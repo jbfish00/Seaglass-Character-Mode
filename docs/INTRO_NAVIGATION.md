@@ -69,7 +69,37 @@ below was found without guessing tile geometry.
 7. Birch's LAB (1.4): entered from the south plaza. Only wandering aides
    (fieldwork/trade-evo flavor) — **no starter here.** → `lab_interior.ss`.
 
-## The blocker: north exit to Route 101 is flag-gated
+## RESOLVED (2026-07-15): gate bypassed, starter obtained, party located
+
+The flag-gated north exit (below) was cracked and the full rescue completed
+**autonomously**:
+
+- **Flags-array base = SaveBlock1 + 0x157E** (flag N -> byte 0x157E + N//8, bit
+  N%8). Found by *bisection against the gate itself*: `gate_test.lua` sets bit4
+  across a byte range, walks to the exit, and checks whether the map becomes
+  0.16 (Route 101). Narrowed to byte 0x158C bit 4 = flag 0x74. (Empirical guesses
+  and literal-pool disassembly had both failed; the gate-bisection was decisive.
+  The write-read path was verified: gSaveBlock1Ptr is stable and the poked byte
+  persisted.) Recorded in `harness.lua` as `H.FLAG_BLOCK` + `H.setFlag/getFlag`.
+- Setting **flag 0x74** opens the gate -> walk north -> **Route 101 (0.16)**.
+- Continuing north into the tall grass triggers the **Prof. Birch rescue**:
+  `reach_starter.lua` reaches it, `win_battle.lua` confirms the starter
+  (**Torchic**), A-mashes the wild-Poochyena battle, and Birch warps you to his
+  lab (1.4). Checkpoints: `route101.ss`, `after_rescue.ss`, `have_starter.ss`.
+- **gPlayerParty = 0x02019C20** (stride 100). Found by scanning EWRAM for a
+  Pokemon record whose OT-ID matches the player's (SaveBlock2+0x0A =
+  0x99BDB9EF), then disambiguating the 3 hits by ROM literal-ref count: this
+  address has 577 refs (the real global); the two transient copies have 3 each.
+  Recorded in `harness.lua`. This unlocks the "Give Pokemon" state-mutation half
+  of the harness and the `find_ram_anchors.lua`/catch-trace path.
+
+Remaining to a wild-battle catch trace: escape the lab's aide-dialogue loop to a
+free overworld state, walk into Route 101 grass, run `headless_catch_trace.lua`.
+Note: setting flag 0x74 ("has a POKeMON") is a slight lie used only to pass the
+gate; it did NOT break the rescue, but watch for side effects and prefer the
+`var 0x4050 != 0` pass-condition or clearing 0x74 post-gate if issues arise.
+
+## The blocker (original analysis): north exit to Route 101 is flag-gated
 
 The starter comes from the **vanilla Route 101 Birch rescue** — confirmed by
 decoding the script text cluster at ROM 0x00284756–0x002847CE:

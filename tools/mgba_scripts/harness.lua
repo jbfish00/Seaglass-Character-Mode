@@ -81,11 +81,38 @@ H.SB1_MAPNUM  = 0x05  -- u8
 -- every helper below that needs one will fail loudly rather than poke a
 -- guessed address (poking the wrong EWRAM address is exactly how you get a
 -- "bug" that isn't real).
-H.gPlayerParty = nil       -- EWRAM base of the 6x100-byte party array
-H.gPlayerPartyCount = nil  -- u8 party count
+-- CONFIRMED (2026-07-15) once a starter (Torchic) was obtained autonomously:
+-- gPlayerParty scanned by matching the player's OT-ID (SaveBlock2+0x0A =
+-- 0x99BDB9EF) against EWRAM Pokemon records, then disambiguated from transient
+-- copies by ROM literal-ref count (this address: 577 refs; the two copies: 3
+-- each). Struct stride is 100 bytes (0x64 -- expansion kept vanilla size).
+-- gEnemyParty is the adjacent block (gPlayerParty + 6*100 = 0x02019E78) in
+-- pokeemerald layout -- verify before relying on it for the catch trace.
+H.gPlayerParty = 0x02019C20   -- EWRAM base of the 6x100-byte party array
+H.PARTY_STRIDE = 100          -- struct Pokemon size (bytes)
+H.gEnemyParty = 0x02019E78    -- candidate (gPlayerParty + 6*stride); UNVERIFIED
+H.gPlayerPartyCount = nil     -- u8 party count (separate global, not yet located)
 H.gSaveBlock1 = nil        -- resolved (deref'd) save block 1 base
-H.VAR_BLOCK = nil          -- base of the vars array (for VAR_CHARACTER_ID-alike)
-H.FLAG_BLOCK = nil         -- base of the flags bitfield (for catching toggle)
+H.VAR_BLOCK = 0x156E       -- vars array base (candidate: a fn clears vars[0]/[1]
+                           -- via strh here; var N = base + (N-0x4000)*2). UNVERIFIED.
+-- CONFIRMED (2026-07-15, by bisection against the Littleroot north-exit gate,
+-- which passes iff flag 0x74 set): the flags bitfield is at SaveBlock1+0x157E.
+-- flag N -> byte 0x157E + N//8, bit N%8 (verified: flag 0x74 = byte 0x158C
+-- bit 4). Setting flag 0x74 here opened the gate -> Route 101 -> Birch rescue.
+-- This is the ROWE debug-menu "toggle catching / set flag" capability.
+H.FLAG_BLOCK = 0x157E      -- SaveBlock1-relative base of the flags bitfield
+function H.setFlag(id)
+    local a = emu:read32(H.gSaveBlock1Ptr) + H.FLAG_BLOCK + math.floor(id/8)
+    emu:write8(a, emu:read8(a) | (1 << (id % 8)))
+end
+function H.getFlag(id)
+    local a = emu:read32(H.gSaveBlock1Ptr) + H.FLAG_BLOCK + math.floor(id/8)
+    return (emu:read8(a) >> (id % 8)) & 1
+end
+function H.clearFlag(id)
+    local a = emu:read32(H.gSaveBlock1Ptr) + H.FLAG_BLOCK + math.floor(id/8)
+    emu:write8(a, emu:read8(a) & (0xFF ~ (1 << (id % 8))))
+end
 
 -- ------------------------------------------------------------------- plumbing
 

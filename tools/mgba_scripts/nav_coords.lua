@@ -22,12 +22,11 @@ local K = H.KEY
 -- along the town to the neighbor's (east) house, then up to its door to enter.
 -- From nav_out.ss (10,1, blocker open): close dialogue, probe cols 12/13 UP
 -- for the Route 101 connection (going around the blocker NPC + trees).
+-- Test control after lab dialogue: close box, walk toward the south exit.
 local MOVES = {
     { K.B, 4, 16 },
-    { K.DOWN, STEP }, { K.RIGHT, STEP }, { K.RIGHT, STEP },
-    { K.UP, STEP }, { K.UP, STEP },                 -- test col 12
-    { K.DOWN, STEP }, { K.RIGHT, STEP },
-    { K.UP, STEP }, { K.UP, STEP },                 -- test col 13
+    { K.DOWN, STEP }, { K.DOWN, STEP }, { K.DOWN, STEP },
+    { K.DOWN, STEP }, { K.DOWN, STEP }, { K.DOWN, STEP },
 }
 local WATCH = false  -- periodic screenshots to catch a cutscene playing out
 
