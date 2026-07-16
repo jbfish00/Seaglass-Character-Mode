@@ -14,6 +14,22 @@ local function setflag(id)
     local a = sb1() + FLAGS_BASE + math.floor(id/8)
     emu:write8(a, emu:read8(a) | (1 << (id%8)))
 end
+local function clearflag(id)
+    local a = sb1() + FLAGS_BASE + math.floor(id/8)
+    emu:write8(a, emu:read8(a) & (0xFF ~ (1 << (id%8))))
+end
+-- Once on Route 101 (map 0.16), clear flag 0x74 so the Birch rescue runs in the
+-- correct "no POKeMON" state (despawns Birch, enables encounters) instead of the
+-- partial state the flag-0x74 lie leaves behind.
+local cleared=false
+H.onFrame(function()
+    if not cleared then
+        local b=sb1()
+        if b>=0x02000000 and b<0x02040000 and emu:read8(b+4)==0 and emu:read8(b+5)==16 then
+            cleared=true; clearflag(0x74); H.log("cleared flag 0x74 on Route 101")
+        end
+    end
+end)
 
 local set=false
 H.onFrame(function(f)

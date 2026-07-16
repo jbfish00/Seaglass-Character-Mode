@@ -101,7 +101,31 @@ without re-interacting), then walk away — `escape_lab.lua` / the B-mash in
 `route101_party.ss` = on Route 101 with Torchic; `have_starter.ss` = free
 overworld with the party.
 
-**Catch-trace status (blocked on a clean wild battle).** With flag 0x74 set to
+**Catch-trace status (2026-07-16 update): wild battles WORK; blocked only on
+obtaining Poké Balls.** The full pipeline is proven end-to-end headlessly:
+clean rescue (clear flag 0x74 on Route 101 so Birch despawns —
+`reach_starter.lua`) → escape lab (B, not A — `escape_lab.lua`/`lab_out.lua`) →
+Route 101 **tall grass** (the encounter grass is the dark spiky tiles east of
+~(11,10), NOT the light tufted ground; sprite legs stay visible either way in
+this tileset, so identify grass by the tile art, not the sprite) → **wild
+battle confirmed** (`battle_bag_oneshot.lua`; `gEnemyParty` **VERIFIED** at
+0x02019E78 — the wild mon materializes there). Battle input gotcha: the GBC-paced
+intro ("Wild X appeared!" / "Go! <name>!") swallows early presses — wait ~1500
+frames for the real command menu; state-loads mid-battle drop single key edges,
+so drive menus with `H.mash` (repeated edges) or run the whole encounter in one
+script. The **bag is EMPTY** (all 4 pockets checked — `pockets.lua`), so we
+can't throw a ball yet. Reached **Oldale Town** (map 0.10, connection at Route
+101 top-edge **column 8**) and the **Oldale Mart** (map 2.4) via a
+whiteout-proof auto-healing trek (`trek_v3.lua`/`probe_north.lua` poke
+gPlayerParty+0x56 = maxHP each frame). Remaining: complete the clerk purchase
+(counter-tile geometry is fussy — clerk behind the top-left counter) OR
+RAM-write Poké Balls into the bag's Poké-Ball pocket (needs that SaveBlock1
+offset; note item quantities are XOR'd with gSaveBlock2's encryption key, item
+IDs are plain). Then: battle → BAG → POKé BALLS → throw → `headless_catch_trace`
+breakpoints fire on the real catch handler. Checkpoints: `wild_battle.ss`,
+`oldale.ss`, `mart_inside.ss`, `shop.ss`.
+
+**Earlier catch-trace note (superseded — kept for context):** With flag 0x74 set to
 bypass the gate, the Route 101 **rescue cleanup did not fully run**: Prof. Birch
 and his bag still linger on the map, and no encounter-triggering *tall grass* was
 reachable in the immediate rescue zone (`walk_grass.lua` walked many steps with
