@@ -22,12 +22,9 @@ local K = H.KEY
 -- along the town to the neighbor's (east) house, then up to its door to enter.
 -- From nav_out.ss (10,1, blocker open): close dialogue, probe cols 12/13 UP
 -- for the Route 101 connection (going around the blocker NPC + trees).
--- Test control after lab dialogue: close box, walk toward the south exit.
-local MOVES = {
-    { K.B, 4, 16 },
-    { K.DOWN, STEP }, { K.DOWN, STEP }, { K.DOWN, STEP },
-    { K.DOWN, STEP }, { K.DOWN, STEP }, { K.DOWN, STEP },
-}
+-- Scout north on Route 101 past the rescue zone, looking for tall grass.
+local MOVES = {}
+for _=1,14 do table.insert(MOVES, { K.UP, STEP }) end
 local WATCH = false  -- periodic screenshots to catch a cutscene playing out
 
 local function sb1() return emu:read32(SB1_PTR) end

@@ -93,11 +93,27 @@ The flag-gated north exit (below) was cracked and the full rescue completed
   Recorded in `harness.lua`. This unlocks the "Give Pokemon" state-mutation half
   of the harness and the `find_ram_anchors.lua`/catch-trace path.
 
-Remaining to a wild-battle catch trace: escape the lab's aide-dialogue loop to a
-free overworld state, walk into Route 101 grass, run `headless_catch_trace.lua`.
-Note: setting flag 0x74 ("has a POKeMON") is a slight lie used only to pass the
-gate; it did NOT break the rescue, but watch for side effects and prefer the
-`var 0x4050 != 0` pass-condition or clearing 0x74 post-gate if issues arise.
+Escaping the lab: the post-rescue lab has aide NPCs; A-mashing re-triggers them
+in a loop (same as the neighbor's-house mom). **Escape with B** (closes dialogue
+without re-interacting), then walk away — `escape_lab.lua` / the B-mash in
+`nav_coords.lua`. After that, walking out and back north to Route 101 works
+(the gate is now legitimately open — obtaining Torchic set flag 0x74 for real).
+`route101_party.ss` = on Route 101 with Torchic; `have_starter.ss` = free
+overworld with the party.
+
+**Catch-trace status (blocked on a clean wild battle).** With flag 0x74 set to
+bypass the gate, the Route 101 **rescue cleanup did not fully run**: Prof. Birch
+and his bag still linger on the map, and no encounter-triggering *tall grass* was
+reachable in the immediate rescue zone (`walk_grass.lua` walked many steps with
+no wild encounter; the map appears stuck in a partial rescue state). The likely
+fix is to pass the gate **without the flag-0x74 lie** — either poke `var 0x4050`
+(= vars[0x50]; needs the vars-array base pinned, candidate 0x156E, unverified) or
+**clear flag 0x74 immediately after passing the gate** so the rescue's own
+completion sets the correct end-state and re-enables encounters. Alternatively,
+traverse further north past the rescue zone to Oldale-side tall grass. Everything
+else for the trace is ready: `gPlayerParty` known, Route 101 reachable with a
+party, and `headless_catch_trace.lua` armed on the 6 catch candidates — it just
+needs a savestate positioned in a real wild battle.
 
 ## The blocker (original analysis): north exit to Route 101 is flag-gated
 
