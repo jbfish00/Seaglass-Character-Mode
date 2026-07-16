@@ -117,13 +117,31 @@ script. The **bag is EMPTY** (all 4 pockets checked — `pockets.lua`), so we
 can't throw a ball yet. Reached **Oldale Town** (map 0.10, connection at Route
 101 top-edge **column 8**) and the **Oldale Mart** (map 2.4) via a
 whiteout-proof auto-healing trek (`trek_v3.lua`/`probe_north.lua` poke
-gPlayerParty+0x56 = maxHP each frame). Remaining: complete the clerk purchase
-(counter-tile geometry is fussy — clerk behind the top-left counter) OR
-RAM-write Poké Balls into the bag's Poké-Ball pocket (needs that SaveBlock1
-offset; note item quantities are XOR'd with gSaveBlock2's encryption key, item
-IDs are plain). Then: battle → BAG → POKé BALLS → throw → `headless_catch_trace`
-breakpoints fire on the real catch handler. Checkpoints: `wild_battle.ss`,
-`oldale.ss`, `mart_inside.ss`, `shop.ss`.
+gPlayerParty+0x56 = maxHP each frame). The Oldale Mart clerk **shop menu was opened** (`shop.lua`; talk from tile
+**(1,5)** facing up — the counter is at the top-LEFT, the front tile is 1 west of
+where geometry first suggested), MONEY ¥3000. **But it stocks only medicine**
+(Potion/Antidote/Paralyze Heal/Awakening) — **no Poké Balls**. In the vanilla
+Emerald flow (which Seaglass follows here), marts don't sell Poké Balls until you
+have the **Pokédex**, and **Birch gives the Pokédex + 5 Poké Balls only AFTER the
+Route 103 rival battle**, not right after the rescue. Verified: the post-rescue
+lab speech is short — control returns by ~frame 800 (then A-mashing just loops a
+tall-grass aide) — and leaves the **bag empty**. So the path to a throwable ball
+(and thus the catch trace) is:
+
+  Route 101 → **Oldale (0.10)** → north to **Route 103** → meet + battle the
+  rival (Torchic can win; auto-heal keeps us alive) → return to **Birch's lab
+  (1.4)** → receive Pokédex + 5 Poké Balls → wild battle → throw → catch trace.
+
+Alternative (faster, and the ROWE "give item" capability we want anyway):
+**RAM-write Poké Balls** into the bag's Poké-Ball pocket. Needs three unknowns
+pinned in this fork's SaveBlock1: the pocket offset, ITEM_POKE_BALL's id (vanilla
+4), and the encryption key (gSaveBlock2->encryptionKey; item *quantities* are
+XOR'd with its low 16 bits, item *IDs* are plain). Easiest to locate by buying a
+Potion (¥200, we have ¥3000) and diffing SaveBlock1 to find the Items pocket +
+key behavior, then writing itemId=4/qty=(N XOR key) into the Poké-Ball pocket.
+
+Checkpoints: `wild_battle.ss`, `oldale.ss`, `mart_inside.ss`, `shop.ss`,
+`have_starter2.ss` (post-full-lab-speech).
 
 **Earlier catch-trace note (superseded — kept for context):** With flag 0x74 set to
 bypass the gate, the Route 101 **rescue cleanup did not fully run**: Prof. Birch
