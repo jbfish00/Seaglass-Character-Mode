@@ -1,0 +1,9828 @@
+{
+ "Aaron": {
+  "category": "elite4",
+  "gen": 4,
+  "page": "Aaron (game) + Aaron (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_LICKITUNG",
+    "id": 108
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SEVIPER",
+    "id": 336
+   },
+   {
+    "const": "SPECIES_TRAPINCH",
+    "id": 328
+   },
+   {
+    "const": "SPECIES_WURMPLE",
+    "id": 265
+   },
+   {
+    "const": "SPECIES_YANMA",
+    "id": 193
+   }
+  ]
+ },
+ "Acerola": {
+  "category": "elite4",
+  "gen": 7,
+  "page": "Acerola (game) + Acerola (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CUBONE",
+    "id": 104
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_MEOWTH",
+    "id": 52
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_SABLEYE",
+    "id": 302
+   },
+   {
+    "const": "SPECIES_SHUPPET",
+    "id": 353
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   }
+  ]
+ },
+ "Agatha": {
+  "category": "elite4",
+  "gen": 1,
+  "page": "Agatha (game) + Agatha (anime)",
+  "signature": {
+   "const": "SPECIES_GASTLY",
+   "id": 92
+  },
+  "species": [
+   {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CACNEA",
+    "id": 331
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CUBONE",
+    "id": 104
+   },
+   {
+    "const": "SPECIES_DODUO",
+    "id": 84
+   },
+   {
+    "const": "SPECIES_EKANS",
+    "id": 23
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_KOFFING",
+    "id": 109
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SMOOCHUM",
+    "id": 238
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Alain": {
+  "category": "anime",
+  "gen": 6,
+  "page": "Alain + Alain (anime)",
+  "signature": {
+   "const": "SPECIES_CHARMANDER",
+   "id": 4
+  },
+  "species": [
+   {
+    "const": "SPECIES_BELDUM",
+    "id": 374
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   }
+  ]
+ },
+ "Allister": {
+  "category": "gymleader",
+  "gen": 8,
+  "page": "Allister (game) + Allister (anime)",
+  "signature": {
+   "const": "SPECIES_GASTLY",
+   "id": 92
+  },
+  "species": [
+   {
+    "const": "SPECIES_CORSOLA_GALAR",
+    "id": 222
+   },
+   {
+    "const": "SPECIES_DUSKULL",
+    "id": 355
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   }
+  ]
+ },
+ "Archer": {
+  "category": "villain",
+  "gen": 2,
+  "page": "Archer (game) + Archer (anime)",
+  "signature": {
+   "const": "SPECIES_HOUNDOUR",
+   "id": 228
+  },
+  "species": [
+   {
+    "const": "SPECIES_BELLSPROUT",
+    "id": 69
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_DROWZEE",
+    "id": 96
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
+    "const": "SPECIES_KOFFING",
+    "id": 109
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_MEOWTH",
+    "id": 52
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_PARAS",
+    "id": 46
+   },
+   {
+    "const": "SPECIES_RATTATA",
+    "id": 19
+   },
+   {
+    "const": "SPECIES_REMORAID",
+    "id": 223
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_VOLTORB",
+    "id": 100
+   },
+   {
+    "const": "SPECIES_WYNAUT",
+    "id": 360
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Archie": {
+  "category": "villain",
+  "gen": 3,
+  "page": "Archie (game) + Archie (anime)",
+  "signature": {
+   "const": "SPECIES_CARVANHA",
+   "id": 318
+  },
+  "species": [
+   {
+    "const": "SPECIES_CARVANHA",
+    "id": 318
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_GROUDON",
+    "id": 383
+   },
+   {
+    "const": "SPECIES_KYOGRE",
+    "id": 382
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MINUN",
+    "id": 312
+   },
+   {
+    "const": "SPECIES_MUDKIP",
+    "id": 258
+   },
+   {
+    "const": "SPECIES_NUMEL",
+    "id": 322
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PLUSLE",
+    "id": 311
+   },
+   {
+    "const": "SPECIES_POOCHYENA",
+    "id": 261
+   },
+   {
+    "const": "SPECIES_SPHEAL",
+    "id": 363
+   },
+   {
+    "const": "SPECIES_TENTACOOL",
+    "id": 72
+   },
+   {
+    "const": "SPECIES_WURMPLE",
+    "id": 265
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Ariana": {
+  "category": "villain",
+  "gen": 2,
+  "page": "Ariana (game) + Ariana (anime)",
+  "signature": {
+   "const": "SPECIES_EKANS",
+   "id": 23
+  },
+  "species": [
+   {
+    "const": "SPECIES_BELLSPROUT",
+    "id": 69
+   },
+   {
+    "const": "SPECIES_DROWZEE",
+    "id": 96
+   },
+   {
+    "const": "SPECIES_EKANS",
+    "id": 23
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_KABUTO",
+    "id": 140
+   },
+   {
+    "const": "SPECIES_LICKITUNG",
+    "id": 108
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_RATTATA",
+    "id": 19
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SLUGMA",
+    "id": 218
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Arven": {
+  "category": "rival",
+  "gen": 9,
+  "page": "Arven (game) + Arven (anime)",
+  "species": [
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_SHELLDER",
+    "id": 90
+   }
+  ]
+ },
+ "Ash": {
+  "category": "anime",
+  "gen": 1,
+  "page": "Ash Ketchum + Ash (anime)",
+  "signature": {
+   "const": "SPECIES_PIKACHU",
+   "id": 25
+  },
+  "species": [
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_HOPPIP",
+    "id": 187
+   },
+   {
+    "const": "SPECIES_LATIOS",
+    "id": 381
+   },
+   {
+    "const": "SPECIES_LUGIA",
+    "id": 249
+   },
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_TAILLOW",
+    "id": 276
+   },
+   {
+    "const": "SPECIES_TORCHIC",
+    "id": 255
+   }
+  ]
+ },
+ "Barry": {
+  "category": "rival",
+  "gen": 4,
+  "page": "Barry (game) + Barry (anime)",
+  "species": [
+   {
+    "const": "SPECIES_BUDEW",
+    "id": 406
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_NATU",
+    "id": 177
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SKARMORY",
+    "id": 227
+   },
+   {
+    "const": "SPECIES_TEDDIURSA",
+    "id": 216
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Bea": {
+  "category": "gymleader",
+  "gen": 8,
+  "page": "Bea (game) + Bea (anime)",
+  "signature": {
+   "const": "SPECIES_MACHOP",
+   "id": 66
+  },
+  "species": [
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_POLIWAG",
+    "id": 60
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
+   }
+  ]
+ },
+ "Bede": {
+  "category": "rival",
+  "gen": 8,
+  "page": "Bede (game) + Bede (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ARTICUNO",
+    "id": 144
+   },
+   {
+    "const": "SPECIES_CATERPIE",
+    "id": 10
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_MAWILE",
+    "id": 303
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_REGICE",
+    "id": 378
+   },
+   {
+    "const": "SPECIES_REGIROCK",
+    "id": 377
+   },
+   {
+    "const": "SPECIES_REGISTEEL",
+    "id": 379
+   },
+   {
+    "const": "SPECIES_ZAPDOS",
+    "id": 145
+   }
+  ]
+ },
+ "Bertha": {
+  "category": "elite4",
+  "gen": 4,
+  "page": "Bertha (game) + Bertha (anime)",
+  "species": [
+   {
+    "const": "SPECIES_BARBOACH",
+    "id": 339
+   },
+   {
+    "const": "SPECIES_BONSLY",
+    "id": 438
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_GLIGAR",
+    "id": 207
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_NIDORAN_M",
+    "id": 32
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SEVIPER",
+    "id": 336
+   },
+   {
+    "const": "SPECIES_SWINUB",
+    "id": 220
+   },
+   {
+    "const": "SPECIES_WOOPER",
+    "id": 194
+   }
+  ]
+ },
+ "Blaine": {
+  "category": "gymleader",
+  "gen": 1,
+  "page": "Blaine (game) + Blaine (anime)",
+  "signature": {
+   "const": "SPECIES_GROWLITHE",
+   "id": 58
+  },
+  "species": [
+   {
+    "const": "SPECIES_ARTICUNO",
+    "id": 144
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_HAPPINY",
+    "id": 440
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
+    "const": "SPECIES_IGGLYBUFF",
+    "id": 174
+   },
+   {
+    "const": "SPECIES_KANGASKHAN",
+    "id": 115
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_MANKEY",
+    "id": 56
+   },
+   {
+    "const": "SPECIES_MEOWTH",
+    "id": 52
+   },
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_NUMEL",
+    "id": 322
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_PARAS",
+    "id": 46
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_REMORAID",
+    "id": 223
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SLUGMA",
+    "id": 218
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_TANGELA",
+    "id": 114
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   },
+   {
+    "const": "SPECIES_TORKOAL",
+    "id": 324
+   },
+   {
+    "const": "SPECIES_VOLTORB",
+    "id": 100
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   }
+  ]
+ },
+ "Blue": {
+  "category": "champion",
+  "gen": 1,
+  "page": "Blue (game) + Blue (anime)",
+  "signature": {
+   "const": "SPECIES_PIDGEY",
+   "id": 16
+  },
+  "species": [
+   {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_AERODACTYL",
+    "id": 142
+   },
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_EKANS",
+    "id": 23
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_HORSEA",
+    "id": 116
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_MILTANK",
+    "id": 241
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PIDGEY",
+    "id": 16
+   },
+   {
+    "const": "SPECIES_PINSIR",
+    "id": 127
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SANDSHREW",
+    "id": 27
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SHELLDER",
+    "id": 90
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_SWINUB",
+    "id": 220
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   },
+   {
+    "const": "SPECIES_ZAPDOS",
+    "id": 145
+   }
+  ]
+ },
+ "Brassius": {
+  "category": "gymleader",
+  "gen": 9,
+  "page": "Brassius (game) + Brassius (anime)",
+  "signature": {
+   "const": "SPECIES_BONSLY",
+   "id": 438
+  },
+  "species": [
+   {
+    "const": "SPECIES_APPLIN",
+    "id": 840
+   },
+   {
+    "const": "SPECIES_BONSLY",
+    "id": 438
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_SHROOMISH",
+    "id": 285
+   },
+   {
+    "const": "SPECIES_SUNKERN",
+    "id": 191
+   }
+  ]
+ },
+ "Brawly": {
+  "category": "gymleader",
+  "gen": 3,
+  "page": "Brawly (game) + Brawly (anime)",
+  "signature": {
+   "const": "SPECIES_MAKUHITA",
+   "id": 296
+  },
+  "species": [
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_GROUDON",
+    "id": 383
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_MAKUHITA",
+    "id": 296
+   },
+   {
+    "const": "SPECIES_MEDITITE",
+    "id": 307
+   },
+   {
+    "const": "SPECIES_SABLEYE",
+    "id": 302
+   },
+   {
+    "const": "SPECIES_SHROOMISH",
+    "id": 285
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   },
+   {
+    "const": "SPECIES_WINGULL",
+    "id": 278
+   }
+  ]
+ },
+ "Brendan": {
+  "category": "protagonist",
+  "gen": 3,
+  "page": "Brendan (game) + Brendan (anime)",
+  "signature": {
+   "const": "SPECIES_TREECKO",
+   "id": 252
+  },
+  "species": [
+   {
+    "const": "SPECIES_ARON",
+    "id": 304
+   },
+   {
+    "const": "SPECIES_BAGON",
+    "id": 371
+   },
+   {
+    "const": "SPECIES_BALTOY",
+    "id": 343
+   },
+   {
+    "const": "SPECIES_ELECTRIKE",
+    "id": 309
+   },
+   {
+    "const": "SPECIES_GROUDON",
+    "id": 383
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_LATIAS",
+    "id": 380
+   },
+   {
+    "const": "SPECIES_LATIOS",
+    "id": 381
+   },
+   {
+    "const": "SPECIES_LOTAD",
+    "id": 270
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_MUDKIP",
+    "id": 258
+   },
+   {
+    "const": "SPECIES_NUMEL",
+    "id": 322
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SEEDOT",
+    "id": 273
+   },
+   {
+    "const": "SPECIES_SHROOMISH",
+    "id": 285
+   },
+   {
+    "const": "SPECIES_SLUGMA",
+    "id": 218
+   },
+   {
+    "const": "SPECIES_SOLROCK",
+    "id": 338
+   },
+   {
+    "const": "SPECIES_TAILLOW",
+    "id": 276
+   },
+   {
+    "const": "SPECIES_TORCHIC",
+    "id": 255
+   },
+   {
+    "const": "SPECIES_TREECKO",
+    "id": 252
+   },
+   {
+    "const": "SPECIES_TROPIUS",
+    "id": 357
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   },
+   {
+    "const": "SPECIES_WHISMUR",
+    "id": 293
+   },
+   {
+    "const": "SPECIES_WINGULL",
+    "id": 278
+   },
+   {
+    "const": "SPECIES_ZIGZAGOON",
+    "id": 263
+   }
+  ]
+ },
+ "Brock": {
+  "category": "gymleader",
+  "gen": 1,
+  "page": "Brock (game) + Brock (anime)",
+  "signature": {
+   "const": "SPECIES_ONIX",
+   "id": 95
+  },
+  "species": [
+   {
+    "const": "SPECIES_AERODACTYL",
+    "id": 142
+   },
+   {
+    "const": "SPECIES_AIPOM",
+    "id": 190
+   },
+   {
+    "const": "SPECIES_BONSLY",
+    "id": 438
+   },
+   {
+    "const": "SPECIES_CATERPIE",
+    "id": 10
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CUBONE",
+    "id": 104
+   },
+   {
+    "const": "SPECIES_DIGLETT",
+    "id": 50
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_HAPPINY",
+    "id": 440
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_HOOTHOOT",
+    "id": 163
+   },
+   {
+    "const": "SPECIES_KABUTO",
+    "id": 140
+   },
+   {
+    "const": "SPECIES_KANGASKHAN",
+    "id": 115
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_LOTAD",
+    "id": 270
+   },
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_MAREEP",
+    "id": 179
+   },
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_NIDORAN_M",
+    "id": 32
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_OMANYTE",
+    "id": 138
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PINECO",
+    "id": 204
+   },
+   {
+    "const": "SPECIES_PINSIR",
+    "id": 127
+   },
+   {
+    "const": "SPECIES_RATTATA",
+    "id": 19
+   },
+   {
+    "const": "SPECIES_RELICANTH",
+    "id": 369
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SEEDOT",
+    "id": 273
+   },
+   {
+    "const": "SPECIES_SHUCKLE",
+    "id": 213
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SPEAROW",
+    "id": 21
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_TAILLOW",
+    "id": 276
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_TEDDIURSA",
+    "id": 216
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Bruno": {
+  "category": "elite4",
+  "gen": 1,
+  "page": "Bruno (game) + Bruno (anime)",
+  "signature": {
+   "const": "SPECIES_MACHOP",
+   "id": 66
+  },
+  "species": [
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_DIGLETT",
+    "id": 50
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_KANGASKHAN",
+    "id": 115
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_MAKUHITA",
+    "id": 296
+   },
+   {
+    "const": "SPECIES_MANKEY",
+    "id": 56
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PIDGEY",
+    "id": 16
+   },
+   {
+    "const": "SPECIES_POLIWAG",
+    "id": 60
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SANDSHREW",
+    "id": 27
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SHELLDER",
+    "id": 90
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SMOOCHUM",
+    "id": 238
+   },
+   {
+    "const": "SPECIES_SNUBBULL",
+    "id": 209
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_TEDDIURSA",
+    "id": 216
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
+   },
+   {
+    "const": "SPECIES_VOLTORB",
+    "id": 100
+   }
+  ]
+ },
+ "Brycen": {
+  "category": "gymleader",
+  "gen": 5,
+  "page": "Brycen (game) + Brycen (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CARVANHA",
+    "id": 318
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_SEEL",
+    "id": 86
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_SPHEAL",
+    "id": 363
+   }
+  ]
+ },
+ "Bugsy": {
+  "category": "gymleader",
+  "gen": 2,
+  "page": "Bugsy (game) + Bugsy (anime)",
+  "signature": {
+   "const": "SPECIES_SCYTHER",
+   "id": 123
+  },
+  "species": [
+   {
+    "const": "SPECIES_ANORITH",
+    "id": 347
+   },
+   {
+    "const": "SPECIES_BELLSPROUT",
+    "id": 69
+   },
+   {
+    "const": "SPECIES_BONSLY",
+    "id": 438
+   },
+   {
+    "const": "SPECIES_CATERPIE",
+    "id": 10
+   },
+   {
+    "const": "SPECIES_CHIKORITA",
+    "id": 152
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_HO_OH",
+    "id": 250
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   },
+   {
+    "const": "SPECIES_NINCADA",
+    "id": 290
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PINECO",
+    "id": 204
+   },
+   {
+    "const": "SPECIES_PINSIR",
+    "id": 127
+   },
+   {
+    "const": "SPECIES_RATTATA",
+    "id": 19
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SHUCKLE",
+    "id": 213
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_SPINARAK",
+    "id": 167
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
+   },
+   {
+    "const": "SPECIES_WEEDLE",
+    "id": 13
+   },
+   {
+    "const": "SPECIES_WOOPER",
+    "id": 194
+   },
+   {
+    "const": "SPECIES_YANMA",
+    "id": 193
+   }
+  ]
+ },
+ "Burgh": {
+  "category": "gymleader",
+  "gen": 5,
+  "page": "Burgh (game) + Burgh (anime)",
+  "species": [
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   }
+  ]
+ },
+ "Byron": {
+  "category": "gymleader",
+  "gen": 4,
+  "page": "Byron (game) + Byron (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ANORITH",
+    "id": 347
+   },
+   {
+    "const": "SPECIES_ARON",
+    "id": 304
+   },
+   {
+    "const": "SPECIES_GLIGAR",
+    "id": 207
+   },
+   {
+    "const": "SPECIES_KABUTO",
+    "id": 140
+   },
+   {
+    "const": "SPECIES_LILEEP",
+    "id": 345
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_OMANYTE",
+    "id": 138
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_PINECO",
+    "id": 204
+   },
+   {
+    "const": "SPECIES_SKARMORY",
+    "id": 227
+   },
+   {
+    "const": "SPECIES_SUNKERN",
+    "id": 191
+   }
+  ]
+ },
+ "Caitlin": {
+  "category": "elite4",
+  "gen": 5,
+  "page": "Caitlin (game) + Caitlin (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_BELDUM",
+    "id": 374
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_SABLEYE",
+    "id": 302
+   }
+  ]
+ },
+ "Calem": {
+  "category": "protagonist",
+  "gen": 6,
+  "page": "Calem (game) + Calem (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   }
+  ]
+ },
+ "Candice": {
+  "category": "gymleader",
+  "gen": 4,
+  "page": "Candice (game) + Candice (anime)",
+  "signature": {
+   "const": "SPECIES_SNORUNT",
+   "id": 361
+  },
+  "species": [
+   {
+    "const": "SPECIES_DODUO",
+    "id": 84
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_GLIGAR",
+    "id": 207
+   },
+   {
+    "const": "SPECIES_MEDITITE",
+    "id": 307
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_REGICE",
+    "id": 378
+   },
+   {
+    "const": "SPECIES_REGIROCK",
+    "id": 377
+   },
+   {
+    "const": "SPECIES_REGISTEEL",
+    "id": 379
+   },
+   {
+    "const": "SPECIES_SMOOCHUM",
+    "id": 238
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   },
+   {
+    "const": "SPECIES_SWINUB",
+    "id": 220
+   }
+  ]
+ },
+ "Cheren": {
+  "category": "gymleader",
+  "gen": 5,
+  "page": "Cheren (game) + Cheren (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CASTFORM_NORMAL",
+    "id": 351
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_LICKITUNG",
+    "id": 108
+   },
+   {
+    "const": "SPECIES_PORYGON",
+    "id": 137
+   },
+   {
+    "const": "SPECIES_SUNKERN",
+    "id": 191
+   },
+   {
+    "const": "SPECIES_ZANGOOSE",
+    "id": 335
+   }
+  ]
+ },
+ "Chili": {
+  "category": "gymleader",
+  "gen": 5,
+  "page": "Chili (game) + Chili (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_NUMEL",
+    "id": 322
+   }
+  ]
+ },
+ "Chloe": {
+  "category": "anime",
+  "gen": 8,
+  "page": "Chloe (anime)",
+  "signature": {
+   "const": "SPECIES_EEVEE",
+   "id": 133
+  },
+  "species": [
+   {
+    "const": "SPECIES_CLAMPERL",
+    "id": 366
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_PSYDUCK",
+    "id": 54
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SEEL",
+    "id": 86
+   },
+   {
+    "const": "SPECIES_SPEAROW",
+    "id": 21
+   },
+   {
+    "const": "SPECIES_WINGULL",
+    "id": 278
+   }
+  ]
+ },
+ "Chuck": {
+  "category": "gymleader",
+  "gen": 2,
+  "page": "Chuck (game) + Chuck (anime)",
+  "signature": {
+   "const": "SPECIES_POLIWAG",
+   "id": 60
+  },
+  "species": [
+   {
+    "const": "SPECIES_CHIKORITA",
+    "id": 152
+   },
+   {
+    "const": "SPECIES_DROWZEE",
+    "id": 96
+   },
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_MANKEY",
+    "id": 56
+   },
+   {
+    "const": "SPECIES_MAREEP",
+    "id": 179
+   },
+   {
+    "const": "SPECIES_MEDITITE",
+    "id": 307
+   },
+   {
+    "const": "SPECIES_POLIWAG",
+    "id": 60
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SANDSHREW",
+    "id": 27
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SHROOMISH",
+    "id": 285
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_SNUBBULL",
+    "id": 209
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_TEDDIURSA",
+    "id": 216
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
+   }
+  ]
+ },
+ "Cilan": {
+  "category": "gymleader",
+  "gen": 5,
+  "page": "Cilan (game) + Cilan (anime)",
+  "species": [
+   {
+    "const": "SPECIES_AIPOM",
+    "id": 190
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CORPHISH",
+    "id": 341
+   },
+   {
+    "const": "SPECIES_HOPPIP",
+    "id": 187
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   }
+  ]
+ },
+ "Clair": {
+  "category": "gymleader",
+  "gen": 2,
+  "page": "Clair (game) + Clair (anime)",
+  "signature": {
+   "const": "SPECIES_HORSEA",
+   "id": 116
+  },
+  "species": [
+   {
+    "const": "SPECIES_AERODACTYL",
+    "id": 142
+   },
+   {
+    "const": "SPECIES_BAGON",
+    "id": 371
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_ENTEI",
+    "id": 244
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_HORSEA",
+    "id": 116
+   },
+   {
+    "const": "SPECIES_KOFFING",
+    "id": 109
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MAREEP",
+    "id": 179
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_NIDORAN_M",
+    "id": 32
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
+   }
+  ]
+ },
+ "Clay": {
+  "category": "gymleader",
+  "gen": 5,
+  "page": "Clay (game) + Clay (anime)",
+  "species": [
+   {
+    "const": "SPECIES_BALTOY",
+    "id": 343
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_SANDSHREW",
+    "id": 27
+   },
+   {
+    "const": "SPECIES_SWINUB",
+    "id": 220
+   },
+   {
+    "const": "SPECIES_TRAPINCH",
+    "id": 328
+   }
+  ]
+ },
+ "Clemont": {
+  "category": "gymleader",
+  "gen": 6,
+  "page": "Clemont (game) + Clemont (anime)",
+  "species": [
+   {
+    "const": "SPECIES_AIPOM",
+    "id": 190
+   },
+   {
+    "const": "SPECIES_ELECTRIKE",
+    "id": 309
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_MAREEP",
+    "id": 179
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SWINUB",
+    "id": 220
+   },
+   {
+    "const": "SPECIES_TORCHIC",
+    "id": 255
+   },
+   {
+    "const": "SPECIES_VOLTORB",
+    "id": 100
+   },
+   {
+    "const": "SPECIES_WEEDLE",
+    "id": 13
+   },
+   {
+    "const": "SPECIES_ZAPDOS",
+    "id": 145
+   }
+  ]
+ },
+ "Colress": {
+  "category": "villain",
+  "gen": 5,
+  "page": "Colress (game) + Colress (anime)",
+  "species": [
+   {
+    "const": "SPECIES_BELDUM",
+    "id": 374
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   }
+  ]
+ },
+ "Crasher Wake": {
+  "category": "gymleader",
+  "gen": 4,
+  "page": "Crasher Wake + Crasher Wake (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CARVANHA",
+    "id": 318
+   },
+   {
+    "const": "SPECIES_CLAMPERL",
+    "id": 366
+   },
+   {
+    "const": "SPECIES_HORSEA",
+    "id": 116
+   },
+   {
+    "const": "SPECIES_LOTAD",
+    "id": 270
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_POLIWAG",
+    "id": 60
+   },
+   {
+    "const": "SPECIES_WOOPER",
+    "id": 194
+   }
+  ]
+ },
+ "Cress": {
+  "category": "gymleader",
+  "gen": 5,
+  "page": "Cress (game) + Cress (anime)",
+  "species": [
+   {
+    "const": "SPECIES_AZURILL",
+    "id": 298
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CORPHISH",
+    "id": 341
+   },
+   {
+    "const": "SPECIES_PSYDUCK",
+    "id": 54
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   }
+  ]
+ },
+ "Cynthia": {
+  "category": "champion",
+  "gen": 4,
+  "page": "Cynthia (game) + Cynthia (anime)",
+  "species": [
+   {
+    "const": "SPECIES_BUDEW",
+    "id": 406
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_HAPPINY",
+    "id": 440
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PORYGON",
+    "id": 137
+   },
+   {
+    "const": "SPECIES_PSYDUCK",
+    "id": 54
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   },
+   {
+    "const": "SPECIES_WURMPLE",
+    "id": 265
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Cyrus": {
+  "category": "villain",
+  "gen": 4,
+  "page": "Cyrus (game) + Cyrus (anime)",
+  "signature": {
+   "const": "SPECIES_SNEASEL",
+   "id": 215
+  },
+  "species": [
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_NOSEPASS",
+    "id": 299
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Dawn": {
+  "category": "protagonist",
+  "gen": 4,
+  "page": "Dawn (game) + Dawn (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_AIPOM",
+    "id": 190
+   },
+   {
+    "const": "SPECIES_CARVANHA",
+    "id": 318
+   },
+   {
+    "const": "SPECIES_CLAMPERL",
+    "id": 366
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_DODUO",
+    "id": 84
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_LICKITUNG",
+    "id": 108
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   },
+   {
+    "const": "SPECIES_MINUN",
+    "id": 312
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PLUSLE",
+    "id": 311
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   },
+   {
+    "const": "SPECIES_SPINARAK",
+    "id": 167
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_SWINUB",
+    "id": 220
+   },
+   {
+    "const": "SPECIES_TANGELA",
+    "id": 114
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   },
+   {
+    "const": "SPECIES_TREECKO",
+    "id": 252
+   },
+   {
+    "const": "SPECIES_VENONAT",
+    "id": 48
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Diantha": {
+  "category": "champion",
+  "gen": 6,
+  "page": "Diantha (game) + Diantha (anime)",
+  "signature": {
+   "const": "SPECIES_RALTS",
+   "id": 280
+  },
+  "species": [
+   {
+    "const": "SPECIES_ABSOL",
+    "id": 359
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_RAYQUAZA",
+    "id": 384
+   }
+  ]
+ },
+ "Drake": {
+  "category": "elite4",
+  "gen": 3,
+  "page": "Drake (game) + Drake (anime)",
+  "signature": {
+   "const": "SPECIES_BAGON",
+   "id": 371
+  },
+  "species": [
+   {
+    "const": "SPECIES_BAGON",
+    "id": 371
+   },
+   {
+    "const": "SPECIES_HORSEA",
+    "id": 116
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_REGICE",
+    "id": 378
+   },
+   {
+    "const": "SPECIES_REGIROCK",
+    "id": 377
+   },
+   {
+    "const": "SPECIES_REGISTEEL",
+    "id": 379
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   },
+   {
+    "const": "SPECIES_TRAPINCH",
+    "id": 328
+   }
+  ]
+ },
+ "Drayden": {
+  "category": "gymleader",
+  "gen": 5,
+  "page": "Drayden (game) + Drayden (anime)",
+  "species": [
+   {
+    "const": "SPECIES_BAGON",
+    "id": 371
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   },
+   {
+    "const": "SPECIES_TRAPINCH",
+    "id": 328
+   }
+  ]
+ },
+ "Drew": {
+  "category": "anime",
+  "gen": 3,
+  "page": "Drew + Drew (anime)",
+  "signature": {
+   "const": "SPECIES_BUDEW",
+   "id": 406
+  },
+  "species": [
+   {
+    "const": "SPECIES_ABSOL",
+    "id": 359
+   },
+   {
+    "const": "SPECIES_ARON",
+    "id": 304
+   },
+   {
+    "const": "SPECIES_BALTOY",
+    "id": 343
+   },
+   {
+    "const": "SPECIES_BUDEW",
+    "id": 406
+   },
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CATERPIE",
+    "id": 10
+   },
+   {
+    "const": "SPECIES_DUSKULL",
+    "id": 355
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_GIRAFARIG",
+    "id": 203
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_MEDITITE",
+    "id": 307
+   },
+   {
+    "const": "SPECIES_SKITTY",
+    "id": 300
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_SURSKIT",
+    "id": 283
+   },
+   {
+    "const": "SPECIES_TAILLOW",
+    "id": 276
+   },
+   {
+    "const": "SPECIES_TORCHIC",
+    "id": 255
+   },
+   {
+    "const": "SPECIES_TRAPINCH",
+    "id": 328
+   },
+   {
+    "const": "SPECIES_WHISMUR",
+    "id": 293
+   },
+   {
+    "const": "SPECIES_WURMPLE",
+    "id": 265
+   },
+   {
+    "const": "SPECIES_WYNAUT",
+    "id": 360
+   }
+  ]
+ },
+ "Elesa": {
+  "category": "gymleader",
+  "gen": 5,
+  "page": "Elesa (game) + Elesa (anime)",
+  "species": [
+   {
+    "const": "SPECIES_MAREEP",
+    "id": 179
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   }
+  ]
+ },
+ "Elio": {
+  "category": "protagonist",
+  "gen": 7,
+  "page": "Elio (game) + Elio (anime)",
+  "species": [
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_SPEAROW",
+    "id": 21
+   }
+  ]
+ },
+ "Erika": {
+  "category": "gymleader",
+  "gen": 1,
+  "page": "Erika (game) + Erika (anime)",
+  "signature": {
+   "const": "SPECIES_ODDISH",
+   "id": 43
+  },
+  "species": [
+   {
+    "const": "SPECIES_BELLSPROUT",
+    "id": 69
+   },
+   {
+    "const": "SPECIES_BUDEW",
+    "id": 406
+   },
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CUBONE",
+    "id": 104
+   },
+   {
+    "const": "SPECIES_DROWZEE",
+    "id": 96
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_HAPPINY",
+    "id": 440
+   },
+   {
+    "const": "SPECIES_HOPPIP",
+    "id": 187
+   },
+   {
+    "const": "SPECIES_LILEEP",
+    "id": 345
+   },
+   {
+    "const": "SPECIES_MANTYKE",
+    "id": 458
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_PARAS",
+    "id": 46
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PINSIR",
+    "id": 127
+   },
+   {
+    "const": "SPECIES_PORYGON",
+    "id": 137
+   },
+   {
+    "const": "SPECIES_SEEDOT",
+    "id": 273
+   },
+   {
+    "const": "SPECIES_SEEL",
+    "id": 86
+   },
+   {
+    "const": "SPECIES_SHELLDER",
+    "id": 90
+   },
+   {
+    "const": "SPECIES_SWINUB",
+    "id": 220
+   },
+   {
+    "const": "SPECIES_TANGELA",
+    "id": 114
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   }
+  ]
+ },
+ "Ethan": {
+  "category": "protagonist",
+  "gen": 2,
+  "page": "Ethan (game) + Ethan (anime)",
+  "signature": {
+   "const": "SPECIES_CYNDAQUIL",
+   "id": 155
+  },
+  "species": [
+   {
+    "const": "SPECIES_AZURILL",
+    "id": 298
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_EKANS",
+    "id": 23
+   },
+   {
+    "const": "SPECIES_HO_OH",
+    "id": 250
+   },
+   {
+    "const": "SPECIES_LUGIA",
+    "id": 249
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_PHANPY",
+    "id": 231
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_RAIKOU",
+    "id": 243
+   },
+   {
+    "const": "SPECIES_RATTATA",
+    "id": 19
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   }
+  ]
+ },
+ "Falkner": {
+  "category": "gymleader",
+  "gen": 2,
+  "page": "Falkner (game) + Falkner (anime)",
+  "signature": {
+   "const": "SPECIES_HOOTHOOT",
+   "id": 163
+  },
+  "species": [
+   {
+    "const": "SPECIES_AERODACTYL",
+    "id": 142
+   },
+   {
+    "const": "SPECIES_ARTICUNO",
+    "id": 144
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CHIKORITA",
+    "id": 152
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_DELIBIRD",
+    "id": 225
+   },
+   {
+    "const": "SPECIES_DODUO",
+    "id": 84
+   },
+   {
+    "const": "SPECIES_ENTEI",
+    "id": 244
+   },
+   {
+    "const": "SPECIES_GLIGAR",
+    "id": 207
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_HOOTHOOT",
+    "id": 163
+   },
+   {
+    "const": "SPECIES_LUGIA",
+    "id": 249
+   },
+   {
+    "const": "SPECIES_MAREEP",
+    "id": 179
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_NATU",
+    "id": 177
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PIDGEY",
+    "id": 16
+   },
+   {
+    "const": "SPECIES_RAIKOU",
+    "id": 243
+   },
+   {
+    "const": "SPECIES_SKARMORY",
+    "id": 227
+   },
+   {
+    "const": "SPECIES_SPEAROW",
+    "id": 21
+   },
+   {
+    "const": "SPECIES_SPINARAK",
+    "id": 167
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_SUNKERN",
+    "id": 191
+   },
+   {
+    "const": "SPECIES_TAILLOW",
+    "id": 276
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_WINGULL",
+    "id": 278
+   },
+   {
+    "const": "SPECIES_ZAPDOS",
+    "id": 145
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Fantina": {
+  "category": "gymleader",
+  "gen": 4,
+  "page": "Fantina (game) + Fantina (anime)",
+  "signature": {
+   "const": "SPECIES_MISDREAVUS",
+   "id": 200
+  },
+  "species": [
+   {
+    "const": "SPECIES_DUSKULL",
+    "id": 355
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_NOSEPASS",
+    "id": 299
+   },
+   {
+    "const": "SPECIES_SHUPPET",
+    "id": 353
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   }
+  ]
+ },
+ "Flannery": {
+  "category": "gymleader",
+  "gen": 3,
+  "page": "Flannery (game) + Flannery (anime)",
+  "signature": {
+   "const": "SPECIES_TORKOAL",
+   "id": 324
+  },
+  "species": [
+   {
+    "const": "SPECIES_CORPHISH",
+    "id": 341
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
+    "const": "SPECIES_KYOGRE",
+    "id": 382
+   },
+   {
+    "const": "SPECIES_LOTAD",
+    "id": 270
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_NUMEL",
+    "id": 322
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_SLUGMA",
+    "id": 218
+   },
+   {
+    "const": "SPECIES_TORCHIC",
+    "id": 255
+   },
+   {
+    "const": "SPECIES_TORKOAL",
+    "id": 324
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   }
+  ]
+ },
+ "Flint": {
+  "category": "elite4",
+  "gen": 4,
+  "page": "Flint (game) + Flint (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   }
+  ]
+ },
+ "Gardenia": {
+  "category": "gymleader",
+  "gen": 4,
+  "page": "Gardenia (game) + Gardenia (anime)",
+  "signature": {
+   "const": "SPECIES_BUDEW",
+   "id": 406
+  },
+  "species": [
+   {
+    "const": "SPECIES_AIPOM",
+    "id": 190
+   },
+   {
+    "const": "SPECIES_BELLSPROUT",
+    "id": 69
+   },
+   {
+    "const": "SPECIES_BUDEW",
+    "id": 406
+   },
+   {
+    "const": "SPECIES_CACNEA",
+    "id": 331
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_HOPPIP",
+    "id": 187
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_SEEDOT",
+    "id": 273
+   },
+   {
+    "const": "SPECIES_SEVIPER",
+    "id": 336
+   },
+   {
+    "const": "SPECIES_SHROOMISH",
+    "id": 285
+   },
+   {
+    "const": "SPECIES_SUNKERN",
+    "id": 191
+   },
+   {
+    "const": "SPECIES_TANGELA",
+    "id": 114
+   },
+   {
+    "const": "SPECIES_TROPIUS",
+    "id": 357
+   }
+  ]
+ },
+ "Gary": {
+  "category": "anime",
+  "gen": 1,
+  "page": "Gary Oak + Gary (anime)",
+  "signature": {
+   "const": "SPECIES_SQUIRTLE",
+   "id": 7
+  },
+  "species": [
+   {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_AERODACTYL",
+    "id": 142
+   },
+   {
+    "const": "SPECIES_ARTICUNO",
+    "id": 144
+   },
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CATERPIE",
+    "id": 10
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_DIGLETT",
+    "id": 50
+   },
+   {
+    "const": "SPECIES_DODUO",
+    "id": 84
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_HOOTHOOT",
+    "id": 163
+   },
+   {
+    "const": "SPECIES_KRABBY",
+    "id": 98
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_NIDORAN_F",
+    "id": 29
+   },
+   {
+    "const": "SPECIES_NIDORAN_M",
+    "id": 32
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PIDGEY",
+    "id": 16
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   },
+   {
+    "const": "SPECIES_WEEDLE",
+    "id": 13
+   },
+   {
+    "const": "SPECIES_WYNAUT",
+    "id": 360
+   }
+  ]
+ },
+ "Giovanni": {
+  "category": "villain",
+  "gen": 1,
+  "page": "Giovanni (game) + Giovanni (anime)",
+  "signature": {
+   "const": "SPECIES_RHYHORN",
+   "id": 111
+  },
+  "species": [
+   {
+    "const": "SPECIES_BELLSPROUT",
+    "id": 69
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CUBONE",
+    "id": 104
+   },
+   {
+    "const": "SPECIES_DIGLETT",
+    "id": 50
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_GLIGAR",
+    "id": 207
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_KABUTO",
+    "id": 140
+   },
+   {
+    "const": "SPECIES_KANGASKHAN",
+    "id": 115
+   },
+   {
+    "const": "SPECIES_KRABBY",
+    "id": 98
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_MEOWTH",
+    "id": 52
+   },
+   {
+    "const": "SPECIES_MEWTWO",
+    "id": 150
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_NIDORAN_F",
+    "id": 29
+   },
+   {
+    "const": "SPECIES_NIDORAN_M",
+    "id": 32
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_PIDGEY",
+    "id": 16
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SANDSHREW",
+    "id": 27
+   },
+   {
+    "const": "SPECIES_SHELLDER",
+    "id": 90
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
+   },
+   {
+    "const": "SPECIES_YANMA",
+    "id": 193
+   }
+  ]
+ },
+ "Glacia": {
+  "category": "elite4",
+  "gen": 3,
+  "page": "Glacia (game) + Glacia (anime)",
+  "signature": {
+   "const": "SPECIES_SPHEAL",
+   "id": 363
+  },
+  "species": [
+   {
+    "const": "SPECIES_CELEBI",
+    "id": 251
+   },
+   {
+    "const": "SPECIES_REGICE",
+    "id": 378
+   },
+   {
+    "const": "SPECIES_REGIROCK",
+    "id": 377
+   },
+   {
+    "const": "SPECIES_REGISTEEL",
+    "id": 379
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   },
+   {
+    "const": "SPECIES_SPHEAL",
+    "id": 363
+   }
+  ]
+ },
+ "Gladion": {
+  "category": "rival",
+  "gen": 7,
+  "page": "Gladion (game) + Gladion (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ABSOL",
+    "id": 359
+   },
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CUBONE",
+    "id": 104
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_EKANS",
+    "id": 23
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
+    "const": "SPECIES_MEOWTH",
+    "id": 52
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PORYGON",
+    "id": 137
+   },
+   {
+    "const": "SPECIES_RATTATA",
+    "id": 19
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Goh": {
+  "category": "anime",
+  "gen": 8,
+  "page": "Goh + Goh (anime)",
+  "species": [
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CUBONE",
+    "id": 104
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_DIGLETT",
+    "id": 50
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_HORSEA",
+    "id": 116
+   },
+   {
+    "const": "SPECIES_LOTAD",
+    "id": 270
+   },
+   {
+    "const": "SPECIES_LUGIA",
+    "id": 249
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PINSIR",
+    "id": 127
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SHELLDER",
+    "id": 90
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_SUNKERN",
+    "id": 191
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   },
+   {
+    "const": "SPECIES_WHISMUR",
+    "id": 293
+   },
+   {
+    "const": "SPECIES_ZIGZAGOON",
+    "id": 263
+   }
+  ]
+ },
+ "Gordie": {
+  "category": "gymleader",
+  "gen": 8,
+  "page": "Gordie (game) + Gordie (anime)",
+  "species": [
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_SHUCKLE",
+    "id": 213
+   }
+  ]
+ },
+ "Grant": {
+  "category": "gymleader",
+  "gen": 6,
+  "page": "Grant (game) + Grant (anime)",
+  "species": [
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SURSKIT",
+    "id": 283
+   }
+  ]
+ },
+ "Grimsley": {
+  "category": "elite4",
+  "gen": 5,
+  "page": "Grimsley (game) + Grimsley (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ABSOL",
+    "id": 359
+   },
+   {
+    "const": "SPECIES_CARVANHA",
+    "id": 318
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   }
+  ]
+ },
+ "Grusha": {
+  "category": "gymleader",
+  "gen": 9,
+  "page": "Grusha (game) + Grusha (anime)",
+  "species": [
+   {
+    "const": "SPECIES_PSYDUCK",
+    "id": 54
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   },
+   {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   }
+  ]
+ },
+ "Guzma": {
+  "category": "villain",
+  "gen": 7,
+  "page": "Guzma (game) + Guzma (anime)",
+  "species": [
+   {
+    "const": "SPECIES_KANGASKHAN",
+    "id": 115
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PINSIR",
+    "id": 127
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SPINARAK",
+    "id": 167
+   },
+   {
+    "const": "SPECIES_SURSKIT",
+    "id": 283
+   }
+  ]
+ },
+ "Hala": {
+  "category": "gymleader",
+  "gen": 7,
+  "page": "Hala (game) + Hala (anime)",
+  "species": [
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_MAKUHITA",
+    "id": 296
+   },
+   {
+    "const": "SPECIES_MANKEY",
+    "id": 56
+   },
+   {
+    "const": "SPECIES_MEOWTH",
+    "id": 52
+   },
+   {
+    "const": "SPECIES_POLIWAG",
+    "id": 60
+   },
+   {
+    "const": "SPECIES_RATTATA",
+    "id": 19
+   },
+   {
+    "const": "SPECIES_SANDSHREW",
+    "id": 27
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   }
+  ]
+ },
+ "Hapu": {
+  "category": "gymleader",
+  "gen": 7,
+  "page": "Hapu (game) + Hapu (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CORSOLA",
+    "id": 222
+   },
+   {
+    "const": "SPECIES_DIGLETT",
+    "id": 50
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_TRAPINCH",
+    "id": 328
+   }
+  ]
+ },
+ "Hassel": {
+  "category": "elite4",
+  "gen": 9,
+  "page": "Hassel (game) + Hassel (anime)",
+  "species": [
+   {
+    "const": "SPECIES_APPLIN",
+    "id": 840
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   }
+  ]
+ },
+ "Hau": {
+  "category": "champion",
+  "gen": 7,
+  "page": "Hau (game) + Hau (anime)",
+  "signature": {
+   "const": "SPECIES_PICHU",
+   "id": 172
+  },
+  "species": [
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_MEOWTH",
+    "id": 52
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PORYGON",
+    "id": 137
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Hilbert": {
+  "category": "protagonist",
+  "gen": 5,
+  "page": "Hilbert (game) + Hilbert (anime)",
+  "species": [
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_POOCHYENA",
+    "id": 261
+   }
+  ]
+ },
+ "Hop": {
+  "category": "rival",
+  "gen": 8,
+  "page": "Hop (game) + Hop (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ARTICUNO",
+    "id": 144
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_REGICE",
+    "id": 378
+   },
+   {
+    "const": "SPECIES_REGIROCK",
+    "id": 377
+   },
+   {
+    "const": "SPECIES_REGISTEEL",
+    "id": 379
+   },
+   {
+    "const": "SPECIES_ZAPDOS",
+    "id": 145
+   }
+  ]
+ },
+ "Hugh": {
+  "category": "rival",
+  "gen": 5,
+  "page": "Hugh (game) + Hugh (anime)",
+  "species": [
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_IGGLYBUFF",
+    "id": 174
+   },
+   {
+    "const": "SPECIES_SEVIPER",
+    "id": 336
+   },
+   {
+    "const": "SPECIES_TRAPINCH",
+    "id": 328
+   }
+  ]
+ },
+ "Iono": {
+  "category": "gymleader",
+  "gen": 9,
+  "page": "Iono (game) + Iono (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_VOLTORB",
+    "id": 100
+   }
+  ]
+ },
+ "Iris": {
+  "category": "champion",
+  "gen": 5,
+  "page": "Iris (game) + Iris (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ARON",
+    "id": 304
+   },
+   {
+    "const": "SPECIES_BAGON",
+    "id": 371
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_RAYQUAZA",
+    "id": 384
+   },
+   {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   }
+  ]
+ },
+ "James": {
+  "category": "anime",
+  "gen": 1,
+  "page": "James + James (anime)",
+  "signature": {
+   "const": "SPECIES_KOFFING",
+   "id": 109
+  },
+  "species": [
+   {
+    "const": "SPECIES_BELLSPROUT",
+    "id": 69
+   },
+   {
+    "const": "SPECIES_CACNEA",
+    "id": 331
+   },
+   {
+    "const": "SPECIES_CARVANHA",
+    "id": 318
+   },
+   {
+    "const": "SPECIES_CELEBI",
+    "id": 251
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CHINGLING",
+    "id": 433
+   },
+   {
+    "const": "SPECIES_DITTO",
+    "id": 132
+   },
+   {
+    "const": "SPECIES_EKANS",
+    "id": 23
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_HOPPIP",
+    "id": 187
+   },
+   {
+    "const": "SPECIES_KOFFING",
+    "id": 109
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_LICKITUNG",
+    "id": 108
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MEOWTH",
+    "id": 52
+   },
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   },
+   {
+    "const": "SPECIES_NUMEL",
+    "id": 322
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PIDGEY",
+    "id": 16
+   },
+   {
+    "const": "SPECIES_POLIWAG",
+    "id": 60
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_RATTATA",
+    "id": 19
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_SNUBBULL",
+    "id": 209
+   },
+   {
+    "const": "SPECIES_SWINUB",
+    "id": 220
+   },
+   {
+    "const": "SPECIES_TAILLOW",
+    "id": 276
+   },
+   {
+    "const": "SPECIES_TENTACOOL",
+    "id": 72
+   },
+   {
+    "const": "SPECIES_WURMPLE",
+    "id": 265
+   },
+   {
+    "const": "SPECIES_WYNAUT",
+    "id": 360
+   },
+   {
+    "const": "SPECIES_YANMA",
+    "id": 193
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Janine": {
+  "category": "gymleader",
+  "gen": 2,
+  "page": "Janine (game) + Janine (anime)",
+  "signature": {
+   "const": "SPECIES_SPINARAK",
+   "id": 167
+  },
+  "species": [
+   {
+    "const": "SPECIES_BUDEW",
+    "id": 406
+   },
+   {
+    "const": "SPECIES_CHIKORITA",
+    "id": 152
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_EKANS",
+    "id": 23
+   },
+   {
+    "const": "SPECIES_GIRAFARIG",
+    "id": 203
+   },
+   {
+    "const": "SPECIES_GLIGAR",
+    "id": 207
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_HOOTHOOT",
+    "id": 163
+   },
+   {
+    "const": "SPECIES_KOFFING",
+    "id": 109
+   },
+   {
+    "const": "SPECIES_NIDORAN_F",
+    "id": 29
+   },
+   {
+    "const": "SPECIES_PINECO",
+    "id": 204
+   },
+   {
+    "const": "SPECIES_SKARMORY",
+    "id": 227
+   },
+   {
+    "const": "SPECIES_SPINARAK",
+    "id": 167
+   },
+   {
+    "const": "SPECIES_STANTLER",
+    "id": 234
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_TENTACOOL",
+    "id": 72
+   },
+   {
+    "const": "SPECIES_VENONAT",
+    "id": 48
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Jasmine": {
+  "category": "gymleader",
+  "gen": 2,
+  "page": "Jasmine (game) + Jasmine (anime)",
+  "signature": {
+   "const": "SPECIES_ONIX",
+   "id": 95
+  },
+  "species": [
+   {
+    "const": "SPECIES_BELDUM",
+    "id": 374
+   },
+   {
+    "const": "SPECIES_CORSOLA",
+    "id": 222
+   },
+   {
+    "const": "SPECIES_KOFFING",
+    "id": 109
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_MANTYKE",
+    "id": 458
+   },
+   {
+    "const": "SPECIES_MAREEP",
+    "id": 179
+   },
+   {
+    "const": "SPECIES_MAWILE",
+    "id": 303
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PINECO",
+    "id": 204
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SKARMORY",
+    "id": 227
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_STANTLER",
+    "id": 234
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_WYNAUT",
+    "id": 360
+   }
+  ]
+ },
+ "Jessie": {
+  "category": "anime",
+  "gen": 1,
+  "page": "Jessie + Jessie (anime)",
+  "signature": {
+   "const": "SPECIES_EKANS",
+   "id": 23
+  },
+  "species": [
+   {
+    "const": "SPECIES_AIPOM",
+    "id": 190
+   },
+   {
+    "const": "SPECIES_CACNEA",
+    "id": 331
+   },
+   {
+    "const": "SPECIES_CELEBI",
+    "id": 251
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_DITTO",
+    "id": 132
+   },
+   {
+    "const": "SPECIES_EKANS",
+    "id": 23
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_HAPPINY",
+    "id": 440
+   },
+   {
+    "const": "SPECIES_IGGLYBUFF",
+    "id": 174
+   },
+   {
+    "const": "SPECIES_KOFFING",
+    "id": 109
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_LICKITUNG",
+    "id": 108
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MAWILE",
+    "id": 303
+   },
+   {
+    "const": "SPECIES_MEOWTH",
+    "id": 52
+   },
+   {
+    "const": "SPECIES_MEW",
+    "id": 151
+   },
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PIDGEY",
+    "id": 16
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_RATTATA",
+    "id": 19
+   },
+   {
+    "const": "SPECIES_SEVIPER",
+    "id": 336
+   },
+   {
+    "const": "SPECIES_SMOOCHUM",
+    "id": 238
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_SNUBBULL",
+    "id": 209
+   },
+   {
+    "const": "SPECIES_STARYU",
+    "id": 120
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
+   },
+   {
+    "const": "SPECIES_WURMPLE",
+    "id": 265
+   },
+   {
+    "const": "SPECIES_WYNAUT",
+    "id": 360
+   },
+   {
+    "const": "SPECIES_YANMA",
+    "id": 193
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Juan": {
+  "category": "gymleader",
+  "gen": 3,
+  "page": "Juan (game) + Juan (anime)",
+  "signature": {
+   "const": "SPECIES_HORSEA",
+   "id": 116
+  },
+  "species": [
+   {
+    "const": "SPECIES_AZURILL",
+    "id": 298
+   },
+   {
+    "const": "SPECIES_BARBOACH",
+    "id": 339
+   },
+   {
+    "const": "SPECIES_CHINCHOU",
+    "id": 170
+   },
+   {
+    "const": "SPECIES_CHINGLING",
+    "id": 433
+   },
+   {
+    "const": "SPECIES_CLAMPERL",
+    "id": 366
+   },
+   {
+    "const": "SPECIES_CORPHISH",
+    "id": 341
+   },
+   {
+    "const": "SPECIES_CORSOLA",
+    "id": 222
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_GOLDEEN",
+    "id": 118
+   },
+   {
+    "const": "SPECIES_GROUDON",
+    "id": 383
+   },
+   {
+    "const": "SPECIES_HORSEA",
+    "id": 116
+   },
+   {
+    "const": "SPECIES_KYOGRE",
+    "id": 382
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_LUVDISC",
+    "id": 370
+   },
+   {
+    "const": "SPECIES_POLIWAG",
+    "id": 60
+   },
+   {
+    "const": "SPECIES_RELICANTH",
+    "id": 369
+   },
+   {
+    "const": "SPECIES_SPHEAL",
+    "id": 363
+   },
+   {
+    "const": "SPECIES_STARYU",
+    "id": 120
+   },
+   {
+    "const": "SPECIES_SURSKIT",
+    "id": 283
+   },
+   {
+    "const": "SPECIES_TENTACOOL",
+    "id": 72
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   },
+   {
+    "const": "SPECIES_WINGULL",
+    "id": 278
+   }
+  ]
+ },
+ "Jupiter": {
+  "category": "villain",
+  "gen": 4,
+  "page": "Jupiter (game) + Jupiter (anime)",
+  "species": [
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_SABLEYE",
+    "id": 302
+   },
+   {
+    "const": "SPECIES_TANGELA",
+    "id": 114
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Kabu": {
+  "category": "gymleader",
+  "gen": 8,
+  "page": "Kabu (game) + Kabu (anime)",
+  "species": [
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_NUMEL",
+    "id": 322
+   },
+   {
+    "const": "SPECIES_TORKOAL",
+    "id": 324
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   }
+  ]
+ },
+ "Kahili": {
+  "category": "elite4",
+  "gen": 7,
+  "page": "Kahili (game) + Kahili (anime)",
+  "species": [
+   {
+    "const": "SPECIES_SKARMORY",
+    "id": 227
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Karen": {
+  "category": "elite4",
+  "gen": 2,
+  "page": "Karen (game) + Karen (anime)",
+  "signature": {
+   "const": "SPECIES_EEVEE",
+   "id": 133
+  },
+  "species": [
+   {
+    "const": "SPECIES_ABSOL",
+    "id": 359
+   },
+   {
+    "const": "SPECIES_ARTICUNO",
+    "id": 144
+   },
+   {
+    "const": "SPECIES_BELLSPROUT",
+    "id": 69
+   },
+   {
+    "const": "SPECIES_CELEBI",
+    "id": 251
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
+    "const": "SPECIES_HO_OH",
+    "id": 250
+   },
+   {
+    "const": "SPECIES_LUGIA",
+    "id": 249
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_MEOWTH",
+    "id": 52
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_SNUBBULL",
+    "id": 209
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_VOLTORB",
+    "id": 100
+   },
+   {
+    "const": "SPECIES_ZAPDOS",
+    "id": 145
+   }
+  ]
+ },
+ "Katy": {
+  "category": "gymleader",
+  "gen": 9,
+  "page": "Katy (game) + Katy (anime)",
+  "signature": {
+   "const": "SPECIES_TEDDIURSA",
+   "id": 216
+  },
+  "species": [
+   {
+    "const": "SPECIES_DIGLETT",
+    "id": 50
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PINECO",
+    "id": 204
+   },
+   {
+    "const": "SPECIES_TEDDIURSA",
+    "id": 216
+   },
+   {
+    "const": "SPECIES_WOOPER_PALDEA",
+    "id": 194
+   }
+  ]
+ },
+ "Kiawe (anime)": {
+  "category": "anime",
+  "gen": 7,
+  "page": "Kiawe (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CORPHISH",
+    "id": 341
+   },
+   {
+    "const": "SPECIES_CUBONE",
+    "id": 104
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_MANTYKE",
+    "id": 458
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Kofu": {
+  "category": "gymleader",
+  "gen": 9,
+  "page": "Kofu (game) + Kofu (anime)",
+  "species": [
+   {
+    "const": "SPECIES_SHROOMISH",
+    "id": 285
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_WINGULL",
+    "id": 278
+   }
+  ]
+ },
+ "Koga": {
+  "category": "elite4",
+  "gen": 1,
+  "page": "Koga (game) + Koga (anime)",
+  "signature": {
+   "const": "SPECIES_KOFFING",
+   "id": 109
+  },
+  "species": [
+   {
+    "const": "SPECIES_ARTICUNO",
+    "id": 144
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CHINCHOU",
+    "id": 170
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CUBONE",
+    "id": 104
+   },
+   {
+    "const": "SPECIES_DITTO",
+    "id": 132
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_DROWZEE",
+    "id": 96
+   },
+   {
+    "const": "SPECIES_EKANS",
+    "id": 23
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_GLIGAR",
+    "id": 207
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_GULPIN",
+    "id": 316
+   },
+   {
+    "const": "SPECIES_HAPPINY",
+    "id": 440
+   },
+   {
+    "const": "SPECIES_KOFFING",
+    "id": 109
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_NIDORAN_F",
+    "id": 29
+   },
+   {
+    "const": "SPECIES_NIDORAN_M",
+    "id": 32
+   },
+   {
+    "const": "SPECIES_PARAS",
+    "id": 46
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PIDGEY",
+    "id": 16
+   },
+   {
+    "const": "SPECIES_PINECO",
+    "id": 204
+   },
+   {
+    "const": "SPECIES_PSYDUCK",
+    "id": 54
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SPINARAK",
+    "id": 167
+   },
+   {
+    "const": "SPECIES_STANTLER",
+    "id": 234
+   },
+   {
+    "const": "SPECIES_TANGELA",
+    "id": 114
+   },
+   {
+    "const": "SPECIES_TENTACOOL",
+    "id": 72
+   },
+   {
+    "const": "SPECIES_VENONAT",
+    "id": 48
+   },
+   {
+    "const": "SPECIES_VOLTORB",
+    "id": 100
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   },
+   {
+    "const": "SPECIES_ZAPDOS",
+    "id": 145
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Korrina": {
+  "category": "gymleader",
+  "gen": 6,
+  "page": "Korrina (game) + Korrina (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ABSOL",
+    "id": 359
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_MAWILE",
+    "id": 303
+   },
+   {
+    "const": "SPECIES_MEDITITE",
+    "id": 307
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_TORCHIC",
+    "id": 255
+   }
+  ]
+ },
+ "Kris": {
+  "category": "protagonist",
+  "gen": 2,
+  "page": "Kris (game) + Kris (anime)",
+  "signature": {
+   "const": "SPECIES_TOTODILE",
+   "id": 158
+  },
+  "species": [
+   {
+    "const": "SPECIES_BONSLY",
+    "id": 438
+   },
+   {
+    "const": "SPECIES_CHIKORITA",
+    "id": 152
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_ENTEI",
+    "id": 244
+   },
+   {
+    "const": "SPECIES_HO_OH",
+    "id": 250
+   },
+   {
+    "const": "SPECIES_IGGLYBUFF",
+    "id": 174
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MAREEP",
+    "id": 179
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_RAIKOU",
+    "id": 243
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_VOLTORB",
+    "id": 100
+   }
+  ]
+ },
+ "Kukui": {
+  "category": "champion",
+  "gen": 7,
+  "page": "Professor Kukui + Kukui (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CORSOLA",
+    "id": 222
+   },
+   {
+    "const": "SPECIES_CUBONE",
+    "id": 104
+   },
+   {
+    "const": "SPECIES_DROWZEE",
+    "id": 96
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_LUVDISC",
+    "id": 370
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   }
+  ]
+ },
+ "Lana (anime)": {
+  "category": "anime",
+  "gen": 7,
+  "page": "Lana (anime)",
+  "species": [
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_KYOGRE",
+    "id": 382
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_MANTYKE",
+    "id": 458
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_SURSKIT",
+    "id": 283
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   }
+  ]
+ },
+ "Lance": {
+  "category": "champion",
+  "gen": 1,
+  "page": "Lance (game) + Lance (anime)",
+  "signature": {
+   "const": "SPECIES_DRATINI",
+   "id": 147
+  },
+  "species": [
+   {
+    "const": "SPECIES_AERODACTYL",
+    "id": 142
+   },
+   {
+    "const": "SPECIES_BAGON",
+    "id": 371
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_ENTEI",
+    "id": 244
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_GROUDON",
+    "id": 383
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_HORSEA",
+    "id": 116
+   },
+   {
+    "const": "SPECIES_KANGASKHAN",
+    "id": 115
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_LUGIA",
+    "id": 249
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_RAIKOU",
+    "id": 243
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_SPEAROW",
+    "id": 21
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_TRAPINCH",
+    "id": 328
+   }
+  ]
+ },
+ "Larry": {
+  "category": "gymleader",
+  "gen": 9,
+  "page": "Larry (game) + Larry (anime)",
+  "species": [
+   {
+    "const": "SPECIES_DUNSPARCE",
+    "id": 206
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   },
+   {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_TINKATINK",
+    "id": 1345
+   },
+   {
+    "const": "SPECIES_TROPIUS",
+    "id": 357
+   },
+   {
+    "const": "SPECIES_WOOPER_PALDEA",
+    "id": 194
+   }
+  ]
+ },
+ "Leaf": {
+  "category": "protagonist",
+  "gen": 1,
+  "page": "Leaf (game) + Leaf (anime)",
+  "signature": {
+   "const": "SPECIES_EEVEE",
+   "id": 133
+  },
+  "species": [
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_GROUDON",
+    "id": 383
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   }
+  ]
+ },
+ "Lenora": {
+  "category": "gymleader",
+  "gen": 5,
+  "page": "Lenora (game) + Lenora (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_DUNSPARCE",
+    "id": 206
+   },
+   {
+    "const": "SPECIES_KANGASKHAN",
+    "id": 115
+   },
+   {
+    "const": "SPECIES_LICKITUNG",
+    "id": 108
+   }
+  ]
+ },
+ "Leon": {
+  "category": "champion",
+  "gen": 8,
+  "page": "Leon (game) + Leon (anime)",
+  "signature": {
+   "const": "SPECIES_CHARMANDER",
+   "id": 4
+  },
+  "species": [
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_TRAPINCH",
+    "id": 328
+   },
+   {
+    "const": "SPECIES_ZIGZAGOON_GALAR",
+    "id": 263
+   }
+  ]
+ },
+ "Lillie (anime)": {
+  "category": "anime",
+  "gen": 7,
+  "page": "Lillie (anime)",
+  "signature": {
+   "const": "SPECIES_VULPIX",
+   "id": 37
+  },
+  "species": [
+   {
+    "const": "SPECIES_CATERPIE",
+    "id": 10
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_MANTYKE",
+    "id": 458
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_SANDSHREW",
+    "id": 27
+   },
+   {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   }
+  ]
+ },
+ "Liza": {
+  "category": "gymleader",
+  "gen": 3,
+  "page": "Tate and Liza + Liza (anime)",
+  "signature": {
+   "const": "SPECIES_LUNATONE",
+   "id": 337
+  },
+  "species": [
+   {
+    "const": "SPECIES_BALTOY",
+    "id": 343
+   },
+   {
+    "const": "SPECIES_CHINGLING",
+    "id": 433
+   },
+   {
+    "const": "SPECIES_CORPHISH",
+    "id": 341
+   },
+   {
+    "const": "SPECIES_DROWZEE",
+    "id": 96
+   },
+   {
+    "const": "SPECIES_GROUDON",
+    "id": 383
+   },
+   {
+    "const": "SPECIES_JIRACHI",
+    "id": 385
+   },
+   {
+    "const": "SPECIES_KYOGRE",
+    "id": 382
+   },
+   {
+    "const": "SPECIES_LUNATONE",
+    "id": 337
+   },
+   {
+    "const": "SPECIES_NATU",
+    "id": 177
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SOLROCK",
+    "id": 338
+   },
+   {
+    "const": "SPECIES_SPOINK",
+    "id": 325
+   },
+   {
+    "const": "SPECIES_TORCHIC",
+    "id": 255
+   }
+  ]
+ },
+ "Lorelei": {
+  "category": "elite4",
+  "gen": 1,
+  "page": "Lorelei (game) + Lorelei (anime)",
+  "signature": {
+   "const": "SPECIES_LAPRAS",
+   "id": 131
+  },
+  "species": [
+   {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_ARTICUNO",
+    "id": 144
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CUBONE",
+    "id": 104
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_IGGLYBUFF",
+    "id": 174
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_OMANYTE",
+    "id": 138
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_SANDSHREW",
+    "id": 27
+   },
+   {
+    "const": "SPECIES_SEEL",
+    "id": 86
+   },
+   {
+    "const": "SPECIES_SHELLDER",
+    "id": 90
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SMOOCHUM",
+    "id": 238
+   },
+   {
+    "const": "SPECIES_STARYU",
+    "id": 120
+   },
+   {
+    "const": "SPECIES_SWINUB",
+    "id": 220
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   }
+  ]
+ },
+ "Lt. Surge": {
+  "category": "gymleader",
+  "gen": 1,
+  "page": "Lt. Surge (game) + Lt. Surge (anime)",
+  "signature": {
+   "const": "SPECIES_PIKACHU",
+   "id": 25
+  },
+  "species": [
+   {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_BELLSPROUT",
+    "id": 69
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CHINCHOU",
+    "id": 170
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_DODUO",
+    "id": 84
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_ELECTRIKE",
+    "id": 309
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_HORSEA",
+    "id": 116
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
+    "const": "SPECIES_KRABBY",
+    "id": 98
+   },
+   {
+    "const": "SPECIES_LICKITUNG",
+    "id": 108
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_MAREEP",
+    "id": 179
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_POLIWAG",
+    "id": 60
+   },
+   {
+    "const": "SPECIES_PORYGON",
+    "id": 137
+   },
+   {
+    "const": "SPECIES_RAIKOU",
+    "id": 243
+   },
+   {
+    "const": "SPECIES_SEEL",
+    "id": 86
+   },
+   {
+    "const": "SPECIES_TANGELA",
+    "id": 114
+   },
+   {
+    "const": "SPECIES_VOLTORB",
+    "id": 100
+   },
+   {
+    "const": "SPECIES_WOOPER",
+    "id": 194
+   },
+   {
+    "const": "SPECIES_ZAPDOS",
+    "id": 145
+   }
+  ]
+ },
+ "Lucas": {
+  "category": "protagonist",
+  "gen": 4,
+  "page": "Lucas (game) + Lucas (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_ABSOL",
+    "id": 359
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_DUNSPARCE",
+    "id": 206
+   },
+   {
+    "const": "SPECIES_DUSKULL",
+    "id": 355
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_GLIGAR",
+    "id": 207
+   },
+   {
+    "const": "SPECIES_KABUTO",
+    "id": 140
+   },
+   {
+    "const": "SPECIES_LILEEP",
+    "id": 345
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_PORYGON",
+    "id": 137
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_TANGELA",
+    "id": 114
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   }
+  ]
+ },
+ "Lucian": {
+  "category": "elite4",
+  "gen": 4,
+  "page": "Lucian (game) + Lucian (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_GIRAFARIG",
+    "id": 203
+   },
+   {
+    "const": "SPECIES_MEDITITE",
+    "id": 307
+   },
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_WURMPLE",
+    "id": 265
+   }
+  ]
+ },
+ "Lusamine": {
+  "category": "villain",
+  "gen": 7,
+  "page": "Lusamine (game) + Lusamine (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ABSOL",
+    "id": 359
+   },
+   {
+    "const": "SPECIES_BELDUM",
+    "id": 374
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CUBONE",
+    "id": 104
+   },
+   {
+    "const": "SPECIES_DITTO",
+    "id": 132
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   }
+  ]
+ },
+ "Lyra": {
+  "category": "protagonist",
+  "gen": 2,
+  "page": "Lyra (game) + Lyra (anime)",
+  "signature": {
+   "const": "SPECIES_CHIKORITA",
+   "id": 152
+  },
+  "species": [
+   {
+    "const": "SPECIES_AZURILL",
+    "id": 298
+   },
+   {
+    "const": "SPECIES_CELEBI",
+    "id": 251
+   },
+   {
+    "const": "SPECIES_CHIKORITA",
+    "id": 152
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_ENTEI",
+    "id": 244
+   },
+   {
+    "const": "SPECIES_GIRAFARIG",
+    "id": 203
+   },
+   {
+    "const": "SPECIES_IGGLYBUFF",
+    "id": 174
+   },
+   {
+    "const": "SPECIES_PHANPY",
+    "id": 231
+   },
+   {
+    "const": "SPECIES_RATTATA",
+    "id": 19
+   },
+   {
+    "const": "SPECIES_SENTRET",
+    "id": 161
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   }
+  ]
+ },
+ "Lysandre": {
+  "category": "villain",
+  "gen": 6,
+  "page": "Lysandre (game) + Lysandre (anime)",
+  "signature": {
+   "const": "SPECIES_MAGIKARP",
+   "id": 129
+  },
+  "species": [
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_SABLEYE",
+    "id": 302
+   },
+   {
+    "const": "SPECIES_SHUPPET",
+    "id": 353
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   }
+  ]
+ },
+ "Mallow (anime)": {
+  "category": "anime",
+  "gen": 7,
+  "page": "Mallow (anime)",
+  "species": [
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_MANTYKE",
+    "id": 458
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_TRAPINCH",
+    "id": 328
+   }
+  ]
+ },
+ "Malva": {
+  "category": "elite4",
+  "gen": 6,
+  "page": "Malva (game) + Malva (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_ELECTRIKE",
+    "id": 309
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_TORKOAL",
+    "id": 324
+   }
+  ]
+ },
+ "Marlon": {
+  "category": "gymleader",
+  "gen": 5,
+  "page": "Marlon (game) + Marlon (anime)",
+  "species": [
+   {
+    "const": "SPECIES_MANTYKE",
+    "id": 458
+   },
+   {
+    "const": "SPECIES_SHELLDER",
+    "id": 90
+   },
+   {
+    "const": "SPECIES_STARYU",
+    "id": 120
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   },
+   {
+    "const": "SPECIES_WOOPER",
+    "id": 194
+   }
+  ]
+ },
+ "Marnie": {
+  "category": "rival",
+  "gen": 8,
+  "page": "Marnie (game) + Marnie (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ARTICUNO",
+    "id": 144
+   },
+   {
+    "const": "SPECIES_MAWILE",
+    "id": 303
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_REGICE",
+    "id": 378
+   },
+   {
+    "const": "SPECIES_REGIROCK",
+    "id": 377
+   },
+   {
+    "const": "SPECIES_REGISTEEL",
+    "id": 379
+   },
+   {
+    "const": "SPECIES_ZAPDOS",
+    "id": 145
+   }
+  ]
+ },
+ "Mars": {
+  "category": "villain",
+  "gen": 4,
+  "page": "Mars (game) + Mars (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_DEOXYS_NORMAL",
+    "id": 386
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_KANGASKHAN",
+    "id": 115
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_YANMA",
+    "id": 193
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Marshal": {
+  "category": "elite4",
+  "gen": 5,
+  "page": "Marshal (game) + Marshal (anime)",
+  "species": [
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_MEDITITE",
+    "id": 307
+   },
+   {
+    "const": "SPECIES_SHROOMISH",
+    "id": 285
+   }
+  ]
+ },
+ "Maxie": {
+  "category": "villain",
+  "gen": 3,
+  "page": "Maxie (game) + Maxie (anime)",
+  "signature": {
+   "const": "SPECIES_NUMEL",
+   "id": 322
+  },
+  "species": [
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_GROUDON",
+    "id": 383
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
+    "const": "SPECIES_KOFFING",
+    "id": 109
+   },
+   {
+    "const": "SPECIES_KYOGRE",
+    "id": 382
+   },
+   {
+    "const": "SPECIES_MINUN",
+    "id": 312
+   },
+   {
+    "const": "SPECIES_NUMEL",
+    "id": 322
+   },
+   {
+    "const": "SPECIES_PLUSLE",
+    "id": 311
+   },
+   {
+    "const": "SPECIES_POOCHYENA",
+    "id": 261
+   },
+   {
+    "const": "SPECIES_SPHEAL",
+    "id": 363
+   },
+   {
+    "const": "SPECIES_TAILLOW",
+    "id": 276
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "May": {
+  "category": "protagonist",
+  "gen": 3,
+  "page": "May (game) + May (anime)",
+  "signature": {
+   "const": "SPECIES_TORCHIC",
+   "id": 255
+  },
+  "species": [
+   {
+    "const": "SPECIES_ARON",
+    "id": 304
+   },
+   {
+    "const": "SPECIES_BAGON",
+    "id": 371
+   },
+   {
+    "const": "SPECIES_BALTOY",
+    "id": 343
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_KYOGRE",
+    "id": 382
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_LATIAS",
+    "id": 380
+   },
+   {
+    "const": "SPECIES_LATIOS",
+    "id": 381
+   },
+   {
+    "const": "SPECIES_LOTAD",
+    "id": 270
+   },
+   {
+    "const": "SPECIES_MUDKIP",
+    "id": 258
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_NOSEPASS",
+    "id": 299
+   },
+   {
+    "const": "SPECIES_NUMEL",
+    "id": 322
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_POOCHYENA",
+    "id": 261
+   },
+   {
+    "const": "SPECIES_RAYQUAZA",
+    "id": 384
+   },
+   {
+    "const": "SPECIES_SHROOMISH",
+    "id": 285
+   },
+   {
+    "const": "SPECIES_SKITTY",
+    "id": 300
+   },
+   {
+    "const": "SPECIES_SLUGMA",
+    "id": 218
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   },
+   {
+    "const": "SPECIES_TAILLOW",
+    "id": 276
+   },
+   {
+    "const": "SPECIES_TENTACOOL",
+    "id": 72
+   },
+   {
+    "const": "SPECIES_TORCHIC",
+    "id": 255
+   },
+   {
+    "const": "SPECIES_TORKOAL",
+    "id": 324
+   },
+   {
+    "const": "SPECIES_TREECKO",
+    "id": 252
+   },
+   {
+    "const": "SPECIES_TROPIUS",
+    "id": 357
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   },
+   {
+    "const": "SPECIES_WHISMUR",
+    "id": 293
+   },
+   {
+    "const": "SPECIES_WINGULL",
+    "id": 278
+   },
+   {
+    "const": "SPECIES_WURMPLE",
+    "id": 265
+   }
+  ]
+ },
+ "Maylene": {
+  "category": "gymleader",
+  "gen": 4,
+  "page": "Maylene (game) + Maylene (anime)",
+  "species": [
+   {
+    "const": "SPECIES_AIPOM",
+    "id": 190
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_MEDITITE",
+    "id": 307
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_SHROOMISH",
+    "id": 285
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
+   }
+  ]
+ },
+ "Milo": {
+  "category": "gymleader",
+  "gen": 8,
+  "page": "Milo (game) + Milo (anime)",
+  "species": [
+   {
+    "const": "SPECIES_APPLIN",
+    "id": 840
+   },
+   {
+    "const": "SPECIES_LOTAD",
+    "id": 270
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_SEEDOT",
+    "id": 273
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   }
+  ]
+ },
+ "Misty": {
+  "category": "gymleader",
+  "gen": 1,
+  "page": "Misty (game) + Misty (anime)",
+  "signature": {
+   "const": "SPECIES_STARYU",
+   "id": 120
+  },
+  "species": [
+   {
+    "const": "SPECIES_CATERPIE",
+    "id": 10
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CHINCHOU",
+    "id": 170
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_DIGLETT",
+    "id": 50
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_EKANS",
+    "id": 23
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_GOLDEEN",
+    "id": 118
+   },
+   {
+    "const": "SPECIES_HOOTHOOT",
+    "id": 163
+   },
+   {
+    "const": "SPECIES_HORSEA",
+    "id": 116
+   },
+   {
+    "const": "SPECIES_IGGLYBUFF",
+    "id": 174
+   },
+   {
+    "const": "SPECIES_KOFFING",
+    "id": 109
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_LATIOS",
+    "id": 381
+   },
+   {
+    "const": "SPECIES_LICKITUNG",
+    "id": 108
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MANTYKE",
+    "id": 458
+   },
+   {
+    "const": "SPECIES_MAREEP",
+    "id": 179
+   },
+   {
+    "const": "SPECIES_MILTANK",
+    "id": 241
+   },
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   },
+   {
+    "const": "SPECIES_NIDORAN_F",
+    "id": 29
+   },
+   {
+    "const": "SPECIES_OMANYTE",
+    "id": 138
+   },
+   {
+    "const": "SPECIES_POLIWAG",
+    "id": 60
+   },
+   {
+    "const": "SPECIES_PSYDUCK",
+    "id": 54
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SEEL",
+    "id": 86
+   },
+   {
+    "const": "SPECIES_SHELLDER",
+    "id": 90
+   },
+   {
+    "const": "SPECIES_SHUPPET",
+    "id": 353
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SPEAROW",
+    "id": 21
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_STARYU",
+    "id": 120
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_SUNKERN",
+    "id": 191
+   },
+   {
+    "const": "SPECIES_TENTACOOL",
+    "id": 72
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   },
+   {
+    "const": "SPECIES_WOOPER",
+    "id": 194
+   }
+  ]
+ },
+ "Molayne": {
+  "category": "elite4",
+  "gen": 7,
+  "page": "Molayne (game) + Molayne (anime)",
+  "signature": {
+   "const": "SPECIES_DIGLETT",
+   "id": 50
+  },
+  "species": [
+   {
+    "const": "SPECIES_BELDUM",
+    "id": 374
+   },
+   {
+    "const": "SPECIES_DIGLETT",
+    "id": 50
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_MAREEP",
+    "id": 179
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_SANDSHREW",
+    "id": 27
+   },
+   {
+    "const": "SPECIES_SKARMORY",
+    "id": 227
+   }
+  ]
+ },
+ "Morty": {
+  "category": "gymleader",
+  "gen": 2,
+  "page": "Morty (game) + Morty (anime)",
+  "signature": {
+   "const": "SPECIES_GASTLY",
+   "id": 92
+  },
+  "species": [
+   {
+    "const": "SPECIES_BONSLY",
+    "id": 438
+   },
+   {
+    "const": "SPECIES_CUBONE",
+    "id": 104
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_DUSKULL",
+    "id": 355
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_GIRAFARIG",
+    "id": 203
+   },
+   {
+    "const": "SPECIES_HOOTHOOT",
+    "id": 163
+   },
+   {
+    "const": "SPECIES_HO_OH",
+    "id": 250
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_MANTYKE",
+    "id": 458
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_RAIKOU",
+    "id": 243
+   },
+   {
+    "const": "SPECIES_SABLEYE",
+    "id": 302
+   },
+   {
+    "const": "SPECIES_SHUPPET",
+    "id": 353
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   },
+   {
+    "const": "SPECIES_SNUBBULL",
+    "id": 209
+   },
+   {
+    "const": "SPECIES_SPEAROW",
+    "id": 21
+   },
+   {
+    "const": "SPECIES_SPINARAK",
+    "id": 167
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   }
+  ]
+ },
+ "N": {
+  "category": "rival",
+  "gen": 5,
+  "page": "N (game) + N (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ANORITH",
+    "id": 347
+   },
+   {
+    "const": "SPECIES_CHINCHOU",
+    "id": 170
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_KABUTO",
+    "id": 140
+   },
+   {
+    "const": "SPECIES_LILEEP",
+    "id": 345
+   },
+   {
+    "const": "SPECIES_NINCADA",
+    "id": 290
+   },
+   {
+    "const": "SPECIES_OMANYTE",
+    "id": 138
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_POLIWAG",
+    "id": 60
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SEEDOT",
+    "id": 273
+   },
+   {
+    "const": "SPECIES_SHELLDER",
+    "id": 90
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   },
+   {
+    "const": "SPECIES_STARYU",
+    "id": 120
+   },
+   {
+    "const": "SPECIES_SWINUB",
+    "id": 220
+   },
+   {
+    "const": "SPECIES_TENTACOOL",
+    "id": 72
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   },
+   {
+    "const": "SPECIES_ZANGOOSE",
+    "id": 335
+   }
+  ]
+ },
+ "Nando": {
+  "category": "anime",
+  "gen": 4,
+  "page": "Nando + Nando (anime)",
+  "signature": {
+   "const": "SPECIES_BUDEW",
+   "id": 406
+  },
+  "species": [
+   {
+    "const": "SPECIES_ANORITH",
+    "id": 347
+   },
+   {
+    "const": "SPECIES_BUDEW",
+    "id": 406
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_SUNKERN",
+    "id": 191
+   },
+   {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   }
+  ]
+ },
+ "Nanu": {
+  "category": "gymleader",
+  "gen": 7,
+  "page": "Nanu (game) + Nanu (anime)",
+  "signature": {
+   "const": "SPECIES_MEOWTH",
+   "id": 52
+  },
+  "species": [
+   {
+    "const": "SPECIES_ABSOL",
+    "id": 359
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_MEOWTH",
+    "id": 52
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_SABLEYE",
+    "id": 302
+   }
+  ]
+ },
+ "Nate": {
+  "category": "protagonist",
+  "gen": 5,
+  "page": "Nate (game) + Nate (anime)",
+  "species": [
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_SEVIPER",
+    "id": 336
+   }
+  ]
+ },
+ "Nemona": {
+  "category": "champion",
+  "gen": 9,
+  "page": "Nemona (game) + Nemona (anime)",
+  "species": [
+   {
+    "const": "SPECIES_DUNSPARCE",
+    "id": 206
+   },
+   {
+    "const": "SPECIES_DUSKULL",
+    "id": 355
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_HOPPIP",
+    "id": 187
+   },
+   {
+    "const": "SPECIES_MAKUHITA",
+    "id": 296
+   },
+   {
+    "const": "SPECIES_RAYQUAZA",
+    "id": 384
+   },
+   {
+    "const": "SPECIES_SABLEYE",
+    "id": 302
+   },
+   {
+    "const": "SPECIES_SUNKERN",
+    "id": 191
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_TINKATINK",
+    "id": 1345
+   }
+  ]
+ },
+ "Nessa": {
+  "category": "gymleader",
+  "gen": 8,
+  "page": "Nessa (game) + Nessa (anime)",
+  "species": [
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_GOLDEEN",
+    "id": 118
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_QWILFISH",
+    "id": 211
+   },
+   {
+    "const": "SPECIES_WINGULL",
+    "id": 278
+   },
+   {
+    "const": "SPECIES_WOOPER",
+    "id": 194
+   }
+  ]
+ },
+ "Norman": {
+  "category": "gymleader",
+  "gen": 3,
+  "page": "Norman (game) + Norman (anime)",
+  "signature": {
+   "const": "SPECIES_SLAKOTH",
+   "id": 287
+  },
+  "species": [
+   {
+    "const": "SPECIES_AIPOM",
+    "id": 190
+   },
+   {
+    "const": "SPECIES_CASTFORM_NORMAL",
+    "id": 351
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_HAPPINY",
+    "id": 440
+   },
+   {
+    "const": "SPECIES_KANGASKHAN",
+    "id": 115
+   },
+   {
+    "const": "SPECIES_KECLEON",
+    "id": 352
+   },
+   {
+    "const": "SPECIES_MUDKIP",
+    "id": 258
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_SLAKOTH",
+    "id": 287
+   },
+   {
+    "const": "SPECIES_SPINDA",
+    "id": 327
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_TORCHIC",
+    "id": 255
+   },
+   {
+    "const": "SPECIES_TORKOAL",
+    "id": 324
+   },
+   {
+    "const": "SPECIES_TREECKO",
+    "id": 252
+   },
+   {
+    "const": "SPECIES_WHISMUR",
+    "id": 293
+   },
+   {
+    "const": "SPECIES_WURMPLE",
+    "id": 265
+   },
+   {
+    "const": "SPECIES_ZANGOOSE",
+    "id": 335
+   },
+   {
+    "const": "SPECIES_ZIGZAGOON",
+    "id": 263
+   }
+  ]
+ },
+ "Olivia": {
+  "category": "gymleader",
+  "gen": 7,
+  "page": "Olivia (game) + Olivia (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ANORITH",
+    "id": 347
+   },
+   {
+    "const": "SPECIES_BONSLY",
+    "id": 438
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_LILEEP",
+    "id": 345
+   },
+   {
+    "const": "SPECIES_NOSEPASS",
+    "id": 299
+   },
+   {
+    "const": "SPECIES_RELICANTH",
+    "id": 369
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   }
+  ]
+ },
+ "Opal": {
+  "category": "gymleader",
+  "gen": 8,
+  "page": "Opal (game) + Opal (anime)",
+  "species": [
+   {
+    "const": "SPECIES_KOFFING",
+    "id": 109
+   },
+   {
+    "const": "SPECIES_MAWILE",
+    "id": 303
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   }
+  ]
+ },
+ "Paul": {
+  "category": "anime",
+  "gen": 4,
+  "page": "Paul (anime)",
+  "signature": {
+   "const": "SPECIES_ELEKID",
+   "id": 239
+  },
+  "species": [
+   {
+    "const": "SPECIES_ARON",
+    "id": 304
+   },
+   {
+    "const": "SPECIES_AZURILL",
+    "id": 298
+   },
+   {
+    "const": "SPECIES_BELDUM",
+    "id": 374
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_GLIGAR",
+    "id": 207
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MAKUHITA",
+    "id": 296
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_NIDORAN_M",
+    "id": 32
+   },
+   {
+    "const": "SPECIES_NINCADA",
+    "id": 290
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_REGICE",
+    "id": 378
+   },
+   {
+    "const": "SPECIES_REGIROCK",
+    "id": 377
+   },
+   {
+    "const": "SPECIES_REGISTEEL",
+    "id": 379
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   },
+   {
+    "const": "SPECIES_STANTLER",
+    "id": 234
+   },
+   {
+    "const": "SPECIES_TEDDIURSA",
+    "id": 216
+   },
+   {
+    "const": "SPECIES_ZANGOOSE",
+    "id": 335
+   }
+  ]
+ },
+ "Penny": {
+  "category": "rival",
+  "gen": 9,
+  "page": "Penny (game) + Penny (anime)",
+  "signature": {
+   "const": "SPECIES_EEVEE",
+   "id": 133
+  },
+  "species": [
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_SHELLDER",
+    "id": 90
+   },
+   {
+    "const": "SPECIES_TINKATINK",
+    "id": 1345
+   },
+   {
+    "const": "SPECIES_VOLTORB",
+    "id": 100
+   }
+  ]
+ },
+ "Phoebe": {
+  "category": "elite4",
+  "gen": 3,
+  "page": "Phoebe (game) + Phoebe (anime)",
+  "signature": {
+   "const": "SPECIES_DUSKULL",
+   "id": 355
+  },
+  "species": [
+   {
+    "const": "SPECIES_CELEBI",
+    "id": 251
+   },
+   {
+    "const": "SPECIES_DUSKULL",
+    "id": 355
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_REGICE",
+    "id": 378
+   },
+   {
+    "const": "SPECIES_REGIROCK",
+    "id": 377
+   },
+   {
+    "const": "SPECIES_REGISTEEL",
+    "id": 379
+   },
+   {
+    "const": "SPECIES_SABLEYE",
+    "id": 302
+   },
+   {
+    "const": "SPECIES_SHUPPET",
+    "id": 353
+   }
+  ]
+ },
+ "Plumeria": {
+  "category": "villain",
+  "gen": 7,
+  "page": "Plumeria (game) + Plumeria (anime)",
+  "species": [
+   {
+    "const": "SPECIES_DROWZEE",
+    "id": 96
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Poppy": {
+  "category": "elite4",
+  "gen": 9,
+  "page": "Poppy (game) + Poppy (anime)",
+  "signature": {
+   "const": "SPECIES_TINKATINK",
+   "id": 1345
+  },
+  "species": [
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_TINKATINK",
+    "id": 1345
+   }
+  ]
+ },
+ "Pryce": {
+  "category": "gymleader",
+  "gen": 2,
+  "page": "Pryce (game) + Pryce (anime)",
+  "signature": {
+   "const": "SPECIES_SWINUB",
+   "id": 220
+  },
+  "species": [
+   {
+    "const": "SPECIES_ARTICUNO",
+    "id": 144
+   },
+   {
+    "const": "SPECIES_CELEBI",
+    "id": 251
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_DELIBIRD",
+    "id": 225
+   },
+   {
+    "const": "SPECIES_GIRAFARIG",
+    "id": 203
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_LUGIA",
+    "id": 249
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_PHANPY",
+    "id": 231
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_SEEL",
+    "id": 86
+   },
+   {
+    "const": "SPECIES_SHELLDER",
+    "id": 90
+   },
+   {
+    "const": "SPECIES_SMOOCHUM",
+    "id": 238
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   },
+   {
+    "const": "SPECIES_SPHEAL",
+    "id": 363
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_SWINUB",
+    "id": 220
+   },
+   {
+    "const": "SPECIES_TEDDIURSA",
+    "id": 216
+   },
+   {
+    "const": "SPECIES_TENTACOOL",
+    "id": 72
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
+   },
+   {
+    "const": "SPECIES_WOOPER",
+    "id": 194
+   }
+  ]
+ },
+ "Raihan": {
+  "category": "gymleader",
+  "gen": 8,
+  "page": "Raihan (game) + Raihan (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_TORKOAL",
+    "id": 324
+   },
+   {
+    "const": "SPECIES_TRAPINCH",
+    "id": 328
+   }
+  ]
+ },
+ "Ramos": {
+  "category": "gymleader",
+  "gen": 6,
+  "page": "Ramos (game) + Ramos (anime)",
+  "species": [
+   {
+    "const": "SPECIES_BELLSPROUT",
+    "id": 69
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_HOPPIP",
+    "id": 187
+   },
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_SUNKERN",
+    "id": 191
+   }
+  ]
+ },
+ "Red": {
+  "category": "protagonist",
+  "gen": 1,
+  "page": "Red (game) + Red (anime)",
+  "signature": {
+   "const": "SPECIES_PIKACHU",
+   "id": 25
+  },
+  "species": [
+   {
+    "const": "SPECIES_ARTICUNO",
+    "id": 144
+   },
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CATERPIE",
+    "id": 10
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CHIKORITA",
+    "id": 152
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_DEOXYS_NORMAL",
+    "id": 386
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_ENTEI",
+    "id": 244
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_MACHOP",
+    "id": 66
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_NOSEPASS",
+    "id": 299
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_RAIKOU",
+    "id": 243
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SLAKOTH",
+    "id": 287
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   },
+   {
+    "const": "SPECIES_WOOPER",
+    "id": 194
+   }
+  ]
+ },
+ "Rika": {
+  "category": "elite4",
+  "gen": 9,
+  "page": "Rika (game) + Rika (anime)",
+  "signature": {
+   "const": "SPECIES_WOOPER_PALDEA",
+   "id": 194
+  },
+  "species": [
+   {
+    "const": "SPECIES_BARBOACH",
+    "id": 339
+   },
+   {
+    "const": "SPECIES_DIGLETT",
+    "id": 50
+   },
+   {
+    "const": "SPECIES_NUMEL",
+    "id": 322
+   },
+   {
+    "const": "SPECIES_PHANPY",
+    "id": 231
+   },
+   {
+    "const": "SPECIES_WOOPER",
+    "id": 194
+   },
+   {
+    "const": "SPECIES_WOOPER_PALDEA",
+    "id": 194
+   }
+  ]
+ },
+ "Ritchie": {
+  "category": "anime",
+  "gen": 1,
+  "page": "Ritchie + Ritchie (anime)",
+  "signature": {
+   "const": "SPECIES_PIKACHU",
+   "id": 25
+  },
+  "species": [
+   {
+    "const": "SPECIES_BAGON",
+    "id": 371
+   },
+   {
+    "const": "SPECIES_CATERPIE",
+    "id": 10
+   },
+   {
+    "const": "SPECIES_CELEBI",
+    "id": 251
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_POLIWAG",
+    "id": 60
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_POOCHYENA",
+    "id": 261
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SPEAROW",
+    "id": 21
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_TAILLOW",
+    "id": 276
+   },
+   {
+    "const": "SPECIES_TENTACOOL",
+    "id": 72
+   }
+  ]
+ },
+ "Roark": {
+  "category": "gymleader",
+  "gen": 4,
+  "page": "Roark (game) + Roark (anime)",
+  "species": [
+   {
+    "const": "SPECIES_AERODACTYL",
+    "id": 142
+   },
+   {
+    "const": "SPECIES_ANORITH",
+    "id": 347
+   },
+   {
+    "const": "SPECIES_AZURILL",
+    "id": 298
+   },
+   {
+    "const": "SPECIES_BONSLY",
+    "id": 438
+   },
+   {
+    "const": "SPECIES_BUDEW",
+    "id": 406
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_NOSEPASS",
+    "id": 299
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_RELICANTH",
+    "id": 369
+   },
+   {
+    "const": "SPECIES_SUNKERN",
+    "id": 191
+   },
+   {
+    "const": "SPECIES_WURMPLE",
+    "id": 265
+   }
+  ]
+ },
+ "Rose": {
+  "category": "villain",
+  "gen": 8,
+  "page": "Rose (game) + Rose (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_MEOWTH_GALAR",
+    "id": 52
+   }
+  ]
+ },
+ "Roxanne": {
+  "category": "gymleader",
+  "gen": 3,
+  "page": "Roxanne (game) + Roxanne (anime)",
+  "signature": {
+   "const": "SPECIES_NOSEPASS",
+   "id": 299
+  },
+  "species": [
+   {
+    "const": "SPECIES_AERODACTYL",
+    "id": 142
+   },
+   {
+    "const": "SPECIES_ANORITH",
+    "id": 347
+   },
+   {
+    "const": "SPECIES_ARON",
+    "id": 304
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_GROUDON",
+    "id": 383
+   },
+   {
+    "const": "SPECIES_KABUTO",
+    "id": 140
+   },
+   {
+    "const": "SPECIES_LILEEP",
+    "id": 345
+   },
+   {
+    "const": "SPECIES_MUDKIP",
+    "id": 258
+   },
+   {
+    "const": "SPECIES_NOSEPASS",
+    "id": 299
+   },
+   {
+    "const": "SPECIES_OMANYTE",
+    "id": 138
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_POLIWAG",
+    "id": 60
+   },
+   {
+    "const": "SPECIES_RELICANTH",
+    "id": 369
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   }
+  ]
+ },
+ "Roxie": {
+  "category": "gymleader",
+  "gen": 5,
+  "page": "Roxie (game) + Roxie (anime)",
+  "species": [
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_KOFFING",
+    "id": 109
+   },
+   {
+    "const": "SPECIES_SEVIPER",
+    "id": 336
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Ryme": {
+  "category": "gymleader",
+  "gen": 9,
+  "page": "Ryme (game) + Ryme (anime)",
+  "species": [
+   {
+    "const": "SPECIES_MANKEY",
+    "id": 56
+   },
+   {
+    "const": "SPECIES_SHUPPET",
+    "id": 353
+   }
+  ]
+ },
+ "Sabrina": {
+  "category": "gymleader",
+  "gen": 1,
+  "page": "Sabrina (game) + Sabrina (anime)",
+  "signature": {
+   "const": "SPECIES_ABRA",
+   "id": 63
+  },
+  "species": [
+   {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_ARTICUNO",
+    "id": 144
+   },
+   {
+    "const": "SPECIES_BELDUM",
+    "id": 374
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CHINGLING",
+    "id": 433
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_DROWZEE",
+    "id": 96
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_IGGLYBUFF",
+    "id": 174
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_MEWTWO",
+    "id": 150
+   },
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_PSYDUCK",
+    "id": 54
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_SANDSHREW",
+    "id": 27
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SENTRET",
+    "id": 161
+   },
+   {
+    "const": "SPECIES_SHELLDER",
+    "id": 90
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SMOOCHUM",
+    "id": 238
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
+   },
+   {
+    "const": "SPECIES_VENONAT",
+    "id": 48
+   },
+   {
+    "const": "SPECIES_WYNAUT",
+    "id": 360
+   },
+   {
+    "const": "SPECIES_ZAPDOS",
+    "id": 145
+   }
+  ]
+ },
+ "Saturn": {
+  "category": "villain",
+  "gen": 4,
+  "page": "Saturn (game) + Saturn (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MINUN",
+    "id": 312
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_REMORAID",
+    "id": 223
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Sawyer": {
+  "category": "anime",
+  "gen": 6,
+  "page": "Sawyer + Sawyer (anime)",
+  "signature": {
+   "const": "SPECIES_TREECKO",
+   "id": 252
+  },
+  "species": [
+   {
+    "const": "SPECIES_BAGON",
+    "id": 371
+   },
+   {
+    "const": "SPECIES_LOTAD",
+    "id": 270
+   },
+   {
+    "const": "SPECIES_MEDITITE",
+    "id": 307
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_SLAKOTH",
+    "id": 287
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_TREECKO",
+    "id": 252
+   }
+  ]
+ },
+ "Selene": {
+  "category": "protagonist",
+  "gen": 7,
+  "page": "Selene (game) + Selene (anime)",
+  "species": [
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_PINSIR",
+    "id": 127
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SPEAROW",
+    "id": 21
+   }
+  ]
+ },
+ "Serena": {
+  "category": "protagonist",
+  "gen": 6,
+  "page": "Serena (game) + Serena (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ABSOL",
+    "id": 359
+   },
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   },
+   {
+    "const": "SPECIES_SWINUB",
+    "id": 220
+   }
+  ]
+ },
+ "Shauna": {
+  "category": "rival",
+  "gen": 6,
+  "page": "Shauna (game) + Shauna (anime)",
+  "species": [
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_SKITTY",
+    "id": 300
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   }
+  ]
+ },
+ "Shauntal": {
+  "category": "elite4",
+  "gen": 5,
+  "page": "Shauntal (game) + Shauntal (anime)",
+  "species": [
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_SHUPPET",
+    "id": 353
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   }
+  ]
+ },
+ "Sidney": {
+  "category": "elite4",
+  "gen": 3,
+  "page": "Sidney (game) + Sidney (anime)",
+  "signature": {
+   "const": "SPECIES_ABSOL",
+   "id": 359
+  },
+  "species": [
+   {
+    "const": "SPECIES_ABSOL",
+    "id": 359
+   },
+   {
+    "const": "SPECIES_CACNEA",
+    "id": 331
+   },
+   {
+    "const": "SPECIES_CARVANHA",
+    "id": 318
+   },
+   {
+    "const": "SPECIES_CELEBI",
+    "id": 251
+   },
+   {
+    "const": "SPECIES_CORPHISH",
+    "id": 341
+   },
+   {
+    "const": "SPECIES_POOCHYENA",
+    "id": 261
+   },
+   {
+    "const": "SPECIES_REGICE",
+    "id": 378
+   },
+   {
+    "const": "SPECIES_REGIROCK",
+    "id": 377
+   },
+   {
+    "const": "SPECIES_REGISTEEL",
+    "id": 379
+   },
+   {
+    "const": "SPECIES_SEEDOT",
+    "id": 273
+   },
+   {
+    "const": "SPECIES_ZANGOOSE",
+    "id": 335
+   }
+  ]
+ },
+ "Siebold": {
+  "category": "elite4",
+  "gen": 6,
+  "page": "Siebold (game) + Siebold (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_REMORAID",
+    "id": 223
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_STARYU",
+    "id": 120
+   }
+  ]
+ },
+ "Silver": {
+  "category": "rival",
+  "gen": 2,
+  "page": "Silver (game) + Silver (anime)",
+  "signature": {
+   "const": "SPECIES_TOTODILE",
+   "id": 158
+  },
+  "species": [
+   {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_BAGON",
+    "id": 371
+   },
+   {
+    "const": "SPECIES_CHIKORITA",
+    "id": 152
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_HO_OH",
+    "id": 250
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_LUGIA",
+    "id": 249
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_MEWTWO",
+    "id": 150
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_NIDORAN_M",
+    "id": 32
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
+   }
+  ]
+ },
+ "Skyla": {
+  "category": "gymleader",
+  "gen": 5,
+  "page": "Skyla (game) + Skyla (anime)",
+  "species": [
+   {
+    "const": "SPECIES_HOPPIP",
+    "id": 187
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_SKARMORY",
+    "id": 227
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   }
+  ]
+ },
+ "Sophocles": {
+  "category": "anime",
+  "gen": 7,
+  "page": "Sophocles (anime)",
+  "species": [
+   {
+    "const": "SPECIES_BELDUM",
+    "id": 374
+   },
+   {
+    "const": "SPECIES_CORPHISH",
+    "id": 341
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_MANTYKE",
+    "id": 458
+   },
+   {
+    "const": "SPECIES_MAREEP",
+    "id": 179
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   }
+  ]
+ },
+ "Steven": {
+  "category": "champion",
+  "gen": 3,
+  "page": "Steven Stone + Steven (anime)",
+  "signature": {
+   "const": "SPECIES_BELDUM",
+   "id": 374
+  },
+  "species": [
+   {
+    "const": "SPECIES_AERODACTYL",
+    "id": 142
+   },
+   {
+    "const": "SPECIES_ANORITH",
+    "id": 347
+   },
+   {
+    "const": "SPECIES_ARON",
+    "id": 304
+   },
+   {
+    "const": "SPECIES_BALTOY",
+    "id": 343
+   },
+   {
+    "const": "SPECIES_BELDUM",
+    "id": 374
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_DEOXYS_NORMAL",
+    "id": 386
+   },
+   {
+    "const": "SPECIES_LILEEP",
+    "id": 345
+   },
+   {
+    "const": "SPECIES_MAWILE",
+    "id": 303
+   },
+   {
+    "const": "SPECIES_MUDKIP",
+    "id": 258
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PINECO",
+    "id": 204
+   },
+   {
+    "const": "SPECIES_RAYQUAZA",
+    "id": 384
+   },
+   {
+    "const": "SPECIES_REGICE",
+    "id": 378
+   },
+   {
+    "const": "SPECIES_REGIROCK",
+    "id": 377
+   },
+   {
+    "const": "SPECIES_REGISTEEL",
+    "id": 379
+   },
+   {
+    "const": "SPECIES_RELICANTH",
+    "id": 369
+   },
+   {
+    "const": "SPECIES_SANDSHREW",
+    "id": 27
+   },
+   {
+    "const": "SPECIES_SKARMORY",
+    "id": 227
+   },
+   {
+    "const": "SPECIES_TORCHIC",
+    "id": 255
+   },
+   {
+    "const": "SPECIES_TREECKO",
+    "id": 252
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   }
+  ]
+ },
+ "Tate": {
+  "category": "gymleader",
+  "gen": 3,
+  "page": "Tate and Liza + Tate (anime)",
+  "signature": {
+   "const": "SPECIES_SOLROCK",
+   "id": 338
+  },
+  "species": [
+   {
+    "const": "SPECIES_BALTOY",
+    "id": 343
+   },
+   {
+    "const": "SPECIES_CHINGLING",
+    "id": 433
+   },
+   {
+    "const": "SPECIES_CORPHISH",
+    "id": 341
+   },
+   {
+    "const": "SPECIES_DROWZEE",
+    "id": 96
+   },
+   {
+    "const": "SPECIES_GROUDON",
+    "id": 383
+   },
+   {
+    "const": "SPECIES_JIRACHI",
+    "id": 385
+   },
+   {
+    "const": "SPECIES_KYOGRE",
+    "id": 382
+   },
+   {
+    "const": "SPECIES_LUNATONE",
+    "id": 337
+   },
+   {
+    "const": "SPECIES_NATU",
+    "id": 177
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SOLROCK",
+    "id": 338
+   },
+   {
+    "const": "SPECIES_SPOINK",
+    "id": 325
+   },
+   {
+    "const": "SPECIES_TORCHIC",
+    "id": 255
+   }
+  ]
+ },
+ "Tracey": {
+  "category": "anime",
+  "gen": 1,
+  "page": "Tracey Sketchit + Tracey (anime)",
+  "signature": {
+   "const": "SPECIES_SCYTHER",
+   "id": 123
+  },
+  "species": [
+   {
+    "const": "SPECIES_AZURILL",
+    "id": 298
+   },
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_DODUO",
+    "id": 84
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_VENONAT",
+    "id": 48
+   }
+  ]
+ },
+ "Tulip": {
+  "category": "gymleader",
+  "gen": 9,
+  "page": "Tulip (game) + Tulip (anime)",
+  "species": [
+   {
+    "const": "SPECIES_DIGLETT",
+    "id": 50
+   },
+   {
+    "const": "SPECIES_GIRAFARIG",
+    "id": 203
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_WOOPER_PALDEA",
+    "id": 194
+   }
+  ]
+ },
+ "Valerie": {
+  "category": "gymleader",
+  "gen": 6,
+  "page": "Valerie (game) + Valerie (anime)",
+  "signature": {
+   "const": "SPECIES_EEVEE",
+   "id": 133
+  },
+  "species": [
+   {
+    "const": "SPECIES_BAGON",
+    "id": 371
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_MAWILE",
+    "id": 303
+   },
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   }
+  ]
+ },
+ "Viola": {
+  "category": "gymleader",
+  "gen": 6,
+  "page": "Viola (game) + Viola (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_SURSKIT",
+    "id": 283
+   }
+  ]
+ },
+ "Volkner": {
+  "category": "gymleader",
+  "gen": 4,
+  "page": "Volkner (game) + Volkner (anime)",
+  "species": [
+   {
+    "const": "SPECIES_AIPOM",
+    "id": 190
+   },
+   {
+    "const": "SPECIES_CHINCHOU",
+    "id": 170
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_REMORAID",
+    "id": 223
+   },
+   {
+    "const": "SPECIES_SNEASEL",
+    "id": 215
+   },
+   {
+    "const": "SPECIES_VOLTORB",
+    "id": 100
+   },
+   {
+    "const": "SPECIES_WINGULL",
+    "id": 278
+   }
+  ]
+ },
+ "Wallace": {
+  "category": "champion",
+  "gen": 3,
+  "page": "Wallace (game) + Wallace (anime)",
+  "signature": {
+   "const": "SPECIES_FEEBAS",
+   "id": 349
+  },
+  "species": [
+   {
+    "const": "SPECIES_BARBOACH",
+    "id": 339
+   },
+   {
+    "const": "SPECIES_BELDUM",
+    "id": 374
+   },
+   {
+    "const": "SPECIES_CARVANHA",
+    "id": 318
+   },
+   {
+    "const": "SPECIES_CELEBI",
+    "id": 251
+   },
+   {
+    "const": "SPECIES_CLAMPERL",
+    "id": 366
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_FEEBAS",
+    "id": 349
+   },
+   {
+    "const": "SPECIES_GOLDEEN",
+    "id": 118
+   },
+   {
+    "const": "SPECIES_GROUDON",
+    "id": 383
+   },
+   {
+    "const": "SPECIES_KYOGRE",
+    "id": 382
+   },
+   {
+    "const": "SPECIES_LOTAD",
+    "id": 270
+   },
+   {
+    "const": "SPECIES_LUVDISC",
+    "id": 370
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MEDITITE",
+    "id": 307
+   },
+   {
+    "const": "SPECIES_MINUN",
+    "id": 312
+   },
+   {
+    "const": "SPECIES_MUDKIP",
+    "id": 258
+   },
+   {
+    "const": "SPECIES_PLUSLE",
+    "id": 311
+   },
+   {
+    "const": "SPECIES_REGICE",
+    "id": 378
+   },
+   {
+    "const": "SPECIES_REGIROCK",
+    "id": 377
+   },
+   {
+    "const": "SPECIES_REGISTEEL",
+    "id": 379
+   },
+   {
+    "const": "SPECIES_RELICANTH",
+    "id": 369
+   },
+   {
+    "const": "SPECIES_SPHEAL",
+    "id": 363
+   },
+   {
+    "const": "SPECIES_STARYU",
+    "id": 120
+   },
+   {
+    "const": "SPECIES_TENTACOOL",
+    "id": 72
+   },
+   {
+    "const": "SPECIES_TORKOAL",
+    "id": 324
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   }
+  ]
+ },
+ "Wally": {
+  "category": "rival",
+  "gen": 3,
+  "page": "Wally (game) + Wally (anime)",
+  "signature": {
+   "const": "SPECIES_RALTS",
+   "id": 280
+  },
+  "species": [
+   {
+    "const": "SPECIES_AZURILL",
+    "id": 298
+   },
+   {
+    "const": "SPECIES_BUDEW",
+    "id": 406
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_SKITTY",
+    "id": 300
+   },
+   {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   },
+   {
+    "const": "SPECIES_ZIGZAGOON",
+    "id": 263
+   }
+  ]
+ },
+ "Wattson": {
+  "category": "gymleader",
+  "gen": 3,
+  "page": "Wattson (game) + Wattson (anime)",
+  "signature": {
+   "const": "SPECIES_ELECTRIKE",
+   "id": 309
+  },
+  "species": [
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_ELECTRIKE",
+    "id": 309
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_MAGNEMITE",
+    "id": 81
+   },
+   {
+    "const": "SPECIES_MAREEP",
+    "id": 179
+   },
+   {
+    "const": "SPECIES_MINUN",
+    "id": 312
+   },
+   {
+    "const": "SPECIES_NINCADA",
+    "id": 290
+   },
+   {
+    "const": "SPECIES_PHANPY",
+    "id": 231
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PLUSLE",
+    "id": 311
+   },
+   {
+    "const": "SPECIES_RAIKOU",
+    "id": 243
+   },
+   {
+    "const": "SPECIES_SKITTY",
+    "id": 300
+   },
+   {
+    "const": "SPECIES_TORKOAL",
+    "id": 324
+   },
+   {
+    "const": "SPECIES_VOLTORB",
+    "id": 100
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   }
+  ]
+ },
+ "Whitney": {
+  "category": "gymleader",
+  "gen": 2,
+  "page": "Whitney (game) + Whitney (anime)",
+  "signature": {
+   "const": "SPECIES_MILTANK",
+   "id": 241
+  },
+  "species": [
+   {
+    "const": "SPECIES_AIPOM",
+    "id": 190
+   },
+   {
+    "const": "SPECIES_BONSLY",
+    "id": 438
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_DITTO",
+    "id": 132
+   },
+   {
+    "const": "SPECIES_DODUO",
+    "id": 84
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_ENTEI",
+    "id": 244
+   },
+   {
+    "const": "SPECIES_GIRAFARIG",
+    "id": 203
+   },
+   {
+    "const": "SPECIES_HAPPINY",
+    "id": 440
+   },
+   {
+    "const": "SPECIES_IGGLYBUFF",
+    "id": 174
+   },
+   {
+    "const": "SPECIES_LICKITUNG",
+    "id": 108
+   },
+   {
+    "const": "SPECIES_MAGBY",
+    "id": 240
+   },
+   {
+    "const": "SPECIES_MEOWTH",
+    "id": 52
+   },
+   {
+    "const": "SPECIES_MILTANK",
+    "id": 241
+   },
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   },
+   {
+    "const": "SPECIES_NIDORAN_F",
+    "id": 29
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_PHANPY",
+    "id": 231
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PIDGEY",
+    "id": 16
+   },
+   {
+    "const": "SPECIES_PSYDUCK",
+    "id": 54
+   },
+   {
+    "const": "SPECIES_RHYHORN",
+    "id": 111
+   },
+   {
+    "const": "SPECIES_SKITTY",
+    "id": 300
+   },
+   {
+    "const": "SPECIES_SMEARGLE",
+    "id": 235
+   },
+   {
+    "const": "SPECIES_STANTLER",
+    "id": 234
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
+    "const": "SPECIES_TEDDIURSA",
+    "id": 216
+   }
+  ]
+ },
+ "Wikstrom": {
+  "category": "elite4",
+  "gen": 6,
+  "page": "Wikstrom (game) + Wikstrom (anime)",
+  "species": [
+   {
+    "const": "SPECIES_NOSEPASS",
+    "id": 299
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   }
+  ]
+ },
+ "Will": {
+  "category": "elite4",
+  "gen": 2,
+  "page": "Will (game) + Will (anime)",
+  "signature": {
+   "const": "SPECIES_NATU",
+   "id": 177
+  },
+  "species": [
+   {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_ARTICUNO",
+    "id": 144
+   },
+   {
+    "const": "SPECIES_CELEBI",
+    "id": 251
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_DROWZEE",
+    "id": 96
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_ELEKID",
+    "id": 239
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_GIRAFARIG",
+    "id": 203
+   },
+   {
+    "const": "SPECIES_HAPPINY",
+    "id": 440
+   },
+   {
+    "const": "SPECIES_HO_OH",
+    "id": 250
+   },
+   {
+    "const": "SPECIES_LUGIA",
+    "id": 249
+   },
+   {
+    "const": "SPECIES_MANTYKE",
+    "id": 458
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
+    "const": "SPECIES_NATU",
+    "id": 177
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_SLOWPOKE",
+    "id": 79
+   },
+   {
+    "const": "SPECIES_SMOOCHUM",
+    "id": 238
+   },
+   {
+    "const": "SPECIES_SPOINK",
+    "id": 325
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_ZAPDOS",
+    "id": 145
+   }
+  ]
+ },
+ "Winona": {
+  "category": "gymleader",
+  "gen": 3,
+  "page": "Winona (game) + Winona (anime)",
+  "signature": {
+   "const": "SPECIES_SWABLU",
+   "id": 333
+  },
+  "species": [
+   {
+    "const": "SPECIES_ARON",
+    "id": 304
+   },
+   {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
+    "const": "SPECIES_GROUDON",
+    "id": 383
+   },
+   {
+    "const": "SPECIES_HOOTHOOT",
+    "id": 163
+   },
+   {
+    "const": "SPECIES_KYOGRE",
+    "id": 382
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_PHANPY",
+    "id": 231
+   },
+   {
+    "const": "SPECIES_RAYQUAZA",
+    "id": 384
+   },
+   {
+    "const": "SPECIES_RELICANTH",
+    "id": 369
+   },
+   {
+    "const": "SPECIES_SKARMORY",
+    "id": 227
+   },
+   {
+    "const": "SPECIES_SURSKIT",
+    "id": 283
+   },
+   {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   },
+   {
+    "const": "SPECIES_TAILLOW",
+    "id": 276
+   },
+   {
+    "const": "SPECIES_TORCHIC",
+    "id": 255
+   },
+   {
+    "const": "SPECIES_TREECKO",
+    "id": 252
+   },
+   {
+    "const": "SPECIES_TROPIUS",
+    "id": 357
+   },
+   {
+    "const": "SPECIES_WINGULL",
+    "id": 278
+   },
+   {
+    "const": "SPECIES_WURMPLE",
+    "id": 265
+   }
+  ]
+ },
+ "Zoey": {
+  "category": "anime",
+  "gen": 4,
+  "page": "Zoey + Zoey (anime)",
+  "species": [
+   {
+    "const": "SPECIES_AIPOM",
+    "id": 190
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_SWINUB",
+    "id": 220
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   }
+  ]
+ }
+}

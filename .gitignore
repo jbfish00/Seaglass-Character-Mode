@@ -1,0 +1,54 @@
+# ROM/patch binaries — never commit copyrighted material
+rom/*.gba
+rom/*.zip
+rom/*.ups
+rom/*.bps
+*.gba
+*.ips
+*.ups
+*.bps
+build/
+__pycache__/
+*.pyc
+
+# armips is a third-party source clone (github.com/Kingcom/armips), not our code
+tools/armips/
+# local compiled/copied tool binaries — regenerate via build steps, not committed
+tools/bin/
+
+# Ghidra install + analysis project — huge, regenerable, not our code
+tools/ghidra/
+ghidra_project/
+
+# rh-hideout/pokeemerald-expansion clone — third-party donor reference (likely
+# lineage of Seaglass's own private fork per battle-engine changelog), used
+# for species/evolution topology only, NOT numeric SPECIES_* ids. Regenerable
+# via git clone, not our code.
+tools/pokeemerald_expansion_donor/
+
+# mgba-emu/mgba source clone + build — third-party, built from source (2026-07-12)
+# to get the headless frontend (mgba-headless) with --script support and a
+# newer scripting API than the packaged mgba-qt 0.10.2 has. Regenerable via
+# git clone + cmake, not our code. See CLAUDE.md's Toolchain section.
+tools/mgba_src/
+
+# savestates — created locally to bootstrap dynamic-tracing test scenarios
+# (e.g. "wild battle, bag open"); not source, not reproducible from a clean
+# checkout, and tied to one person's specific playthrough RNG/state.
+*.ss0
+*.ss1
+*.ss2
+*.ss3
+*.ss4
+*.ss5
+*.ss6
+*.ss7
+*.ss8
+*.ss9
+*.state
+tools/savestates/
+
+docs/strings_dump.txt
+docs/ghidra_analysis.log
+docs/all_strings_dump.txt
+docs/all_strings_dump.stderr
