@@ -60,6 +60,29 @@ to attach a module-less debugger when **`MGBA_HEADLESS_DEBUGGER=1`** is set;
 rebuilt. Free while no breakpoints are armed; single-steps once they are.
 **This unblocks `headless_catch_trace.lua` / the 6 catch candidates below.**
 
+## Selection mechanism — cheat-code system LOCATED (2026-07-16; the Phase-4 character-select hook, per Lazarus's design)
+
+Seaglass ships Nemo622's native **"CHEAT DEVICE" / "GIFT CODE"** system (same
+family as Lazarus's Acrisia cheat codes) — the intended character-select hook:
+replace one specials-table pointer to add character-name codes, everything else
+additive free-space (Lazarus proved this exact route works).
+
+| Piece | Address | Detail |
+|---|---|---|
+| **gSpecialsTable** | **`0x0826DD68`** | from `ScrCmd_special` (cmd 0x25 @ table) literal @`0x081EC89C`; special ID → slot `0x0826DD68 + 4*id` |
+| Cheat-code entry script | `0x08311C32`+ | uses `special`/`specialvar` 0x1E5/0x1E6/0x1E7/0x1EC + a `compare VAR_RESULT(0x800D),k` match switch |
+| Prompt/result text bank | `~0x00311A23`–`0x00311C20` | "turned on the CHEAT DEVICE! Prepare a GIFT CODE… enter a code?", "Please enter the code.", "The code was valid!/invalid!/already redeemed!", "[player] received a [item]!" (one code = show all in DexNav) |
+| special 0x1E5 | `0x08215B24` | builds a caught/received-mon summary (GetPartyMon+GetMonData) — a display helper, NOT the matcher |
+| special 0x1E7 | `0x08135BAC` | redeem-once guard (FlagGet→FlagSet) |
+
+**Next (Phase-4 selection)**: parse the entry script fully to pin the
+DoNamingScreen entry special + the StringCompare matcher + the code-string table
+(Lazarus's were entry 0x221 / match 0x222 / table `0x087D9294` — IDs differ
+here, same-author builds vary), then design the injection = overwrite the
+matcher's specials-table slot with a CM function that (native match first, else
+match our character-name codes → set CM char var + give signature starter). Full
+template: `../Lazarus-Character-Mode/docs/SELECTION_MECHANISM.md`.
+
 ## Catch/give enforcement — CONFIRMED via live headless catch trace (2026-07-16, using Lazarus's method + the fixed headless breakpoints)
 
 **This supersedes the "6 string-choice candidates" approach below.** The real
