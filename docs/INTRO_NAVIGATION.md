@@ -71,6 +71,18 @@ below was found without guessing tile geometry.
 
 ## RESOLVED (2026-07-15): gate bypassed, starter obtained, party located
 
+> **2026-07-16 CORRECTION (Lazarus feedback loop — read before reusing the
+> numbers below):** the "flags-array base = SaveBlock1 + 0x157E" finding is
+> WRONG. The true bases are **flags = SB1+0x13C0, vars = SB1+0x14EC** (static
+> disasm of FlagGet/FlagSet/GetVarPointer via the script command table, plus
+> 61/61 live FlagGet round-trip matches — `docs/ROUTINE_MAP.md`). The
+> bisection's byte `+0x158C` bit4 was actually **var 0x4050 |= 0x10**, and the
+> gate is a coord trigger keyed on var 0x4050 == 0 (its block script
+> `0x0827DC4A` shows "Um, um, um!" and pushes the player back
+> unconditionally); real flag 0x74 does NOT open it (live-disproven). Every
+> downstream result below (Route 101, Torchic, gPlayerParty, savestates)
+> remains valid — the poke set the right memory under the wrong name.
+
 The flag-gated north exit (below) was cracked and the full rescue completed
 **autonomously**:
 

@@ -17,6 +17,49 @@ Reused Unbound's already-installed Ghidra 12.0.2 + `pudii/gba-ghidra-loader` (in
 
 **Important correction vs. Unbound's script usage comment**: addresses passed to both scripts must include the full `0x08000000` GBA base (e.g. `0811FFA4`, not `0011FFA4`) — Unbound's own script comments say "without the base" but that did not work here (produced empty disassembly/no function found every time); prefixing with the base worked immediately. Use the full address form.
 
+## Script engine + flags/vars — CONFIRMED (2026-07-16, via the Lazarus feedback loop)
+
+Found with `../Lazarus-Character-Mode/tools/find_script_cmd_table.py` (scans for
+the donor ScriptContext-init signature: cmdTable and cmdTableEnd as two
+adjacent literal-pool words, pointing at a dense run of odd Thumb pointers).
+Single clean hit; entries 0x29/2A/2B are the classic 16-byte
+setflag/clearflag/checkflag handler trio (decoy-proof). All ROM addresses
+(subtract `0x08000000` for file offsets):
+
+| Symbol | Address | Evidence |
+|---|---|---|
+| gScriptCmdTable | `0x0826D970`, 0xE7 (231) cmds, end `0x0826DD0C` | 4 literal-pool XREF pairs at file `0x1EF54C/0x1EF5DC/0x1EF654/0x1EF7B4` |
+| ScriptReadHalfword | `0x081EF488` | called by all flag/var handlers |
+| FlagSet | `0x0810D254` | bl target of setflag handler `0x081ED0C9` |
+| FlagClear | `0x0810D304` | bl target of clearflag handler `0x081ED0D9` |
+| FlagGet | `0x0810D35C` | bl target of checkflag handler `0x081ED0E9`; **live-verified**: entry/exit breakpoints predicted 61/61 return values from `sb1+0x13C0` (verify_flags_offset.lua, 2 savestates) |
+| GetVarPointer | `0x0810D0C0` | from setvar handler `0x081ECC81` (cmd 0x16) |
+
+**SaveBlock1 layout: flags at `+0x13C0` (0x12C bytes), vars at `+0x14EC`.**
+Special flags (≥0x4000) at EWRAM `0x020055FC`. Both primitives deref
+gSaveBlock1Ptr `0x030051B8`. Lazarus's offsets (`+0x12E8`/`+0x1414`) do NOT
+transfer — same-author builds differ; the *method* transfers.
+
+**Correction to the 2026-07-15 gate finding**: the bisection hit "flags base
++0x157E / flag 0x74 = byte +0x158C bit4" was actually **var 0x4050 |= 0x10**
+(`0x158C = 0x14EC + 2*0x50`). The Littleroot north gate is a **coord trigger
+keyed on var 0x4050** (fires while ==0) running an unconditional block script
+@`0x0827DC4A` ("Um, um, um!" + applymovement push-back); the checkflag-0x74
+script @`0x0827DBEF` is a different object's script and setting real flag 0x74
+does NOT open the gate (live-tested: blocked with `sb1+0x13CE bit4` set, write
+persisting to gate time). The game's own pass path sets var 0x4050 = 2.
+`harness.lua` FLAG_BLOCK/VAR_BLOCK corrected; `goto_grass.lua` now uses
+`H.setVar(0x4050, 2)`.
+
+**Headless breakpoints now WORK** (this is what made the live verification
+possible): stock `mgba-headless` never creates `core->debugger`, so
+`emu:setBreakpoint` always returned -1 and silently never fired — every prior
+breakpoint-based trace conclusion ("needs the GUI + a human") was built on a
+dead API. Patched `tools/mgba_src/src/platform/headless-main.c` (2026-07-16)
+to attach a module-less debugger when **`MGBA_HEADLESS_DEBUGGER=1`** is set;
+rebuilt. Free while no breakpoints are armed; single-steps once they are.
+**This unblocks `headless_catch_trace.lua` / the 6 catch candidates below.**
+
 ## Catch mechanic — CODE FOUND (real functions confirmed, exact catch-handler still undetermined)
 
 File offset `~0x4C6918`–`0x4C69A8` decodes to the full vanilla-shaped Emerald catch-sequence string bank, contiguous and in the expected order:

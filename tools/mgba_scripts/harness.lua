@@ -93,14 +93,27 @@ H.PARTY_STRIDE = 100          -- struct Pokemon size (bytes)
 H.gEnemyParty = 0x02019E78    -- candidate (gPlayerParty + 6*stride); UNVERIFIED
 H.gPlayerPartyCount = nil     -- u8 party count (separate global, not yet located)
 H.gSaveBlock1 = nil        -- resolved (deref'd) save block 1 base
-H.VAR_BLOCK = 0x156E       -- vars array base (candidate: a fn clears vars[0]/[1]
-                           -- via strh here; var N = base + (N-0x4000)*2). UNVERIFIED.
--- CONFIRMED (2026-07-15, by bisection against the Littleroot north-exit gate,
--- which passes iff flag 0x74 set): the flags bitfield is at SaveBlock1+0x157E.
--- flag N -> byte 0x157E + N//8, bit N%8 (verified: flag 0x74 = byte 0x158C
--- bit 4). Setting flag 0x74 here opened the gate -> Route 101 -> Birch rescue.
--- This is the ROWE debug-menu "toggle catching / set flag" capability.
-H.FLAG_BLOCK = 0x157E      -- SaveBlock1-relative base of the flags bitfield
+-- CORRECTED 2026-07-16 (via Lazarus feedback loop — see docs/ROUTINE_MAP.md):
+-- TRUE offsets, from static disasm of the flag/var primitives (found through
+-- the script command table @0x0826D970) + live verification (61/61 FlagGet
+-- return values predicted correctly via entry/exit breakpoints):
+--   flags = SaveBlock1 + 0x13C0   (FlagGet 0x0810D35C, FlagSet 0x0810D254)
+--   vars  = SaveBlock1 + 0x14EC   (GetVarPointer 0x0810D0C0)
+-- The old values (FLAG_BLOCK=0x157E, VAR_BLOCK=0x156E) were WRONG: the
+-- 2026-07-15 gate bisection's "flag 0x74 = byte +0x158C bit4" was actually
+-- var 0x4050 |= 0x10 (0x158C = 0x14EC + 2*0x50). The Littleroot gate is a
+-- coord trigger keyed on var 0x4050 (fires while ==0, runs an unconditional
+-- push-back script @0x0827DC4A); flag 0x74 never gated it. Everything
+-- downstream (starter, party find) remains valid — the var-poke legitimately
+-- passed the gate.
+H.VAR_BLOCK = 0x14EC       -- SaveBlock1-relative vars base; var N at +0x14EC+(N-0x4000)*2
+H.FLAG_BLOCK = 0x13C0      -- SaveBlock1-relative base of the flags bitfield
+function H.setVar(id, v)
+    emu:write16(emu:read32(H.gSaveBlock1Ptr) + H.VAR_BLOCK + 2*(id - 0x4000), v)
+end
+function H.getVar(id)
+    return emu:read16(emu:read32(H.gSaveBlock1Ptr) + H.VAR_BLOCK + 2*(id - 0x4000))
+end
 function H.setFlag(id)
     local a = emu:read32(H.gSaveBlock1Ptr) + H.FLAG_BLOCK + math.floor(id/8)
     emu:write8(a, emu:read8(a) | (1 << (id % 8)))

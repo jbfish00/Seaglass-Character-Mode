@@ -12,8 +12,12 @@ local set=false
 H.onFrame(function(f)
     if f==60 and not set then
         set=true
-        H.setFlag(0x74)
-        H.log(string.format("flag byte 0x158C now = 0x%02X", emu:read8(emu:read32(SB1_PTR)+0x158C)))
+        -- 2026-07-16 correction: the gate is a coord trigger on var 0x4050
+        -- (fires while ==0), NOT flag 0x74. The old H.setFlag(0x74) only
+        -- worked because FLAG_BLOCK was wrong and aliased var 0x4050 |= 0x10.
+        -- Set the var to 2 = the game's own post-pass value.
+        H.setVar(0x4050, 2)
+        H.log(string.format("var 0x4050 (SB1+0x158C) now = 0x%04X", H.getVar(0x4050)))
         local seq={}
         local function add(k,n) for _=1,n do seq[#seq+1]=k end end
         -- from have_starter.ss (7,17): proven warp path via (11,2)->(10,2)->up

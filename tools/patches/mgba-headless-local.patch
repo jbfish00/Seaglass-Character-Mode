@@ -1,0 +1,48 @@
+diff --git a/src/platform/headless-main.c b/src/platform/headless-main.c
+index 61110b1..f9673d6 100644
+--- a/src/platform/headless-main.c
++++ b/src/platform/headless-main.c
+@@ -117,6 +117,21 @@ int main(int argc, char * argv[]) {
+ 	mCoreInitConfig(core, "headless");
+ 	mArgumentsApply(&args, NULL, 0, &core->config);
+ 
++	// LOCAL PATCH (Seaglass-Character-Mode): allocate a video buffer.
++	// Stock headless renders no video at all and leaves the core's video
++	// buffer NULL, so emu:screenshot()/screenshotToImage() from a Lua script
++	// dereferences NULL and segfaults. We rely on screenshots to actually SEE
++	// the game while driving it with scripted input (there is no GUI), so
++	// give the core a real buffer to render into. Costs one small alloc and
++	// the software renderer's time per frame; irrelevant for our use.
++	// See docs/TESTING.md.
++	unsigned _vbW, _vbH;
++	core->baseVideoSize(core, &_vbW, &_vbH);
++	mColor* _videoBuffer = malloc(_vbW * _vbH * sizeof(mColor));
++	if (_videoBuffer) {
++		core->setVideoBuffer(core, _videoBuffer, _vbW);
++	}
++
+ 	mCoreConfigSetDefaultValue(&core->config, "idleOptimization", "remove");
+ 	mCoreConfigSetDefaultIntValue(&core->config, "logToStdout", true);
+ 	mCoreLoadConfig(core);
+@@ -170,9 +185,21 @@ int main(int argc, char * argv[]) {
+ 	mDebuggerInit(&debugger);
+ 	bool hasDebugger = mArgumentsApplyDebugger(&args, core, &debugger);
+ 
++	// LOCAL PATCH (Character Hacks, 2026-07-16): Lua emu:setBreakpoint /
++	// emu:setWatchpoint need core->debugger, which stock headless never
++	// creates unless -g is passed — so script breakpoints always failed with
++	// -1 and never fired. MGBA_HEADLESS_DEBUGGER=1 attaches a debugger with
++	// no frontend module. Free while no breakpoints are set (the debugger
++	// loop uses core->runLoop until platform->hasBreakpoints); with
++	// breakpoints it single-steps, so only set the env var for trace runs.
++	bool scriptDebugger = !hasDebugger && getenv("MGBA_HEADLESS_DEBUGGER");
++
+ 	if (hasDebugger) {
+ 		mDebuggerAttach(&debugger, core);
+ 		mDebuggerEnter(&debugger, DEBUGGER_ENTER_MANUAL, NULL);
++	} else if (scriptDebugger) {
++		mDebuggerAttach(&debugger, core);
++		hasDebugger = true;
+ 	} else {
+ 		mDebuggerDeinit(&debugger);
+ 	}

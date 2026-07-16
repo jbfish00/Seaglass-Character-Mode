@@ -3,8 +3,12 @@
 -- (map 0.16), and continue north into the tall grass to trigger the Prof. Birch
 -- rescue cutscene (the starter source). A-mash the dialogue; screenshot + save.
 --
--- Flags-array base pinned by bisection: SaveBlock1 + 0x157E. flag N -> byte
--- 0x157E + N/8, bit N%8. flag 0x74 -> byte 0x158C bit 4.
+-- 2026-07-16 CORRECTION (kept working as-is, but the naming below is wrong):
+-- SB1+0x157E is NOT the flags base (that's +0x13C0; docs/ROUTINE_MAP.md).
+-- "setflag(0x74)" below actually writes SB1+0x158C bit4 = var 0x4050 |= 0x10,
+-- and the gate is a coord trigger keyed on var 0x4050 (fires while ==0) — so
+-- this script always worked by poking the RIGHT memory under the WRONG name.
+-- "clearflag(0x74)" = var 0x4050 back to 0 (re-arms the rescue state).
 local H = dofile("tools/mgba_scripts/harness.lua")
 local SB1_PTR = 0x030051B8
 local K = H.KEY

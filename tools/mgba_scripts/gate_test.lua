@@ -10,8 +10,13 @@ local K = H.KEY
 -- range, the gate shows "…Good luck!" (only flag 0x74 does). Bisect on that.
 -- WIDE INSTRUMENTED TEST: set bit4 across a big range, log SB1 base at set-time,
 -- verify at gate-time that the pointer is stable and the write persisted.
-local LO = 0x158C
-local HI = 0x158D
+-- 2026-07-16: static disasm of FlagSet (0x0810D254, found via the script cmd
+-- table @0x0826D970 entry 0x29) proves the TRUE flags base is SB1+0x13C0, so
+-- flag 0x74 = byte +0x13CE bit4. The old empirical hit (+0x158C bit4) was
+-- actually var 0x4050 |= 0x10 (vars base = SB1+0x14EC) — the gate's
+-- "compare var 0x4050,0 → pass if !=0" branch, not checkflag 0x74.
+local LO = 0x13CE
+local HI = 0x13CF
 local base_at_set = nil
 
 local function sb1() return emu:read32(SB1_PTR) end
