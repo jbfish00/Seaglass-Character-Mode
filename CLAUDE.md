@@ -62,13 +62,37 @@ User's directive: **"Build and test until you have a playable rom with no bugs o
 
 **Full toolchain is now set up AND the injection pipeline is empirically validated end-to-end (2026-07-12).** armips syntax for GBA (confirmed against the actual `tools/bin/armips` v0.11.0 build, not just docs): `.gba` sets the architecture, `.open "in.gba","out.gba",0x08000000` opens for output (two-filename form copies input→output first, leaving the source untouched), `.org <memory address>` seeks (GBA ROM maps 1:1 at `0x08000000`, so memory address = file offset + that base), `.ascii "text"`/`.db` for raw bytes (`.string` needs a `.loadtable`-loaded charmap first — plain ASCII should use `.ascii`), `.close` closes the file. Validated round-trip: wrote a marker string into free space via armips → `flips --create --bps` diffed it into a 74-byte patch → `flips --apply` to a fresh ROM copy reproduced a byte-identical file (SHA1-verified) → both the armips-built and patch-reapplied ROMs boot-tested cleanly via `mgba-headless` for 300 frames with identical CPU state, no crash. **Nothing left blocking hook-writing/patch-building once a confirmed hook site exists** — the remaining gap is knowledge (which exact address to hook), not tools, and that knowledge-gap-closing path (headless breakpoint+key-injection tracing) is now also self-service, gated only on one savestate (see Status).
 
-## Status (2026-07-16 — latest; Lazarus feedback checkpoint #1)
+## Status (2026-07-16 — checkpoint #2 EXECUTED: catch enforcement hook CONFIRMED)
+
+**The catch-handler question — Phase 1's highest-value unknown — is now SOLVED**,
+by running Lazarus's recipe end-to-end on Seaglass:
+- Gave Poké Balls via `give_pokeballs.lua` (AddBagItem `0x0814D2D0` → pocket table
+  EWRAM `0x0200B0B8`, Poké Ball = item id 1) — the ROWE "give item" capability now
+  works here.
+- Caught a wild mon **fully headless** (weakened enemy to 1 HP + threw a ball;
+  `catch_trace_sg.lua`, `MGBA_HEADLESS_DEBUGGER=1`), watchpoints on
+  gPlayerPartyCount + slot1 fired and **partyCount went 1→2**.
+- Pinned **GiveMonToPlayer = `0x081AA5AC`** (disasm self-confirms gPlayerParty
+  `0x02019C20`, **gPlayerPartyCount `0x02019C1D`**, gSaveBlock2Ptr, memcpy
+  `0x08368EF0`, SetMonData `0x081A9CA0`, GetMonData `0x081A94AC`).
+- BL-scan → **exactly 3 callers** (matches Lazarus): **battle/catch `0x080A6A46`
+  (PRIMARY Character-Mode hook)**, egg-hatch `0x08188514` (exempt), script-gift
+  `0x081F18DE`. Full table + evidence in `docs/ROUTINE_MAP.md`; addresses in
+  `harness.lua` (`H.GiveMonToPlayer`, `H.GiveMon_callers`).
+
+This is the exact Phase-4 hook site. Remaining Phase-1-ish items: the selection
+mechanism (check whether Seaglass has Nemo622's cheat-code system like Lazarus —
+search game text for known codes), the `callnative` gift-site audit, and Phase 3
+sprites. Then Phase 4 injection can begin against a confirmed hook.
+
+## Status (2026-07-16 — Lazarus feedback checkpoint #1)
 
 Four findings landed from the Lazarus sibling project (see `../Lazarus-Character-Mode/`):
 
 1. **Headless breakpoints were never working — now fixed.** `emu:setBreakpoint` on stock `mgba-headless` returns -1 and never fires (`core->debugger` is never created; the "empirically verified" claim below covered callability only). Patched `tools/mgba_src/src/platform/headless-main.c` to attach a module-less debugger when **`MGBA_HEADLESS_DEBUGGER=1`**; rebuilt. Verified firing (61 FlagGet round-trips traced). **`headless_catch_trace.lua` / the 6 catch candidates are now runnable headlessly** — the "needs GUI + human" conclusion is obsolete. Env var only for trace runs (breakpoints armed = single-step slowdown).
 2. **TRUE flags/vars offsets found and live-verified** (via the script command table, located with `../Lazarus-Character-Mode/tools/find_script_cmd_table.py`): **flags = SB1+0x13C0, vars = SB1+0x14EC**; FlagGet `0x0810D35C`, FlagSet `0x0810D254`, GetVarPointer `0x0810D0C0`, cmd table `0x0826D970` (0xE7 cmds). See `docs/ROUTINE_MAP.md`'s new "Script engine" section.
 3. **Catch-trace recipe now PROVEN on Lazarus (checkpoint #2 ready here)**: don't chase the 6 string-anchor candidates — arm `emu:setWatchpoint(cb, gPlayerPartyCount, 5)` + slot-1 write watchpoints (`MGBA_HEADLESS_DEBUGGER=1`), catch a mon headlessly, and the faulting PC lands inside GiveMonToPlayer directly; then a whole-ROM Thumb BL scan enumerates every caller (Lazarus had exactly 3: battle-catch, daycare/hatch, ScriptGiveMon). Seaglass's gPlayerParty/count are already known (`0x02019C20`/stride 100 — count likely 3 bytes before, verify). Lazarus's ball-shortage fix also transfers: AddBagItem (via cmd-table entry 0x44) → pocket table + qty-XOR-key (SB2+offset) → Lua-write Poké Balls. See `../Lazarus-Character-Mode/docs/ROUTINE_MAP.md` + `tools/mgba_scripts/{catch_trace,give_pokeballs}.lua`.
+4a. **(2026-07-16 later, Lazarus Phase 4 wins — more transferable methods.)** (i) **Donor specials.inc INDEX ordering transfers**: Lazarus's trade specials sat at exactly the donor's indices 0xFF/0x100/0x101 in the specials table (base found from cmd-0x25 handler literal; special ID = (slot−base)/4) → `sIngameTrades` from the create-fn's literal pool in minutes. Try the identical route here for trades and any other special. (ii) **Cheat-code system anatomy** (Seaglass may have one too — search game text for its known codes): string table → dispatcher special (StringCompare chain → VAR_RESULT) → script-side switch; specials-table slot replacement = perfect selection hook, no BL constraints. (iii) **Custom givemon lives behind `callnative`** on this engine family (vanilla cmd 0x79 re-tabled to nop): search u32 refs to the native fn to enumerate ALL script gift sites; gifts do NOT go through GiveMonToPlayer (native inserts into party directly) — enforcement needs a post-check wrapper on those callnative pointers. (iv) MON_DATA enum: SPECIES=18 matched the donor exactly on Lazarus (verify per-ROM via GiveMonToPlayer's slot-probe constant). See `../Lazarus-Character-Mode/docs/SELECTION_MECHANISM.md` + `docs/ROUTINE_MAP.md`.
 4. **The 2026-07-15 gate finding was misattributed** (flags base 0x157E is wrong): the bisection's byte `+0x158C` bit4 was actually **var 0x4050 |= 0x10**, and the Littleroot gate is a coord trigger keyed on var 0x4050 == 0 (block script `0x0827DC4A` push-back), not flag 0x74 (live-disproven). All downstream results (starter, `gPlayerParty`, savestates) remain valid — the poke passed the gate for the right reason under the wrong name. `harness.lua` (FLAG_BLOCK/VAR_BLOCK + new `H.setVar/getVar`), `goto_grass.lua`, `reach_starter.lua` corrected.
 
 ## Status (2026-07-15)

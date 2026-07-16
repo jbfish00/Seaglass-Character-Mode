@@ -90,8 +90,25 @@ H.SB1_MAPNUM  = 0x05  -- u8
 -- pokeemerald layout -- verify before relying on it for the catch trace.
 H.gPlayerParty = 0x02019C20   -- EWRAM base of the 6x100-byte party array
 H.PARTY_STRIDE = 100          -- struct Pokemon size (bytes)
-H.gEnemyParty = 0x02019E78    -- candidate (gPlayerParty + 6*stride); UNVERIFIED
-H.gPlayerPartyCount = nil     -- u8 party count (separate global, not yet located)
+H.gEnemyParty = 0x02019E78    -- VERIFIED (2026-07-16): wild mon materializes here in battle
+H.gPlayerPartyCount = 0x02019C1D  -- u8 count. CONFIRMED via GiveMonToPlayer's own
+                                  -- literal pool + live catch (count 1->2).
+
+-- Catch/give ENFORCEMENT (CONFIRMED 2026-07-16 via live headless catch trace +
+-- disasm — see docs/ROUTINE_MAP.md). These are the Character-Mode Phase-4 hooks.
+H.GiveMonToPlayer = 0x081AA5AC        -- party-add fn (BL target). The enforcement point.
+H.GiveMon_callers = {
+    battle_catch = 0x080A6A46,        -- PRIMARY catch hook (gate off-roster -> PC)
+    egg_hatch    = 0x08188514,        -- daycare/hatch (exempt)
+    script_gift  = 0x081F18DE,        -- ScriptGiveMon (gate gifts)
+}
+H.SetMonData = 0x081A9CA0
+H.GetMonData = 0x081A94AC
+H.AddBagItem = 0x0814D2D0
+-- Bag "give item" (give_pokeballs.lua): pocket descriptor table EWRAM 0x0200B0B8
+-- (stride 8, [pocket-1]={u32 slots*, u8 cap}); slot {u16 id, u16 qty^key};
+-- key = u16 @ *gSaveBlock2Ptr+0xB0; Poke Ball = item id 1; Balls = pocket 2.
+H.BAG_POCKETS = 0x0200B0B8
 H.gSaveBlock1 = nil        -- resolved (deref'd) save block 1 base
 -- CORRECTED 2026-07-16 (via Lazarus feedback loop — see docs/ROUTINE_MAP.md):
 -- TRUE offsets, from static disasm of the flag/var primitives (found through

@@ -60,7 +60,37 @@ to attach a module-less debugger when **`MGBA_HEADLESS_DEBUGGER=1`** is set;
 rebuilt. Free while no breakpoints are armed; single-steps once they are.
 **This unblocks `headless_catch_trace.lua` / the 6 catch candidates below.**
 
-## Catch mechanic — CODE FOUND (real functions confirmed, exact catch-handler still undetermined)
+## Catch/give enforcement — CONFIRMED via live headless catch trace (2026-07-16, using Lazarus's method + the fixed headless breakpoints)
+
+**This supersedes the "6 string-choice candidates" approach below.** The real
+Character-Mode enforcement point is **GiveMonToPlayer** (the party-add function),
+not the battle-string dispatcher. Found by the Lazarus recipe: give Poké Balls
+(RAM), catch a wild mon fully headless, and set a **write-change watchpoint**
+(`emu:setWatchpoint(cb, addr, 5)`, needs `MGBA_HEADLESS_DEBUGGER=1`) on
+`gPlayerPartyCount` + party slot1. The catch fired both watchpoints and
+`partyCount` went 1→2 (`catch_trace_sg.lua`, `after_catch.ss`).
+
+| Symbol | Address | Evidence |
+|---|---|---|
+| **GiveMonToPlayer** | **`0x081AA5AC`** (Thumb; BL target) | disassembled: loads gSaveBlock2Ptr, SetMonData OT-id/name into the mon, scans 6 party slots for empty (GetMonData species==0), memcpy mon (stride 100), `strb ++count`. Literal pool self-confirms gPlayerParty `0x02019C20`, **gPlayerPartyCount `0x02019C1D`**, gSaveBlock2Ptr `0x030051BC` |
+| SetMonData | `0x081A9CA0` | 3 calls in GiveMonToPlayer (OT_ID=7, OT_NAME=0x38, field 2) |
+| GetMonData | `0x081A94AC` | empty-slot scan (species field 18) |
+| CopyMon (memcpy) | `0x08368EF0` | mon copy into slot, r2=0x64; WP slot1 fired here |
+| AddBagItem | `0x0814D2D0` | from ScrCmd_additem (cmd 0x44 @ table); pocket table EWRAM `0x0200B0B8` stride 8, Poké Ball=item id 1, slot {u16 id, u16 qty^key} — `give_pokeballs.lua` |
+
+**The 3 (and only 3) callers of GiveMonToPlayer** — the complete catch/gift
+enforcement audit surface (BL-scan; mirrors Lazarus's 3 exactly):
+
+| Caller | Address | Role | Character-Mode action |
+|---|---|---|---|
+| **battle/catch** | **`0x080A6A46`** | `mon = r5 + slot*100; r0=mon; bl GiveMonToPlayer; cmp r0,#0; beq …` (return 0=party, else PC) | **PRIMARY HOOK** — gate here: if caught species ∉ active character's roster, redirect to PC / block |
+| daycare/egg-hatch | `0x08188514` | egg-hatch give (field 22/38 reads) | exempt (grandfather/egg semantics, RR/Lazarus parity) |
+| script-gift | `0x081F18DE` | ScriptGiveMon (sets field 52=IS_EGG before give) | gate in-game gift Pokémon |
+
+This closes the highest-value Phase-1 unknown (catch enforcement) and gives the
+exact Phase-4 hook site. Recorded in `harness.lua`.
+
+## Catch mechanic (SUPERSEDED string-dispatcher investigation) — CODE FOUND, exact handler undetermined
 
 File offset `~0x4C6918`–`0x4C69A8` decodes to the full vanilla-shaped Emerald catch-sequence string bank, contiguous and in the expected order:
 ```
