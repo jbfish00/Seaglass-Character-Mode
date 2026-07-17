@@ -74,6 +74,6 @@ loads fine on the patched ROM.
    (`gSpecialsTable 0x0826DD68`) so character-name codes set `FLAG 0x945` +
    `VAR 0x40E4` and deliver the signature starter — see `docs/ROUTINE_MAP.md`
    "Selection mechanism" + `../Lazarus-Character-Mode/docs/SELECTION_MECHANISM.md`.
-3. **Remaining gates** — DONE for script-gift `0x081F18DE`; egg-hatch `0x08188514` intentionally exempt (eggs).
-   (retarget its BL too); egg-hatch `0x08188514` stays original (eggs exempt).
+3. **Remaining acquisition gates** — DONE (script-gift `0x081F18DE` gated;
+   egg-hatch `0x08188514` intentionally exempt — eggs).
 4. Trades, sprites (Phase 3), regression suite, README — RR/Lazarus parity.
