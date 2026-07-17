@@ -1,26 +1,31 @@
 ; Character Mode enforcement injection — Pokemon Emerald Seaglass v3.0.
-; Places the compiled shim (build/cm.bin, linked at 0x08ED2164, entry
-; CM_GiveMonToPlayerGated = 0x08ED21A6) in the big free block, adds an 8-byte
-; trampoline in BL range of the wild-catch caller, and retargets that caller's
-; BL from GiveMonToPlayer -> the trampoline -> the gated shim.
+; Places the compiled shim + per-character roster bitmap in the big free block,
+; adds an 8-byte trampoline in BL range of the wild-catch caller, and retargets
+; that caller's BL from GiveMonToPlayer -> trampoline -> the gated shim.
 ;
 ; Hook site (docs/ROUTINE_MAP.md, live catch-trace-confirmed):
 ;   0x080A6A46  bl 0x081AA5AC (GiveMonToPlayer)  ->  bl 0x08470200 (trampoline)
-; Trampoline scavenge: 0x08470200 (64 bytes of 0xFF padding, BL-reachable).
+; CM_ENTRY (shim entry) is generated into build/cm_entry.asm by build_cm.sh.
 
 .gba
 .open "rom/seaglass v3.0.gba", "build/seaglass_cm.gba", 0x08000000
 
+.include "build/cm_entry.asm"     ; .definelabel CM_ENTRY, 0x08ED21xx
+
 ; --- shim blob in free space ---
 .org 0x08ED2164
 .incbin "build/cm.bin"
+
+; --- per-character allowed-species bitmap (rosters_expanded.bin) ---
+.org 0x08ED2400
+.incbin "tools/character_mode/rosters_expanded.bin"
 
 ; --- trampoline (Thumb): jump to the far shim entry ---
 .org 0x08470200
 .thumb
     ldr r3, [pc, #0]      ; -> word at 0x08470204
     bx  r3
-    .word 0x08ED21A7      ; CM_GiveMonToPlayerGated | 1 (Thumb)
+    .word CM_ENTRY+1      ; CM_GiveMonToPlayerGated | 1 (Thumb)
 
 ; --- retarget the wild-catch caller's BL ---
 .org 0x080A6A46

@@ -81,10 +81,13 @@ to Seaglass's confirmed hook:
 - `build/seaglass_cm.bps` created against the hack ROM, round-trip byte-identical.
   `sh tools/build_cm.sh` reproduces from source. Full writeup: `docs/INJECTION.md`.
 
-**Roster is a hardcoded PoC (Torchic line)** — the hook/gate/build/patch chain is
-production; remaining for a real playable build: pipeline **bitmap emit** (roster
-base-lists → per-character allowed-species bitfield), **selection mechanism**
-(cheat-code specials-table slot `0x0826DD68` → set CM flag/var + give starter),
+**REAL 170-character roster now wired in** (`tools/character_mode/emit_bitmaps.py`
+→ `rosters_expanded.bin`, base stages expanded through the donor evolution graph;
+placed at ROM `0x08ED2400`; shim `onRoster()` = bit test). **Per-character
+discrimination live-tested**: same wild Zigzagoon, CM on — char 1 (Red, off
+roster) → blocked→PC (count 1); char 39 (Brendan, on roster) → party (count 2).
+Remaining for a full playable game: **selection mechanism** (cheat-code
+specials-table slot `0x0826DD68` → set CM flag/var + give signature starter),
 gate the script-gift caller `0x081F18DE`, then trades/sprites/tests/README.
 
 ## Status (2026-07-16 — checkpoint #2 EXECUTED: catch enforcement hook CONFIRMED)

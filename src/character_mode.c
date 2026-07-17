@@ -45,20 +45,34 @@ typedef unsigned int   u32;
 #define MON_DATA_SPECIES 18
 #define MON_DATA_IS_EGG  52
 
+/* Per-character allowed-species bitmap (tools/character_mode/emit_bitmaps.py:
+ * rosters_expanded.bin, 170 x 187 bytes, index-aligned with characters.bin;
+ * bit S set => species id S catchable/keepable). Placed in free space by the
+ * injector; -DBITMAPS_ADDR passes its address. */
+#define NUM_CHARACTERS 170
+#define NUM_SPECIES    1489   /* max ROM species id 1488 + 1 */
+#define BITMAP_STRIDE  187
+#ifndef BITMAPS_ADDR
+#error "compile with -DBITMAPS_ADDR=<rosters_expanded.bin address>"
+#endif
+#define sBitmaps ((const u8 *) BITMAPS_ADDR)
+
 static int gateActive(void)
 {
     u16 id;
     if (!FlagGet(FLAG_CHARACTER_MODE))
         return 0;
     id = *GetVarPointer(VAR_CM_CHAR);
-    return id != 0;   /* any non-zero character selected */
+    return id >= 1 && id <= NUM_CHARACTERS;
 }
 
-/* PoC: Torchic line only. Real build: per-character bitmap bit test. */
 static int onRoster(u16 charId, u32 species)
 {
-    (void) charId;
-    return species == 255 || species == 256 || species == 257;
+    const u8 *bm;
+    if (species == 0 || species >= NUM_SPECIES)
+        return 1;   /* out-of-model species: never block */
+    bm = sBitmaps + (charId - 1) * BITMAP_STRIDE;
+    return (bm[species >> 3] >> (species & 7)) & 1;
 }
 
 u8 CM_GiveMonToPlayerGated(void *mon)

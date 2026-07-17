@@ -1,9 +1,10 @@
-# Injection — Phase 4/5 (catch-enforcement PoC, live-tested)
+# Injection — Phase 4/5 (catch enforcement, real rosters, live-tested)
 
-**Status (2026-07-17): catch enforcement is INJECTED, LIVE-TESTED, and packaged
-as a BPS.** This is the core Character-Mode mechanic working in a real patched
-ROM. The roster check is a hardcoded PoC (Torchic line) pending the pipeline
-bitmap step; the hook, gate, trampoline, build, and patch chain are production.
+**Status (2026-07-17): catch enforcement is INJECTED with the REAL 170-character
+roster bitmap, LIVE-TESTED with per-character discrimination, and packaged as a
+BPS.** The core Character-Mode mechanic works in a real patched ROM for every
+character. Remaining for a full game: the in-game selection UI (currently the CM
+flag/var are set via RAM), script-gift/trade gating, sprites.
 
 ## What ships
 
@@ -16,10 +17,20 @@ Seaglass ROM, never to clean Emerald). Round-trip verified byte-identical
 ## The shim (`src/character_mode.c`)
 
 `CM_GiveMonToPlayerGated(mon)` — ROWE/RR acquisition semantics: when Character
-Mode is ON (`FLAG 0x945` set + `VAR 0x40E4` != 0) and the caught mon is a
+Mode is ON (`FLAG 0x945` set + `VAR 0x40E4` in 1..170) and the caught mon is a
 non-egg species not on the active character's roster, route it to the PC
 (`CopyMonToPC`) instead of the party (`GiveMonToPlayer`); otherwise identical to
-the original. Returns the same u8 the caller's `cmp r0,#0` expects.
+the original. `onRoster()` is an O(1) bit test into the per-character bitmap.
+
+## The roster bitmap (`tools/character_mode/emit_bitmaps.py` → `rosters_expanded.bin`)
+
+The pipeline stores each character's roster as evolution-family **base stages**;
+enforcement must allow the whole family. `emit_bitmaps.py` expands each base
+forward through the donor's evolution graph, maps every member's display name
+back to this ROM's species id, and sets its bit → 170 × 187-byte bitmaps
+(index-aligned with `characters.bin`, bit S = species id S catchable). 0 family
+names unresolved; avg 29.8 species/char. Verified: Red allows the full
+Bulbasaur+Charmander families; Brendan allows Zigzagoon, Red does not.
 
 Confirmed addresses used (all live-verified, `docs/ROUTINE_MAP.md`):
 GiveMonToPlayer `0x081AA5AC`, CopyMonToPC `0x081AA620`, GetMonData `0x081A94AC`,
@@ -42,25 +53,22 @@ PC-relative, engine calls via absolute-pointer literals) — placeable anywhere.
 
 ## Live test (`tools/mgba_scripts/cm_catch_test.lua`)
 
-Same wild Zigzagoon (Nat-Dex 263, off the PoC Torchic-line roster), same catch,
-toggling only the CM flag/var:
+Same wild Zigzagoon (Nat-Dex 263), same catch, varying only the CM state:
 
 | Run | Setup | partyCount | Meaning |
 |---|---|---|---|
-| **control** | CM off | 1 → **2** | Zigzagoon caught to party (normal) |
-| **enforcement** | CM on | 1 → **1** | same catch, off-roster mon **blocked → PC** |
+| control | CM off | 1 → **2** | Zigzagoon caught to party (normal) |
+| enforce, char 1 (Red) | Zigzagoon **off** Red's roster | 1 → **1** | **blocked → PC** |
+| enforce, char 39 (Brendan) | Zigzagoon **on** Brendan's roster | 1 → **2** | **allowed → party** |
 
-The control proves the catch succeeds; the enforcement run proves the gate
-redirects it. `battle_menu2.ss` (original-ROM state) loads fine on the patched
-ROM.
+Per-character discrimination on an identical catch — the real bitmap works. The
+control proves the catch succeeds; Red proves the gate redirects off-roster;
+Brendan proves on-roster is untouched. `battle_menu2.ss` (original-ROM state)
+loads fine on the patched ROM.
 
-## To reach a real playable build
+## To reach a full playable game
 
-1. **Roster bitmap emit** (pipeline): `rosters.bin` currently holds base-species
-   *lists*; the shim needs a per-character allowed-species *bitmap* (base +
-   evolution families → bitfield, like Lazarus's `rosters_expanded.bin`). Add an
-   `emit_bitmaps.py` step; then `onRoster()` becomes a bit test and the hardcoded
-   PoC roster is replaced.
+1. **Roster bitmap** — DONE (`emit_bitmaps.py`, wired into the shim, tested).
 2. **Selection mechanism**: hook the cheat-code matcher's specials-table slot
    (`gSpecialsTable 0x0826DD68`) so character-name codes set `FLAG 0x945` +
    `VAR 0x40E4` and deliver the signature starter — see `docs/ROUTINE_MAP.md`
