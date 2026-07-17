@@ -2,6 +2,25 @@
 
 Guidance for Claude Code when working in this repo. Keep this file current at every pause — it's the handoff doc for a fresh instance picking this up cold.
 
+## ⭐ COLD-START QUICK REFERENCE (read first; full detail in the dated Status entries below)
+
+**Where we are (2026-07-17):** The **core Character-Mode mechanic works, is injected, live-tested, and packaged.** Catch + script-gift acquisition are gated by the real 170-character roster bitmap: an off-roster non-egg mon is routed to the PC instead of the party. Phases 0–2 done; Phase 1 RE fully confirmed (all addresses in `harness.lua` + `docs/ROUTINE_MAP.md`); Phase 4 (injection) + Phase 5 (BPS round-trip) done for enforcement.
+
+**Build the patch** (reproducible from source): `sh tools/build_cm.sh` → `build/seaglass_cm.gba` + `build/seaglass_cm.bps` (both gitignored; BPS is the deliverable, created against the hack ROM). See `docs/INJECTION.md`.
+
+**Test it** (headless; breakpoints need `MGBA_HEADLESS_DEBUGGER=1`):
+```
+# per-character catch enforcement (CM on): char 1 (Red) blocks Zigzagoon, char 39 (Brendan) allows it
+CM_ON=1 CM_CHAR=1  ./tools/mgba_src/build/mgba-headless --script tools/mgba_scripts/cm_catch_test.lua -t tools/savestates/battle_menu2.ss build/seaglass_cm.gba
+```
+Key savestates (gitignored, one person's playthrough): `battle_menu2.ss` (wild Zigzagoon battle — the enforcement-test fixture), `have_starter.ss`, `oldale.ss`, `mart_inside.ss`. Original-ROM states load fine on the patched ROM.
+
+**What's NEXT (task #15, in priority order):**
+1. **Selection mechanism** — the biggest gap. CM flag/var are set via RAM in tests; players need an in-game way to pick a character. The native cheat-code system is LOCATED (`gSpecialsTable 0x0826DD68`, entry script `0x08311C32`, "CHEAT DEVICE/GIFT CODE" text `~0x00311A23`) but the exact matcher special + code-string table aren't pinned yet. **Lazarus completed this exact injection** — read `../Lazarus-Character-Mode/docs/SELECTION_MECHANISM.md` + its `src/character_mode.c` `CM_CheatDispatchHook` + `tools/inject_character_mode.py` as the template.
+2. Trade gating, Phase 3 sprites (task #10, for select-UI portraits), regression suite, end-user README.
+
+**The sibling `../Lazarus-Character-Mode/` (same author Nemo622, same engine) is FINISHED (Phase 6, shipped) and is the primary source of transferable methods** — offsets differ per-build but techniques/idioms transfer. Its CLAUDE.md Status + docs are worth re-reading before each new subsystem here (selection, trades, test suite). This session's wins (flags/vars offsets, headless-breakpoint fix, catch-trace recipe, give-item, injection template) all came from it.
+
 ## What this project is
 
 Porting the "Character Mode" feature from the Pokemon ROWE project (`/home/jbfish00/Documents/Pokemon Rowe Alteration`) to Pokemon Emerald Seaglass (by Nemo622): an opt-in mode restricting the player to catching/keeping only one iconic Pokemon character's Bulbapedia-documented roster (evolution families included). See the full plan at `~/.claude/plans/similar-to-what-you-tranquil-crescent.md` for the research behind this scaffold.
@@ -50,6 +69,14 @@ User's directive: **"Build and test until you have a playable rom with no bugs o
 - `tools/mgba_src/` — gitignored clone+build of `mgba-emu/mgba` from source (see Toolchain: built to get the headless frontend, which the packaged `mgba-qt` 0.10.2 doesn't have). `tools/mgba_src/build/mgba-headless` is the resulting binary.
 - `tools/patches/test_toolchain_roundtrip.asm` — a harmless armips test patch (writes a marker string into free space) used once to validate the full armips→flips→boot-test pipeline; not part of Character Mode itself, kept as a working syntax reference for future `.asm` hook files.
 - `build/` — gitignored scratch output for ROM-copy build artifacts (armips output, flips patches, boot-test roms). Never the canonical source ROM.
+
+**Phase 4 injection (added 2026-07-17 — the working enforcement patch; see `docs/INJECTION.md`):**
+- `src/character_mode.c` — the enforcement shim (`CM_GiveMonToPlayerGated`: off-roster non-egg catch → PC). Compiles to a position-independent Thumb blob.
+- `tools/patches/inject_cm.asm` — armips injector: shim @`0x08ED2164`, roster bitmap @`0x08ED2400`, trampoline @`0x08470200`, retargets the two acquisition BLs (catch `0x080A6A46`, script-gift `0x081F18DE`).
+- `tools/build_cm.sh` — one-command reproducible build (emit bitmaps → gcc → ld → objcopy → armips → flips). Reads the shim entry from the ELF into `build/cm_entry.asm` so the shim can move freely.
+- `tools/character_mode/emit_bitmaps.py` → `rosters_expanded.bin` — per-character allowed-species bitmap (base rosters expanded through the donor evolution graph; 170×187 B).
+- `tools/mgba_scripts/` (Phase 4/live-testing additions): `cm_catch_test.lua` (enforcement test), `catch_trace_sg.lua` (the watchpoint catch trace), `give_pokeballs.lua` (give-item), `nav_coords.lua` + the intro-nav suite (`drive_intro`, `reach_starter`, `win_battle`, `lab_out`, `trek_v3`, `walk_grass`, `grass_east`, `to_bag`, `buy_potion`, …), `probe_saveblock.lua`, `scan_saveblock.lua`, `boot_test.lua`. See `docs/INTRO_NAVIGATION.md` for the nav route.
+- `docs/INJECTION.md` — the Phase 4/5 injection writeup (shim, hooks, bitmap, live-test table, build). `docs/INTRO_NAVIGATION.md` — headless intro nav + all savestate checkpoints.
 
 ## Toolchain
 
@@ -164,13 +191,15 @@ Four findings landed from the Lazarus sibling project (see `../Lazarus-Character
 
 **Phases 3-6: not started.** Phase 3 (sprite/trainer-pic coverage) and Phases 4-6 (actual code injection, patch assembly, playtesting) are the remaining work toward the standing "playable ROM" goal — see Roadmap below.
 
-## Roadmap to playable (added 2026-07-12 per standing goal)
+## Roadmap to playable (status as of 2026-07-17)
 
-1. **Phase 1 routine mapping — IN PROGRESS, partially self-service now.** Catch-mechanism disambiguation is blocked on one savestate from the user (see NEXT); PC-storage/trade/Mystery-Gift dispatchers are found but not fully traced to their exact enforcement points (lower priority than catch — catch/starter gating is the core mechanic, PC-sweep and gift-gating are secondary enforcement paths that matter for "no bugs" but not for a minimum playable version).
-2. **Phase 3 — sprite/trainer-pic coverage: not started.** Needs locating Seaglass's OW sprite and trainer-pic tables (same `search_gametext.py`/pointer-search/Ghidra technique as Phase 1). Blocks: character-select screen needing a portrait per character, `sprite_asset_id` in `characters.bin` staying a placeholder.
-3. **Phase 4 — actual Character Mode code injection: not started.** Once Phase 1 confirms hook sites (catch success, PC storage, title-menu mode-select, ideally starter-selection too), write the real ARM/Thumb hooks in `.asm` (armips, now validated working) implementing: character-select UI (piggybacking on the title-menu hook found — `FUN_08160ebc`), catch-time roster enforcement (reject/allow based on `characters.bin`/`rosters.bin`), PC-sweep on character switch, and reading the roster/name data already built in Phase 2.
-4. **Phase 5 — patch assembly: not started but pipeline validated.** `flips --create --bps` from a hooked ROM copy vs. the clean source ROM, following the exact round-trip already proven this session.
-5. **Phase 6 — actual playtesting for "no bugs or glitches": harness built, tests pending code to test.** `tools/mgba_scripts/harness.lua` (+ `docs/TESTING.md`) is the ROWE-debug-menu port: scripted input, RAM read/write, breakpoints, PASS/FAIL assertions, all headless and repeatable. Once hooks are injected this becomes the regression suite gating "playable": in-roster species catchable, out-of-roster rejected, PC sweep correct, character-select commits, save/load round-trips. Expect this to be the largest remaining phase once code exists to test.
+- **Phase 0 — ROM pinned. DONE.** (`rom.sha1`, `docs/ROM_INFO.md`.)
+- **Phase 1 — RE. DONE (core confirmed).** Free space, species table, SaveBlock trio, flags/vars offsets (SB1+0x13C0 / +0x14EC), gPlayerParty/count/EnemyParty, and — the big one — **the catch/gift enforcement surface: GiveMonToPlayer `0x081AA5AC` + its 3 callers (battle/catch `0x080A6A46`, egg-hatch `0x08188514`, script-gift `0x081F18DE`), CopyMonToPC `0x081AA620`** — all live-verified. The selection mechanism (cheat-code system) is LOCATED but its matcher/code-table aren't pinned. All in `docs/ROUTINE_MAP.md` + `harness.lua`.
+- **Phase 2 — roster pipeline. DONE.** 170 characters, real ROM ids, + `emit_bitmaps.py` → per-character allowed-species bitmap (base rosters expanded through evolution families).
+- **Phase 3 — sprites. NOT STARTED (task #10).** Needed for character-select portraits; `sprite_asset_id` in `characters.bin` still a placeholder. Not blocking enforcement.
+- **Phase 4 — injection. DONE for acquisition enforcement; selection remaining.** ✅ Catch + script-gift gated by the real roster bitmap, injected, **live-tested with per-character discrimination** (Red blocks Zigzagoon, Brendan allows it). ❌ **In-game selection UI** — CM flag/var (`FLAG 0x945`, `VAR_CM_CHAR 0x40E4`) are set via RAM in tests; still need to hook the cheat-code matcher's specials-table slot (`gSpecialsTable 0x0826DD68`) so character-name codes set them + give the signature starter (Lazarus's `CM_CheatDispatchHook` is the template). ❌ trade gating.
+- **Phase 5 — BPS. DONE for the current build.** `build/seaglass_cm.bps` round-trips byte-identical; `sh tools/build_cm.sh` reproduces.
+- **Phase 6 — regression suite + "no bugs" playtest. PARTIAL.** The enforcement path has a controlled live test (`cm_catch_test.lua`); a full suite (à la Lazarus's 4 layers: GDB unit tests, boot smoke, static artifact checks, live e2e) is not built. Once selection is injected, this becomes the gate to "playable." Lazarus found 2 real bugs in its equivalent step (stale activation marker; phantom nickname prompt on wrapper-boxed gives) — watch for the analogues here.
 
 ## Testing (read `docs/TESTING.md` before doing test work)
 
