@@ -27,8 +27,15 @@
     bx  r3
     .word CM_ENTRY+1      ; CM_GiveMonToPlayerGated | 1 (Thumb)
 
-; --- retarget the wild-catch caller's BL ---
+; --- retarget the wild-catch caller's BL (primary hook) ---
 .org 0x080A6A46
+.thumb
+    bl 0x08470200
+
+; --- retarget the script-gift caller (ScriptGiveMon) — same trampoline, in
+;     BL range (2.6 MB). Gates in-game gift Pokemon. The egg-hatch caller
+;     0x08188514 is left original (eggs exempt). ---
+.org 0x081F18DE
 .thumb
     bl 0x08470200
 

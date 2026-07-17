@@ -46,10 +46,11 @@ PC-relative, engine calls via absolute-pointer literals) — placeable anywhere.
    spot; the free block is >4 MB from the caller, out of Thumb BL range):
    `ldr r3,[pc,#0]; bx r3; .word 0x08ED21A7` (entry|1). `bx` preserves `lr`, so
    the shim returns straight to the caller.
-3. **Hook**: retarget the wild-catch caller's BL `0x080A6A46`
-   (GiveMonToPlayer → trampoline). `0x080A6A46` is 3.9 MB from `0x08470200` — in
-   BL range. Total shipped-region edit: 4 bytes (one BL). Everything else is
-   additive free space.
+3. **Hooks**: retarget the two acquisition BLs to the trampoline (both in BL
+   range of it): wild-catch `0x080A6A46` (3.9 MB) and script-gift `0x081F18DE`
+   (2.6 MB). The egg-hatch caller `0x08188514` is left original (eggs exempt).
+   Total shipped-region edit: 8 bytes (two BLs). Everything else is additive
+   free space.
 
 ## Live test (`tools/mgba_scripts/cm_catch_test.lua`)
 
@@ -73,6 +74,6 @@ loads fine on the patched ROM.
    (`gSpecialsTable 0x0826DD68`) so character-name codes set `FLAG 0x945` +
    `VAR 0x40E4` and deliver the signature starter — see `docs/ROUTINE_MAP.md`
    "Selection mechanism" + `../Lazarus-Character-Mode/docs/SELECTION_MECHANISM.md`.
-3. **Gate the other 2 GiveMonToPlayer callers**: script-gift `0x081F18DE`
+3. **Remaining gates** — DONE for script-gift `0x081F18DE`; egg-hatch `0x08188514` intentionally exempt (eggs).
    (retarget its BL too); egg-hatch `0x08188514` stays original (eggs exempt).
 4. Trades, sprites (Phase 3), regression suite, README — RR/Lazarus parity.

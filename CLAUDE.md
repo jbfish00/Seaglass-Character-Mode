@@ -88,7 +88,7 @@ discrimination live-tested**: same wild Zigzagoon, CM on — char 1 (Red, off
 roster) → blocked→PC (count 1); char 39 (Brendan, on roster) → party (count 2).
 Remaining for a full playable game: **selection mechanism** (cheat-code
 specials-table slot `0x0826DD68` → set CM flag/var + give signature starter),
-gate the script-gift caller `0x081F18DE`, then trades/sprites/tests/README.
+then trades/sprites/tests/README. (Script-gift caller `0x081F18DE` now gated; egg-hatch `0x08188514` exempt.)
 
 ## Status (2026-07-16 — checkpoint #2 EXECUTED: catch enforcement hook CONFIRMED)
 
