@@ -62,6 +62,31 @@ User's directive: **"Build and test until you have a playable rom with no bugs o
 
 **Full toolchain is now set up AND the injection pipeline is empirically validated end-to-end (2026-07-12).** armips syntax for GBA (confirmed against the actual `tools/bin/armips` v0.11.0 build, not just docs): `.gba` sets the architecture, `.open "in.gba","out.gba",0x08000000` opens for output (two-filename form copies input→output first, leaving the source untouched), `.org <memory address>` seeks (GBA ROM maps 1:1 at `0x08000000`, so memory address = file offset + that base), `.ascii "text"`/`.db` for raw bytes (`.string` needs a `.loadtable`-loaded charmap first — plain ASCII should use `.ascii`), `.close` closes the file. Validated round-trip: wrote a marker string into free space via armips → `flips --create --bps` diffed it into a 74-byte patch → `flips --apply` to a fresh ROM copy reproduced a byte-identical file (SHA1-verified) → both the armips-built and patch-reapplied ROMs boot-tested cleanly via `mgba-headless` for 300 frames with identical CPU state, no crash. **Nothing left blocking hook-writing/patch-building once a confirmed hook site exists** — the remaining gap is knowledge (which exact address to hook), not tools, and that knowledge-gap-closing path (headless breakpoint+key-injection tracing) is now also self-service, gated only on one savestate (see Status).
 
+## Status (2026-07-17 — PHASE 4/5: catch enforcement INJECTED + LIVE-TESTED + BPS)
+
+**The core Character-Mode mechanic works in a real patched ROM.** Adapted
+Lazarus's injection template (`src/character_mode.c`, `tools/inject_character_mode.py`)
+to Seaglass's confirmed hook:
+- `src/character_mode.c`: `CM_GiveMonToPlayerGated(mon)` — when CM on (FLAG 0x945
+  + VAR 0x40E4) and the caught non-egg species isn't on the active roster, route
+  to PC (`CopyMonToPC 0x081AA620`) instead of party (`GiveMonToPlayer 0x081AA5AC`).
+  Compiles to a 180-byte position-independent Thumb blob.
+- `tools/patches/inject_cm.asm` + `tools/build_cm.sh`: shim at free-space
+  `0x08ED2164`; 8-byte **trampoline** at `0x08470200` (0xFF-padding scavenge, in
+  BL range); retarget the wild-catch caller BL `0x080A6A46` → trampoline → shim.
+  Total shipped-region edit = 4 bytes.
+- **Live test (`cm_catch_test.lua`), same wild Zigzagoon, toggling only the CM
+  flag**: CM off → caught to party (count 1→2); **CM on → same catch, off-roster
+  mon blocked → PC (count stays 1)**. Controlled proof the gate works.
+- `build/seaglass_cm.bps` created against the hack ROM, round-trip byte-identical.
+  `sh tools/build_cm.sh` reproduces from source. Full writeup: `docs/INJECTION.md`.
+
+**Roster is a hardcoded PoC (Torchic line)** — the hook/gate/build/patch chain is
+production; remaining for a real playable build: pipeline **bitmap emit** (roster
+base-lists → per-character allowed-species bitfield), **selection mechanism**
+(cheat-code specials-table slot `0x0826DD68` → set CM flag/var + give starter),
+gate the script-gift caller `0x081F18DE`, then trades/sprites/tests/README.
+
 ## Status (2026-07-16 — checkpoint #2 EXECUTED: catch enforcement hook CONFIRMED)
 
 **The catch-handler question — Phase 1's highest-value unknown — is now SOLVED**,
