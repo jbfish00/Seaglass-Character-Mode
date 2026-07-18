@@ -1,0 +1,86 @@
+# Pokémon Emerald Seaglass v3.0 — Roster Sprites (Generation 6)
+
+Final-evolution rosters in National Pokédex order, sprites with names. [← back to index](../ROSTERS_SPRITES.md)
+
+### Alain — Anime
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/6.png"><br><sub>Charizard</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/248.png"><br><sub>Tyranitar</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/376.png"><br><sub>Metagross</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/461.png"><br><sub>Weavile</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/521.png"><br><sub>Unfezant</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/652.png"><br><sub>Chesnaught</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/687.png"><br><sub>Malamar</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/983.png"><br><sub>Kingambit</sub></td></tr>
+</table>
+
+### Calem — Protagonist
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/359.png"><br><sub>Absol</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/652.png"><br><sub>Chesnaught</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/655.png"><br><sub>Delphox</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/658.png"><br><sub>Greninja</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/660.png"><br><sub>Diggersby</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/666.png"><br><sub>Vivillon</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/678.png"><br><sub>Meowstic</sub></td></tr>
+</table>
+
+### Clemont — Gym Leader
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/405.png"><br><sub>Luxray</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/462.png"><br><sub>Magnezone</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/587.png"><br><sub>Emolga</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/652.png"><br><sub>Chesnaught</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/660.png"><br><sub>Diggersby</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/695.png"><br><sub>Heliolisk</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/702.png"><br><sub>Dedenne</sub></td></tr>
+</table>
+
+### Diantha — Champion
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/282.png"><br><sub>Gardevoir</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/697.png"><br><sub>Tyrantrum</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/699.png"><br><sub>Aurorus</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/701.png"><br><sub>Hawlucha</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/706.png"><br><sub>Goodra</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/711.png"><br><sub>Gourgeist</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/719.png"><br><sub>Diancie</sub></td></tr>
+</table>
+
+### Grant — Gym Leader
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/208.png"><br><sub>Steelix</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/697.png"><br><sub>Tyrantrum</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/699.png"><br><sub>Aurorus</sub></td></tr>
+</table>
+
+### Korrina — Gym Leader
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/68.png"><br><sub>Machamp</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/308.png"><br><sub>Medicham</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/448.png"><br><sub>Lucario</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/475.png"><br><sub>Gallade</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/620.png"><br><sub>Mienshao</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/652.png"><br><sub>Chesnaught</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/701.png"><br><sub>Hawlucha</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/740.png"><br><sub>Crabominable</sub></td></tr>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/865.png"><br><sub>Sirfetch'd</sub></td></tr>
+</table>
+
+### Lysandre — Villain
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/130.png"><br><sub>Gyarados</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/430.png"><br><sub>Honchkrow</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/620.png"><br><sub>Mienshao</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/668.png"><br><sub>Pyroar</sub></td></tr>
+</table>
+
+### Malva — Elite Four
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/229.png"><br><sub>Houndoom</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/324.png"><br><sub>Torkoal</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/609.png"><br><sub>Chandelure</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/655.png"><br><sub>Delphox</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/666.png"><br><sub>Vivillon</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/668.png"><br><sub>Pyroar</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/681.png"><br><sub>Aegislash</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/717.png"><br><sub>Yveltal</sub></td></tr>
+</table>
+
+### Ramos — Gym Leader
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/45.png"><br><sub>Vileplume</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/71.png"><br><sub>Victreebel</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/103.png"><br><sub>Exeggutor</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/182.png"><br><sub>Bellossom</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/189.png"><br><sub>Jumpluff</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/192.png"><br><sub>Sunflora</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/673.png"><br><sub>Gogoat</sub></td></tr>
+</table>
+
+### Sawyer — Anime
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/254.png"><br><sub>Sceptile</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/289.png"><br><sub>Slaking</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/373.png"><br><sub>Salamence</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/681.png"><br><sub>Aegislash</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/685.png"><br><sub>Slurpuff</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/693.png"><br><sub>Clawitzer</sub></td></tr>
+</table>
+
+### Serena — Protagonist
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/134.png"><br><sub>Vaporeon</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/135.png"><br><sub>Jolteon</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/136.png"><br><sub>Flareon</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/196.png"><br><sub>Espeon</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/197.png"><br><sub>Umbreon</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/470.png"><br><sub>Leafeon</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/471.png"><br><sub>Glaceon</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/655.png"><br><sub>Delphox</sub></td></tr>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/675.png"><br><sub>Pangoro</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/700.png"><br><sub>Sylveon</sub></td></tr>
+</table>
+
+### Shauna — Rival
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/3.png"><br><sub>Venusaur</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/301.png"><br><sub>Delcatty</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/652.png"><br><sub>Chesnaught</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/655.png"><br><sub>Delphox</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/658.png"><br><sub>Greninja</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/671.png"><br><sub>Florges</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/706.png"><br><sub>Goodra</sub></td></tr>
+</table>
+
+### Siebold — Elite Four
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/9.png"><br><sub>Blastoise</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/121.png"><br><sub>Starmie</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/130.png"><br><sub>Gyarados</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/689.png"><br><sub>Barbaracle</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/693.png"><br><sub>Clawitzer</sub></td></tr>
+</table>
+
+### Valerie — Gym Leader
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/303.png"><br><sub>Mawile</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/683.png"><br><sub>Aromatisse</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/700.png"><br><sub>Sylveon</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/866.png"><br><sub>Mr. Rime</sub></td></tr>
+</table>
+
+### Viola — Gym Leader
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/284.png"><br><sub>Masquerain</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/666.png"><br><sub>Vivillon</sub></td></tr>
+</table>
+
+### Wikstrom — Elite Four
+<table>
+<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/212.png"><br><sub>Scizor</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/476.png"><br><sub>Probopass</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/681.png"><br><sub>Aegislash</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/707.png"><br><sub>Klefki</sub></td></tr>
+</table>
+
