@@ -52,3 +52,6 @@ docs/strings_dump.txt
 docs/ghidra_analysis.log
 docs/all_strings_dump.txt
 docs/all_strings_dump.stderr
+
+# Local Claude Code handoff notes (kept out of the public repo)
+CLAUDE.md
