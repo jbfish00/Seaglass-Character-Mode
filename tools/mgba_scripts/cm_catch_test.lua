@@ -37,8 +37,8 @@ H.onFrame(function(f)
     if f>1900 and f<4200 and f%80==0 then H.press(K.A, 8, 30) end
     if f==4400 then
         emu:screenshot("tools/savestates/cm_test_" .. (CM_ON and "on" or "off") .. ".png")
-        H.log(string.format("RESULT CM_ON=%s partyCount=%d (expect %s)",
-            tostring(CM_ON), emu:read8(PC), CM_ON and "1=blocked->PC" or "2=to party"))
+        H.assertEq(CM_ON and "partyCount (blocked->PC)" or "partyCount (to party)",
+            emu:read8(PC), CM_ON and 1 or 2)
         H.finish()
     end
 end)

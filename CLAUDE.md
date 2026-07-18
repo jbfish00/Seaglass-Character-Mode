@@ -4,20 +4,22 @@ Guidance for Claude Code when working in this repo. Keep this file current at ev
 
 ## ⭐ COLD-START QUICK REFERENCE (read first; full detail in the dated Status entries below)
 
-**Where we are (2026-07-17):** The **core Character-Mode mechanic works, is injected, live-tested, and packaged.** Catch + script-gift acquisition are gated by the real 170-character roster bitmap: an off-roster non-egg mon is routed to the PC instead of the party. Phases 0–2 done; Phase 1 RE fully confirmed (all addresses in `harness.lua` + `docs/ROUTINE_MAP.md`); Phase 4 (injection) + Phase 5 (BPS round-trip) done for enforcement.
+**Where we are (2026-07-17 latest):** **Real-UI activation e2e DONE and in the suite — every seam is now live-verified except trades-in-situ.** The full feature (selection via CODE naming screen, catch/gift/callnative enforcement, trades, deactivation) is injected; `sh tools/tests/run_tests.sh` runs **8 layers, all green, ~20 s**: static 24/24, boot, catch gate on/off, and four naming-screen e2e (RED activate, MISTY discriminate, ZZZ reject, CMDBGOFF deactivate) driven from `naming_open.ss` with real assertions. **Left: trade refusal in-situ (needs a savestate near a trade NPC), full human playthrough, optional GDB shim unit tests, Phase 3 sprites (ships without, per precedent).**
 
-**Build the patch** (reproducible from source): `sh tools/build_cm.sh` → `build/seaglass_cm.gba` + `build/seaglass_cm.bps` (both gitignored; BPS is the deliverable, created against the hack ROM). See `docs/INJECTION.md`.
+**Build the patch** (reproducible from source): `python3 tools/inject_character_mode.py` → `build/seaglass_cm.gba` + `build/seaglass_cm.bps` (both gitignored; BPS is the deliverable, created against the hack ROM). (`tools/build_cm.sh` is the older enforcement-only armips build, superseded.) See `docs/ROUTINE_MAP.md` selection section.
 
-**Test it** (headless; breakpoints need `MGBA_HEADLESS_DEBUGGER=1`):
+**Test it:** `sh tools/tests/run_tests.sh` (8 layers: static 24/24 + boot + catch gate on/off + 4 naming-screen e2e; all green, ~20 s). Note `H.finish()` now `os.exit`s and tests **assert** (a log-only test used to green-wash the runner's grep — see `docs/TESTING.md` gotchas). Single live check (breakpoints need `MGBA_HEADLESS_DEBUGGER=1`):
 ```
 # per-character catch enforcement (CM on): char 1 (Red) blocks Zigzagoon, char 39 (Brendan) allows it
 CM_ON=1 CM_CHAR=1  ./tools/mgba_src/build/mgba-headless --script tools/mgba_scripts/cm_catch_test.lua -t tools/savestates/battle_menu2.ss build/seaglass_cm.gba
 ```
 Key savestates (gitignored, one person's playthrough): `battle_menu2.ss` (wild Zigzagoon battle — the enforcement-test fixture), `have_starter.ss`, `oldale.ss`, `mart_inside.ss`. Original-ROM states load fine on the patched ROM.
 
-**What's NEXT (task #15, in priority order):**
-1. **Selection mechanism** — the biggest gap. CM flag/var are set via RAM in tests; players need an in-game way to pick a character. The native cheat-code system is LOCATED (`gSpecialsTable 0x0826DD68`, entry script `0x08311C32`, "CHEAT DEVICE/GIFT CODE" text `~0x00311A23`) but the exact matcher special + code-string table aren't pinned yet. **Lazarus completed this exact injection** — read `../Lazarus-Character-Mode/docs/SELECTION_MECHANISM.md` + its `src/character_mode.c` `CM_CheatDispatchHook` + `tools/inject_character_mode.py` as the template.
-2. Trade gating, Phase 3 sprites (task #10, for select-UI portraits), regression suite, end-user README.
+**What's NEXT (in priority order):**
+0. ~~Real-UI activation e2e~~ **DONE (2026-07-17 latest)** — `cm_ui_activate.lua` from `naming_open.ss` (regen via `capture_naming.lua` if the script layout moves): suite layers 4c–4f (activate/discriminate/reject/deactivate), all asserted. Remaining live gap = **trade refusal in-situ** (no savestate near any of the 4 trade NPCs exists; junctions are statically decoded) → then the **full human playthrough**.
+1. ~~Selection mechanism~~ **DONE (2026-07-17)** — Seaglass's GIFT CODE is Easy-Chat (no free text), so NO matcher special to hook (Lazarus's slot-hook route does NOT transfer). Instead: repoint the single cheat-clipboard BG-event ptr (file `0x123ACC`, was `0x08311CCB`) → free-space entry script that opens the expansion's compiled-but-unused CODE naming screen (`DoNamingScreen 0x08174415`, template 5) with return cb `0x08179AFD`, then matches in a post-`waitstate` callnative. `src/character_mode.c` (5 entries) + `tools/inject_character_mode.py`. Also closed the **callnative give hole**: real script gifts use native `0x081F2175` (49 sites), not GiveMonToPlayer — all wrapped by `CM_NativeGiveGated`. Full detail: `docs/ROUTINE_MAP.md`.
+2. **Trade gating** (in progress) — find sIngameTrades via donor specials.inc INDEX ordering, wrap the confirm junction(s). CM_TradeCheck stub already in the shim (gated behind `-DTRADE_TABLE_ADDR`).
+3. Phase 3 sprite survey (likely ship-without, per Lazarus/RR precedent), 4-layer test suite + **real-UI activation e2e** (needs `mart_inside.ss` + naming-screen input automation — the one thing not yet live-verified), end-user README.
 
 **The sibling `../Lazarus-Character-Mode/` (same author Nemo622, same engine) is FINISHED (Phase 6, shipped) and is the primary source of transferable methods** — offsets differ per-build but techniques/idioms transfer. Its CLAUDE.md Status + docs are worth re-reading before each new subsystem here (selection, trades, test suite). This session's wins (flags/vars offsets, headless-breakpoint fix, catch-trace recipe, give-item, injection template) all came from it.
 
@@ -88,6 +90,39 @@ User's directive: **"Build and test until you have a playable rom with no bugs o
 - Ghidra 12.0.2 + `pudii/gba-ghidra-loader` for static disassembly/decompilation. Set up and used (previous + this session) — reused `Unbound-Character-Mode/tools/ghidra/`'s already-installed copy directly (invoked its `support/analyzeHeadless` against this project's own `ghidra_project/`/ROM, rather than re-downloading/copying the ~847 MB install). No full-ROM auto-analysis run (deliberately — see `docs/ROUTINE_MAP.md`'s Ghidra setup section for why); everything is targeted, on-demand disassembly/decompilation of specific known addresses.
 
 **Full toolchain is now set up AND the injection pipeline is empirically validated end-to-end (2026-07-12).** armips syntax for GBA (confirmed against the actual `tools/bin/armips` v0.11.0 build, not just docs): `.gba` sets the architecture, `.open "in.gba","out.gba",0x08000000` opens for output (two-filename form copies input→output first, leaving the source untouched), `.org <memory address>` seeks (GBA ROM maps 1:1 at `0x08000000`, so memory address = file offset + that base), `.ascii "text"`/`.db` for raw bytes (`.string` needs a `.loadtable`-loaded charmap first — plain ASCII should use `.ascii`), `.close` closes the file. Validated round-trip: wrote a marker string into free space via armips → `flips --create --bps` diffed it into a 74-byte patch → `flips --apply` to a fresh ROM copy reproduced a byte-identical file (SHA1-verified) → both the armips-built and patch-reapplied ROMs boot-tested cleanly via `mgba-headless` for 300 frames with identical CPU state, no crash. **Nothing left blocking hook-writing/patch-building once a confirmed hook site exists** — the remaining gap is knowledge (which exact address to hook), not tools, and that knowledge-gap-closing path (headless breakpoint+key-injection tracing) is now also self-service, gated only on one savestate (see Status).
+
+## Status (2026-07-17 latest — REAL-UI ACTIVATION E2E DONE; suite now 8 layers, all green)
+
+The last unexercised seam (typing a code on the naming screen in a running
+emulator) is closed. `cm_ui_activate.lua` drives `naming_open.ss` (CODE screen
+open at the mart clipboard) with 40-frame-spaced cursor taps → START→A commit →
+short A-mash → RAM asserts. Suite layers **4c** RED→char 1 + starter (party
+1→2), **4d** MISTY→char 10 (discrimination), **4e** ZZZ rejected (nothing set),
+**4f** CMDBGOFF deactivates a preset CM (flag/char cleared, starter var =
+0xFFFF off-marker). Two suite-hardening fixes this pass (detail in
+`docs/TESTING.md` gotchas): (1) **cm_catch_test/cm_ui_activate now genuinely
+assert** — previously they only logged and `H.finish` printed `RESULT: PASS`
+unconditionally, so the runner's grep was vacuously green; `H.finish` also
+`os.exit`s with a real status now (suite runs in ~20 s, no timeout idling).
+(2) The post-commit A-mash window was shortened to ~9 presses — a long mash
+re-triggers the clipboard BG event and commits a stray invalid code that
+overwrites VAR_CM_STARTER (this was a real intermittent red herring).
+Remaining: trade refusal in-situ (needs a savestate near one of the 4 trade
+NPCs), full human playthrough, optional GDB shim unit tests, Phase 3 sprites
+(ships without). `naming_open.ss` is build-layout-specific — regenerate with
+`capture_naming.lua` if SCRIPT_ADDR/entry-script layout ever moves.
+
+## Status (2026-07-17 later — FULL FEATURE INJECTED: selection + trades + callnative-give hole closed; 3 automated test layers green)
+
+Session took Seaglass from "enforcement only" to a complete injected feature. New `src/character_mode.c` (5 entries) + `tools/inject_character_mode.py` (Python injector, supersedes the enforcement-only `build_cm.sh`). `python3 tools/inject_character_mode.py` → `build/seaglass_cm.gba` + `seaglass_cm.bps` (9.2 KB). Full RE detail in `docs/ROUTINE_MAP.md`; test matrix in `docs/TESTING.md`.
+
+- **Selection mechanism (task #3) DONE — Lazarus's slot-hook route does NOT transfer.** Seaglass's GIFT CODE is the vanilla Easy-Chat QUESTIONNAIRE (no free text), so there's no string matcher special to replace. Instead: the single cheat-clipboard BG-event ptr (file `0x123ACC`, was `0x08311CCB`) → free-space entry script that opens the expansion's compiled-but-unused **CODE naming screen** (`DoNamingScreen 0x08174415`, template 5, dest gStringVar2 `0x0203AF24`, return cb `0x08179AFD`), then matches in a post-`waitstate` `callnative CM_MatchCode`. ABI byte-decoded from ChangePokemonNickname (donor INDEX 0xA1). Passing the return-to-field cb directly means our C never calls SetMainCallback2.
+- **Callnative-give hole (task #2) FOUND + CLOSED.** Real script gifts use a custom give native `0x081F2175` (49 sites), NOT GiveMonToPlayer — its core writes party/CopyMonToPC directly, bypassing the catch gate. All 49 operands retargeted → `CM_NativeGiveGated` (post-check wrapper). Coverage proven by exhaustion (native has 0 BL/u32 refs elsewhere).
+- **Trades (task #4) DONE.** Donor specials.inc INDEX ordering (0xFF/0x100/0x101) → sIngameTrades `0x08A3DB30`, stride 60, 4 entries (DOTS/PLUSES/SEASOR/MEOWOW), received @+14 — identical layout to Lazarus. 4 shared 17-byte confirm junctions overlaid with goto→wrappers calling `CM_TradeCheck`.
+- **Vars validated:** FLAG_CM `0x945`, VAR_CM_CHAR `0x40E4`, VAR_CM_STARTER `0x40E5` — all 0 *real* script refs (operand-validity filter distinguishes real script from coincidental bytes; `0x40E4`'s 2 raw hits are a `compare_var_to_var(0x13C2, 0x40E4)` with an invalid first operand).
+- **Sprites (task #5): Phase 3 closed, ships without sprites** — survey 96/170 (56%) coverage, zero-coverage all Gen 6-9/anime (docs/SPRITE_COVERAGE.md); text-first selection needs none. `sprite_asset_id` stays 0xFFFF.
+- **Tests (task #6): 3 automated layers GREEN** (`sh tools/tests/run_tests.sh`): static `verify_artifacts.py` **24/24** (round-trip byte-identical, diff containment, GiveMonToPlayer BL exhaustion → only egg-hatch left, 49-site give exhaustion, script decodes, code round-trips, trade-junction decodes); boot smoke; live catch gate ON (Red blocks Zigzagoon→PC) + OFF (control→party). **README.md** written (170-char code tables). **Remaining before playthrough:** GDB shim unit tests (not built) + **real-UI activation e2e** (type a code at the clipboard via naming-screen automation — the one seam not yet exercised in a running emulator; needs a mart-clipboard savestate).
+- **Not committed** (standing rule: commit only on explicit request). Working tree has the new shim/injector/tests/README/docs.
 
 ## Status (2026-07-17 — PHASE 4/5: catch enforcement INJECTED + LIVE-TESTED + BPS)
 

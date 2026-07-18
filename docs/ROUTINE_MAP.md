@@ -75,13 +75,113 @@ additive free-space (Lazarus proved this exact route works).
 | special 0x1E5 | `0x08215B24` | builds a caught/received-mon summary (GetPartyMon+GetMonData) — a display helper, NOT the matcher |
 | special 0x1E7 | `0x08135BAC` | redeem-once guard (FlagGet→FlagSet) |
 
-**Next (Phase-4 selection)**: parse the entry script fully to pin the
-DoNamingScreen entry special + the StringCompare matcher + the code-string table
-(Lazarus's were entry 0x221 / match 0x222 / table `0x087D9294` — IDs differ
-here, same-author builds vary), then design the injection = overwrite the
-matcher's specials-table slot with a CM function that (native match first, else
-match our character-name codes → set CM char var + give signature starter). Full
-template: `../Lazarus-Character-Mode/docs/SELECTION_MECHANISM.md`.
+### FULLY DECODED 2026-07-17 — Lazarus's design does NOT transfer; new design pinned
+
+**The entry chain was fully script-decoded (2026-07-17). Key discovery: Seaglass's
+GIFT CODE flow has NO text matcher to hook — it's the vanilla Easy Chat
+QUESTIONNAIRE flow** (the Mauville-style clipboard), with phrase matching done
+natively inside the easy-chat screen. Character-name codes cannot ride it
+(Easy Chat only offers vocabulary words, no free text). Full chain:
+
+| Piece | Address | Detail |
+|---|---|---|
+| Main BG-event script | `0x08311CCB` | lockall → yes/no msgbox `0x0830F7D4` ("enter a code?") → decline goto `0x08311DAD` (releaseall,end) |
+| Easy-chat launcher sub | `0x0830E247` | `fadescreen 1; special 0x62; fadescreen 0` — donor INDEX 0x62 = **ShowEasyChatScreen**; type set by `setvar 0x8004, 0x14` = EASY_CHAT_TYPE_QUESTIONNAIRE |
+| Post-entry dispatch | `0x08311CEB`+ | `specialvar 0x8008, 0x1EC` (mart-employee obj id, donor-INDEX match) then `compare 0x8004,1→0x8311D1D`, `0x8004,2→0x8311D65`, `0x800D,0→end`, `0x800D,1→0x8311DAF` (invalid msg `0x830F80D`) — i.e. **0x8004 = matched-phrase index (set inside easy chat), 0x800D = 0 canceled / 1 confirmed-no-match** |
+| Reward branches | `0x08311D1D` / `0x08311D65` | both gated on flag `0x861`; redeem-once flags `0x8AC` / `0x8DB`; msg-only rewards (DexNav-show-all etc.) — only TWO live codes |
+| Single BG-event ref | file **`0x123ACC`** | the ONLY pointer to `0x08311CCB` in the ROM (bg_event struct base `0x123AC4`) — one clipboard, at a mart (0x1EC + `mart_inside.ss` savestate) |
+
+**But the perfect entry UI exists anyway, unused: Seaglass compiles the
+expansion's CODE naming-screen template.** DoNamingScreen internals (all
+byte-confirmed in-ROM 2026-07-17):
+
+| Piece | Address | Detail |
+|---|---|---|
+| **DoNamingScreen** | **`0x08174415`** (Thumb) | vanilla sig: `(u8 template, u8* dest, u16 species, u16 gender, u32 personality, MainCallback cb)` — proven by ChangePokemonNickname special (donor INDEX 0xA1 → Seaglass fn `0x08215A69`) and DoWaldaNamingScreen (INDEX 0x200 → `0x0822A7C1`), both BL it |
+| sNamingScreenTemplates | `0x0869DFD0` | 7 entries; **template 5 = CODE: struct `0x0869E320`, maxChars=10, no icon/gender, title "Enter Gift Code:" (`0x08967D24`)** — compiled but unused by the hack (v3 gift codes use easy chat instead) |
+| Resume callback | **`0x08179AFD`** | CB2_ReturnToFieldContinueScriptPlayMapMusic-equivalent — Walda's exit cb (`0x0822A7F5`) stores match result to `gSpecialVar_0x8004` then `SetMainCallback2(0x08179AFD)`; resumes a `waitstate`-paused script |
+| SetMainCallback2 | `0x08000685` (Thumb) | `gMain = 0x030014B4`, callback2 at +4, clears byte +0x438 |
+| gSpecialVar_0x8004 | `0x020055E0` | from ChangePokemonNickname/Walda disasm |
+| gStringVar2 | `0x0203AF24` | Walda's dest buffer — safe transient dest for ours |
+| givemon cmd 0x79 | handler `0x081EC84D` | **re-tabled to nop1's handler (movs r0,#0; bx lr) — same as Lazarus**; script gives happen elsewhere (see callnative audit) |
+
+**DoNamingScreen ABI (byte-decoded from ChangePokemonNickname 0x08215A69,
+2026-07-17):** `DoNamingScreen(r0=templateNum, r1=destBuf, r2=species,
+r3=gender, [sp+0]=personality(u32), [sp+4]=returnCallback)`. returnCallback is
+a CB2; Walda's exit cb chains to **`0x08179AFD`** (CB2_ReturnToField…, resumes
+a `waitstate`-paused field script) — confirmed a real function. `GetVarPointer
+0x0810D0C0`, FlagSet `0x0810D254`, FlagClear `0x0810D304`, FlagGet
+`0x0810D35C` (all re-confirmed from cmd-table handlers). **gSpecialVars base
+`0x020055D8`** → gSpecialVar_Result (0x800D) = `0x020055F2`; use
+GetVarPointer(0x800D) rather than hardcoding.
+
+**Injection design (final, replaces the Lazarus slot-hook plan since Seaglass
+has no text matcher to hook):** repoint the single BG-event ptr (file
+`0x123ACC`, currently → `0x08311CCB`) → our free-space entry script:
+`lockall; yesnobox "Enter a Character Mode code?"` → NO: `goto 0x08311CCB`
+(original gift-code/easy-chat flow 100% untouched) → YES:
+`callnative CM_OpenCodeEntry` (calls `DoNamingScreen(5=CODE, gStringVar2
+0x0203AF24, 0, 0, 0, cb=0x08179AFD)`) → `waitstate` → `callnative
+CM_MatchCode` (folds gStringVar2 vs our 170-code table + 3 debug codes; on
+match sets VAR_CM_CHAR/FLAG_CM/VAR_CM_STARTER + gSpecialVar_Result; else
+Result=0) → `compare 0x800D` branch → confirm-msgbox + starter give (via the
+native-give idiom, VAR_CM_STARTER as species) OR invalid-msgbox → releaseall.
+Passing `0x08179AFD` directly as the return cb (not a custom processing cb like
+Walda's) lets the match happen in the post-waitstate callnative, so **our C
+never calls SetMainCallback2**. Shipped-region edit for selection = 4 bytes
+(one pointer). Lazarus bug lessons applied: reset VAR_CM_STARTER before the
+give; `goto` (never `call`) any releaseall-terminated tail; native-give wrapper
+sets Result=1 when it boxes.
+
+## Callnative give audit — ENFORCEMENT HOLE FOUND + SURFACE CLOSED BY EXHAUSTION (2026-07-17)
+
+**Lazarus lesson (iii) confirmed on Seaglass: script gifts do NOT go through
+GiveMonToPlayer.** The engine's script-give surface:
+
+| Piece | Address | Detail |
+|---|---|---|
+| **Give native (the hole)** | **`0x081F2175`** | reached via `callnative` at **49 script sites** (pattern `23 75 21 1F 08`); reads 10 bytes of inline args: hw0=`0x0600` const, hw1=species (literal or var id — VarGet'd; one site passes `0x800D`), hw2=level, hw3/hw4 usually 0. Simple-site idiom: `0006 <species> 0500 0000 0000` |
+| Give core | `0x081F1D64` | called ONLY from inside the native (2 BLs: `0x1F2124`, `0x1F2362`); **writes gPlayerParty/gPlayerPartyCount directly, boxes via CopyMonToPC `0x081AA620` when party full — never BLs GiveMonToPlayer** → bypasses the injected CM gate |
+| Arg readers | `0x081EF488` / `0x081EF49C` | ScriptReadHalfword / ScriptReadWord; species/level resolved via VarGet `0x0810D104` |
+| Coverage proof | — | `0x081F2175` has ZERO Thumb-BL callers and ZERO non-callnative u32 refs ROM-wide; give core has only the 2 internal BLs → **wrapping the 49 callnative operands closes the entire script-gift surface by exhaustion** |
+| Gated BL `0x081F18DE` (context) | fn `0x081F18BC` | small fn (SetMonData + GiveMonToPlayer + `0x081AA76C`), single BL caller `0x1EE80E` (ScrCmd-handler region — the giveegg-family path). Keeping it gated is correct but it is NOT the main gift path |
+| Other frequent natives (ruled out) | `0x0810F20D` ×25, `0x0810F3B9` ×9 | var/flag EWRAM utilities (`0x02005654` etc.), no party writes — not gives |
+| Post-give script flow | e.g. site `0x281CCF` | `setvar 0x4001,<species>` (msg buffer) → callnative+args → fanfare + "received!" msgbox; **no VAR_RESULT branching, no nickname prompt** → wrapper needs no Result semantics; off-roster boxing is silent (matches catch UX) |
+
+**Fix (Phase 4b)**: `CM_NativeGiveGated(ctx)` — snapshot gPlayerPartyCount, call
+the original native, and if the count grew while the gate is active, post-check
+the new tail slot: non-egg off-roster → CopyMonToPC, zero the 100-byte slot,
+count-- (only if the copy succeeded, per the Lazarus wrapper-boxing bug). Patch
+all 49 callnative operands → wrapper. The same native idiom (species via a CM
+var) delivers the selection starter from the confirm script.
+
+## In-game trades — GATED (2026-07-17; donor specials.inc INDEX ordering, exactly Lazarus's recipe)
+
+Donor trade specials at indices 0xFF/0x100/0x101 (GetInGameTradeSpeciesInfo /
+CreateInGameTradePokemon / DoInGameTradeScene) → Seaglass gSpecialsTable
+`0x0826DD68` slots resolve to `0x0820AA3D` / `0x0820AD35` / `0x0820B1C5`.
+GetInGameTradeSpeciesInfo's literal pool → **sIngameTrades `0x08A3DB30`,
+stride 60, 4 entries, received species u16 @+14** (identical layout to
+Lazarus):
+
+| idx | nick | receives | wants |
+|---|---|---|---|
+| 0 | DOTS | Seedot 273 | Ralts 280 |
+| 1 | PLUSES | Plusle 311 | Volbeat 313 |
+| 2 | SEASOR | Horsea 116 | Bagon 371 |
+| 3 | MEOWOW | Meowth 52 | Skitty 300 |
+
+All 4 scripts share an identical 17-byte confirm junction
+(`copyvar 0x8004,0x8008; copyvar 0x8005,0x800A; special 0x100; special 0x101;
+waitstate`); the trade index arrives in **0x8008** (junction order 2,0,1,3 vs
+table order — same quirk Lazarus found). Junctions: `0x29CFF5`(idx2),
+`0x2AF873`(idx0), `0x2B01EF`(idx1), `0x30129E`(idx3). Injector overlays the
+first 5 bytes of each with `goto` → per-trade wrapper at `0x08EE3000` that
+`copyvar`s the index, `callnative CM_TradeCheck` (received species @+14 vs the
+active bitmap → VAR_RESULT 1/0), then either the polite refusal or the original
+17-byte junction body + `goto` resume. CM_TradeCheck compiled behind
+`-DTRADE_TABLE_ADDR=0x08A3DB30 -DTRADE_STRIDE=60 -DTRADE_RECV_OFF=14
+-DTRADE_COUNT=4`.
 
 ## Catch/give enforcement — CONFIRMED via live headless catch trace (2026-07-16, using Lazarus's method + the fixed headless breakpoints)
 

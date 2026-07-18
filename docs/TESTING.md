@@ -159,13 +159,44 @@ string) rather than looping `emu:read8`. Scanning 256 KB of EWRAM one byte at a
 time crosses the C/Lua marshalling boundary ~200k times and stalls the emulator
 so hard the frame callback never returns.
 
-## Where this is going (Phase 6)
+## Test matrix (2026-07-17 — full feature injected)
 
-Once Character Mode code is actually injected, this harness becomes the
-regression suite that gates "playable ROM with no bugs or glitches":
-scripted playthroughs asserting that an **in-roster** species can be caught,
-an **out-of-roster** species is rejected, the PC sweep moves the right mons,
-the character-select menu commits the right character, and saving/loading
-round-trips — all headless, repeatable, and diffable run over run. That is
-strictly more than ROWE's manual pass could offer, and it is the reason to
-build the harness before the hooks rather than after.
+Run the automated layers: `sh tools/tests/run_tests.sh`.
+
+| Layer | What | Status |
+|---|---|---|
+| **3 — static artifacts** (`tools/tests/verify_artifacts.py`) | Re-derives everything from the built ROM/BPS, shares no code with the injector. 24 checks: sha1 pin, **BPS round-trip byte-identical**, **diff containment to 63 intended windows**, **GiveMonToPlayer BL exhaustion** (orig 3 callers → patched leaves only the exempt egg-hatch caller), trampoline/BL decode, bitmaps == rosters_expanded.bin, roster+starter on-bitmap invariant, 170 codes round-trip + unique, **49 callnative-give sites all retargeted**, BG-ptr repoint + entry-script decode, 4 trade-junction overlays + wrapper decode. | **24/24 GREEN** |
+| **2 — boot smoke** (`boot_test.lua`) | Patched ROM boots and runs. | **GREEN** |
+| **4a/b — live catch gate** (`cm_catch_test.lua`) | Same wild Zigzagoon, toggling only the CM flag: CM on + char 1 (Red, off-roster) → blocked→PC (party stays 1); CM off → caught to party (control). Per-character discrimination previously verified (char 39 Brendan allows Zigzagoon). | **GREEN** |
+| **1 — GDB shim unit tests** | Not built for Seaglass. Would exercise the shim's branch table (flag off / empty party / on-roster / off-roster→PC / egg exemption / per-char bitmap) in isolation à la Lazarus's `shim_unit_test.py`. The static on-bitmap invariants + live catch gate + the 4c–4f e2e now cover this seam's main paths; optional hardening only. | Not built (optional) |
+| **4c–4f — real-UI activation e2e** (`cm_ui_activate.lua`) | **DONE (2026-07-17 later).** From `naming_open.ss` (CODE naming screen open at the mart clipboard), types a code via 40-frame-spaced cursor taps, commits (START→A), dismisses the dialogue, then **asserts** on flag/char/party/starter-var. Four suite layers: **4c** RED → char 1 + starter to party; **4d** MISTY → char 10 (discrimination); **4e** ZZZ → rejected, nothing set; **4f** CMDBGOFF with CM preset → flag+char cleared, starter var = 0xFFFF off-marker. | **GREEN (all 4)** |
+
+**What's proven about selection:** the selection script + shim are statically
+verified end-to-end, **and the naming-screen UI seam is now live-verified**
+(4c–4f above: type→commit→match→confirm+give / reject / deactivate, all
+asserted against real RAM state). The enforcement half is live-verified
+(catch gate on/off; the 49-site callnative-give hole closed by exhaustion).
+Remaining live gaps: **trade refusal in-situ** (needs a savestate near one of
+the 4 in-game trade NPCs — none exists yet; the junction overlays are
+statically decoded) and the **full human playthrough**.
+
+**Two e2e gotchas (hard-won, 2026-07-17 later):**
+1. **Tests must assert, not just log.** `H.finish()` prints `RESULT: PASS`
+   whenever the assert-failure list is empty — a script that only `H.log`s its
+   observations *always* "passes" the runner's grep. `cm_catch_test.lua` had
+   exactly this bug (green while vacuous); it now asserts the party count, and
+   `H.finish` also `os.exit`s with a real status (nonzero on failure), which
+   ends the emulator immediately instead of idling out the runner's timeout.
+2. **Don't over-mash A after the commit.** The player is still standing at the
+   clipboard, so a long post-commit A-mash re-triggers the BG event, reopens
+   the code entry, and can commit a stray invalid code that overwrites
+   `VAR_CM_STARTER` (this made the off-marker assert fail intermittently and
+   left a reopened naming screen in end screenshots). The mash window is ~9
+   presses (`commit+80 .. commit+500`) — enough for one msgbox, too few to
+   drive prompt→naming→commit again.
+
+**Fixture note:** `naming_open.ss` embeds the paused script context (the
+`waitstate` inside the injected entry script), so it is build-layout-specific —
+if `SCRIPT_ADDR` or the entry-script layout ever moves, regenerate it with
+`capture_naming.lua` (drives mart_inside.ss → clipboard → "yes" → naming
+screen, saves the state ~90 frames after the DoNamingScreen breakpoint).

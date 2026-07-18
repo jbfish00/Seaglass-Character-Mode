@@ -214,6 +214,9 @@ function H.finish()
     else
         H.log("RESULT: FAIL")
     end
+    -- Terminate the emulator so callers don't have to wait out their timeout.
+    -- (os.exit flushes stdio; verified the RESULT line still reaches the log.)
+    os.exit(#failures == 0 and 0 or 1)
 end
 
 -- ---------------------------------------------------------------------- input
