@@ -112,8 +112,13 @@ a CB2; Walda's exit cb chains to **`0x08179AFD`** (CB2_ReturnToField…, resumes
 a `waitstate`-paused field script) — confirmed a real function. `GetVarPointer
 0x0810D0C0`, FlagSet `0x0810D254`, FlagClear `0x0810D304`, FlagGet
 `0x0810D35C` (all re-confirmed from cmd-table handlers). **gSpecialVars base
-`0x020055D8`** → gSpecialVar_Result (0x800D) = `0x020055F2`; use
-GetVarPointer(0x800D) rather than hardcoding.
+`0x020055D8`**. gSpecialVar_Result (0x800D) is at **`0x020055F0`** — verified
+2026-07-17 by reading r0 at CM_TradeCheck's `strh` store (the game's own
+GetVarPointer(0x800D) return). NOTE: the earlier "= 0x020055F2" here was a naive
+base + 0xD*2 computation and is **wrong by 2** (GetVarPointer's special-var
+indexing isn't a flat 0x8000-based array); always read GetVarPointer(0x800D) /
+the store address rather than hardcoding, and if you must hardcode use
+`0x020055F0`.
 
 **Injection design (final, replaces the Lazarus slot-hook plan since Seaglass
 has no text matcher to hook):** repoint the single BG-event ptr (file
@@ -361,3 +366,74 @@ See `CLAUDE.md`. **Full toolchain now set up (2026-07-12).** `arm-none-eabi-gcc`
 | Mystery Gift | Code found for one hit (multiplayer dialogue); rest still string-anchor-only (likely script-bytecode-addressed, not pointer-addressed) | `FUN_08171a38` |
 
 Every remaining "next step" above now converges on the same answer: **live mGBA tracing is the correct next tool**, not further static analysis — every subsystem investigated this session independently hit the same Ghidra `-noanalysis` jump-table recovery wall. `tools/mgba_scripts/trace_catch_mechanic.lua` is ready for the catch mechanic specifically; the same breakpoint-and-log pattern would generalize to PC storage/trade if needed later. Toolchain (`arm-none-eabi-gcc`, `armips`, `mgba-qt`, `flips`) is now fully set up — nothing left blocking hook-writing once a confirmed hook site exists.
+
+## Wild-encounter species/level roll — CreateMonWithIVs-simple choke point CONFIRMED (task #5, wild-mon override)
+
+Found live via `mgba-headless` breakpoint tracing from `tools/savestates/at_8_8.ss`
+(clean overworld a few tiles from Route 101's tall grass) — the same
+"give Poké Balls, weaken, watch a watchpoint fire" methodology as the
+GiveMonToPlayer discovery, but climbing the call chain via `emu:setBreakpoint`
+at each successive candidate entry (reading its own `lr` register) rather than
+static disassembly, since every subsystem here (like the earlier catch
+mechanic / trade / PC storage investigations) hits Ghidra's `-noanalysis`
+jump-table wall — the mon-construction code is a deeply shared, jump-table
+dispatched `SetMonData`-style core reused for dozens of unrelated fields, and
+static backward-tracing through it repeatedly dead-ends. Breakpointing actual
+candidate function entries and reading `lr` (not watching memory writes,
+which land deep inside the shared dispatcher with a stale/generic caller)
+was the technique that actually worked.
+
+| Symbol | Address | Evidence |
+|---|---|---|
+| **CreateMonWithIVs-simple** | **`0x081A7504`** (Thumb) | disasm-confirmed signature: `(mon, u16 species, u8 level, u8 fixedIV, ...)` — masks r1 to u16, r2 to u8, writes r2 (level) directly to `mon+0x54` (the same plaintext level field `enemyLv()` readers already used), calls a sibling `CreateBoxMon`-shaped helper (`0x081A6E44`) which itself calls the giant SetMonData-driven field-init montage (species set via `SetMonData(mon, MON_DATA_SPECIES=18, &species)` inside it, confirmed by breakpointing `SetMonData`@`0x081A9CA0` with `r0==gEnemyParty` filter and watching `r1` cycle through the exact field-id sequence donor's CreateBoxMon writes) |
+| **Wild-encounter hook site (the BL retargeted)** | **ROM file offset `0x22BF36`** (`0x0822BF36`) | `emu:setBreakpoint` at `0x081A7504`'s entry fired **exactly once per wild encounter** with `r0=gEnemyParty (0x02019E78)`, `r1=`rolled species, `r2=`rolled level, `lr=0x0822BF3B` — i.e. the BL instruction at file offset `0x22BF36` is the wild-roll's own call into CreateMonWithIVs-simple. A full-ROM BL-scan for direct callers of `0x081A7504` found exactly **5** static sites: 4 clustered at `0x81F19xx`/`0x81F1Fxx` (the give-native region — confirmed unrelated, script gifts use fixed species) and this **1** at `0x0822BF36` — the sole wild-roll caller, matching the donor's architecture where `TryGenerateWildMon`/`GenerateFishingWildMon`/`SetUpMassOutbreakEncounter` all fan into ONE shared `CreateWildMon(species, level)` which itself makes exactly one call into `CreateMonWithIVs` — i.e. **this single BL is the shared choke point for every wild-roll table type** (grass/cave land, surfing, rock smash, all 3 fishing rod tiers, and mass outbreaks), exactly mirroring how `GiveMonToPlayer`'s 3 callers were the acquisition choke point. |
+
+**Coverage — what is live-proven vs analysis-only (updated 2026-07-17 latest++):**
+
+*Live-proven (grass/cave LAND path, the only wild type reachable from any
+existing savestate):* `tools/mgba_scripts/prove_wild_chokepoint.lua` (suite
+layer 5c), run on the **original unpatched ROM** across 5 land encounters with
+different rolled species/levels, asserts every run:
+1. the BL instruction at `0x0822BF36` genuinely **executes** (breakpoint on the
+   site fires during the encounter), and
+2. **every** `CreateMonWithIVs`-for-the-wild-mon call (r0==gEnemyParty) returns
+   to **exactly one** address, `0x0822BF3B` (= the return addr of the BL at
+   `0x0822BF36`) — i.e. there is no second wild-construction path on the
+   reachable route.
+Plus the patched-ROM side: `cm_wild_test.lua`/`cm_wild_stage_test.lua` (layers
+5a/5b) show the *retargeted* land encounter routing through the trampoline at
+`0x08470208` (the only BL in the ROM pointing there) into
+`CM_WildMonSpeciesGated` and back, with the override firing/not-firing
+correctly.
+
+*Analysis-only (surf / rock smash / all fishing tiers / mass outbreaks):* NOT
+walked into live — no Surf HM, fishing rod, or badge exists in any savestate
+(every state is pre-5th-gym early game: bag + badge dump confirmed 0 badges,
+no rods/HMs), and those wild types are unreachable this session. Their
+coverage rests on: (a) the donor architecture — `TryGenerateWildMon`
+(land/water/rock), `GenerateFishingWildMon` (fishing), and
+`SetUpMassOutbreakEncounter` all funnel into ONE shared
+`CreateWildMon`→`CreateMonWithIVs` call; and (b) `verify_artifacts.py`'s
+full-ROM BL-scan finding **exactly one** wild-related caller of `0x081A7504`
+(the other 4 are the unrelated give-native region) — if surf/rock/fishing used
+a different `CreateMonWithIVs` site, the scan would have found a second caller.
+This is now "the *same* BL that we empirically proved is the sole caller on the
+land path, and the ROM has no other wild caller" rather than pure static
+inference — but the non-land types themselves have not been observed executing.
+
+**Hook design**: since the hook site (`0x0822BF36`) is ~7.6 MiB from the main
+Character Mode shim blob (`~0x08ED2200`) and ~0.5 MiB from CreateMonWithIVs
+itself, retargeting the BL directly to the far shim is out of Thumb BL range
+(±4 MiB). Fix: a tiny second trampoline (`src/wild_trampoline.c`, 40 bytes)
+placed in the *same* 64-byte 0xFF scavenge run as the existing catch-gate
+trampoline (`0x08470200`), immediately after it at `0x08470208` — in range of
+both the hook site and CreateMonWithIVs. It shuffles species/level into the
+call ABI, reaches the far `CM_WildMonSpeciesGated` via the classic ARMv4T
+long-call idiom (manually build a Thumb return address into `lr`, `bx` to an
+absolute literal — this CPU has no BLX), then tail-jumps (plain `bx`, not
+`bl`) to the untouched original CreateMonWithIVs so its own return goes
+straight back to the real caller, invisibly. See `src/character_mode.c`'s
+`CM_WildMonSpeciesGated` doc comment and `tools/character_mode/emit_wildpool.py`
+for the per-character override-pool data (non-legendary roster bases,
+expanded through the donor evolution graph, each member tagged with a canon
+"first appears at this level" estimate from the donor's `EVO_LEVEL` params).

@@ -60,6 +60,47 @@ grep -q "HARNESS RESULT: PASS" /tmp/sg_ui_off.log && echo "  PASS deactivation (
     || { echo "  FAIL deactivation (see /tmp/sg_ui_off.log)"; exit 1; }
 
 echo
-echo "ALL AUTOMATED LAYERS GREEN (incl. real-UI activation e2e)."
-echo "Remaining human-in-the-loop verify: trade refusal in-situ + full playthrough"
-echo "(docs/TESTING.md)."
+echo "=== Layer 4g: in-situ trade gate (idx2 SEASOR/Horsea, real overlay wrapper) ==="
+python3 tools/tests/build_trade_testrom.py 2 > /tmp/sg_trade_build.log 2>&1 \
+    || { echo "  FAIL building trade test ROM (see /tmp/sg_trade_build.log)"; exit 1; }
+TRADEROM=build/seaglass_cm_tradetest.gba
+trade_case() {  # name  CM_ON  CM_CHAR  EXPECT
+    log=/tmp/sg_trade_$1.log
+    timeout 150 env MGBA_HEADLESS_DEBUGGER=1 CM_ON=$2 CM_CHAR=$3 EXPECT=$4 "$MGBA" \
+        --script tools/mgba_scripts/cm_trade_test.lua \
+        -t tools/savestates/mart_inside.ss "$TRADEROM" > "$log" 2>&1 || true
+    grep -q "HARNESS RESULT: PASS" "$log" && echo "  PASS trade $1" \
+        || { echo "  FAIL trade $1 (see $log)"; grep -a "HARNESS.*FAIL" "$log"; exit 1; }
+}
+trade_case RED   1 1  0    # Horsea OFF Red's roster   -> refuse
+trade_case MISTY 1 10 1    # Horsea ON  Misty's roster -> allow (discrimination)
+trade_case CTRL  0 1  1    # CM off                    -> allow (control)
+
+echo
+echo "=== Layer 5a: wild-encounter override inert with CM off ==="
+timeout 60 env MGBA_HEADLESS_DEBUGGER=1 CM_ON=0 "$MGBA" --script tools/mgba_scripts/cm_wild_test.lua \
+    -t tools/savestates/at_8_8.ss "$ROM" > /tmp/sg_wild_off.log 2>&1 || true
+grep -q "HARNESS RESULT: PASS" /tmp/sg_wild_off.log && echo "  PASS wild override inert (CM off)" \
+    || { echo "  FAIL wild override inert (see /tmp/sg_wild_off.log)"; exit 1; }
+
+echo
+echo "=== Layer 5b: wild-encounter stage-fit (forced high level -> evolved stage, char 1 Red) ==="
+python3 tools/tests/verify_wild_override.py > /tmp/sg_wild_stage.log 2>&1
+grep -q "RESULT: PASS" /tmp/sg_wild_stage.log && echo "  PASS wild stage-fit + rate + legendary exclusion" \
+    || { echo "  FAIL wild stage-fit (see /tmp/sg_wild_stage.log)"; cat /tmp/sg_wild_stage.log; exit 1; }
+
+echo
+echo "=== Layer 5c: wild-encounter choke-point proof (BL 0x0822BF36 is the sole land-path caller) ==="
+# Proves, on a REACHABLE land encounter, that the exact BL we retarget is
+# executed and is the ONLY caller of CreateMonWithIVs for the wild mon --
+# so the surf/rock-smash/fishing coverage rests on "same proven choke point"
+# (+ the ROM-wide single-caller BL-scan in verify_artifacts.py), not static
+# analysis alone. See docs/ROUTINE_MAP.md's wild-encounter coverage note.
+timeout 60 env MGBA_HEADLESS_DEBUGGER=1 "$MGBA" --script tools/mgba_scripts/prove_wild_chokepoint.lua \
+    -t tools/savestates/at_8_8.ss "rom/seaglass v3.0.gba" > /tmp/sg_wild_choke.log 2>&1 || true
+grep -q "HARNESS RESULT: PASS" /tmp/sg_wild_choke.log && echo "  PASS choke point empirically proven (land path)" \
+    || { echo "  FAIL choke-point proof (see /tmp/sg_wild_choke.log)"; grep -a "HARNESS" /tmp/sg_wild_choke.log; exit 1; }
+
+echo
+echo "ALL AUTOMATED LAYERS GREEN (incl. real-UI activation + in-situ trade e2e + wild override)."
+echo "Remaining human-in-the-loop verify: full playthrough (docs/TESTING.md)."

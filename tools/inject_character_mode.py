@@ -7,12 +7,19 @@ task #4 (needs sIngameTrades). All addresses CONFIRMED for rom.sha1 — see
 docs/ROUTINE_MAP.md.
 
 Pipeline:
-  1. emit_bitmaps.py -> rosters_expanded.bin (170 x 187 allowed-species).
-  2. Compile src/character_mode.c (5 entry points) at SHIM_ADDR in the big
+  1. emit_bitmaps.py -> rosters_expanded.bin (170 x 187 allowed-species) and
+     emit_wildpool.py -> wildpool.bin (170 x 104 wild-encounter-override
+     entries: species + canon min-level, non-legendary only). Both are
+     pre-generated (not re-run automatically here); this script just reads
+     the .bin outputs.
+  2. Compile src/character_mode.c (6 entry points) at SHIM_ADDR in the big
      free block (ROM 0x08ED2164+). Referenced only via 32-bit pointers except
-     the two acquisition BLs, which use an 8-byte trampoline at 0x08470200.
-  3. Splice payloads (shim/bitmaps/codes/starters/entry+confirm script) into a
-     ROM copy; the source ROM is never written.
+     the two acquisition BLs (8-byte trampoline @0x08470200) and the wild-
+     encounter species override (separate 40-byte long-call trampoline,
+     src/wild_trampoline.c, @0x08470208 -- its hook site is ~7.6 MiB from the
+     main shim, out of Thumb BL range, hence the manual long-call).
+  3. Splice payloads (shim/bitmaps/codes/starters/wildpool/entry+confirm
+     script) into a ROM copy; the source ROM is never written.
   4. Patch (verify-original-first):
        - BG-event ptr (file 0x123ACC): 0x08311CCB -> CM entry script
          (yes/no -> CODE naming screen -> match -> confirm+give / invalid;
@@ -20,6 +27,10 @@ Pipeline:
        - BL @0x0A6A46 (wild catch) and BL @0x1F18DE (small script-give fn):
          GiveMonToPlayer -> trampoline -> CM_GiveMonToPlayerGated.
        - 49 inline `callnative 0x081F2175` operands -> CM_NativeGiveGated.
+       - BL @0x22BF36 (wild-encounter species/level roll's call into
+         CreateMonWithIVs-simple): retargeted -> the wild trampoline, which
+         calls CM_WildMonSpeciesGated then tail-jumps to the untouched
+         original CreateMonWithIVs.
   5. Write build/seaglass_cm.gba + build/seaglass_cm.bps (BPS against the hack
      ROM, per the standing distribution rule).
 
@@ -53,9 +64,11 @@ BITMAPS_ADDR   = 0x08EDA000        # 170*187 = 31790 B
 CODES_ADDR     = 0x08EE2000        # 170*11  = 1870 B
 STARTERS_ADDR  = 0x08EE2800        # 170*2   = 340 B
 SCRIPT_ADDR    = 0x08EE2A00        # entry + confirm script
+WILDPOOL_ADDR  = 0x08EE4000        # 170*104*4 = 70720 B (tools/character_mode/emit_wildpool.py)
 FREE_END_ROM   = 0x09000000
 
-TRAMPOLINE_ADDR = 0x08470200       # 8B 0xFF scavenge, in BL range of both sites
+TRAMPOLINE_ADDR      = 0x08470200  # 8B 0xFF scavenge, in BL range of both sites
+WILD_TRAMPOLINE_ADDR = 0x08470208  # same 64B scavenge run, immediately after; 40B used
 
 # --- confirmed hook sites (docs/ROUTINE_MAP.md) ---
 BL_SITE_CATCH = 0x0A6A46
@@ -64,6 +77,16 @@ GIVEMON_ADDR  = 0x081AA5AC
 
 GIVE_NATIVE   = 0x081F2175         # callnative give fn (49 inline script ptrs)
 GIVE_NATIVE_COUNT = 49
+
+# Wild-encounter species/level roll override (task #5). Found live via
+# mgba-headless breakpoint tracing (docs/ROUTINE_MAP.md): the BL at this ROM
+# file offset (0x0822BF36) is the wild-encounter roll's call into
+# CreateMonWithIVs-simple, firing once per encounter with r0=gEnemyParty,
+# r1=rolled species, r2=rolled level -- the single choke point shared by
+# every wild-roll table (grass/cave, surf, rock smash, all fishing tiers).
+WILD_BL_SITE          = 0x22BF36
+CREATE_MON_WITH_IVS   = 0x081A7504
+WILDPOOL_STRIDE       = 104
 
 BG_EVENT_PTR_OFF = 0x123ACC        # only ref to the clipboard script
 ORIG_CLIPBOARD   = 0x08311CCB
@@ -205,6 +228,8 @@ def main():
     assert len(chars) == NUM_CHARACTERS, len(chars)
     bitmaps = (CM / "rosters_expanded.bin").read_bytes()
     assert len(bitmaps) == NUM_CHARACTERS * BITMAP_STRIDE, len(bitmaps)
+    wildpool = (CM / "wildpool.bin").read_bytes()
+    assert len(wildpool) == NUM_CHARACTERS * WILDPOOL_STRIDE * 4, len(wildpool)
 
     # --- code + starter tables ---
     codes = bytearray()
@@ -248,6 +273,7 @@ def main():
                     f"-DTRADE_STRIDE={TRADE_STRIDE}",
                     f"-DTRADE_RECV_OFF={TRADE_RECV_OFF}",
                     f"-DTRADE_COUNT={TRADE_COUNT}",
+                    f"-DWILDPOOL_ADDR={WILDPOOL_ADDR:#x}",
                     "-o", str(obj), str(ROOT / "src" / "character_mode.c")],
                    check=True)
     libgcc = subprocess.run(["arm-none-eabi-gcc", "-mthumb", "-mcpu=arm7tdmi",
@@ -264,7 +290,7 @@ def main():
     syms = {m.group(2): int(m.group(1), 16)
             for m in re.finditer(r"^([0-9a-f]+) [Tt] (\w+)$", sym_out, re.M)}
     for need in ("CM_OpenCodeEntry", "CM_MatchCode", "CM_GiveMonToPlayerGated",
-                 "CM_NativeGiveGated", "CM_TradeCheck"):
+                 "CM_NativeGiveGated", "CM_TradeCheck", "CM_WildMonSpeciesGated"):
         assert need in syms, f"missing symbol {need}"
     assert len(shim) <= BITMAPS_ADDR - SHIM_ADDR, f"shim too big: {len(shim)}"
     print(f"shim: {len(shim)} bytes @ {SHIM_ADDR:#x}")
@@ -273,6 +299,29 @@ def main():
     hook_match  = syms["CM_MatchCode"]
     hook_gate   = syms["CM_GiveMonToPlayerGated"] | 1
     hook_native = syms["CM_NativeGiveGated"]
+    hook_wild   = syms["CM_WildMonSpeciesGated"]
+
+    # --- compile + link the separate wild-encounter trampoline (long-call
+    # veneer: its hook site is ~7.6 MiB from the main shim blob, out of Thumb
+    # BL range, so it lives in its own tiny scavenged slot near both the hook
+    # site and CreateMonWithIVs -- see src/wild_trampoline.c) ---
+    wobj, welf, wbin = BUILD / "wtramp.o", BUILD / "wtramp.elf", BUILD / "wtramp.bin"
+    subprocess.run(["arm-none-eabi-gcc", "-c", "-mthumb", "-mcpu=arm7tdmi",
+                    "-O2", "-ffreestanding", "-fno-builtin",
+                    f"-DGATED_FN_ADDR={hook_wild:#x}",
+                    f"-DORIG_TARGET_ADDR={CREATE_MON_WITH_IVS:#x}",
+                    "-o", str(wobj), str(ROOT / "src" / "wild_trampoline.c")],
+                   check=True)
+    subprocess.run(["arm-none-eabi-ld", "-Ttext", f"{WILD_TRAMPOLINE_ADDR:#x}",
+                    "--entry", "CM_WildMonSpecies_Trampoline",
+                    "-o", str(welf), str(wobj)], check=True)
+    subprocess.run(["arm-none-eabi-objcopy", "-O", "binary", str(welf), str(wbin)],
+                   check=True)
+    wild_tramp = wbin.read_bytes()
+    assert len(wild_tramp) <= TRAMPOLINE_ADDR + 64 - WILD_TRAMPOLINE_ADDR, (
+        f"wild trampoline too big: {len(wild_tramp)} bytes, "
+        f"only {TRAMPOLINE_ADDR + 64 - WILD_TRAMPOLINE_ADDR} available")
+    print(f"wild trampoline: {len(wild_tramp)} bytes @ {WILD_TRAMPOLINE_ADDR:#x}")
 
     # --- assemble entry + confirm scripts (two-pass fixup) ---
     txt = build_scripts(cm)
@@ -349,10 +398,13 @@ def main():
     splice(CODES_ADDR, bytes(codes), "codes")
     splice(STARTERS_ADDR, starters_blob, "starters")
     splice(SCRIPT_ADDR, bytes(script), "scripts")
+    splice(WILDPOOL_ADDR, wildpool, "wildpool")
 
     tramp = struct.pack("<HH", 0x4B00, 0x4718) + struct.pack("<I", hook_gate)
     assert TRAMPOLINE_ADDR % 4 == 0
     splice(TRAMPOLINE_ADDR, tramp, "trampoline")
+    assert WILD_TRAMPOLINE_ADDR % 2 == 0
+    splice(WILD_TRAMPOLINE_ADDR, wild_tramp, "wild trampoline")
 
     # --- patches (verify-then-write) ---
     for site in (BL_SITE_CATCH, BL_SITE_GIFT):
@@ -360,6 +412,11 @@ def main():
         expect = thumb_bl(0x08000000 + site, GIVEMON_ADDR)
         assert cur == expect, (f"BL site {site:#x}: {cur.hex()} != {expect.hex()}")
         data[site:site + 4] = thumb_bl(0x08000000 + site, TRAMPOLINE_ADDR)
+
+    cur = bytes(data[WILD_BL_SITE:WILD_BL_SITE + 4])
+    expect = thumb_bl(0x08000000 + WILD_BL_SITE, CREATE_MON_WITH_IVS)
+    assert cur == expect, (f"wild BL site {WILD_BL_SITE:#x}: {cur.hex()} != {expect.hex()}")
+    data[WILD_BL_SITE:WILD_BL_SITE + 4] = thumb_bl(0x08000000 + WILD_BL_SITE, WILD_TRAMPOLINE_ADDR)
 
     cur = struct.unpack_from("<I", data, BG_EVENT_PTR_OFF)[0]
     assert cur == ORIG_CLIPBOARD, f"BG ptr: {cur:#x} != {ORIG_CLIPBOARD:#x}"
@@ -407,8 +464,9 @@ def main():
         assert cur == TRADE_JUNCTION_BYTES, f"trade junction {j:#x}: {cur.hex()}"
         data[j:j + 5] = op_goto(w_addr)
 
-    print(f"patched: 2 BL sites, BG-event ptr, {len(sites)} callnative give ptrs, "
-          f"{len(TRADE_JUNCTIONS)} trade junctions (wrappers @ {TRADE_SCRIPT_ADDR:#x})")
+    print(f"patched: 3 BL sites (2 catch/gift + 1 wild-encounter), BG-event ptr, "
+          f"{len(sites)} callnative give ptrs, {len(TRADE_JUNCTIONS)} trade junctions "
+          f"(wrappers @ {TRADE_SCRIPT_ADDR:#x})")
 
     # --- outputs ---
     out_rom = BUILD / "seaglass_cm.gba"

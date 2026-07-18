@@ -170,15 +170,47 @@ Run the automated layers: `sh tools/tests/run_tests.sh`.
 | **4a/b — live catch gate** (`cm_catch_test.lua`) | Same wild Zigzagoon, toggling only the CM flag: CM on + char 1 (Red, off-roster) → blocked→PC (party stays 1); CM off → caught to party (control). Per-character discrimination previously verified (char 39 Brendan allows Zigzagoon). | **GREEN** |
 | **1 — GDB shim unit tests** | Not built for Seaglass. Would exercise the shim's branch table (flag off / empty party / on-roster / off-roster→PC / egg exemption / per-char bitmap) in isolation à la Lazarus's `shim_unit_test.py`. The static on-bitmap invariants + live catch gate + the 4c–4f e2e now cover this seam's main paths; optional hardening only. | Not built (optional) |
 | **4c–4f — real-UI activation e2e** (`cm_ui_activate.lua`) | **DONE (2026-07-17 later).** From `naming_open.ss` (CODE naming screen open at the mart clipboard), types a code via 40-frame-spaced cursor taps, commits (START→A), dismisses the dialogue, then **asserts** on flag/char/party/starter-var. Four suite layers: **4c** RED → char 1 + starter to party; **4d** MISTY → char 10 (discrimination); **4e** ZZZ → rejected, nothing set; **4f** CMDBGOFF with CM preset → flag+char cleared, starter var = 0xFFFF off-marker. | **GREEN (all 4)** |
+| **4g — in-situ trade gate** (`cm_trade_test.lua` on the test-only ROM) | **DONE (2026-07-17 latest).** From `mart_inside.ss` we navigate to the clipboard and trigger a test-ROM entry script (`lock; setvar 0x8008,idx; goto junction[idx]`) that lands on the **shipped** junction overlay → the shipped per-trade wrapper. Breakpoints CM_TradeCheck's store (`0x08ED25BC`) and reads the decision from r4. Three cases on idx2 (SEASOR, receives Horsea 116): **RED** (off-roster) → 0 refuse + refusal msg renders + party unchanged; **MISTY** (on-roster) → 1 allow (per-character discrimination); **CM off** → 1 allow (control). | **GREEN (all 3)** |
+| **5a/b — wild-encounter override** (`cm_wild_test.lua`, `cm_wild_stage_test.lua`, `tools/tests/verify_wild_override.py`) | **DONE (task #5, wild-mon override).** From `at_8_8.ss`, walks into Route 101 grass; two breakpoints on the wild trampoline (`0x08470208` entry, `0x08470218` post-call) observe the rolled species/level going in and the (possibly overridden) species coming out. **5a**: CM off → trampoline fires (proving the hook is live) but never overrides (inert requirement). **5b** (`verify_wild_override.py`): forces the rolled level to 45 via `emu:writeRegister` and retries across `START_DELAY`s until the 10% gate fires → asserts the resulting species is a real, non-legendary member of the active character's pool with no closer-fitting stage available; separately samples 20 unforced low-level (2–3) rolls, asserting every override observed is a valid pool member and the empirical rate is in a plausible band for p=0.10. Comprehensive **offline** legendary-exclusion + rate-math checks (not emulator-dependent) also passed: `wildpool_manifest.json`'s 4889 entries across all 170 characters contain zero legendary species; an exhaustive sweep of the `wildSeed()` formula over ~346k (species,level,vcount,keys) combinations landed at exactly 10.00%. | **GREEN** |
 
 **What's proven about selection:** the selection script + shim are statically
 verified end-to-end, **and the naming-screen UI seam is now live-verified**
 (4c–4f above: type→commit→match→confirm+give / reject / deactivate, all
 asserted against real RAM state). The enforcement half is live-verified
 (catch gate on/off; the 49-site callnative-give hole closed by exhaustion).
-Remaining live gaps: **trade refusal in-situ** (needs a savestate near one of
-the 4 in-game trade NPCs — none exists yet; the junction overlays are
-statically decoded) and the **full human playthrough**.
+**Trade gating is now live-verified too** (4g: the real overlaid junction
+wrapper + CM_TradeCheck, refuse and allow both exercised, per-character
+discrimination on one trade). The only remaining live gap is the **full human
+playthrough**.
+
+**In-situ trade e2e — how it works and what it cost (2026-07-17 latest):**
+Real trade NPCs are deep in the game and the warp path is unusable (same wall
+Lazarus hit), so we reuse Lazarus's *test-only ROM* trick:
+`tools/tests/build_trade_testrom.py <idx>` copies `build/seaglass_cm.gba` and
+repoints the mart-clipboard BG event (file `0x123ACC`) from the CM entry script
+to a tiny `lock; setvar 0x8008,idx; goto junction` shim in unused free space
+(`0x08EF6000` — moved from `0x08EF0000` when task #5's wild-encounter pool
+table, `0x08EE4000`-`0x08EF5440`, grew into the old address). The junction it jumps to is the **shipped** overlay, so the
+per-trade wrapper under test is unmodified; the shipped ROM is never touched and
+the variant is never distributed. Three hard-won gotchas that cost real time:
+1. **The junction/setvar order is (2,0,1,3), not table order** (documented in
+   the trades section): trade index N's junction is *not* `TRADE_JUNCTIONS[N]`.
+   The builder maps index→junction explicitly (`JUNCTION_FOR_TRADE`). Verify:
+   `setvar 0x8008,2` sits 0x55 before junction `0x29CFF5`.
+2. **A log-only "pass" is worthless — and RED is a decoy.** Horsea is off
+   *every* roster we'd test, so a RED-only refuse result confirms nothing about
+   whether the right trade index was read. The MISTY-vs-RED pair on the *same*
+   trade is the load-bearing check. Always breakpoint CM_TradeCheck to prove it
+   ran, and read the decision from r4/the store, not from a frame poll — the
+   ALLOW path's `special 0x100/0x101` overwrite VAR_RESULT before any later
+   frame sees it.
+3. **gSpecialVar_Result is at `0x020055F0`, not `0x020055F2`** — an old computed
+   note was off by 2; reading GetVarPointer(0x800D)'s own store address settled
+   it. The test now reads r4 directly (address-independent).
+4. **The clipboard interacts on a LEFT-facing A at (0,5)** (LEFT till blocked,
+   UP till blocked, an A-up probe, then face-LEFT + A) — the older `LEFT×3,UP×2`
+   cadence no longer reaches it and a saved "facing" state didn't reproduce the
+   trigger; the reactive walk in `cm_trade_test.lua` is the reliable route.
 
 **Two e2e gotchas (hard-won, 2026-07-17 later):**
 1. **Tests must assert, not just log.** `H.finish()` prints `RESULT: PASS`

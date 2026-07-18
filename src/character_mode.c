@@ -1,9 +1,14 @@
 /* Character Mode shims for Pokemon Emerald Seaglass v3.0 (by Nemo622).
  *
- * Five entry points, all placed in the big free block (ROM 0x08ED2164+) and
- * reached only through full 32-bit pointers (BG-event ptr, specials-free
- * script pointers, 49 callnative operands) — except the two acquisition BLs,
- * which go through the 8-byte trampoline at 0x08470200. See
+ * Six entry points. The first five live in the big free block (ROM
+ * 0x08ED2164+) and are reached only through full 32-bit pointers (BG-event
+ * ptr, specials-free script pointers, 49 callnative operands) — except the
+ * two acquisition BLs, which go through the 8-byte trampoline at 0x08470200.
+ * The sixth (CM_WildMonSpeciesGated) lives in the SAME far blob but is
+ * reached via a SEPARATE small trampoline (src/wild_trampoline.c, placed
+ * right after the acquisition trampoline at 0x08470208) because its hook
+ * site is ~7.6 MiB away — out of Thumb BL range from here, so the far
+ * trampoline does a manual long-call (no BLX on this CPU). See
  * tools/inject_character_mode.py + docs/ROUTINE_MAP.md; every fixed address is
  * CONFIRMED for this exact ROM (rom.sha1).
  *
@@ -36,6 +41,29 @@
  *
  *  5. CM_TradeCheck(ctx) — in-game trade gate (task #4; sIngameTrades located
  *     separately). Writes 1 (allow) / 0 (refuse) to gSpecialVar_Result.
+ *
+ *  6. CM_WildMonSpeciesGated(species, level) — wild-encounter override (task
+ *     #5). Hooked at the SINGLE call site inside the wild-encounter
+ *     species/level roll that invokes CreateMonWithIVs-simple (0x081A7504),
+ *     found live via mgba-headless breakpoint tracing (docs/ROUTINE_MAP.md):
+ *     ROM file offset 0x22BF36 (BL operand, currently -> 0x081A7504),
+ *     r0=gEnemyParty, r1=rolled species, r2=rolled level at that exact PC.
+ *     This single choke point is shared by every wild-roll table type --
+ *     grass/cave land encounters, surfing, rock smash, and all 3 fishing rod
+ *     tiers all fall through TryGenerateWildMon/GenerateFishingWildMon (the
+ *     donor's shared species+level roll routines) into this one
+ *     CreateMonWithIVs call, exactly mirroring the acquisition gate's single
+ *     GiveMonToPlayer choke point. Static/scripted gift encounters never
+ *     reach this call (they use the separate give-native path already
+ *     gated by CM_NativeGiveGated), so they're untouched by construction.
+ *     On a 10% roll (CM on only — inert with Character Mode off, per
+ *     gateActive()), overrides the rolled species with a random member of
+ *     the active character's wild pool (tools/character_mode/emit_wildpool.py
+ *     -> wildpool.bin — non-legendary roster bases only, expanded through
+ *     the donor evolution graph with a canon "first appears at this level"
+ *     estimate per family member), picking the stage whose level best fits
+ *     the roll (nearest-at-or-below, else nearest overall). The rolled level
+ *     itself is left untouched — only the species may change.
  *
  * MON_DATA_SPECIES=18 / IS_EGG=52 confirmed for this ROM (docs/ROUTINE_MAP.md).
  */
@@ -95,6 +123,13 @@ typedef unsigned int u32;
 #define sCodes    ((const u8 *)  CODES_ADDR)    /* 170 x 11, charmap, 0xFF pad */
 #define sStarters ((const u16 *) STARTERS_ADDR) /* 170 x u16 ROM species id    */
 #define sBitmaps  ((const u8 *)  BITMAPS_ADDR)  /* 170 x 187 allowed-species   */
+
+#ifndef WILDPOOL_ADDR
+#error "compile with -DWILDPOOL_ADDR="
+#endif
+#define WILDPOOL_STRIDE 104   /* entries/char; tools/character_mode/emit_wildpool.py */
+typedef struct { u16 species; u8 minLevel; u8 _pad; } WildPoolEntry;
+#define sWildPool ((const WildPoolEntry *) WILDPOOL_ADDR)
 
 /* --- helpers --- */
 
@@ -253,3 +288,87 @@ void CM_TradeCheck(void *ctx)
     *GetVarPointer(VAR_RESULT) = allowed;
 }
 #endif
+
+/* --- 6. wild encounter species override (task #5) --- */
+
+/* Not the game's own Random() (its address wasn't worth chasing down for a
+ * cosmetic 10% roll, and every RE minute here went into finding the actual
+ * hook site instead) -- and deliberately NOT a `static` counter either:
+ * this shim is linked directly into the ROM image (-Ttext at a ROM
+ * address), so a mutable file-scope variable would be a global sitting in
+ * *read-only* cartridge space. On real hardware writes to ROM are simply
+ * ignored (the value would never actually advance); relying on it would be
+ * an emulator-only illusion of persistence. Instead this seeds from the
+ * live VCOUNT scanline + button-state hardware registers (both genuinely
+ * writable-by-hardware, read-only for us, no RAM budget needed) mixed with
+ * the roll's own species+level -- different encounters land on different
+ * table slots/levels and fire at slightly different real-time instants, so
+ * consecutive rolls still land on different seeds despite there being no
+ * carried state. One seed feeds two independent-enough decisions (the 10%
+ * gate, then the tie-break pick) via a second constant-multiplier mix step. */
+static u32 wildSeed(u16 species, u8 level)
+{
+    u16 vcount = *(volatile u16 *) 0x04000006;   /* REG_VCOUNT: current scanline */
+    u16 keys   = *(volatile u16 *) 0x04000130;   /* REG_KEYINPUT: active-low pad state */
+    return (u32) species * 2654435761u + (u32) level * 40503u
+         + (u32) vcount * 6151u + (u32) keys;
+}
+
+u16 CM_WildMonSpeciesGated(u16 species, u8 level)
+{
+    u16 charId;
+    const WildPoolEntry *e;
+    const WildPoolEntry *best;
+    const WildPoolEntry *fallback;
+    u32 tieCount, pick, seed;
+    int i;
+
+    if (!gateActive())
+        return species;                    /* CM off: fully inert */
+    seed = wildSeed(species, level);
+    if (seed % 100 >= 10)
+        return species;                    /* 90%: leave the normal roll alone */
+
+    charId = *GetVarPointer(VAR_CM_CHAR);
+    e = sWildPool + (charId - 1) * WILDPOOL_STRIDE;
+
+    /* best = the entry whose minLevel is the closest to (and not above) the
+     * rolled level -- "pick the stage whose canon level range best fits the
+     * rolled level, low level -> early stage, high level -> evolved stage".
+     * fallback = the single lowest-minLevel entry in the whole pool, used
+     * only if EVERY entry's minLevel is above the roll (nearest-stage
+     * fallback for a roster whose pool starts higher than this level). */
+    best = 0;
+    fallback = 0;
+    for (i = 0; i < WILDPOOL_STRIDE; i++) {
+        if (e[i].species == 0)
+            break;                          /* terminator: end of this char's pool */
+        if (!fallback || e[i].minLevel < fallback->minLevel)
+            fallback = &e[i];
+        if (e[i].minLevel <= level && (!best || e[i].minLevel > best->minLevel))
+            best = &e[i];
+    }
+    if (!best)
+        best = fallback;
+    if (!best)
+        return species;                    /* empty pool (shouldn't happen): never override */
+
+    /* Several members can share the same minLevel (branched evolutions, or
+     * several unrelated roster families that happen to line up) -- pick
+     * uniformly among the tied entries rather than always the first. */
+    tieCount = 0;
+    for (i = 0; i < WILDPOOL_STRIDE && e[i].species != 0; i++) {
+        if (e[i].minLevel == best->minLevel)
+            tieCount++;
+    }
+    seed = seed * 1103515245u + 12345u;    /* second mix step: an independent-enough draw */
+    pick = seed % tieCount;
+    for (i = 0; i < WILDPOOL_STRIDE && e[i].species != 0; i++) {
+        if (e[i].minLevel == best->minLevel) {
+            if (pick == 0)
+                return e[i].species;
+            pick--;
+        }
+    }
+    return best->species;                  /* unreachable */
+}

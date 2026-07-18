@@ -62,6 +62,17 @@ def main():
     id_to_name = {int(i): nm for i, nm in rom_tbl.items()}
 
     name_to_const, _parent = M.load_donor()
+    # Key the donor name->const map by normalize() too: the ROM's own dumped
+    # species names carry charmap-decode quirks (fullwidth "。"/U+3000 in
+    # "Mime Jr.", "Mr. Mime"; "ー" in "Ho-Oh"/"Porygon-Z") that don't match the
+    # donor's plain-ASCII speciesName under a raw dict lookup. Without this,
+    # such a base fails const resolution and its forward evolutions are never
+    # added (e.g. Mime Jr. base -> Mr. Mime evo silently dropped).
+    norm_name_to_const = {}
+    for nm, cst in name_to_const.items():
+        k = normalize(nm)
+        if k and k not in norm_name_to_const:
+            norm_name_to_const[k] = cst
     const_name, forward = load_donor_forward()
 
     stride = (max_id + 8) // 8          # bytes to cover ids 0..max_id
@@ -74,7 +85,7 @@ def main():
         for base_id in c["roster_species_ids"]:
             allowed.add(base_id)                    # the base itself
             base_name = id_to_name.get(base_id)
-            const = name_to_const.get(base_name) if base_name else None
+            const = norm_name_to_const.get(normalize(base_name)) if base_name else None
             if not const:
                 continue
             for member in family_closure(const, forward):

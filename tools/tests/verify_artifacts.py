@@ -65,6 +65,13 @@ TRADE_JUNCTION_BYTES = bytes([0x19,0x04,0x80,0x08,0x80, 0x19,0x05,0x80,0x0A,0x80
                               0x25,0x00,0x01, 0x25,0x01,0x01, 0x27])
 TRADE_TABLE = 0xA3DB30
 
+# Wild-encounter species override (task #5, docs/ROUTINE_MAP.md).
+WILD_BL_SITE = 0x22BF36
+CREATE_MON_WITH_IVS = 0x081A7504
+WILD_TRAMPOLINE_ADDR = 0x08470208
+WILDPOOL_ADDR = 0x08EE4000
+WILDPOOL_STRIDE = 104
+
 _p = _f = 0
 def ok(cond, msg):
     global _p, _f
@@ -136,9 +143,11 @@ def main():
     print("[3] diff containment")
     windows = [(BL_CATCH, 4), (BL_GIFT, 4), (BG_EVENT_PTR_OFF, 4),
                (TRAMPOLINE_ADDR & 0x01FFFFFF, 8),
+               (WILD_BL_SITE, 4), (WILD_TRAMPOLINE_ADDR & 0x01FFFFFF, 64 - 8),
                (0xED2200, 0x2000), (0xEDA000, NUM_CHARACTERS * BITMAP_STRIDE),
                (0xEE2000, NUM_CHARACTERS * CODE_LEN), (0xEE2800, NUM_CHARACTERS * 2),
-               (0xEE2A00, 0x300), (0xEE3000, 0x400)]
+               (0xEE2A00, 0x300), (0xEE3000, 0x400),
+               (WILDPOOL_ADDR & 0x01FFFFFF, NUM_CHARACTERS * WILDPOOL_STRIDE * 4)]
     give_sites = [i for i in range(len(orig))
                   if orig[i - 1] == 0x23 and orig[i:i + 4] == struct.pack("<I", GIVE_NATIVE)]
     windows += [(s, 4) for s in give_sites]
@@ -234,6 +243,49 @@ def main():
     recv_ok = all(1 <= struct.unpack_from("<H", orig, TRADE_TABLE + k * 60 + 14)[0] < 1489
                   for k in range(4))
     ok(recv_ok, "sIngameTrades received-species fields sane (4 entries)")
+
+    print("[11] wild-encounter hook + trampoline")
+    ok(decode_bl(orig, WILD_BL_SITE) == CREATE_MON_WITH_IVS,
+       "wild BL originally -> CreateMonWithIVs-simple")
+    ok(decode_bl(patched, WILD_BL_SITE) == WILD_TRAMPOLINE_ADDR,
+       "wild BL retargeted -> wild trampoline")
+    wt = patched[WILD_TRAMPOLINE_ADDR & 0x01FFFFFF: (WILD_TRAMPOLINE_ADDR & 0x01FFFFFF) + 40]
+    ok(wt[0:2] == bytes([0x1D, 0xB5]), "wild trampoline starts push {r0,r2,r3,r4,lr}")
+    gated_word, orig_word = struct.unpack_from("<II", wt, 0x20)
+    ok(0x08ED2200 <= (gated_word & ~1) < 0x08EDA000,
+       f"wild trampoline's long-call literal -> main shim blob ({gated_word:#x})")
+    ok((orig_word & ~1) == CREATE_MON_WITH_IVS,
+       f"wild trampoline's tail-jump literal -> untouched CreateMonWithIVs ({orig_word:#x})")
+
+    print("[12] wild pool data + legendary exclusion")
+    wildpool = (CM / "wildpool.bin").read_bytes()
+    ok(len(wildpool) == NUM_CHARACTERS * WILDPOOL_STRIDE * 4, "wildpool.bin size matches stride")
+    wp_off = WILDPOOL_ADDR & 0x01FFFFFF
+    ok(patched[wp_off:wp_off + len(wildpool)] == wildpool, "wildpool in-ROM == wildpool.bin")
+    sys.path.insert(0, str(CM))
+    from emit_characters import LEGENDARY_BASES
+    import map_species as _M
+    name_to_const, _ = _M.load_donor()
+    const_to_name = {v: k for k, v in name_to_const.items()}
+    legend_names = {const_to_name[c] for c in LEGENDARY_BASES if c in const_to_name}
+    sp_table = json.loads((CM / "rom_species_table.json").read_text())["species"]
+    leaks = 0
+    empty_pool_but_nonempty_roster = 0
+    for ci, c in enumerate(manifest):
+        rec = wildpool[ci * WILDPOOL_STRIDE * 4:(ci + 1) * WILDPOOL_STRIDE * 4]
+        n_entries = 0
+        for k in range(WILDPOOL_STRIDE):
+            sid, lvl, _pad = struct.unpack_from("<HBB", rec, k * 4)
+            if sid == 0:
+                break
+            n_entries += 1
+            if sp_table.get(str(sid)) in legend_names:
+                leaks += 1
+        if n_entries == 0 and c.get("starter_count", 0) > 0:
+            empty_pool_but_nonempty_roster += 1
+    ok(leaks == 0, f"no legendary species in any character's wild pool ({leaks} leaks)")
+    ok(empty_pool_but_nonempty_roster == 0,
+       "every character with a non-legendary roster has a non-empty wild pool")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     sys.exit(1 if _f else 0)
