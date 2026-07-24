@@ -1,0 +1,3229 @@
+{
+ "Aaron": {
+  "Beautifly": {
+   "tag": "single-game",
+   "games": "Pokémon Diamond/Pearl"
+  },
+  "Dustox": {
+   "tag": "single-game",
+   "games": "Pokémon Diamond/Pearl"
+  },
+  "Yanmega": {
+   "tag": "single-game",
+   "games": "Pokémon Platinum"
+  },
+  "Scizor": {
+   "tag": "single-game",
+   "games": "Pokémon Platinum"
+  }
+ },
+ "Birch": {},
+ "Cerise": {
+  "Beedrill": {
+   "tag": "anime-only"
+  },
+  "Blastoise": {
+   "tag": "anime-only"
+  },
+  "Boltund": {
+   "tag": "anime-only"
+  },
+  "Charizard": {
+   "tag": "anime-only"
+  },
+  "Clefable": {
+   "tag": "anime-only"
+  },
+  "Crobat": {
+   "tag": "anime-only"
+  },
+  "Empoleon": {
+   "tag": "anime-only"
+  },
+  "Espeon": {
+   "tag": "anime-only"
+  },
+  "Flareon": {
+   "tag": "anime-only"
+  },
+  "Glaceon": {
+   "tag": "anime-only"
+  },
+  "Jolteon": {
+   "tag": "anime-only"
+  },
+  "Leafeon": {
+   "tag": "anime-only"
+  },
+  "Lugia": {
+   "tag": "anime-only"
+  },
+  "Mew": {
+   "tag": "anime-only"
+  },
+  "Rotom": {
+   "tag": "anime-only"
+  },
+  "Sylveon": {
+   "tag": "anime-only"
+  },
+  "Umbreon": {
+   "tag": "anime-only"
+  },
+  "Vaporeon": {
+   "tag": "anime-only"
+  },
+  "Venusaur": {
+   "tag": "anime-only"
+  }
+ },
+ "Drake": {},
+ "Ghetsis": {
+  "Bouffalant": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Kingambit": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Drapion": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Toxicroak": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  }
+ },
+ "Hop": {
+  "Boltund": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Cinderace": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Corviknight": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Cramorant": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Dubwool": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Heatmor": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Inteleon": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Pincurchin": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Rillaboom": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Sandaconda": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Snorlax": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Toxtricity": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Trevenant": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Zacian": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Zamazenta": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Kofu": {
+  "Clawitzer": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Crabominable": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Feraligatr": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Pelipper": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Veluza": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Wugtrio": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Lucas": {},
+ "Milo": {
+  "Appletun": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Bellossom": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Cherrim": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Eldegoss": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Flapple": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Ludicolo": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Shiftry": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Tsareena": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Phoebe": {
+  "Chandelure": {
+   "tag": "single-game",
+   "games": "Pokémon Omega Ruby/Alpha Sapphire"
+  },
+  "Drifblim": {
+   "tag": "single-game",
+   "games": "Pokémon Omega Ruby/Alpha Sapphire"
+  }
+ },
+ "Ryme": {
+  "Banette": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Golurk": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Houndstone": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Mimikyu": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Spiritomb": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Toxtricity": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Sycamore": {
+  "Absol": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Blastoise": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Blaziken": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Charizard": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Chesnaught": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Delphox": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Drapion": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Druddigon": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Gallade": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Garchomp": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Gardevoir": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Gogoat": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Greninja": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Hawlucha": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Pinsir": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Venusaur": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Xerneas": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Yveltal": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  }
+ },
+ "Wulfric": {
+  "Abomasnow": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Avalugg": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Cryogonal": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  }
+ },
+ "Acerola": {
+  "Sableye": {
+   "tag": "single-game",
+   "games": "Pokémon Sun/Moon"
+  },
+  "Banette": {
+   "tag": "single-game",
+   "games": "Pokémon Ultra Sun/Ultra Moon"
+  }
+ },
+ "Blaine": {
+  "Rhyperior": {
+   "tag": "anime-only"
+  },
+  "Flareon": {
+   "tag": "single-game",
+   "games": "Pokémon: Let's Go, Pikachu!/Let's Go, Eevee!"
+  }
+ },
+ "Cheren": {},
+ "Drasna": {
+  "Altaria": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Dragalge": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Druddigon": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Noivern": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  }
+ },
+ "Giovanni": {
+  "Cloyster": {
+   "tag": "anime-only"
+  },
+  "Golem": {
+   "tag": "anime-only"
+  },
+  "Kingler": {
+   "tag": "anime-only"
+  },
+  "Machamp": {
+   "tag": "anime-only"
+  },
+  "Mewtwo": {
+   "tag": "anime-only"
+  },
+  "Honchkrow": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  }
+ },
+ "Hugh": {
+  "Bouffalant": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Eelektross": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Emboar": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Flygon": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Samurott": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Serperior": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Simipour": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Simisage": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Simisear": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Unfezant": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  }
+ },
+ "Koga": {
+  "Skuntank": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Toxicroak": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Swalot": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Tentacruel": {
+   "tag": "single-game",
+   "games": "Pokémon: Let's Go, Pikachu!/Let's Go, Eevee!"
+  }
+ },
+ "Lucian": {
+  "Slowbro": {
+   "tag": "single-game",
+   "games": "Pokémon Brilliant Diamond/Shining Pearl"
+  }
+ },
+ "Misty": {
+  "Politoed": {
+   "tag": "anime-only"
+  },
+  "Clawitzer": {
+   "tag": "anime-only"
+  },
+  "Azumarill": {
+   "tag": "anime-only"
+  },
+  "Togekiss": {
+   "tag": "anime-only"
+  },
+  "Cursola": {
+   "tag": "anime-only"
+  },
+  "Gyarados": {
+   "tag": "single-game",
+   "games": "Pokémon: Let's Go, Pikachu!/Let's Go, Eevee!"
+  },
+  "Dewgong": {
+   "tag": "single-game",
+   "games": "Pokémon: Let's Go, Pikachu!/Let's Go, Eevee!"
+  },
+  "Vaporeon": {
+   "tag": "single-game",
+   "games": "Pokémon: Let's Go, Pikachu!/Let's Go, Eevee!"
+  },
+  "Lanturn": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Floatzel": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Milotic": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  }
+ },
+ "Piers": {
+  "Malamar": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Obstagoon": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Scrafty": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Skuntank": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Toxtricity": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Sabrina": {
+  "Gengar": {
+   "tag": "anime-only"
+  },
+  "Wobbuffet": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Gallade": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Slowbro": {
+   "tag": "single-game",
+   "games": "Pokémon: Let's Go, Pikachu!/Let's Go, Eevee!"
+  },
+  "Hypno": {
+   "tag": "single-game",
+   "games": "Pokémon: Let's Go, Pikachu!/Let's Go, Eevee!"
+  }
+ },
+ "Tate": {},
+ "Zoey": {
+  "Gallade": {
+   "tag": "anime-only"
+  },
+  "Gastrodon": {
+   "tag": "anime-only"
+  },
+  "Leafeon": {
+   "tag": "anime-only"
+  },
+  "Lumineon": {
+   "tag": "anime-only"
+  },
+  "Mismagius": {
+   "tag": "anime-only"
+  },
+  "Purugly": {
+   "tag": "anime-only"
+  }
+ },
+ "Agatha": {},
+ "Blue": {},
+ "Chili": {},
+ "Drayden": {},
+ "Glacia": {},
+ "Iono": {
+  "Bellibolt": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Kilowattrel": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Luxray": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Mismagius": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Korrina": {
+  "Hawlucha": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Machamp": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Mienshao": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Lucario": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  }
+ },
+ "Lusamine": {},
+ "Molayne": {
+  "Klefki": {
+   "tag": "single-game",
+   "games": "Pokémon Ultra Sun/Ultra Moon"
+  },
+  "Kingambit": {
+   "tag": "single-game",
+   "games": "Pokémon Ultra Sun/Ultra Moon"
+  },
+  "Metagross": {
+   "tag": "single-game",
+   "games": "Pokémon Ultra Sun/Ultra Moon"
+  },
+  "Dugtrio": {
+   "tag": "single-game",
+   "games": "Pokémon Ultra Sun/Ultra Moon"
+  },
+  "Magnezone": {
+   "tag": "single-game",
+   "games": "Pokémon Ultra Sun/Ultra Moon"
+  }
+ },
+ "Plumeria": {},
+ "Samson Oak": {},
+ "Tobias": {
+  "Darkrai": {
+   "tag": "anime-only"
+  },
+  "Latios": {
+   "tag": "anime-only"
+  }
+ },
+ "Alain": {
+  "Charizard": {
+   "tag": "anime-only"
+  },
+  "Chesnaught": {
+   "tag": "anime-only"
+  },
+  "Kingambit": {
+   "tag": "anime-only"
+  },
+  "Malamar": {
+   "tag": "anime-only"
+  },
+  "Metagross": {
+   "tag": "anime-only"
+  },
+  "Tyranitar": {
+   "tag": "anime-only"
+  },
+  "Unfezant": {
+   "tag": "anime-only"
+  },
+  "Weavile": {
+   "tag": "anime-only"
+  }
+ },
+ "Brassius": {
+  "Arboliva": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Lilligant": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Sudowoodo": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Chloe": {
+  "Boltund": {
+   "tag": "anime-only"
+  },
+  "Espeon": {
+   "tag": "anime-only"
+  },
+  "Flareon": {
+   "tag": "anime-only"
+  },
+  "Glaceon": {
+   "tag": "anime-only"
+  },
+  "Jolteon": {
+   "tag": "anime-only"
+  },
+  "Leafeon": {
+   "tag": "anime-only"
+  },
+  "Sylveon": {
+   "tag": "anime-only"
+  },
+  "Umbreon": {
+   "tag": "anime-only"
+  },
+  "Vaporeon": {
+   "tag": "anime-only"
+  }
+ },
+ "Drew": {
+  "Absol": {
+   "tag": "anime-only"
+  },
+  "Butterfree": {
+   "tag": "anime-only"
+  },
+  "Flygon": {
+   "tag": "anime-only"
+  },
+  "Masquerain": {
+   "tag": "anime-only"
+  },
+  "Roserade": {
+   "tag": "anime-only"
+  }
+ },
+ "Gladion": {},
+ "Iris": {
+  "Aggron": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Archeops": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Hydreigon": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Lapras": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Dragonite": {
+   "tag": "anime-only"
+  },
+  "Emolga": {
+   "tag": "anime-only"
+  },
+  "Excadrill": {
+   "tag": "anime-only"
+  },
+  "Garchomp": {
+   "tag": "anime-only"
+  }
+ },
+ "Kris": {},
+ "Lyra": {
+  "Azumarill": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  }
+ },
+ "Morty": {},
+ "Poppy": {
+  "Bronzong": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Copperajah": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Corviknight": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Magnezone": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Tinkaton": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Saturn": {},
+ "Tracey": {
+  "Azumarill": {
+   "tag": "anime-only"
+  },
+  "Kleavor": {
+   "tag": "anime-only"
+  },
+  "Scizor": {
+   "tag": "anime-only"
+  },
+  "Venomoth": {
+   "tag": "anime-only"
+  }
+ },
+ "Alder": {
+  "Druddigon": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Vanilluxe": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Chandelure": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Reuniclus": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Krookodile": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Conkeldurr": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Braviary": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  }
+ },
+ "Brawly": {
+  "Hitmonchan": {
+   "tag": "single-game",
+   "games": "Pokémon Emerald"
+  },
+  "Hitmonlee": {
+   "tag": "single-game",
+   "games": "Pokémon Emerald"
+  },
+  "Heracross": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Breloom": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  }
+ },
+ "Chuck": {
+  "Machamp": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Medicham": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Breloom": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  }
+ },
+ "Elesa": {
+  "Ampharos": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Galvantula": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Eelektross": {
+   "tag": "anime-only"
+  }
+ },
+ "Goh": {
+  "Absol": {
+   "tag": "anime-only"
+  },
+  "Aerodactyl": {
+   "tag": "anime-only"
+  },
+  "Alcremie": {
+   "tag": "anime-only"
+  },
+  "Altaria": {
+   "tag": "anime-only"
+  },
+  "Annihilape": {
+   "tag": "anime-only"
+  },
+  "Arbok": {
+   "tag": "anime-only"
+  },
+  "Arctozolt": {
+   "tag": "anime-only"
+  },
+  "Ariados": {
+   "tag": "anime-only"
+  },
+  "Barbaracle": {
+   "tag": "anime-only"
+  },
+  "Beautifly": {
+   "tag": "anime-only"
+  },
+  "Beedrill": {
+   "tag": "anime-only"
+  },
+  "Bellossom": {
+   "tag": "anime-only"
+  },
+  "Bruxish": {
+   "tag": "anime-only"
+  },
+  "Butterfree": {
+   "tag": "anime-only"
+  },
+  "Camerupt": {
+   "tag": "anime-only"
+  },
+  "Cinderace": {
+   "tag": "anime-only"
+  },
+  "Cloyster": {
+   "tag": "anime-only"
+  },
+  "Crobat": {
+   "tag": "anime-only"
+  },
+  "Cursola": {
+   "tag": "anime-only"
+  },
+  "Darmanitan": {
+   "tag": "anime-only"
+  },
+  "Dewgong": {
+   "tag": "anime-only"
+  },
+  "Diggersby": {
+   "tag": "anime-only"
+  },
+  "Dugtrio": {
+   "tag": "anime-only"
+  },
+  "Durant": {
+   "tag": "anime-only"
+  },
+  "Dustox": {
+   "tag": "anime-only"
+  },
+  "Eldegoss": {
+   "tag": "anime-only"
+  },
+  "Electrode": {
+   "tag": "anime-only"
+  },
+  "Eternatus": {
+   "tag": "anime-only"
+  },
+  "Exeggutor": {
+   "tag": "anime-only"
+  },
+  "Falinks": {
+   "tag": "anime-only"
+  },
+  "Fearow": {
+   "tag": "anime-only"
+  },
+  "Ferrothorn": {
+   "tag": "anime-only"
+  },
+  "Florges": {
+   "tag": "anime-only"
+  },
+  "Flygon": {
+   "tag": "anime-only"
+  },
+  "Forretress": {
+   "tag": "anime-only"
+  },
+  "Furret": {
+   "tag": "anime-only"
+  },
+  "Gigalith": {
+   "tag": "anime-only"
+  },
+  "Golem": {
+   "tag": "anime-only"
+  },
+  "Golurk": {
+   "tag": "anime-only"
+  },
+  "Greedent": {
+   "tag": "anime-only"
+  },
+  "Greninja": {
+   "tag": "anime-only"
+  },
+  "Gyarados": {
+   "tag": "anime-only"
+  },
+  "Heracross": {
+   "tag": "anime-only"
+  },
+  "Hitmonchan": {
+   "tag": "anime-only"
+  },
+  "Honchkrow": {
+   "tag": "anime-only"
+  },
+  "Hypno": {
+   "tag": "anime-only"
+  },
+  "Inteleon": {
+   "tag": "anime-only"
+  },
+  "Kingdra": {
+   "tag": "anime-only"
+  },
+  "Kingler": {
+   "tag": "anime-only"
+  },
+  "Kleavor": {
+   "tag": "anime-only"
+  },
+  "Krookodile": {
+   "tag": "anime-only"
+  },
+  "Lanturn": {
+   "tag": "anime-only"
+  },
+  "Lilligant": {
+   "tag": "anime-only"
+  },
+  "Mantine": {
+   "tag": "anime-only"
+  },
+  "Marowak": {
+   "tag": "anime-only"
+  },
+  "Mismagius": {
+   "tag": "anime-only"
+  },
+  "Muk": {
+   "tag": "anime-only"
+  },
+  "Nidoqueen": {
+   "tag": "anime-only"
+  },
+  "Ninetales": {
+   "tag": "anime-only"
+  },
+  "Noctowl": {
+   "tag": "anime-only"
+  },
+  "Parasect": {
+   "tag": "anime-only"
+  },
+  "Passimian": {
+   "tag": "anime-only"
+  },
+  "Pelipper": {
+   "tag": "anime-only"
+  },
+  "Pidgeot": {
+   "tag": "anime-only"
+  },
+  "Pinsir": {
+   "tag": "anime-only"
+  },
+  "Politoed": {
+   "tag": "anime-only"
+  },
+  "Poliwrath": {
+   "tag": "anime-only"
+  },
+  "Pyukumuku": {
+   "tag": "anime-only"
+  },
+  "Raichu": {
+   "tag": "anime-only"
+  },
+  "Raticate": {
+   "tag": "anime-only"
+  },
+  "Regieleki": {
+   "tag": "anime-only"
+  },
+  "Rillaboom": {
+   "tag": "anime-only"
+  },
+  "Scizor": {
+   "tag": "anime-only"
+  },
+  "Seaking": {
+   "tag": "anime-only"
+  },
+  "Sharpedo": {
+   "tag": "anime-only"
+  },
+  "Shedinja": {
+   "tag": "anime-only"
+  },
+  "Shiinotic": {
+   "tag": "anime-only"
+  },
+  "Simipour": {
+   "tag": "anime-only"
+  },
+  "Simisear": {
+   "tag": "anime-only"
+  },
+  "Sirfetch'd": {
+   "tag": "anime-only"
+  },
+  "Slowbro": {
+   "tag": "anime-only"
+  },
+  "Slowking": {
+   "tag": "anime-only"
+  },
+  "Stunfisk": {
+   "tag": "anime-only"
+  },
+  "Suicune": {
+   "tag": "anime-only"
+  },
+  "Swellow": {
+   "tag": "anime-only"
+  },
+  "Tentacruel": {
+   "tag": "anime-only"
+  },
+  "Trevenant": {
+   "tag": "anime-only"
+  },
+  "Typhlosion": {
+   "tag": "anime-only"
+  },
+  "Venomoth": {
+   "tag": "anime-only"
+  },
+  "Victreebel": {
+   "tag": "anime-only"
+  },
+  "Vileplume": {
+   "tag": "anime-only"
+  },
+  "Vivillon": {
+   "tag": "anime-only"
+  },
+  "Wyrdeer": {
+   "tag": "anime-only"
+  }
+ },
+ "James": {
+  "Aggron": {
+   "tag": "anime-only"
+  },
+  "Amoonguss": {
+   "tag": "anime-only"
+  },
+  "Arcanine": {
+   "tag": "anime-only"
+  },
+  "Cacturne": {
+   "tag": "anime-only"
+  },
+  "Carnivine": {
+   "tag": "anime-only"
+  },
+  "Chimecho": {
+   "tag": "anime-only"
+  },
+  "Cofagrigus": {
+   "tag": "anime-only"
+  },
+  "Gyarados": {
+   "tag": "anime-only"
+  },
+  "Jumpluff": {
+   "tag": "anime-only"
+  },
+  "Malamar": {
+   "tag": "anime-only"
+  },
+  "Morpeko": {
+   "tag": "anime-only"
+  },
+  "Mr. Rime": {
+   "tag": "anime-only"
+  },
+  "Runerigus": {
+   "tag": "anime-only"
+  },
+  "Toxapex": {
+   "tag": "anime-only"
+  },
+  "Tyranitar": {
+   "tag": "anime-only"
+  },
+  "Victreebel": {
+   "tag": "anime-only"
+  },
+  "Weezing": {
+   "tag": "anime-only"
+  }
+ },
+ "Kukui": {
+  "Empoleon": {
+   "tag": "anime-only"
+  },
+  "Lucario": {
+   "tag": "anime-only"
+  },
+  "Venusaur": {
+   "tag": "anime-only"
+  }
+ },
+ "Lysandre": {
+  "Mienshao": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Honchkrow": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Pyroar": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Gyarados": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  }
+ },
+ "N": {
+  "Carracosta": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Archeops": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Zoroark": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Klinklang": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Liepard": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Conkeldurr": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Seismitoad": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Krookodile": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Scrafty": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Darmanitan": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Sigilyph": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Unfezant": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Politoed": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Lanturn": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Tentacruel": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Omastar": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Kabutops": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Starmie": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Ninetales": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Arcanine": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Rapidash": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Shiftry": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Ninjask": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Leafeon": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Hippowdon": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Gastrodon": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Cradily": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Armaldo": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Scizor": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Rhyperior": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Abomasnow": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Cloyster": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Mamoswine": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  }
+ },
+ "Pryce": {
+  "Abomasnow": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Glalie": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Froslass": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Walrein": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Jynx": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Cloyster": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Lapras": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Weavile": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  }
+ },
+ "Sawyer": {
+  "Aegislash": {
+   "tag": "anime-only"
+  },
+  "Clawitzer": {
+   "tag": "anime-only"
+  },
+  "Salamence": {
+   "tag": "anime-only"
+  },
+  "Sceptile": {
+   "tag": "anime-only"
+  },
+  "Slaking": {
+   "tag": "anime-only"
+  },
+  "Slurpuff": {
+   "tag": "anime-only"
+  }
+ },
+ "Trip": {
+  "Chandelure": {
+   "tag": "anime-only"
+  },
+  "Conkeldurr": {
+   "tag": "anime-only"
+  },
+  "Jellicent": {
+   "tag": "anime-only"
+  },
+  "Serperior": {
+   "tag": "anime-only"
+  },
+  "Unfezant": {
+   "tag": "anime-only"
+  },
+  "Vanilluxe": {
+   "tag": "anime-only"
+  }
+ },
+ "Allister": {
+  "Chandelure": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Cofagrigus": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Cursola": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Dusknoir": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Gengar": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Mimikyu": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Polteageist": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Runerigus": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Brendan": {},
+ "Cilan": {
+  "Crustle": {
+   "tag": "anime-only"
+  },
+  "Stunfisk": {
+   "tag": "anime-only"
+  }
+ },
+ "Elio": {},
+ "Gordie": {
+  "Barbaracle": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Coalossal": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Shuckle": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Stonjourner": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Tyranitar": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Janine": {},
+ "Lana (anime)": {},
+ "Magnolia": {},
+ "Nando": {
+  "Altaria": {
+   "tag": "anime-only"
+  },
+  "Armaldo": {
+   "tag": "anime-only"
+  },
+  "Kricketune": {
+   "tag": "anime-only"
+  },
+  "Lopunny": {
+   "tag": "anime-only"
+  },
+  "Roserade": {
+   "tag": "anime-only"
+  },
+  "Sunflora": {
+   "tag": "anime-only"
+  }
+ },
+ "Raihan": {
+  "Archaludon": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Flygon": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Gigalith": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Goodra": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Sandaconda": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Torkoal": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Turtonator": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Selene": {},
+ "Tulip": {
+  "Delphox": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Espathra": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Farigiraf": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Florges": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Gallade": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Gardevoir": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Archer": {
+  "Houndoom": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Weezing": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  }
+ },
+ "Brock": {
+  "Blissey": {
+   "tag": "anime-only"
+  },
+  "Crobat": {
+   "tag": "anime-only"
+  },
+  "Forretress": {
+   "tag": "anime-only"
+  },
+  "Ludicolo": {
+   "tag": "anime-only"
+  },
+  "Ninetales": {
+   "tag": "anime-only"
+  },
+  "Sudowoodo": {
+   "tag": "anime-only"
+  },
+  "Swampert": {
+   "tag": "anime-only"
+  },
+  "Toxicroak": {
+   "tag": "anime-only"
+  },
+  "Kabutops": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  },
+  "Omastar": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  },
+  "Rhyperior": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  }
+ },
+ "Clair": {
+  "Aerodactyl": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  },
+  "Charizard": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  },
+  "Dragonite": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  },
+  "Gyarados": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  },
+  "Kingdra": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  }
+ },
+ "Elm": {
+  "Cursola": {
+   "tag": "anime-only"
+  }
+ },
+ "Grant": {
+  "Aurorus": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Tyrantrum": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  }
+ },
+ "Jasmine": {
+  "Bronzong": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  },
+  "Empoleon": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  },
+  "Magnezone": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  },
+  "Metagross": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  },
+  "Skarmory": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  },
+  "Steelix": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  }
+ },
+ "Lance": {
+  "Altaria": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Charizard": {
+   "tag": "single-game",
+   "games": "Pokémon Gold/Silver/Crystal & HeartGold/SoulSilver"
+  },
+  "Garchomp": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Kingdra": {
+   "tag": "single-game",
+   "games": "Pokémon FireRed/LeafGreen"
+  },
+  "Salamence": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  }
+ },
+ "Mallow (anime)": {
+  "Shaymin": {
+   "tag": "anime-only"
+  },
+  "Tsareena": {
+   "tag": "anime-only"
+  }
+ },
+ "Nanu": {
+  "Honchkrow": {
+   "tag": "single-game",
+   "games": "Pokémon Sun/Moon"
+  }
+ },
+ "Ramos": {
+  "Gogoat": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Jumpluff": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Victreebel": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  }
+ },
+ "Serena": {
+  "Delphox": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Pangoro": {
+   "tag": "anime-only"
+  },
+  "Sylveon": {
+   "tag": "anime-only"
+  }
+ },
+ "Valerie": {
+  "Aromatisse": {
+   "tag": "anime-only"
+  },
+  "Mawile": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Mr. Rime": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Sylveon": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  }
+ },
+ "Archie": {},
+ "Bruno": {},
+ "Clay": {},
+ "Erika": {},
+ "Grimsley": {
+  "Absol": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  }
+ },
+ "Jessie": {
+  "Arbok": {
+   "tag": "anime-only"
+  },
+  "Beautifly": {
+   "tag": "anime-only"
+  },
+  "Charizard": {
+   "tag": "anime-only"
+  },
+  "Cloyster": {
+   "tag": "anime-only"
+  },
+  "Dustox": {
+   "tag": "anime-only"
+  },
+  "Gourgeist": {
+   "tag": "anime-only"
+  },
+  "Gyarados": {
+   "tag": "anime-only"
+  },
+  "Jellicent": {
+   "tag": "anime-only"
+  },
+  "Lickilicky": {
+   "tag": "anime-only"
+  },
+  "Mawile": {
+   "tag": "anime-only"
+  },
+  "Mimikyu": {
+   "tag": "anime-only"
+  },
+  "Seviper": {
+   "tag": "anime-only"
+  },
+  "Swoobat": {
+   "tag": "anime-only"
+  },
+  "Wobbuffet": {
+   "tag": "anime-only"
+  },
+  "Yanmega": {
+   "tag": "anime-only"
+  }
+ },
+ "Larry": {
+  "Altaria": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Flamigo": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Komala": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Oricorio": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Staraptor": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Tropius": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Malva": {
+  "Chandelure": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Pyroar": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Torkoal": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  }
+ },
+ "Nate": {
+  "Emboar": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Samurott": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Serperior": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Simipour": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Simisage": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Simisear": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  }
+ },
+ "Red": {},
+ "Shauna": {
+  "Chesnaught": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Delcatty": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Delphox": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Goodra": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Greninja": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  }
+ },
+ "Viola": {
+  "Masquerain": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Vivillon": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  }
+ },
+ "Ariana": {
+  "Arbok": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Honchkrow": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Vileplume": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  }
+ },
+ "Brycen": {},
+ "Clemont": {
+  "Emolga": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Heliolisk": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Magnezone": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Chesnaught": {
+   "tag": "anime-only"
+  },
+  "Dedenne": {
+   "tag": "anime-only"
+  },
+  "Diggersby": {
+   "tag": "anime-only"
+  },
+  "Luxray": {
+   "tag": "anime-only"
+  }
+ },
+ "Ethan": {},
+ "Grusha": {
+  "Altaria": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Beartic": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Cetitan": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Frosmoth": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Ninetales": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Weavile": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Juan": {},
+ "Laventon": {},
+ "Marlon": {
+  "Carracosta": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Jellicent": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Wailord": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  }
+ },
+ "Nemona": {
+  "Dudunsparce": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Goodra": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Lycanroc": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Meowscarada": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Orthworm": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Pawmot": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Quaquaval": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Skeledirge": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Rika": {
+  "Camerupt": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Clodsire": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Donphan": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Dugtrio": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Whiscash": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Shauntal": {},
+ "Volkner": {},
+ "Arven": {
+  "Cloyster": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Garganacl": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Greedent": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Mabosstiff": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Scovillain": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Toedscruel": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Bugsy": {},
+ "Colress": {},
+ "Falkner": {},
+ "Guzma": {},
+ "Juniper": {},
+ "Leaf": {},
+ "Marnie": {
+  "Grimmsnarl": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Liepard": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Morpeko": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Scrafty": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Toxicroak": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Nessa": {
+  "Barraskewda": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Drednaw": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Golisopod": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Pelipper": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Quagsire": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Ritchie": {
+  "Butterfree": {
+   "tag": "anime-only"
+  },
+  "Charizard": {
+   "tag": "anime-only"
+  },
+  "Fearow": {
+   "tag": "anime-only"
+  },
+  "Raichu": {
+   "tag": "anime-only"
+  },
+  "Swellow": {
+   "tag": "anime-only"
+  },
+  "Tentacruel": {
+   "tag": "anime-only"
+  },
+  "Tyranitar": {
+   "tag": "anime-only"
+  }
+ },
+ "Sidney": {},
+ "Wallace": {},
+ "Ash": {
+  "Ambipom": {
+   "tag": "anime-only"
+  },
+  "Annihilape": {
+   "tag": "anime-only"
+  },
+  "Blastoise": {
+   "tag": "anime-only"
+  },
+  "Butterfree": {
+   "tag": "anime-only"
+  },
+  "Charizard": {
+   "tag": "anime-only"
+  },
+  "Crawdaunt": {
+   "tag": "anime-only"
+  },
+  "Decidueye": {
+   "tag": "anime-only"
+  },
+  "Donphan": {
+   "tag": "anime-only"
+  },
+  "Dracovish": {
+   "tag": "anime-only"
+  },
+  "Dragonite": {
+   "tag": "anime-only"
+  },
+  "Emboar": {
+   "tag": "anime-only"
+  },
+  "Feraligatr": {
+   "tag": "anime-only"
+  },
+  "Floatzel": {
+   "tag": "anime-only"
+  },
+  "Garchomp": {
+   "tag": "anime-only"
+  },
+  "Gengar": {
+   "tag": "anime-only"
+  },
+  "Gigalith": {
+   "tag": "anime-only"
+  },
+  "Glalie": {
+   "tag": "anime-only"
+  },
+  "Gliscor": {
+   "tag": "anime-only"
+  },
+  "Goodra": {
+   "tag": "anime-only"
+  },
+  "Greninja": {
+   "tag": "anime-only"
+  },
+  "Hawlucha": {
+   "tag": "anime-only"
+  },
+  "Heracross": {
+   "tag": "anime-only"
+  },
+  "Incineroar": {
+   "tag": "anime-only"
+  },
+  "Infernape": {
+   "tag": "anime-only"
+  },
+  "Kingler": {
+   "tag": "anime-only"
+  },
+  "Krookodile": {
+   "tag": "anime-only"
+  },
+  "Lapras": {
+   "tag": "anime-only"
+  },
+  "Leavanny": {
+   "tag": "anime-only"
+  },
+  "Lucario": {
+   "tag": "anime-only"
+  },
+  "Lycanroc": {
+   "tag": "anime-only"
+  },
+  "Meganium": {
+   "tag": "anime-only"
+  },
+  "Melmetal": {
+   "tag": "anime-only"
+  },
+  "Mr. Rime": {
+   "tag": "anime-only"
+  },
+  "Muk": {
+   "tag": "anime-only"
+  },
+  "Naganadel": {
+   "tag": "anime-only"
+  },
+  "Noctowl": {
+   "tag": "anime-only"
+  },
+  "Noivern": {
+   "tag": "anime-only"
+  },
+  "Pidgeot": {
+   "tag": "anime-only"
+  },
+  "Raichu": {
+   "tag": "anime-only"
+  },
+  "Samurott": {
+   "tag": "anime-only"
+  },
+  "Sceptile": {
+   "tag": "anime-only"
+  },
+  "Scrafty": {
+   "tag": "anime-only"
+  },
+  "Seismitoad": {
+   "tag": "anime-only"
+  },
+  "Serperior": {
+   "tag": "anime-only"
+  },
+  "Sirfetch'd": {
+   "tag": "anime-only"
+  },
+  "Snorlax": {
+   "tag": "anime-only"
+  },
+  "Staraptor": {
+   "tag": "anime-only"
+  },
+  "Swellow": {
+   "tag": "anime-only"
+  },
+  "Tauros": {
+   "tag": "anime-only"
+  },
+  "Torkoal": {
+   "tag": "anime-only"
+  },
+  "Torterra": {
+   "tag": "anime-only"
+  },
+  "Typhlosion": {
+   "tag": "anime-only"
+  },
+  "Tyranitar": {
+   "tag": "anime-only"
+  },
+  "Unfezant": {
+   "tag": "anime-only"
+  },
+  "Venusaur": {
+   "tag": "anime-only"
+  },
+  "Vivillon": {
+   "tag": "anime-only"
+  }
+ },
+ "Burgh": {},
+ "Crasher Wake": {},
+ "Fantina": {},
+ "Hala": {},
+ "Jupiter": {},
+ "Lenora": {
+  "Stoutland": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Audino": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Clefable": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Kangaskhan": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Sawsbuck": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Dudunsparce": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  }
+ },
+ "Mars": {},
+ "Norman": {},
+ "Roark": {},
+ "Siebold": {
+  "Barbaracle": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Clawitzer": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Gyarados": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Starmie": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Blastoise": {
+   "tag": "anime-only"
+  }
+ },
+ "Wally": {
+  "Gallade": {
+   "tag": "single-game",
+   "games": "Pokémon Omega Ruby/Alpha Sapphire"
+  }
+ },
+ "Barry": {
+  "Hitmonlee": {
+   "tag": "anime-only"
+  },
+  "Skarmory": {
+   "tag": "anime-only"
+  }
+ },
+ "Burnet": {},
+ "Cress": {},
+ "Flannery": {},
+ "Hapu": {},
+ "Kabu": {
+  "Arcanine": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Centiskorch": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Ninetales": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Leon": {
+  "Aegislash": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Charizard": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Cinderace": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Dragapult": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Haxorus": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Inteleon": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Mr. Rime": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Rhyperior": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Rillaboom": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Seismitoad": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Marshal": {},
+ "Oak": {},
+ "Rosa": {},
+ "Silver": {},
+ "Wattson": {},
+ "Bea": {
+  "Falinks": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Grapploct": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Hawlucha": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Hitmontop": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Machamp": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Pangoro": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Sirfetch'd": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Byron": {},
+ "Cynthia": {},
+ "Flint": {
+  "Steelix": {
+   "tag": "single-game",
+   "games": "Pokémon Diamond/Pearl (and BDSP)"
+  },
+  "Drifblim": {
+   "tag": "single-game",
+   "games": "Pokémon Diamond/Pearl (and BDSP)"
+  },
+  "Lopunny": {
+   "tag": "single-game",
+   "games": "Pokémon Diamond/Pearl (and BDSP)"
+  },
+  "Arcanine": {
+   "tag": "single-game",
+   "games": "Pokémon Brilliant Diamond/Shining Pearl"
+  },
+  "Ninetales": {
+   "tag": "single-game",
+   "games": "Pokémon Brilliant Diamond/Shining Pearl"
+  }
+ },
+ "Hassel": {
+  "Archaludon": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Baxcalibur": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Dragalge": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Dragonite": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Flapple": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Haxorus": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Noivern": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Kahili": {
+  "Crobat": {
+   "tag": "single-game",
+   "games": "Pokémon Sun/Moon"
+  },
+  "Skarmory": {
+   "tag": "single-game",
+   "games": "Pokémon Sun/Moon"
+  },
+  "Braviary": {
+   "tag": "single-game",
+   "games": "Pokémon Ultra Sun/Ultra Moon"
+  },
+  "Hawlucha": {
+   "tag": "single-game",
+   "games": "Pokémon Ultra Sun/Ultra Moon"
+  }
+ },
+ "Lillie (anime)": {
+  "Magearna": {
+   "tag": "anime-only"
+  },
+  "Ninetales": {
+   "tag": "anime-only"
+  }
+ },
+ "Maxie": {},
+ "Olivia": {
+  "Golem": {
+   "tag": "single-game",
+   "games": "Pokémon Sun/Moon"
+  },
+  "Relicanth": {
+   "tag": "single-game",
+   "games": "Pokémon Sun/Moon"
+  },
+  "Carbink": {
+   "tag": "single-game",
+   "games": "Pokémon Sun/Moon"
+  },
+  "Armaldo": {
+   "tag": "single-game",
+   "games": "Pokémon Ultra Sun/Ultra Moon"
+  },
+  "Cradily": {
+   "tag": "single-game",
+   "games": "Pokémon Ultra Sun/Ultra Moon"
+  }
+ },
+ "Rose": {
+  "Copperajah": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Escavalier": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Ferrothorn": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Klinklang": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Perrserker": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Skyla": {
+  "Archeops": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Braviary": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Drifblim": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Jumpluff": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Mandibuzz": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Sigilyph": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Skarmory": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  }
+ },
+ "Whitney": {
+  "Farigiraf": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Lickilicky": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Bibarel": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Delcatty": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Wigglytuff": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Tauros": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Ambipom": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Ursaluna": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Blissey": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Lopunny": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Watchog": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Cinccino": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  }
+ },
+ "Bede": {
+  "Gardevoir": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Gothitelle": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Hatterene": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Mawile": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Rapidash": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Reuniclus": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Sylveon": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Caitlin": {},
+ "Cyrus": {},
+ "Gardenia": {},
+ "Hau": {},
+ "Karen": {
+  "Absol": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Spiritomb": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  },
+  "Weavile": {
+   "tag": "single-game",
+   "games": "Pokémon HeartGold/SoulSilver"
+  }
+ },
+ "Liza": {},
+ "May": {
+  "Beautifly": {
+   "tag": "anime-only"
+  },
+  "Blastoise": {
+   "tag": "anime-only"
+  },
+  "Delcatty": {
+   "tag": "anime-only"
+  },
+  "Glaceon": {
+   "tag": "anime-only"
+  },
+  "Manaphy": {
+   "tag": "anime-only"
+  },
+  "Snorlax": {
+   "tag": "anime-only"
+  },
+  "Venusaur": {
+   "tag": "anime-only"
+  }
+ },
+ "Opal": {
+  "Alcremie": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Mawile": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Togekiss": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Weezing": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Rowan": {},
+ "Sonia": {},
+ "Wikstrom": {
+  "Aegislash": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Klefki": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Probopass": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Scizor": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  }
+ },
+ "Bertha": {
+  "Rhyperior": {
+   "tag": "single-game",
+   "games": "Pokémon Platinum"
+  }
+ },
+ "Calem": {
+  "Absol": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Chesnaught": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Delphox": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Diggersby": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Greninja": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Meowstic": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Vivillon": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  }
+ },
+ "Dawn": {},
+ "Gary": {
+  "Bastiodon": {
+   "tag": "anime-only"
+  },
+  "Electivire": {
+   "tag": "anime-only"
+  },
+  "Hatterene": {
+   "tag": "anime-only"
+  },
+  "Houndoom": {
+   "tag": "anime-only"
+  },
+  "Kingdra": {
+   "tag": "anime-only"
+  },
+  "Magmortar": {
+   "tag": "anime-only"
+  },
+  "Noctowl": {
+   "tag": "anime-only"
+  },
+  "Regidrago": {
+   "tag": "anime-only"
+  },
+  "Scizor": {
+   "tag": "anime-only"
+  },
+  "Skarmory": {
+   "tag": "anime-only"
+  },
+  "Tyranitar": {
+   "tag": "anime-only"
+  },
+  "Umbreon": {
+   "tag": "anime-only"
+  }
+ },
+ "Hilbert": {},
+ "Katy": {
+  "Araquanid": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Forretress": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Heracross": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Lokix": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Spidops": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Ursaluna": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Lorelei": {},
+ "Maylene": {},
+ "Paul": {
+  "Aggron": {
+   "tag": "anime-only"
+  },
+  "Azumarill": {
+   "tag": "anime-only"
+  },
+  "Drapion": {
+   "tag": "anime-only"
+  },
+  "Electivire": {
+   "tag": "anime-only"
+  },
+  "Froslass": {
+   "tag": "anime-only"
+  },
+  "Garchomp": {
+   "tag": "anime-only"
+  },
+  "Gastrodon": {
+   "tag": "anime-only"
+  },
+  "Gliscor": {
+   "tag": "anime-only"
+  },
+  "Gyarados": {
+   "tag": "anime-only"
+  },
+  "Hariyama": {
+   "tag": "anime-only"
+  },
+  "Honchkrow": {
+   "tag": "anime-only"
+  },
+  "Infernape": {
+   "tag": "anime-only"
+  },
+  "Magmortar": {
+   "tag": "anime-only"
+  },
+  "Metagross": {
+   "tag": "anime-only"
+  },
+  "Nidoking": {
+   "tag": "anime-only"
+  },
+  "Ninjask": {
+   "tag": "anime-only"
+  },
+  "Staraptor": {
+   "tag": "anime-only"
+  },
+  "Torterra": {
+   "tag": "anime-only"
+  },
+  "Ursaluna": {
+   "tag": "anime-only"
+  },
+  "Weavile": {
+   "tag": "anime-only"
+  },
+  "Wyrdeer": {
+   "tag": "anime-only"
+  }
+ },
+ "Roxanne": {},
+ "Sophocles": {},
+ "Will": {},
+ "Bianca": {
+  "Chandelure": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Cinccino": {
+   "tag": "anime-only"
+  },
+  "Emboar": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Escavalier": {
+   "tag": "anime-only"
+  },
+  "Mienshao": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Musharna": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Samurott": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Serperior": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Simipour": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Simisage": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Simisear": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  },
+  "Stoutland": {
+   "tag": "single-game",
+   "games": "Pokémon Black/White"
+  }
+ },
+ "Candice": {},
+ "Diantha": {
+  "Aurorus": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Gardevoir": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Goodra": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Gourgeist": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Hawlucha": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  },
+  "Tyrantrum": {
+   "tag": "single-game",
+   "games": "Pokémon X/Y"
+  }
+ },
+ "Geeta": {
+  "Avalugg": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Chesnaught": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Dragapult": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Espathra": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Glimmora": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Gogoat": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Kingambit": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Veluza": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Hilda": {},
+ "Kiawe (anime)": {
+  "Charizard": {
+   "tag": "anime-only"
+  },
+  "Turtonator": {
+   "tag": "anime-only"
+  }
+ },
+ "Lt. Surge": {},
+ "Melony": {
+  "Darmanitan": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Eiscue": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Frosmoth": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Lapras": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  },
+  "Mr. Rime": {
+   "tag": "single-game",
+   "games": "Pokémon Sword/Shield"
+  }
+ },
+ "Penny": {
+  "Espeon": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Flareon": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Glaceon": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Jolteon": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Leafeon": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Sylveon": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Umbreon": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  },
+  "Vaporeon": {
+   "tag": "single-game",
+   "games": "Pokémon Scarlet/Violet"
+  }
+ },
+ "Roxie": {
+  "Amoonguss": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Crobat": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Drapion": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Garbodor": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Muk": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Scolipede": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Seviper": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Toxicroak": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  },
+  "Weezing": {
+   "tag": "single-game",
+   "games": "Pokémon Black 2/White 2"
+  }
+ },
+ "Steven": {},
+ "Winona": {}
+}

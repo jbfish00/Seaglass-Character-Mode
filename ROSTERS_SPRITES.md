@@ -2,6 +2,8 @@
 
 Each character's **final-evolution** roster, in **National Pokédex order**, with sprites and names. Split by generation to keep pages fast. Regional/cosmetic forms show as base species. Sprites via [PokéAPI](https://github.com/PokeAPI/sprites). Text: `ROSTERS.md`.
 
+> **Provenance:** ᵃ = only in the anime (never on this character's team in a core game) · ᵍ = only in one core game. Unmarked = appears across multiple games.
+
 > ⚠️ **Work in progress.**
 
 **182 characters.**
