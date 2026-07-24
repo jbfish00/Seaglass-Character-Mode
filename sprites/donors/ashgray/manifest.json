@@ -1,0 +1,143 @@
+{
+  "source": "Pokemon Ash Gray v4.5.3 (metapod23), built locally from BPS patch on byte-matching pret/pokefirered build",
+  "format": "GBA LZ77 (BIOS type 0x10); gfx = 64x64 4bpp (0x800 raw), pal = 32 bytes BGR555",
+  "tables": {
+    "front": "0x23957c",
+    "pal": "0x239a1c"
+  },
+  "entries": {
+    "aj": {
+      "ashgray_pic_index": 142,
+      "gfx_lz_bytes": 862,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "brock_anime": {
+      "ashgray_pic_index": 116,
+      "gfx_lz_bytes": 826,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "cissy": {
+      "ashgray_pic_index": 25,
+      "gfx_lz_bytes": 666,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "damian": {
+      "ashgray_pic_index": 8,
+      "gfx_lz_bytes": 741,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "danny": {
+      "ashgray_pic_index": 62,
+      "gfx_lz_bytes": 645,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "duplica": {
+      "ashgray_pic_index": 135,
+      "gfx_lz_bytes": 817,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "gary": {
+      "ashgray_pic_index": 106,
+      "gfx_lz_bytes": 566,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "giovanni_anime": {
+      "ashgray_pic_index": 108,
+      "gfx_lz_bytes": 783,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "giselle": {
+      "ashgray_pic_index": 65,
+      "gfx_lz_bytes": 728,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "jessie_james": {
+      "ashgray_pic_index": 28,
+      "gfx_lz_bytes": 1076,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "jessiebelle": {
+      "ashgray_pic_index": 146,
+      "gfx_lz_bytes": 808,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "misty_anime": {
+      "ashgray_pic_index": 117,
+      "gfx_lz_bytes": 764,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "oak_anime": {
+      "ashgray_pic_index": 132,
+      "gfx_lz_bytes": 875,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "otoshi": {
+      "ashgray_pic_index": 47,
+      "gfx_lz_bytes": 732,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "ritchie": {
+      "ashgray_pic_index": 82,
+      "gfx_lz_bytes": 672,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "rudy": {
+      "ashgray_pic_index": 75,
+      "gfx_lz_bytes": 626,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "samurai": {
+      "ashgray_pic_index": 83,
+      "gfx_lz_bytes": 838,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "todd": {
+      "ashgray_pic_index": 15,
+      "gfx_lz_bytes": 702,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    },
+    "tracey": {
+      "ashgray_pic_index": 133,
+      "gfx_lz_bytes": 850,
+      "gfx_raw_bytes": 2048,
+      "pal_lz_bytes": 40,
+      "pal_raw_bytes": 32
+    }
+  }
+}
