@@ -92,3 +92,14 @@ decode-back from the built ROM byte-exact; `gTrainerFrontPicTable`
 consumption confirmed (12 literal-pool code refs incl. battle engine); the
 all-slots test build boots to free-roam. The blob-copy + table-repoint
 technique transfers to this project once its own table addresses are located.
+
+### Outstanding (2026-07-24)
+
+1. Locate THIS ROM's `gTrainerFrontPicTable` / palette / back-pic / OW tables before any
+   injection (recipe: build/borrow a pokeemerald(-expansion) .map for candidate addresses, or
+   pattern-scan for runs of `{u32 ROM ptr, u16 0x800, u16 seq tag}`; then XREF-verify with
+   `tools/find_pointer_refs.py` per this doc's existing "if sprites are ever installed" section).
+2. Then reuse RadicalRed's proven pilot verbatim (`RadicalRed-Character-Mode/tools/
+   inject_sprites_pilot.py`): blobs are format-compatible, only table/free-space addresses change.
+3. Per-character wiring design (what the mugshot replaces in this hack's select flow).
+4. Missing art: Drew, Paul, Zoey, Nando, Trip, Lyra; James solo pic (duo-only).
