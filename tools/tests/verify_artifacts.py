@@ -48,7 +48,7 @@ CM = ROOT / "tools" / "character_mode"
 CHARMAP = Path("/home/jbfish00/Documents/Pokemon Rowe Alteration/charmap.txt")
 
 ROM_SHA1 = "b9f4d332d30fc88c379f9e037f9eae3b2755ead4"
-NUM_CHARACTERS = 170
+NUM_CHARACTERS = 182  # 2026-07-23 rebuild (+11 professors, +Tobias; Magnolia/Sada/Turo trimmed)
 BITMAP_STRIDE = 187
 CODE_LEN = 11
 
@@ -70,7 +70,7 @@ WILD_BL_SITE = 0x22BF36
 CREATE_MON_WITH_IVS = 0x081A7504
 WILD_TRAMPOLINE_ADDR = 0x08470208
 WILDPOOL_ADDR = 0x08EE4000
-WILDPOOL_STRIDE = 104
+WILDPOOL_STRIDE = 176
 
 _p = _f = 0
 def ok(cond, msg):
@@ -145,8 +145,8 @@ def main():
                (TRAMPOLINE_ADDR & 0x01FFFFFF, 8),
                (WILD_BL_SITE, 4), (WILD_TRAMPOLINE_ADDR & 0x01FFFFFF, 64 - 8),
                (0xED2200, 0x2000), (0xEDA000, NUM_CHARACTERS * BITMAP_STRIDE),
-               (0xEE2000, NUM_CHARACTERS * CODE_LEN), (0xEE2800, NUM_CHARACTERS * 2),
-               (0xEE2A00, 0x300), (0xEE3000, 0x400),
+               (0xEE2800, NUM_CHARACTERS * CODE_LEN), (0xEE3100, NUM_CHARACTERS * 2),
+               (0xEE3800, 0x300), (0xEE3300, 0x400),
                (WILDPOOL_ADDR & 0x01FFFFFF, NUM_CHARACTERS * WILDPOOL_STRIDE * 4)]
     give_sites = [i for i in range(len(orig))
                   if orig[i - 1] == 0x23 and orig[i:i + 4] == struct.pack("<I", GIVE_NATIVE)]
@@ -190,7 +190,7 @@ def main():
     ok(all_in, "every roster id + starter is set in its character's own bitmap")
 
     print("[7] codes table")
-    codes_rom = patched[0xEE2000:0xEE2000 + NUM_CHARACTERS * CODE_LEN]
+    codes_rom = patched[0xEE2800:0xEE2800 + NUM_CHARACTERS * CODE_LEN]
     seen = set(); good = True
     for ci, c in enumerate(manifest):
         want = enc(code_for(c["character"]), cm)
@@ -213,7 +213,7 @@ def main():
     ok(struct.unpack_from("<I", orig, BG_EVENT_PTR_OFF)[0] == ORIG_CLIPBOARD,
        "BG ptr originally -> clipboard script")
     entry = struct.unpack_from("<I", patched, BG_EVENT_PTR_OFF)[0]
-    ok(entry == 0x08EE2A00, f"BG ptr repointed -> entry script {entry:#x}")
+    ok(entry == 0x08EE3800, f"BG ptr repointed -> entry script {entry:#x}")
     o = entry & 0x01FFFFFF
     # lockall; loadword; callstd 5; compare 0x800D,1; goto_if !=,ORIG; callnative; waitstate; callnative; goto
     ok(patched[o] == 0x69, "entry starts lockall")
@@ -280,7 +280,10 @@ def main():
                 break
             n_entries += 1
             if sp_table.get(str(sid)) in legend_names:
-                leaks += 1
+                if c["character"] == "Tobias":
+                    pass  # legendary-INCLUSIVE by design (Latios @1%%, user spec 2026-07-23)
+                else:
+                    leaks += 1
         if n_entries == 0 and c.get("starter_count", 0) > 0:
             empty_pool_but_nonempty_roster += 1
     ok(leaks == 0, f"no legendary species in any character's wild pool ({leaks} leaks)")

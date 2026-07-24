@@ -77,7 +77,8 @@ typedef unsigned int u32;
 #define VAR_CM_STARTER      0x40E5   /* adjacent free slot; doubles as give/confirm marker */
 #define CM_STARTER_OFF_MARKER 0xFFFF
 
-#define NUM_CHARACTERS 170
+#define NUM_CHARACTERS 182  /* 170 + 11 professors + Tobias (2026-07-23; Magnolia/Sada/Turo trimmed) */
+#define TOBIAS_CHAR_ID 182   /* Latios-only here (Darkrai absent from Seaglass dex); 1%% wild rate (user spec) */
 #define NUM_SPECIES    1489          /* max ROM species id 1488 + 1 */
 #define BITMAP_STRIDE  187
 #define CODE_LEN       11
@@ -325,11 +326,12 @@ u16 CM_WildMonSpeciesGated(u16 species, u8 level)
 
     if (!gateActive())
         return species;                    /* CM off: fully inert */
-    seed = wildSeed(species, level);
-    if (seed % 100 >= 10)
-        return species;                    /* 90%: leave the normal roll alone */
-
     charId = *GetVarPointer(VAR_CM_CHAR);
+    seed = wildSeed(species, level);
+    /* Tobias (user spec 2026-07-23): 1%% per roll; everyone else 10%%. His
+     * pool is his (legendary) signature Latios via the starter_count slice. */
+    if (seed % 100 >= ((charId == TOBIAS_CHAR_ID) ? 1 : 10))
+        return species;                    /* miss: leave the normal roll alone */
     e = sWildPool + (charId - 1) * WILDPOOL_STRIDE;
 
     /* best = the entry whose minLevel is the closest to (and not above) the

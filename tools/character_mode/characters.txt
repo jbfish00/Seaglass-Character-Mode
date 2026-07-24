@@ -206,3 +206,24 @@ Tulip | Tulip (game) | gymleader | 9
 Grusha | Grusha (game) | gymleader | 9
 Arven | Arven (game) | rival | 9
 Penny | Penny (game) | rival | 9
+
+# --- Professors (added 2026-07-23, user request: all professors playable) ---
+Oak | Professor Oak | professor | 1
+Elm | Professor Elm | professor | 2
+Birch | Professor Birch | professor | 3
+Rowan | Professor Rowan | professor | 4
+Juniper | Professor Juniper | professor | 5
+Sycamore | Professor Sycamore | professor | 6
+Burnet | Professor Burnet | professor | 7
+Samson Oak | Samson Oak | professor | 7
+# TRIMMED (2026-07-23): Magnolia | Professor Magnolia | professor | 8  — every roster species absent from Seaglass's dex (paradox mons / Galar-only line)
+Sonia | Sonia | professor | 8
+Laventon | Professor Laventon | professor | 8
+Cerise | Professor Cerise | professor | 8
+# TRIMMED (2026-07-23): Sada | Sada | professor | 9  — every roster species absent from Seaglass's dex (paradox mons / Galar-only line)
+# TRIMMED (2026-07-23): Turo | Turo | professor | 9  — every roster species absent from Seaglass's dex (paradox mons / Galar-only line)
+
+# Tobias (2026-07-23 user spec): canon roster = Darkrai + Latios. Darkrai is ABSENT
+# from Seaglass's dex, so he is LATIOS-ONLY here (starter falls back to Latios).
+# 1% legendary-inclusive wild override (vs standard 10% non-legendary) — see shim.
+Tobias | Tobias (Sinnoh) | anime | 4

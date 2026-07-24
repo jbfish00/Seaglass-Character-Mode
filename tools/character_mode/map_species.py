@@ -187,6 +187,7 @@ MACRO_FORM_CONST_OVERRIDES = {
 # Reused verbatim from ROWE's SIGNATURES dict (same real-world characters,
 # same signatures, full Gen 1-9 scope matching this project's characters.txt).
 SIGNATURES = {
+ "Tobias":"Latios",  # Darkrai ABSENT from Seaglass dex; Latios doubles as starter+wild pool entry
  "Red":"Pikachu","Leaf":"Eevee","Blue":"Pidgeot","Lance":"Dragonite",
  "Lorelei":"Lapras","Bruno":"Machamp","Agatha":"Gengar","Koga":"Weezing",
  "Brock":"Onix","Misty":"Starmie","Lt. Surge":"Pikachu","Erika":"Vileplume",

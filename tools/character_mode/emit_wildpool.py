@@ -47,8 +47,8 @@ ROM_TABLE = os.path.join(HERE, "rom_species_table.json")
 OUT = os.path.join(HERE, "wildpool.bin")
 MANIFEST_OUT = os.path.join(HERE, "wildpool_manifest.json")
 
-NUM_CHARACTERS = 170
-POOL_STRIDE = 104  # entries/character; asserted sufficient below (max observed: 100, Brock)
+NUM_CHARACTERS = 182  # 170 + 11 professors + Tobias (2026-07-23; Magnolia/Sada/Turo trimmed)
+POOL_STRIDE = 176  # entries/character; raised 104->176 (2026-07-23 full-research rosters: max observed 160, Goh)
 STEP_BY_DEPTH = {1: 16, 2: 32, 3: 45, 4: 55}
 DEFAULT_STEP = 60
 

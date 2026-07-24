@@ -54,17 +54,17 @@ BUILD = ROOT / "build"
 CM = HERE / "character_mode"
 CHARMAP = Path("/home/jbfish00/Documents/Pokemon Rowe Alteration/charmap.txt")
 
-NUM_CHARACTERS = 170
+NUM_CHARACTERS = 182  # 170 + 11 professors + Tobias (2026-07-23)
 BITMAP_STRIDE = 187
 CODE_LEN = 11
 
 # --- confirmed free-block layout (all verified 0xFF) ---
 SHIM_ADDR      = 0x08ED2200
 BITMAPS_ADDR   = 0x08EDA000        # 170*187 = 31790 B
-CODES_ADDR     = 0x08EE2000        # 170*11  = 1870 B
-STARTERS_ADDR  = 0x08EE2800        # 170*2   = 340 B
-SCRIPT_ADDR    = 0x08EE2A00        # entry + confirm script
-WILDPOOL_ADDR  = 0x08EE4000        # 170*104*4 = 70720 B (tools/character_mode/emit_wildpool.py)
+CODES_ADDR     = 0x08EE2800        # 182*11 = 2002 B (rebased 2026-07-23; bitmaps grew to 34,034 B)
+STARTERS_ADDR  = 0x08EE3100        # 182*2 = 364 B
+SCRIPT_ADDR    = 0x08EE3800        # entry + confirm script (rebased)
+WILDPOOL_ADDR  = 0x08EE4000        # 182*176*4 = 128,128 B -> ends 0x08F03480 (2026-07-23)
 FREE_END_ROM   = 0x09000000
 
 TRAMPOLINE_ADDR      = 0x08470200  # 8B 0xFF scavenge, in BL range of both sites
@@ -86,7 +86,7 @@ GIVE_NATIVE_COUNT = 49
 # every wild-roll table (grass/cave, surf, rock smash, all fishing tiers).
 WILD_BL_SITE          = 0x22BF36
 CREATE_MON_WITH_IVS   = 0x081A7504
-WILDPOOL_STRIDE       = 104
+WILDPOOL_STRIDE       = 176
 
 BG_EVENT_PTR_OFF = 0x123ACC        # only ref to the clipboard script
 ORIG_CLIPBOARD   = 0x08311CCB
@@ -103,7 +103,7 @@ TRADE_COUNT      = 4
 TRADE_JUNCTIONS  = (0x29CFF5, 0x2AF873, 0x2B01EF, 0x30129E)
 TRADE_JUNCTION_BYTES = bytes([0x19,0x04,0x80,0x08,0x80, 0x19,0x05,0x80,0x0A,0x80,
                               0x25,0x00,0x01, 0x25,0x01,0x01, 0x27])
-TRADE_SCRIPT_ADDR = 0x08EE3000
+TRADE_SCRIPT_ADDR = 0x08EE3300
 
 # script/engine constants
 YESNO_TEXT_ADDR = None             # our msg (in-script); built below

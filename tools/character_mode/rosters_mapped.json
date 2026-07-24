@@ -460,8 +460,32 @@
   },
   "species": [
    {
+    "const": "SPECIES_AIPOM",
+    "id": 190
+   },
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CATERPIE",
+    "id": 10
+   },
+   {
     "const": "SPECIES_CHARMANDER",
     "id": 4
+   },
+   {
+    "const": "SPECIES_CHIKORITA",
+    "id": 152
+   },
+   {
+    "const": "SPECIES_CORPHISH",
+    "id": 341
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
    },
    {
     "const": "SPECIES_DRATINI",
@@ -472,8 +496,36 @@
     "id": 92
    },
    {
+    "const": "SPECIES_GLIGAR",
+    "id": 207
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_HERACROSS",
+    "id": 214
+   },
+   {
+    "const": "SPECIES_HOOTHOOT",
+    "id": 163
+   },
+   {
     "const": "SPECIES_HOPPIP",
     "id": 187
+   },
+   {
+    "const": "SPECIES_KRABBY",
+    "id": 98
+   },
+   {
+    "const": "SPECIES_LAPRAS",
+    "id": 131
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
    },
    {
     "const": "SPECIES_LATIOS",
@@ -492,6 +544,18 @@
     "id": 129
    },
    {
+    "const": "SPECIES_MANKEY",
+    "id": 56
+   },
+   {
+    "const": "SPECIES_MIME_JR",
+    "id": 439
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   },
+   {
     "const": "SPECIES_MURKROW",
     "id": 198
    },
@@ -500,16 +564,48 @@
     "id": 43
    },
    {
+    "const": "SPECIES_PHANPY",
+    "id": 231
+   },
+   {
     "const": "SPECIES_PICHU",
     "id": 172
+   },
+   {
+    "const": "SPECIES_PIDGEY",
+    "id": 16
+   },
+   {
+    "const": "SPECIES_SNORUNT",
+    "id": 361
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
    },
    {
     "const": "SPECIES_TAILLOW",
     "id": 276
    },
    {
+    "const": "SPECIES_TAUROS",
+    "id": 128
+   },
+   {
     "const": "SPECIES_TORCHIC",
     "id": 255
+   },
+   {
+    "const": "SPECIES_TORKOAL",
+    "id": 324
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_TREECKO",
+    "id": 252
    }
   ]
  },
@@ -692,6 +788,14 @@
     "id": 32
    },
    {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_PHANPY",
+    "id": 231
+   },
+   {
     "const": "SPECIES_RHYHORN",
     "id": 111
    },
@@ -706,6 +810,109 @@
    {
     "const": "SPECIES_WOOPER",
     "id": 194
+   }
+  ]
+ },
+ "Birch": {
+  "category": "professor",
+  "gen": 3,
+  "page": "Professor Birch + Birch (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ARON",
+    "id": 304
+   },
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CHIKORITA",
+    "id": 152
+   },
+   {
+    "const": "SPECIES_CLAMPERL",
+    "id": 366
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_JIRACHI",
+    "id": 385
+   },
+   {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MUDKIP",
+    "id": 258
+   },
+   {
+    "const": "SPECIES_NINCADA",
+    "id": 290
+   },
+   {
+    "const": "SPECIES_POOCHYENA",
+    "id": 261
+   },
+   {
+    "const": "SPECIES_RAYQUAZA",
+    "id": 384
+   },
+   {
+    "const": "SPECIES_SEEDOT",
+    "id": 273
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_TORCHIC",
+    "id": 255
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_TREECKO",
+    "id": 252
+   },
+   {
+    "const": "SPECIES_TROPIUS",
+    "id": 357
+   },
+   {
+    "const": "SPECIES_WAILMER",
+    "id": 320
+   },
+   {
+    "const": "SPECIES_WINGULL",
+    "id": 278
+   },
+   {
+    "const": "SPECIES_WURMPLE",
+    "id": 265
+   },
+   {
+    "const": "SPECIES_ZIGZAGOON",
+    "id": 263
    }
   ]
  },
@@ -1286,6 +1493,10 @@
     "id": 439
    },
    {
+    "const": "SPECIES_MUDKIP",
+    "id": 258
+   },
+   {
     "const": "SPECIES_MUNCHLAX",
     "id": 446
    },
@@ -1679,6 +1890,21 @@
    }
   ]
  },
+ "Burnet": {
+  "category": "professor",
+  "gen": 7,
+  "page": "Professor Burnet + Burnet (anime)",
+  "species": [
+   {
+    "const": "SPECIES_MANTYKE",
+    "id": 458
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
+   }
+  ]
+ },
  "Byron": {
   "category": "gymleader",
   "gen": 4,
@@ -1763,6 +1989,10 @@
   "page": "Calem (game) + Calem (anime)",
   "species": [
    {
+    "const": "SPECIES_ABSOL",
+    "id": 359
+   },
+   {
     "const": "SPECIES_CHARMANDER",
     "id": 4
    },
@@ -1836,6 +2066,49 @@
    {
     "const": "SPECIES_SWINUB",
     "id": 220
+   }
+  ]
+ },
+ "Cerise": {
+  "category": "professor",
+  "gen": 8,
+  "page": "Professor Cerise + Cerise (anime)",
+  "species": [
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_LUGIA",
+    "id": 249
+   },
+   {
+    "const": "SPECIES_MEW",
+    "id": 151
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_WEEDLE",
+    "id": 13
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
    }
   ]
  },
@@ -2229,6 +2502,10 @@
     "id": 147
    },
    {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
     "const": "SPECIES_MAGNEMITE",
     "id": 81
    },
@@ -2237,8 +2514,16 @@
     "id": 172
    },
    {
+    "const": "SPECIES_PORYGON",
+    "id": 137
+   },
+   {
     "const": "SPECIES_RALTS",
     "id": 280
+   },
+   {
+    "const": "SPECIES_VOLTORB",
+    "id": 100
    }
   ]
  },
@@ -2247,6 +2532,10 @@
   "gen": 4,
   "page": "Crasher Wake + Crasher Wake (anime)",
   "species": [
+   {
+    "const": "SPECIES_ANORITH",
+    "id": 347
+   },
    {
     "const": "SPECIES_CARVANHA",
     "id": 318
@@ -2268,12 +2557,28 @@
     "id": 129
    },
    {
+    "const": "SPECIES_MUDKIP",
+    "id": 258
+   },
+   {
     "const": "SPECIES_PICHU",
     "id": 172
    },
    {
     "const": "SPECIES_POLIWAG",
     "id": 60
+   },
+   {
+    "const": "SPECIES_SCYTHER",
+    "id": 123
+   },
+   {
+    "const": "SPECIES_SUICUNE",
+    "id": 245
+   },
+   {
+    "const": "SPECIES_WINGULL",
+    "id": 278
    },
    {
     "const": "SPECIES_WOOPER",
@@ -2389,12 +2694,20 @@
   },
   "species": [
    {
+    "const": "SPECIES_BAGON",
+    "id": 371
+   },
+   {
     "const": "SPECIES_DRATINI",
     "id": 147
    },
    {
     "const": "SPECIES_EEVEE",
     "id": 133
+   },
+   {
+    "const": "SPECIES_ENTEI",
+    "id": 244
    },
    {
     "const": "SPECIES_FEEBAS",
@@ -2803,6 +3116,73 @@
    }
   ]
  },
+ "Elm": {
+  "category": "professor",
+  "gen": 2,
+  "page": "Professor Elm + Elm (anime)",
+  "species": [
+   {
+    "const": "SPECIES_AZURILL",
+    "id": 298
+   },
+   {
+    "const": "SPECIES_BELLSPROUT",
+    "id": 69
+   },
+   {
+    "const": "SPECIES_BONSLY",
+    "id": 438
+   },
+   {
+    "const": "SPECIES_CHIKORITA",
+    "id": 152
+   },
+   {
+    "const": "SPECIES_CLEFFA",
+    "id": 173
+   },
+   {
+    "const": "SPECIES_CORSOLA",
+    "id": 222
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_EKANS",
+    "id": 23
+   },
+   {
+    "const": "SPECIES_GLIGAR",
+    "id": 207
+   },
+   {
+    "const": "SPECIES_KOFFING",
+    "id": 109
+   },
+   {
+    "const": "SPECIES_LARVITAR",
+    "id": 246
+   },
+   {
+    "const": "SPECIES_SENTRET",
+    "id": 161
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
+   },
+   {
+    "const": "SPECIES_WHISMUR",
+    "id": 293
+   }
+  ]
+ },
  "Erika": {
   "category": "gymleader",
   "gen": 1,
@@ -2928,6 +3308,14 @@
     "id": 298
    },
    {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CHIKORITA",
+    "id": 152
+   },
+   {
     "const": "SPECIES_CYNDAQUIL",
     "id": 155
    },
@@ -2960,6 +3348,10 @@
     "id": 172
    },
    {
+    "const": "SPECIES_PORYGON",
+    "id": 137
+   },
+   {
     "const": "SPECIES_RAIKOU",
     "id": 243
    },
@@ -2968,8 +3360,16 @@
     "id": 19
    },
    {
+    "const": "SPECIES_TANGELA",
+    "id": 114
+   },
+   {
     "const": "SPECIES_TAUROS",
     "id": 128
+   },
+   {
+    "const": "SPECIES_TOTODILE",
+    "id": 158
    }
   ]
  },
@@ -3390,6 +3790,14 @@
     "id": 163
    },
    {
+    "const": "SPECIES_HORSEA",
+    "id": 116
+   },
+   {
+    "const": "SPECIES_HOUNDOUR",
+    "id": 228
+   },
+   {
     "const": "SPECIES_KRABBY",
     "id": 98
    },
@@ -3434,6 +3842,10 @@
     "id": 16
    },
    {
+    "const": "SPECIES_PINSIR",
+    "id": 127
+   },
+   {
     "const": "SPECIES_PONYTA",
     "id": 77
    },
@@ -3446,8 +3858,16 @@
     "id": 123
    },
    {
+    "const": "SPECIES_SKARMORY",
+    "id": 227
+   },
+   {
     "const": "SPECIES_SLOWPOKE",
     "id": 79
+   },
+   {
+    "const": "SPECIES_SPEAROW",
+    "id": 21
    },
    {
     "const": "SPECIES_SQUIRTLE",
@@ -3718,8 +4138,36 @@
   "page": "Goh + Goh (anime)",
   "species": [
    {
+    "const": "SPECIES_ABSOL",
+    "id": 359
+   },
+   {
+    "const": "SPECIES_AERODACTYL",
+    "id": 142
+   },
+   {
+    "const": "SPECIES_BELLSPROUT",
+    "id": 69
+   },
+   {
     "const": "SPECIES_BULBASAUR",
     "id": 1
+   },
+   {
+    "const": "SPECIES_CARVANHA",
+    "id": 318
+   },
+   {
+    "const": "SPECIES_CATERPIE",
+    "id": 10
+   },
+   {
+    "const": "SPECIES_CHINCHOU",
+    "id": 170
+   },
+   {
+    "const": "SPECIES_CORSOLA",
+    "id": 222
    },
    {
     "const": "SPECIES_CUBONE",
@@ -3734,8 +4182,16 @@
     "id": 50
    },
    {
+    "const": "SPECIES_DROWZEE",
+    "id": 96
+   },
+   {
     "const": "SPECIES_EEVEE",
     "id": 133
+   },
+   {
+    "const": "SPECIES_EKANS",
+    "id": 23
    },
    {
     "const": "SPECIES_EXEGGCUTE",
@@ -3746,12 +4202,32 @@
     "id": 349
    },
    {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_GOLDEEN",
+    "id": 118
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
     "const": "SPECIES_HERACROSS",
     "id": 214
    },
    {
+    "const": "SPECIES_HOOTHOOT",
+    "id": 163
+   },
+   {
     "const": "SPECIES_HORSEA",
     "id": 116
+   },
+   {
+    "const": "SPECIES_KRABBY",
+    "id": 98
    },
    {
     "const": "SPECIES_LOTAD",
@@ -3762,6 +4238,22 @@
     "id": 249
    },
    {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MANKEY",
+    "id": 56
+   },
+   {
+    "const": "SPECIES_MANTYKE",
+    "id": 458
+   },
+   {
+    "const": "SPECIES_MISDREAVUS",
+    "id": 200
+   },
+   {
     "const": "SPECIES_MOLTRES",
     "id": 146
    },
@@ -3770,16 +4262,68 @@
     "id": 446
    },
    {
+    "const": "SPECIES_MURKROW",
+    "id": 198
+   },
+   {
+    "const": "SPECIES_NIDORAN_F",
+    "id": 29
+   },
+   {
+    "const": "SPECIES_NIDORAN_M",
+    "id": 32
+   },
+   {
+    "const": "SPECIES_NINCADA",
+    "id": 290
+   },
+   {
+    "const": "SPECIES_NUMEL",
+    "id": 322
+   },
+   {
+    "const": "SPECIES_ODDISH",
+    "id": 43
+   },
+   {
+    "const": "SPECIES_PARAS",
+    "id": 46
+   },
+   {
     "const": "SPECIES_PICHU",
     "id": 172
+   },
+   {
+    "const": "SPECIES_PIDGEY",
+    "id": 16
+   },
+   {
+    "const": "SPECIES_PINECO",
+    "id": 204
    },
    {
     "const": "SPECIES_PINSIR",
     "id": 127
    },
    {
+    "const": "SPECIES_POLIWAG",
+    "id": 60
+   },
+   {
+    "const": "SPECIES_RATTATA",
+    "id": 19
+   },
+   {
     "const": "SPECIES_SCYTHER",
     "id": 123
+   },
+   {
+    "const": "SPECIES_SEEL",
+    "id": 86
+   },
+   {
+    "const": "SPECIES_SENTRET",
+    "id": 161
    },
    {
     "const": "SPECIES_SHELLDER",
@@ -3790,6 +4334,18 @@
     "id": 79
    },
    {
+    "const": "SPECIES_SPEAROW",
+    "id": 21
+   },
+   {
+    "const": "SPECIES_SPINARAK",
+    "id": 167
+   },
+   {
+    "const": "SPECIES_STANTLER",
+    "id": 234
+   },
+   {
     "const": "SPECIES_SUICUNE",
     "id": 245
    },
@@ -3798,16 +4354,60 @@
     "id": 191
    },
    {
+    "const": "SPECIES_SWABLU",
+    "id": 333
+   },
+   {
+    "const": "SPECIES_TAILLOW",
+    "id": 276
+   },
+   {
+    "const": "SPECIES_TENTACOOL",
+    "id": 72
+   },
+   {
+    "const": "SPECIES_TRAPINCH",
+    "id": 328
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
+   },
+   {
+    "const": "SPECIES_VENONAT",
+    "id": 48
+   },
+   {
+    "const": "SPECIES_VOLTORB",
+    "id": 100
+   },
+   {
     "const": "SPECIES_VULPIX",
     "id": 37
+   },
+   {
+    "const": "SPECIES_WEEDLE",
+    "id": 13
    },
    {
     "const": "SPECIES_WHISMUR",
     "id": 293
    },
    {
+    "const": "SPECIES_WINGULL",
+    "id": 278
+   },
+   {
+    "const": "SPECIES_WURMPLE",
+    "id": 265
+   },
+   {
     "const": "SPECIES_ZIGZAGOON",
     "id": 263
+   },
+   {
+    "const": "SPECIES_ZUBAT",
+    "id": 41
    }
   ]
  },
@@ -3915,6 +4515,10 @@
    {
     "const": "SPECIES_KANGASKHAN",
     "id": 115
+   },
+   {
+    "const": "SPECIES_MURKROW",
+    "id": 198
    },
    {
     "const": "SPECIES_PICHU",
@@ -4211,6 +4815,10 @@
   },
   "species": [
    {
+    "const": "SPECIES_ARON",
+    "id": 304
+   },
+   {
     "const": "SPECIES_BELLSPROUT",
     "id": 69
    },
@@ -4245,6 +4853,10 @@
    {
     "const": "SPECIES_GASTLY",
     "id": 92
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
    },
    {
     "const": "SPECIES_HOPPIP",
@@ -4636,6 +5248,10 @@
     "id": 336
    },
    {
+    "const": "SPECIES_SHELLDER",
+    "id": 90
+   },
+   {
     "const": "SPECIES_SMOOCHUM",
     "id": 238
    },
@@ -4776,6 +5392,17 @@
    }
   ]
  },
+ "Juniper": {
+  "category": "professor",
+  "gen": 5,
+  "page": "Professor Juniper + Juniper (anime)",
+  "species": [
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   }
+  ]
+ },
  "Jupiter": {
   "category": "villain",
   "gen": 4,
@@ -4792,6 +5419,14 @@
    {
     "const": "SPECIES_FEEBAS",
     "id": 349
+   },
+   {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
+    "const": "SPECIES_NIDORAN_M",
+    "id": 32
    },
    {
     "const": "SPECIES_SABLEYE",
@@ -5602,6 +6237,17 @@
    }
   ]
  },
+ "Laventon": {
+  "category": "professor",
+  "gen": 8,
+  "page": "Professor Laventon + Laventon (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   }
+  ]
+ },
  "Leaf": {
   "category": "protagonist",
   "gen": 1,
@@ -6246,6 +6892,10 @@
     "id": 298
    },
    {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
     "const": "SPECIES_CELEBI",
     "id": 251
    },
@@ -6278,12 +6928,24 @@
     "id": 231
    },
    {
+    "const": "SPECIES_PORYGON",
+    "id": 137
+   },
+   {
     "const": "SPECIES_RATTATA",
     "id": 19
    },
    {
     "const": "SPECIES_SENTRET",
     "id": 161
+   },
+   {
+    "const": "SPECIES_TANGELA",
+    "id": 114
+   },
+   {
+    "const": "SPECIES_TAUROS",
+    "id": 128
    },
    {
     "const": "SPECIES_TOTODILE",
@@ -6329,6 +6991,12 @@
     "id": 7
    }
   ]
+ },
+ "Magnolia": {
+  "category": "professor",
+  "gen": 8,
+  "page": "Professor Magnolia + Magnolia (anime)",
+  "species": []
  },
  "Mallow (anime)": {
   "category": "anime",
@@ -6593,6 +7261,10 @@
     "id": 343
    },
    {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
     "const": "SPECIES_EEVEE",
     "id": 133
    },
@@ -6790,6 +7462,10 @@
   },
   "species": [
    {
+    "const": "SPECIES_AZURILL",
+    "id": 298
+   },
+   {
     "const": "SPECIES_CATERPIE",
     "id": 10
    },
@@ -6804,6 +7480,10 @@
    {
     "const": "SPECIES_CLEFFA",
     "id": 173
+   },
+   {
+    "const": "SPECIES_CORSOLA",
+    "id": 222
    },
    {
     "const": "SPECIES_DIGLETT",
@@ -6864,6 +7544,10 @@
    {
     "const": "SPECIES_LICKITUNG",
     "id": 108
+   },
+   {
+    "const": "SPECIES_LUVDISC",
+    "id": 370
    },
    {
     "const": "SPECIES_MAGIKARP",
@@ -7458,6 +8142,57 @@
    }
   ]
  },
+ "Oak": {
+  "category": "professor",
+  "gen": 1,
+  "page": "Professor Oak + Oak (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ARTICUNO",
+    "id": 144
+   },
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_DITTO",
+    "id": 132
+   },
+   {
+    "const": "SPECIES_EEVEE",
+    "id": 133
+   },
+   {
+    "const": "SPECIES_MEW",
+    "id": 151
+   },
+   {
+    "const": "SPECIES_MEWTWO",
+    "id": 150
+   },
+   {
+    "const": "SPECIES_NIDORAN_M",
+    "id": 32
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PIDGEY",
+    "id": 16
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   }
+  ]
+ },
  "Olivia": {
   "category": "gymleader",
   "gen": 7,
@@ -7906,6 +8641,10 @@
     "id": 144
    },
    {
+    "const": "SPECIES_BELLSPROUT",
+    "id": 69
+   },
+   {
     "const": "SPECIES_BULBASAUR",
     "id": 1
    },
@@ -7930,6 +8669,10 @@
     "id": 386
    },
    {
+    "const": "SPECIES_DODUO",
+    "id": 84
+   },
+   {
     "const": "SPECIES_DRATINI",
     "id": 147
    },
@@ -7938,12 +8681,28 @@
     "id": 133
    },
    {
+    "const": "SPECIES_EKANS",
+    "id": 23
+   },
+   {
     "const": "SPECIES_ENTEI",
     "id": 244
    },
    {
+    "const": "SPECIES_GASTLY",
+    "id": 92
+   },
+   {
     "const": "SPECIES_GROWLITHE",
     "id": 58
+   },
+   {
+    "const": "SPECIES_HAPPINY",
+    "id": 440
+   },
+   {
+    "const": "SPECIES_KABUTO",
+    "id": 140
    },
    {
     "const": "SPECIES_LAPRAS",
@@ -7954,8 +8713,28 @@
     "id": 66
    },
    {
+    "const": "SPECIES_MAGIKARP",
+    "id": 129
+   },
+   {
+    "const": "SPECIES_MEOWTH",
+    "id": 52
+   },
+   {
+    "const": "SPECIES_MEWTWO",
+    "id": 150
+   },
+   {
+    "const": "SPECIES_MOLTRES",
+    "id": 146
+   },
+   {
     "const": "SPECIES_MUNCHLAX",
     "id": 446
+   },
+   {
+    "const": "SPECIES_NIDORAN_M",
+    "id": 32
    },
    {
     "const": "SPECIES_NOSEPASS",
@@ -7966,8 +8745,24 @@
     "id": 172
    },
    {
+    "const": "SPECIES_PIDGEY",
+    "id": 16
+   },
+   {
+    "const": "SPECIES_PONYTA",
+    "id": 77
+   },
+   {
+    "const": "SPECIES_PSYDUCK",
+    "id": 54
+   },
+   {
     "const": "SPECIES_RAIKOU",
     "id": 243
+   },
+   {
+    "const": "SPECIES_RATTATA",
+    "id": 19
    },
    {
     "const": "SPECIES_SCYTHER",
@@ -7976,6 +8771,10 @@
    {
     "const": "SPECIES_SLAKOTH",
     "id": 287
+   },
+   {
+    "const": "SPECIES_SPEAROW",
+    "id": 21
    },
    {
     "const": "SPECIES_SQUIRTLE",
@@ -7990,8 +8789,16 @@
     "id": 128
    },
    {
+    "const": "SPECIES_TENTACOOL",
+    "id": 72
+   },
+   {
     "const": "SPECIES_TOTODILE",
     "id": 158
+   },
+   {
+    "const": "SPECIES_TYROGUE",
+    "id": 236
    },
    {
     "const": "SPECIES_WAILMER",
@@ -8000,6 +8807,10 @@
    {
     "const": "SPECIES_WOOPER",
     "id": 194
+   },
+   {
+    "const": "SPECIES_ZAPDOS",
+    "id": 145
    }
   ]
  },
@@ -8200,6 +9011,33 @@
    {
     "const": "SPECIES_MEOWTH_GALAR",
     "id": 52
+   }
+  ]
+ },
+ "Rowan": {
+  "category": "professor",
+  "gen": 4,
+  "page": "Professor Rowan + Rowan (anime)",
+  "species": [
+   {
+    "const": "SPECIES_AIPOM",
+    "id": 190
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
+    "const": "SPECIES_ONIX",
+    "id": 95
+   },
+   {
+    "const": "SPECIES_SHUCKLE",
+    "id": 213
+   },
+   {
+    "const": "SPECIES_SPINARAK",
+    "id": 167
    }
   ]
  },
@@ -8443,6 +9281,59 @@
    }
   ]
  },
+ "Sada": {
+  "category": "professor",
+  "gen": 9,
+  "page": "Sada + Sada (anime)",
+  "species": []
+ },
+ "Samson Oak": {
+  "category": "professor",
+  "gen": 7,
+  "page": "Samson Oak + Samson Oak (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CUBONE",
+    "id": 104
+   },
+   {
+    "const": "SPECIES_DIGLETT",
+    "id": 50
+   },
+   {
+    "const": "SPECIES_EXEGGCUTE",
+    "id": 102
+   },
+   {
+    "const": "SPECIES_GEODUDE",
+    "id": 74
+   },
+   {
+    "const": "SPECIES_GRIMER",
+    "id": 88
+   },
+   {
+    "const": "SPECIES_MEOWTH",
+    "id": 52
+   },
+   {
+    "const": "SPECIES_PICHU",
+    "id": 172
+   },
+   {
+    "const": "SPECIES_PORYGON",
+    "id": 137
+   },
+   {
+    "const": "SPECIES_RATTATA",
+    "id": 19
+   },
+   {
+    "const": "SPECIES_VULPIX",
+    "id": 37
+   }
+  ]
+ },
  "Saturn": {
   "category": "villain",
   "gen": 4,
@@ -8451,6 +9342,10 @@
    {
     "const": "SPECIES_ABRA",
     "id": 63
+   },
+   {
+    "const": "SPECIES_CARVANHA",
+    "id": 318
    },
    {
     "const": "SPECIES_GEODUDE",
@@ -8849,6 +9744,17 @@
    }
   ]
  },
+ "Sonia": {
+  "category": "professor",
+  "gen": 8,
+  "page": "Sonia + Sonia (anime)",
+  "species": [
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   }
+  ]
+ },
  "Sophocles": {
   "category": "anime",
   "gen": 7,
@@ -8995,6 +9901,41 @@
    }
   ]
  },
+ "Sycamore": {
+  "category": "professor",
+  "gen": 6,
+  "page": "Professor Sycamore + Sycamore (anime)",
+  "species": [
+   {
+    "const": "SPECIES_ABSOL",
+    "id": 359
+   },
+   {
+    "const": "SPECIES_BULBASAUR",
+    "id": 1
+   },
+   {
+    "const": "SPECIES_CHARMANDER",
+    "id": 4
+   },
+   {
+    "const": "SPECIES_PINSIR",
+    "id": 127
+   },
+   {
+    "const": "SPECIES_RALTS",
+    "id": 280
+   },
+   {
+    "const": "SPECIES_SQUIRTLE",
+    "id": 7
+   },
+   {
+    "const": "SPECIES_TORCHIC",
+    "id": 255
+   }
+  ]
+ },
  "Tate": {
   "category": "gymleader",
   "gen": 3,
@@ -9063,6 +10004,21 @@
    {
     "const": "SPECIES_TORCHIC",
     "id": 255
+   }
+  ]
+ },
+ "Tobias": {
+  "category": "anime",
+  "gen": 4,
+  "page": "Tobias (Sinnoh)",
+  "signature": {
+   "const": "SPECIES_LATIOS",
+   "id": 381
+  },
+  "species": [
+   {
+    "const": "SPECIES_LATIOS",
+    "id": 381
    }
   ]
  },
@@ -9135,6 +10091,12 @@
     "id": 194
    }
   ]
+ },
+ "Turo": {
+  "category": "professor",
+  "gen": 9,
+  "page": "Turo + Turo (anime)",
+  "species": []
  },
  "Valerie": {
   "category": "gymleader",

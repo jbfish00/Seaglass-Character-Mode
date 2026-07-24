@@ -29,11 +29,11 @@ SHIPPED = ROOT / "build" / "seaglass_cm.gba"
 TESTROM = ROOT / "build" / "seaglass_cm_tradetest.gba"
 
 BG_EVENT_PTR_OFF = 0x123ACC          # mart clipboard BG event script pointer
-CM_ENTRY_ADDR    = 0x08EE2A00        # shipped clipboard target (must match)
+CM_ENTRY_ADDR    = 0x08EE3800        # shipped clipboard target (rebased 2026-07-23; must match inject_character_mode.SCRIPT_ADDR)
 # Unused free space, clear of all CM data. Moved from 0x08EF0000 (task #5):
 # the wild-encounter pool table now occupies 0x08EE4000-0x08EF5480 (170 x 104
 # x 4B), which swallowed the old address.
-TEST_SCRIPT_ADDR = 0x08EF6000
+TEST_SCRIPT_ADDR = 0x08F10000
 
 # The junctions live at these addresses in *address* order, but each belongs to
 # a trade index in the order (2, 0, 1, 3) — the setvar-0x8008 quirk documented
