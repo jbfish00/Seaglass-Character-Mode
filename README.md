@@ -51,7 +51,7 @@ To switch off, enter the code **`CMDBGOFF`**.
 ## Character codes
 
 Codes are the character's name with spaces and punctuation removed. Case is
-ignored. 170 characters across all nine generations:
+ignored. 182 characters across all nine generations:
 
 ### Gen 1 — Kanto
 
@@ -74,6 +74,7 @@ ignored. 170 characters across all nine generations:
 | `LORELEI` | Lorelei |
 | `LTSURGE` | Lt. Surge |
 | `MISTY` | Misty |
+| `OAK` | Oak |
 | `RED` | Red |
 | `RITCHIE` | Ritchie |
 | `SABRINA` | Sabrina |
@@ -88,6 +89,7 @@ ignored. 170 characters across all nine generations:
 | `BUGSY` | Bugsy |
 | `CHUCK` | Chuck |
 | `CLAIR` | Clair |
+| `ELM` | Elm |
 | `ETHAN` | Ethan |
 | `FALKNER` | Falkner |
 | `JANINE` | Janine |
@@ -106,6 +108,7 @@ ignored. 170 characters across all nine generations:
 | Code | Character |
 |---|---|
 | `ARCHIE` | Archie |
+| `BIRCH` | Birch |
 | `BRAWLY` | Brawly |
 | `BRENDAN` | Brendan |
 | `DRAKE` | Drake |
@@ -151,7 +154,9 @@ ignored. 170 characters across all nine generations:
 | `NANDO` | Nando |
 | `PAUL` | Paul |
 | `ROARK` | Roark |
+| `ROWAN` | Rowan |
 | `SATURN` | Saturn |
+| `TOBIAS` | Tobias |
 | `VOLKNER` | Volkner |
 | `ZOEY` | Zoey |
 
@@ -174,6 +179,7 @@ ignored. 170 characters across all nine generations:
 | `HILBERT` | Hilbert |
 | `HUGH` | Hugh |
 | `IRIS` | Iris |
+| `JUNIPER` | Juniper |
 | `LENORA` | Lenora |
 | `MARLON` | Marlon |
 | `MARSHAL` | Marshal |
@@ -200,6 +206,7 @@ ignored. 170 characters across all nine generations:
 | `SERENA` | Serena |
 | `SHAUNA` | Shauna |
 | `SIEBOLD` | Siebold |
+| `SYCAMORE` | Sycamore |
 | `VALERIE` | Valerie |
 | `VIOLA` | Viola |
 | `WIKSTROM` | Wikstrom |
@@ -209,6 +216,7 @@ ignored. 170 characters across all nine generations:
 | Code | Character |
 |---|---|
 | `ACEROLA` | Acerola |
+| `BURNET` | Burnet |
 | `ELIO` | Elio |
 | `GLADION` | Gladion |
 | `GUZMA` | Guzma |
@@ -226,6 +234,7 @@ ignored. 170 characters across all nine generations:
 | `NANU` | Nanu |
 | `OLIVIA` | Olivia |
 | `PLUMERIA` | Plumeria |
+| `SAMSONOAK` | Samson Oak |
 | `SELENE` | Selene |
 | `SOPHOCLES` | Sophocles |
 
@@ -236,11 +245,13 @@ ignored. 170 characters across all nine generations:
 | `ALLISTER` | Allister |
 | `BEA` | Bea |
 | `BEDE` | Bede |
+| `CERISE` | Cerise |
 | `CHLOE` | Chloe |
 | `GOH` | Goh |
 | `GORDIE` | Gordie |
 | `HOP` | Hop |
 | `KABU` | Kabu |
+| `LAVENTON` | Laventon |
 | `LEON` | Leon |
 | `MARNIE` | Marnie |
 | `MILO` | Milo |
@@ -248,6 +259,7 @@ ignored. 170 characters across all nine generations:
 | `OPAL` | Opal |
 | `RAIHAN` | Raihan |
 | `ROSE` | Rose |
+| `SONIA` | Sonia |
 
 ### Gen 9 — Paldea
 
