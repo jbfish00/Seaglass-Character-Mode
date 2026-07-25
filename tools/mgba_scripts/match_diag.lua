@@ -33,7 +33,7 @@ end)
 H.onFrame(function(f)
     if f == commit + 400 then
         H.log(("post: flag=%d char=%d starter=%d fired=%s"):format(
-            H.getFlag(0x945), H.getVar(0x40E4), H.getVar(0x40E5), tostring(fired)))
+            H.getFlag(0x2B0), H.getVar(0x40E4), H.getVar(0x40E5), tostring(fired)))
         H.finish()
     end
 end)

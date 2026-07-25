@@ -12,7 +12,7 @@
 local H = dofile("tools/mgba_scripts/harness.lua")
 local K = H.KEY
 local ENEMY = 0x02019E78
-local FLAG_CM = 0x945
+local FLAG_CM = 0x2B0
 
 local CM_ON = (os.getenv and os.getenv("CM_ON")) == "1"
 local CM_CHAR = tonumber(os.getenv and os.getenv("CM_CHAR")) or 1

@@ -64,6 +64,11 @@ echo "=== Layer 4g: in-situ trade gate (idx2 SEASOR/Horsea, real overlay wrapper
 python3 tools/tests/build_trade_testrom.py 2 > /tmp/sg_trade_build.log 2>&1 \
     || { echo "  FAIL building trade test ROM (see /tmp/sg_trade_build.log)"; exit 1; }
 TRADEROM=build/seaglass_cm_tradetest.gba
+# CM_TradeCheck's VAR_RESULT store moves with every shim rebuild -- derive it.
+CM_TRADECHECK_STORE=$(python3 tools/tests/find_shim_store.py) || {
+    echo "  FAIL locating CM_TradeCheck's store instruction"; exit 1; }
+export CM_TRADECHECK_STORE
+echo "  (CM_TradeCheck store @ $CM_TRADECHECK_STORE)"
 trade_case() {  # name  CM_ON  CM_CHAR  EXPECT
     log=/tmp/sg_trade_$1.log
     timeout 150 env MGBA_HEADLESS_DEBUGGER=1 CM_ON=$2 CM_CHAR=$3 EXPECT=$4 "$MGBA" \

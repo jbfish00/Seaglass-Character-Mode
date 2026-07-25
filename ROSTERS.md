@@ -27,8 +27,8 @@ Every playable character and the **final evolutions** their complete roster reso
 Venusaur, Arbok, Alakazam, Muk, Gengar, Marowak, Weezing, Jynx, Gyarados, Crobat, Mismagius
 
 ### Ash — Anime
-**Final evolutions (56):**
-Venusaurᵃ, Charizardᵃ, Blastoiseᵃ, Butterfreeᵃ, Pidgeotᵃ, Raichuᵃ, Mukᵃ, Gengarᵃ, Kinglerᵃ, Taurosᵃ, Laprasᵃ, Snorlaxᵃ, Dragoniteᵃ, Meganiumᵃ, Typhlosionᵃ, Feraligatrᵃ, Noctowlᵃ, Heracrossᵃ, Donphanᵃ, Tyranitarᵃ, Sceptileᵃ, Swellowᵃ, Torkoalᵃ, Crawdauntᵃ, Glalieᵃ, Torterraᵃ, Infernapeᵃ, Staraptorᵃ, Floatzelᵃ, Ambipomᵃ, Garchompᵃ, Lucarioᵃ, Gliscorᵃ, Serperiorᵃ, Emboarᵃ, Samurottᵃ, Unfezantᵃ, Gigalithᵃ, Seismitoadᵃ, Leavannyᵃ, Krookodileᵃ, Scraftyᵃ, Greninjaᵃ, Vivillonᵃ, Hawluchaᵃ, Goodraᵃ, Noivernᵃ, Decidueyeᵃ, Incineroarᵃ, Lycanrocᵃ, Naganadelᵃ, Melmetalᵃ, Sirfetch'dᵃ, Mr. Rimeᵃ, Dracovishᵃ, Annihilapeᵃ
+**Final evolutions (57):**
+Venusaurᵃ, Charizardᵃ, Blastoiseᵃ, Butterfreeᵃ, Pidgeotᵃ, Raticate, Raichuᵃ, Mukᵃ, Gengarᵃ, Kinglerᵃ, Taurosᵃ, Laprasᵃ, Snorlaxᵃ, Dragoniteᵃ, Meganiumᵃ, Typhlosionᵃ, Feraligatrᵃ, Noctowlᵃ, Heracrossᵃ, Donphanᵃ, Tyranitarᵃ, Sceptileᵃ, Swellowᵃ, Torkoalᵃ, Crawdauntᵃ, Glalieᵃ, Torterraᵃ, Infernapeᵃ, Staraptorᵃ, Floatzelᵃ, Ambipomᵃ, Garchompᵃ, Lucarioᵃ, Gliscorᵃ, Serperiorᵃ, Emboarᵃ, Samurottᵃ, Unfezantᵃ, Gigalithᵃ, Seismitoadᵃ, Leavannyᵃ, Krookodileᵃ, Scraftyᵃ, Greninjaᵃ, Vivillonᵃ, Hawluchaᵃ, Goodraᵃ, Noivernᵃ, Decidueyeᵃ, Incineroarᵃ, Lycanrocᵃ, Naganadelᵃ, Melmetalᵃ, Sirfetch'dᵃ, Mr. Rimeᵃ, Dracovishᵃ, Annihilapeᵃ
 
 ### Blaine — Gym Leader
 **Final evolutions (12):**
@@ -55,8 +55,8 @@ Venusaur, Vileplume, Parasect, Victreebel, Exeggutor, Bellossom, Jumpluff, Shift
 Blastoise, Fearow, Nidoqueen, Nidoking, Arcanine, Alakazam, Golem, Dodrio, Kingler, Pinsir, Aerodactyl, Noctowlᵃ, Umbreonᵃ, Scizorᵃ, Skarmoryᵃ, Houndoomᵃ, Kingdraᵃ, Tyranitarᵃ, Bastiodonᵃ, Electivireᵃ, Magmortarᵃ, Hattereneᵃ, Regidragoᵃ
 
 ### Giovanni — Villain
-**Final evolutions (18):**
-Nidoqueen, Nidoking, Dugtrio, Persian, Machampᵃ, Golemᵃ, Cloysterᵃ, Gengar, Kinglerᵃ, Marowak, Kangaskhan, Moltres, Mewtwoᵃ, Steelix, Honchkrowᵍ, Garchomp, Rhyperior, Krookodile
+**Final evolutions (19):**
+Nidoqueen, Nidoking, Dugtrio, Persian, Machampᵃ, Golemᵃ, Cloysterᵃ, Gengar, Kinglerᵃ, Marowak, Weezing, Kangaskhan, Moltres, Mewtwoᵃ, Steelix, Honchkrowᵍ, Garchomp, Rhyperior, Krookodile
 
 ### James — Anime
 **Final evolutions (17):**
@@ -292,8 +292,8 @@ Rapidash, Hitmonleeᵃ, Snorlax, Heracross, Skarmoryᵃ, Torterra, Infernape, Em
 Nidoking, Golem, Sudowoodo, Quagsire, Steelix, Donphan, Whiscash, Hippowdon, Rhyperiorᵍ, Gliscor, Mamoswine
 
 ### Byron — Gym Leader
-**Final evolutions (9):**
-Forretress, Steelix, Skarmory, Aggron, Empoleon, Bastiodon, Bronzong, Magnezone, Excadrill
+**Final evolutions (15):**
+Moltres, Forretress, Steelix, Scizor, Skarmory, Pelipper, Aggron, Metagross, Empoleon, Bastiodon, Bronzong, Magnezone, Heatran, Excadrill, Kleavor
 
 ### Candice — Gym Leader
 **Final evolutions (9):**
@@ -308,28 +308,28 @@ Poliwrath, Gyarados, Politoed, Quagsire, Scizor, Kingdra, Suicune, Swampert, Lud
 Milotic, Roserade, Gastrodon, Spiritomb, Garchomp, Lucario, Togekiss, Glaceon, Eelektross, Braviary, Kommo-o
 
 ### Cyrus — Villain
-**Final evolutions (13):**
-Gyarados, Crobat, Houndoom, Entei, Salamence, Honchkrow, Weavile, Magnezone, Probopass, Dialga, Palkia, Darkrai, Sneasler
+**Final evolutions (14):**
+Gyarados, Crobat, Houndoom, Entei, Salamence, Honchkrow, Weavile, Magnezone, Probopass, Rotom, Dialga, Palkia, Darkrai, Sneasler
 
 ### Dawn — Protagonist
 **Final evolutions (9):**
 Typhlosion, Empoleon, Pachirisu, Floatzel, Ambipom, Lopunny, Togekiss, Mamoswine, Samurott
 
 ### Fantina — Gym Leader
-**Final evolutions (9):**
-Gengar, Banette, Drifblim, Mismagius, Spiritomb, Dusknoir, Froslass, Rotom, Jellicent
+**Final evolutions (14):**
+Gengar, Dragonite, Ninjask, Shedinja, Sableye, Crawdaunt, Banette, Drifblim, Mismagius, Spiritomb, Dusknoir, Froslass, Rotom, Jellicent
 
 ### Flint — Elite Four
-**Final evolutions (10):**
-Ninetalesᵍ, Arcanineᵍ, Rapidash, Flareon, Steelixᵍ, Houndoom, Infernape, Drifblimᵍ, Lopunnyᵍ, Magmortar
+**Final evolutions (14):**
+Ninetalesᵍ, Arcanineᵍ, Rapidash, Flareon, Zapdos, Steelixᵍ, Houndoom, Entei, Blaziken, Infernape, Drifblimᵍ, Lopunnyᵍ, Magmortar, Rotom
 
 ### Gardenia — Gym Leader
-**Final evolutions (13):**
-Bellossom, Jumpluff, Sunflora, Breloom, Cacturne, Tropius, Torterra, Roserade, Cherrim, Carnivine, Tangrowth, Leafeon, Dhelmise
+**Final evolutions (18):**
+Venusaur, Ninetales, Bellossom, Jumpluff, Sunflora, Breloom, Cacturne, Cradily, Milotic, Tropius, Torterra, Roserade, Cherrim, Carnivine, Tangrowth, Leafeon, Rotom, Dhelmise
 
 ### Jupiter — Villain
-**Final evolutions (7):**
-Nidoking, Gengar, Crobat, Purugly, Skuntank, Bronzong, Toxicroak
+**Final evolutions (10):**
+Nidoking, Gengar, Crobat, Tyranitar, Sharpedo, Absol, Purugly, Skuntank, Bronzong, Toxicroak
 
 ### Lucas — Protagonist
 **Final evolutions (7):**
@@ -340,12 +340,12 @@ Clefable, Alakazam, Torterra, Infernape, Empoleon, Bibarel, Magmortar
 Alakazam, Slowbroᵍ, Espeon, Medicham, Bronzong, Gallade, Mr. Rime, Farigiraf
 
 ### Mars — Villain
-**Final evolutions (4):**
-Crobat, Purugly, Skuntank, Bronzong
+**Final evolutions (13):**
+Vaporeon, Jolteon, Flareon, Crobat, Espeon, Umbreon, Purugly, Skuntank, Bronzong, Togekiss, Leafeon, Glaceon, Sylveon
 
 ### Maylene — Gym Leader
-**Final evolutions (7):**
-Machamp, Heracross, Hitmontop, Breloom, Medicham, Infernape, Lucario
+**Final evolutions (9):**
+Machamp, Dragonite, Heracross, Hitmontop, Blaziken, Breloom, Medicham, Infernape, Lucario
 
 ### Nando — Anime
 **Final evolutions (6):**
@@ -356,8 +356,8 @@ Sunfloraᵃ, Altariaᵃ, Armaldoᵃ, Kricketuneᵃ, Roseradeᵃ, Lopunnyᵃ
 Nidokingᵃ, Gyaradosᵃ, Azumarillᵃ, Ninjaskᵃ, Hariyamaᵃ, Aggronᵃ, Metagrossᵃ, Torterraᵃ, Infernapeᵃ, Staraptorᵃ, Gastrodonᵃ, Honchkrowᵃ, Garchompᵃ, Drapionᵃ, Weavileᵃ, Electivireᵃ, Magmortarᵃ, Gliscorᵃ, Froslassᵃ, Wyrdeerᵃ, Ursalunaᵃ
 
 ### Roark — Gym Leader
-**Final evolutions (11):**
-Golem, Aerodactyl, Sudowoodo, Steelix, Tyranitar, Armaldo, Relicanth, Rampardos, Probopass, Crustle, Archeops
+**Final evolutions (16):**
+Golem, Slowbro, Aerodactyl, Sudowoodo, Slowking, Steelix, Tyranitar, Torkoal, Lunatone, Armaldo, Relicanth, Salamence, Rampardos, Probopass, Crustle, Archeops
 
 ### Rowan — Professor
 **Final evolutions (15):**
@@ -372,8 +372,8 @@ Alakazam, Crobat, Sharpedo, Skuntank, Bronzong, Toxicroak, Rhyperior
 Latiosᵃ, Darkraiᵃ
 
 ### Volkner — Gym Leader
-**Final evolutions (13):**
-Raichu, Electrode, Jolteon, Lanturn, Octillery, Pelipper, Luxray, Ambipom, Electivire, Rotom, Zebstrika, Galvantula, Eelektross
+**Final evolutions (17):**
+Raichu, Electrode, Gyarados, Jolteon, Zapdos, Lanturn, Octillery, Swampert, Pelipper, Luxray, Ambipom, Magnezone, Electivire, Rotom, Zebstrika, Galvantula, Eelektross
 
 ### Zoey — Anime
 **Final evolutions (6):**
@@ -431,8 +431,8 @@ Ampharosᵍ, Luxray, Togekiss, Rotom, Zebstrika, Emolga, Galvantulaᵍ, Eelektro
 Houndoom, Tyranitar, Sharpedo, Absolᵍ, Honchkrow, Drapion, Liepard, Krookodile, Scrafty, Kingambit
 
 ### Hilbert — Protagonist
-**Final evolutions (9):**
-Mightyena, Glaceon, Serperior, Emboar, Samurott, Thundurus, Zekrom, Kyurem, Genesect
+**Final evolutions (42):**
+Mightyena, Glaceon, Serperior, Emboar, Samurott, Musharna, Gigalith, Excadrill, Audino, Conkeldurr, Throh, Sawk, Lilligant, Krookodile, Scrafty, Cofagrigus, Archeops, Gothitelle, Reuniclus, Vanilluxe, Escavalier, Amoonguss, Jellicent, Alomomola, Ferrothorn, Klinklang, Eelektross, Chandelure, Haxorus, Beartic, Cryogonal, Accelgor, Mienshao, Braviary, Mandibuzz, Durant, Thundurus, Zekrom, Kyurem, Genesect, Runerigus, Kingambit
 
 ### Hugh — Rival
 **Final evolutions (10):**
@@ -486,8 +486,8 @@ Jumpluffᵍ, Skarmoryᵍ, Drifblimᵍ, Unfezant, Swoobat, Sigilyphᵍ, Archeops�
 Charizardᵃ, Tyranitarᵃ, Metagrossᵃ, Weavileᵃ, Unfezantᵃ, Chesnaughtᵃ, Malamarᵃ, Kingambitᵃ
 
 ### Calem — Protagonist
-**Final evolutions (7):**
-Absolᵍ, Chesnaughtᵍ, Delphoxᵍ, Greninjaᵍ, Diggersbyᵍ, Vivillonᵍ, Meowsticᵍ
+**Final evolutions (9):**
+Absolᵍ, Chesnaughtᵍ, Delphoxᵍ, Greninjaᵍ, Diggersbyᵍ, Vivillonᵍ, Meowsticᵍ, Xerneas, Yveltal
 
 ### Clemont — Gym Leader
 **Final evolutions (7):**
@@ -522,8 +522,8 @@ Vileplume, Victreebelᵍ, Exeggutor, Bellossom, Jumpluffᵍ, Sunflora, Gogoatᵍ
 Sceptileᵃ, Slakingᵃ, Salamenceᵃ, Aegislashᵃ, Slurpuffᵃ, Clawitzerᵃ
 
 ### Serena — Protagonist
-**Final evolutions (10):**
-Vaporeon, Jolteon, Flareon, Espeon, Umbreon, Leafeon, Glaceon, Delphoxᵍ, Pangoroᵃ, Sylveonᵃ
+**Final evolutions (12):**
+Vaporeon, Jolteon, Flareon, Espeon, Umbreon, Leafeon, Glaceon, Delphoxᵍ, Vivillon, Pangoroᵃ, Meowstic, Sylveonᵃ
 
 ### Shauna — Rival
 **Final evolutions (8):**
@@ -561,8 +561,8 @@ Gengar, Sableyeᵍ, Banetteᵍ, Drifblim, Froslass, Palossand, Mimikyu, Dhelmise
 Snorlax, Mantine, Lycanroc, Silvally, Bruxish, Kommo-o, Tapu Bulu, Solgaleo, Lunala, Guzzlord, Necrozma
 
 ### Elio — Protagonist
-**Final evolutions (8):**
-Espeon, Decidueye, Incineroar, Primarina, Solgaleo, Lunala, Necrozma, Stakataka
+**Final evolutions (16):**
+Espeon, Decidueye, Incineroar, Primarina, Silvally, Solgaleo, Lunala, Nihilego, Buzzwole, Pheromosa, Xurkitree, Celesteela, Kartana, Guzzlord, Necrozma, Stakataka
 
 ### Gladion — Rival
 **Final evolutions (20):**
@@ -601,12 +601,12 @@ Venusaurᵃ, Ninetales, Snorlax, Empoleonᵃ, Lucarioᵃ, Magnezone, Braviary, D
 Lapras, Vaporeon, Jolteon, Flareon, Espeon, Umbreon, Milotic, Leafeon, Glaceon, Sylveon, Primarina, Araquanid, Turtonator, Drampa, Xurkitree
 
 ### Lillie (anime) — Anime
-**Final evolutions (2):**
-Ninetalesᵃ, Magearnaᵃ
+**Final evolutions (3):**
+Ninetalesᵃ, Magearnaᵃ, Blacephalon
 
 ### Lusamine — Villain
-**Final evolutions (13):**
-Clefable, Lapras, Milotic, Absol, Lopunny, Mismagius, Stoutland, Lilligant, Salazzle, Bewear, Nihilego, Pheromosa, Necrozma
+**Final evolutions (23):**
+Raichu, Clefable, Slowbro, Starmie, Lapras, Slowking, Granbull, Milotic, Absol, Drifblim, Lopunny, Mismagius, Magmortar, Stoutland, Lilligant, Decidueye, Incineroar, Salazzle, Bewear, Pyukumuku, Nihilego, Pheromosa, Necrozma
 
 ### Mallow (anime) — Anime
 **Final evolutions (2):**
@@ -633,12 +633,12 @@ Muk, Gengar, Crobat, Toxapex, Lurantis, Salazzle
 Raticate, Raichu, Ninetales, Dugtrio, Persian, Golem, Muk, Exeggutor, Marowak, Bronzong, Porygon-Z, Gumshoos, Vikavolt, Ribombee, Araquanid, Lurantis, Salazzle, Minior, Komala, Togedemaru, Mimikyu, Kommo-o, Nihilego, Necrozma, Perrserker
 
 ### Selene — Protagonist
-**Final evolutions (9):**
-Umbreon, Scizor, Decidueye, Incineroar, Primarina, Solgaleo, Lunala, Nihilego, Necrozma
+**Final evolutions (15):**
+Umbreon, Scizor, Decidueye, Incineroar, Primarina, Solgaleo, Lunala, Nihilego, Buzzwole, Pheromosa, Xurkitree, Celesteela, Kartana, Guzzlord, Necrozma
 
 ### Sophocles — Anime
-**Final evolutions (3):**
-Vikavolt, Minior, Togedemaru
+**Final evolutions (6):**
+Golem, Magnezone, Electivire, Vikavolt, Minior, Togedemaru
 
 
 ## Generation 8
@@ -731,16 +731,16 @@ Vileplume, Sudowoodoᵍ, Sunflora, Breloom, Lilligantᵍ, Tsareena, Arbolivaᵍ
 Ninetalesᵍ, Altariaᵍ, Weavileᵍ, Bearticᵍ, Frosmothᵍ, Cetitanᵍ
 
 ### Hassel — Elite Four
-**Final evolutions (7):**
-Dragoniteᵍ, Haxorusᵍ, Dragalgeᵍ, Noivernᵍ, Flappleᵍ, Baxcaliburᵍ, Archaludonᵍ
+**Final evolutions (8):**
+Dragoniteᵍ, Garchomp, Haxorusᵍ, Dragalgeᵍ, Noivernᵍ, Flappleᵍ, Baxcaliburᵍ, Archaludonᵍ
 
 ### Iono — Gym Leader
 **Final evolutions (9):**
 Electrode, Luxrayᵍ, Mismagiusᵍ, Magnezone, Electivire, Belliboltᵍ, Kilowattrelᵍ, Flutter Mane, Raging Bolt
 
 ### Katy — Gym Leader
-**Final evolutions (6):**
-Forretressᵍ, Heracrossᵍ, Araquanidᵍ, Ursalunaᵍ, Spidopsᵍ, Lokixᵍ
+**Final evolutions (7):**
+Forretressᵍ, Heracrossᵍ, Vespiquen, Araquanidᵍ, Ursalunaᵍ, Spidopsᵍ, Lokixᵍ
 
 ### Kofu — Gym Leader
 **Final evolutions (6):**
@@ -751,16 +751,16 @@ Feraligatrᵍ, Pelipperᵍ, Clawitzerᵍ, Crabominableᵍ, Wugtrioᵍ, Veluzaᵍ
 Tauros, Altariaᵍ, Tropiusᵍ, Staraptorᵍ, Braviary, Oricorioᵍ, Komalaᵍ, Oinkologne, Flamigoᵍ, Dudunsparce
 
 ### Nemona — Champion
-**Final evolutions (9):**
-Tauros, Goodraᵍ, Lycanrocᵍ, Meowscaradaᵍ, Skeledirgeᵍ, Quaquavalᵍ, Pawmotᵍ, Orthwormᵍ, Dudunsparceᵍ
+**Final evolutions (10):**
+Tauros, Goodraᵍ, Lycanrocᵍ, Meowscaradaᵍ, Skeledirgeᵍ, Quaquavalᵍ, Pawmotᵍ, Orthwormᵍ, Dudunsparceᵍ, Scream Tail
 
 ### Penny — Rival
 **Final evolutions (8):**
 Vaporeonᵍ, Jolteonᵍ, Flareonᵍ, Espeonᵍ, Umbreonᵍ, Leafeonᵍ, Glaceonᵍ, Sylveonᵍ
 
 ### Poppy — Elite Four
-**Final evolutions (6):**
-Bastiodon, Bronzongᵍ, Magnezoneᵍ, Corviknightᵍ, Copperajahᵍ, Tinkatonᵍ
+**Final evolutions (7):**
+Bastiodon, Bronzongᵍ, Magnezoneᵍ, Corviknightᵍ, Copperajahᵍ, Tinkatonᵍ, Iron Treads
 
 ### Rika — Elite Four
 **Final evolutions (6):**

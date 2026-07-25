@@ -1,0 +1,204 @@
+{
+ "_comment": "User-approved roster additions (2026-07-23 Bulbapedia completeness audit; scope: partner pools + edge cases included, manga excluded). Merged into rosters_raw by map_species.py at map time so re-scrapes cannot silently drop them. Provenance: ../../..//approved_roster_additions_2026-07-23.json",
+ "additions": {
+  "Ash": [
+   "Rattata"
+  ],
+  "Byron": [
+   "Beldum",
+   "Heatran",
+   "Moltres",
+   "Scyther",
+   "Wingull"
+  ],
+  "Calem": [
+   "Xerneas",
+   "Yveltal"
+  ],
+  "Cyrus": [
+   "Rotom"
+  ],
+  "Elio": [
+   "Buzzwole",
+   "Celesteela",
+   "Guzzlord",
+   "Kartana",
+   "Nihilego",
+   "Pheromosa",
+   "Type: Null",
+   "Xurkitree"
+  ],
+  "Fantina": [
+   "Corphish",
+   "Dratini",
+   "Nincada",
+   "Sableye"
+  ],
+  "Flint": [
+   "Entei",
+   "Rotom",
+   "Torchic",
+   "Zapdos"
+  ],
+  "Gardenia": [
+   "Bulbasaur",
+   "Feebas",
+   "Lileep",
+   "Rotom",
+   "Vulpix"
+  ],
+  "Giovanni": [
+   "Koffing"
+  ],
+  "Gloria": [
+   "Glastrier",
+   "Spectrier"
+  ],
+  "Hassel": [
+   "Gible"
+  ],
+  "Hilbert": [
+   "Alomomola",
+   "Archen",
+   "Audino",
+   "Axew",
+   "Cryogonal",
+   "Cubchoo",
+   "Drilbur",
+   "Durant",
+   "Ferroseed",
+   "Foongus",
+   "Frillish",
+   "Gothita",
+   "Karrablast",
+   "Klink",
+   "Litwick",
+   "Mienfoo",
+   "Munna",
+   "Pawniard",
+   "Petilil",
+   "Roggenrola",
+   "Rufflet",
+   "Sandile",
+   "Sawk",
+   "Scraggy",
+   "Shelmet",
+   "Solosis",
+   "Throh",
+   "Timburr",
+   "Tynamo",
+   "Vanillite",
+   "Vullaby",
+   "Yamask"
+  ],
+  "Hilda": [
+   "Clobbopus",
+   "Diancie",
+   "Iron Leaves",
+   "Tornadus"
+  ],
+  "Jupiter": [
+   "Absol",
+   "Carvanha",
+   "Larvitar",
+   "Nidoran-M"
+  ],
+  "Katy": [
+   "Combee"
+  ],
+  "Lillie (anime)": [
+   "Blacephalon"
+  ],
+  "Lusamine": [
+   "Drifloon",
+   "Litten",
+   "Magby",
+   "Pichu",
+   "Pyukumuku",
+   "Rowlet",
+   "Slowpoke",
+   "Snubbull",
+   "Staryu"
+  ],
+  "Mars": [
+   "Eevee",
+   "Togepi"
+  ],
+  "Maylene": [
+   "Dratini",
+   "Torchic"
+  ],
+  "Nemona": [
+   "Scream Tail"
+  ],
+  "Poppy": [
+   "Iron Treads"
+  ],
+  "Roark": [
+   "Bagon",
+   "Lunatone",
+   "Slowpoke",
+   "Torkoal"
+  ],
+  "Rosa": [
+   "Alomomola",
+   "Archen",
+   "Audino",
+   "Axew",
+   "Bouffalant",
+   "Cryogonal",
+   "Cubchoo",
+   "Darumaka",
+   "Drilbur",
+   "Durant",
+   "Ferroseed",
+   "Foongus",
+   "Frillish",
+   "Golett",
+   "Gothita",
+   "Karrablast",
+   "Klink",
+   "Litwick",
+   "Mienfoo",
+   "Munna",
+   "Pawniard",
+   "Petilil",
+   "Roggenrola",
+   "Rufflet",
+   "Sandile",
+   "Sawk",
+   "Scraggy",
+   "Shelmet",
+   "Solosis",
+   "Throh",
+   "Timburr",
+   "Tynamo",
+   "Vanillite",
+   "Vullaby",
+   "Yamask"
+  ],
+  "Selene": [
+   "Buzzwole",
+   "Celesteela",
+   "Guzzlord",
+   "Kartana",
+   "Pheromosa",
+   "Xurkitree"
+  ],
+  "Serena": [
+   "Espurr",
+   "Fletchling"
+  ],
+  "Sophocles": [
+   "Elekid",
+   "Geodude",
+   "Magnemite"
+  ],
+  "Volkner": [
+   "Magikarp",
+   "Magnemite",
+   "Mudkip",
+   "Zapdos"
+  ]
+ }
+}

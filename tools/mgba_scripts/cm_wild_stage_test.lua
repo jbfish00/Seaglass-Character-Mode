@@ -9,7 +9,7 @@
 local H = dofile("tools/mgba_scripts/harness.lua")
 local K = H.KEY
 local ENEMY = 0x02019E78
-local FLAG_CM = 0x945
+local FLAG_CM = 0x2B0
 
 local CM_CHAR = tonumber(os.getenv and os.getenv("CM_CHAR")) or 1
 local FORCE_LEVEL = tonumber(os.getenv and os.getenv("FORCE_LEVEL")) or 40

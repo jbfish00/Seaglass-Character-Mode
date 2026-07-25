@@ -42,13 +42,13 @@ H.onFrame(function(f)
         emu:write16(VAR_RESULT, 0xFFFF)          -- sentinel: defeats stale-value pass
         before.party = emu:read8(H.gPlayerPartyCount)
         if CM_ON then
-            H.setFlag(0x945)                     -- FLAG_CHARACTER_MODE
+            H.setFlag(0x2B0)                     -- FLAG_CHARACTER_MODE
             H.setVar(0x40E4, CM_CHAR)            -- VAR_CM_CHAR
             H.log(("CM ON char=%d flag=%d var=%d"):format(
-                CM_CHAR, H.getFlag(0x945), H.getVar(0x40E4)))
+                CM_CHAR, H.getFlag(0x2B0), H.getVar(0x40E4)))
         else
-            local a = emu:read32(H.gSaveBlock1Ptr) + H.FLAG_BLOCK + math.floor(0x945/8)
-            emu:write8(a, emu:read8(a) & ~(1 << (0x945 % 8)))
+            local a = emu:read32(H.gSaveBlock1Ptr) + H.FLAG_BLOCK + math.floor(0x2B0/8)
+            emu:write8(a, emu:read8(a) & ~(1 << (0x2B0 % 8)))
             H.log("CM OFF (control)")
         end
         H.log("start party=" .. before.party)
@@ -56,18 +56,22 @@ H.onFrame(function(f)
 end)
 
 -- Prove CM_TradeCheck runs AND capture its decision at the instant it writes
--- VAR_RESULT. We breakpoint the store itself (0x08ED25BC: strh r4,[r0]) and read
--- the value straight from r4 — address-independent, and taken before the ALLOW
--- path's subsequent special 0x100/0x101 can overwrite VAR_RESULT.
+-- VAR_RESULT. We breakpoint the store itself (`strh r4,[r0]` inside
+-- CM_TradeCheck) and read the value straight from r4 — taken before the ALLOW
+-- path's subsequent special 0x100/0x101 can overwrite VAR_RESULT. That
+-- instruction lives inside the recompiled shim and MOVES on every rebuild, so
+-- the runner passes it in from tools/tests/find_shim_store.py; the literal is
+-- only a last-resort fallback for a hand-run.
+local STORE = tonumber(os.getenv("CM_TRADECHECK_STORE") or "0x08ED25B6")
 local ran, decided = false, nil
 local V8004 = 0x020055D8 + 4*2
-H.breakpoint("TradeCheck", 0x08ED25BC, function(fr)
+H.breakpoint("TradeCheck", STORE, function(fr)
     if not ran then
         ran = true
         decided = { frame = fr, val = emu:readRegister("r4"),
                     addr = emu:readRegister("r0") }
         H.log(("CM_TradeCheck decision=%d @0x%08X f=%d [flag=%d char=%d v8004=%d]"):format(
-            decided.val, decided.addr, fr, H.getFlag(0x945), H.getVar(0x40E4),
+            decided.val, decided.addr, fr, H.getFlag(0x2B0), H.getVar(0x40E4),
             emu:read16(V8004)))
     end
 end)

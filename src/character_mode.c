@@ -72,7 +72,13 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-#define FLAG_CHARACTER_MODE 0x945    /* 0 script refs (audited) */
+/* 0 script refs (audited: no setflag/clearflag/checkflag operand anywhere in
+   the ROM) AND outside every engine sweep range. The original pick, 0x945, was
+   inside DAILY_FLAGS (0x920-0x95F), which ClearDailyFlags() memsets on every
+   RTC day rollover -- Character Mode silently switched itself off at midnight
+   while VAR_CM_CHAR stayed set. Any replacement must stay clear of the temp
+   block (0x000-0x01F, ClearTempFieldEventData) and the daily block. */
+#define FLAG_CHARACTER_MODE 0x2B0
 #define VAR_CM_CHAR         0x40E4   /* only 2 copyvar-SOURCE refs, none write it */
 #define VAR_CM_STARTER      0x40E5   /* adjacent free slot; doubles as give/confirm marker */
 #define CM_STARTER_OFF_MARKER 0xFFFF

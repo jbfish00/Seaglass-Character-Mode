@@ -14,7 +14,7 @@
 --   row0 ABCDEF . | row1 GHIJKL , | row2 MNOPQRS | row3 TUVWXYZ
 local H = dofile("tools/mgba_scripts/harness.lua")
 local K = H.KEY
-local FLAG_CM, VAR_CHAR, VAR_STARTER = 0x945, 0x40E4, 0x40E5
+local FLAG_CM, VAR_CHAR, VAR_STARTER = 0x2B0, 0x40E4, 0x40E5
 
 local code = os.getenv("CM_CODE") or "RED"
 local expectChar = tonumber(os.getenv("CM_EXPECT_CHAR") or "1")

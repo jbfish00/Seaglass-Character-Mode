@@ -18,9 +18,9 @@ H.onFrame(function(f)
     emu:write16(ENEMY + 0x56, 1)
     if CM_ON then
         local char = tonumber(os.getenv("CM_CHAR")) or 1
-        H.setFlag(0x945)          -- FLAG_CHARACTER_MODE
+        H.setFlag(0x2B0)          -- FLAG_CHARACTER_MODE
         H.setVar(0x40E4, char)    -- VAR_CM_CHAR
-        H.log(string.format("CM ON char=%d: flag0x945=%d var0x40E4=%d", char, H.getFlag(0x945), H.getVar(0x40E4)))
+        H.log(string.format("CM ON char=%d: flag0x2B0=%d var0x40E4=%d", char, H.getFlag(0x2B0), H.getVar(0x40E4)))
     else
         H.log("CM OFF (control)")
     end

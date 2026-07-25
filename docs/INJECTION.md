@@ -17,7 +17,7 @@ Seaglass ROM, never to clean Emerald). Round-trip verified byte-identical
 ## The shim (`src/character_mode.c`)
 
 `CM_GiveMonToPlayerGated(mon)` — ROWE/RR acquisition semantics: when Character
-Mode is ON (`FLAG 0x945` set + `VAR 0x40E4` in 1..170) and the caught mon is a
+Mode is ON (`FLAG 0x2B0` set + `VAR 0x40E4` in 1..170) and the caught mon is a
 non-egg species not on the active character's roster, route it to the PC
 (`CopyMonToPC`) instead of the party (`GiveMonToPlayer`); otherwise identical to
 the original. `onRoster()` is an O(1) bit test into the per-character bitmap.
@@ -71,7 +71,7 @@ loads fine on the patched ROM.
 
 1. **Roster bitmap** — DONE (`emit_bitmaps.py`, wired into the shim, tested).
 2. **Selection mechanism**: hook the cheat-code matcher's specials-table slot
-   (`gSpecialsTable 0x0826DD68`) so character-name codes set `FLAG 0x945` +
+   (`gSpecialsTable 0x0826DD68`) so character-name codes set `FLAG 0x2B0` +
    `VAR 0x40E4` and deliver the signature starter — see `docs/ROUTINE_MAP.md`
    "Selection mechanism" + `../Lazarus-Character-Mode/docs/SELECTION_MECHANISM.md`.
 3. **Remaining acquisition gates** — DONE (script-gift `0x081F18DE` gated;

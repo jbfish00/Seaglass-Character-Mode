@@ -72,6 +72,12 @@ WILD_TRAMPOLINE_ADDR = 0x08470208
 WILDPOOL_ADDR = 0x08EE4000
 WILDPOOL_STRIDE = 176
 
+# Engine flag/var bookkeeping (check [13], added 2026-07-24 with the 0x945 fix).
+SB1_FLAGS_OFF = 0x13C0           # SaveBlock1.flags (docs/ROUTINE_MAP.md)
+TEMP_FLAGS_START, TEMP_FLAGS_END = 0x000, 0x01F
+DAILY_FLAGS_START, DAILY_FLAGS_END = 0x920, 0x95F
+SCR_SETFLAG, SCR_CLEARFLAG, SCR_CHECKFLAG = 0x29, 0x2A, 0x2B
+
 _p = _f = 0
 def ok(cond, msg):
     global _p, _f
@@ -289,6 +295,39 @@ def main():
     ok(leaks == 0, f"no legendary species in any character's wild pool ({leaks} leaks)")
     ok(empty_pool_but_nonempty_roster == 0,
        "every character with a non-legendary roster has a non-empty wild pool")
+
+    print("[13] CM flag id survives the engine's sweeps")
+    src = (ROOT / "src" / "character_mode.c").read_text()
+    m = re.search(r"#define\s+FLAG_CHARACTER_MODE\s+(0x[0-9A-Fa-f]+)", src)
+    flag = int(m.group(1), 16) if m else None
+    ok(flag is not None, "FLAG_CHARACTER_MODE parsed from src/character_mode.c")
+    # ClearTempFieldEventData() memsets flags 0x000-0x01F on every map load;
+    # ClearDailyFlags() memsets flags 0x920-0x95F on every RTC day rollover.
+    # A flag in either range silently deactivates Character Mode mid-save --
+    # that was the 0x945 bug (fixed 2026-07-24). Both ranges are re-derived
+    # from the ROM below rather than trusted as constants.
+    ok(not (TEMP_FLAGS_START <= flag <= TEMP_FLAGS_END),
+       f"flag {flag:#x} outside the temp-flag sweep "
+       f"({TEMP_FLAGS_START:#x}-{TEMP_FLAGS_END:#x})")
+    ok(not (DAILY_FLAGS_START <= flag <= DAILY_FLAGS_END),
+       f"flag {flag:#x} outside the daily-flag sweep "
+       f"({DAILY_FLAGS_START:#x}-{DAILY_FLAGS_END:#x})")
+    # ClearDailyFlags is `ldr r0,[gSaveBlock1Ptr]; ldr r3,=off; mov ip,r3;
+    # push {lr}; movs r2,#8; movs r1,#0; add r0,ip; bl memset` -- find it and
+    # confirm the byte range it wipes really is the one we excluded above.
+    sig = bytes.fromhex("9c4600b5082200216044")
+    i = orig.find(sig)
+    ok(i != -1, "ClearDailyFlags located in the original ROM")
+    if i != -1:
+        swept_off = struct.unpack_from("<I", orig, i + 22)[0]
+        first = SB1_FLAGS_OFF + DAILY_FLAGS_START // 8
+        ok(swept_off == first,
+           f"ClearDailyFlags wipes SB1+{swept_off:#x} == flags[{DAILY_FLAGS_START:#x}] "
+           f"(8 B); our flag byte is SB1+{SB1_FLAGS_OFF + flag // 8:#x}")
+    # No script anywhere in the ROM touches it (setflag/clearflag/checkflag).
+    refs = sum(orig.count(bytes([op]) + struct.pack("<H", flag))
+               for op in (SCR_SETFLAG, SCR_CLEARFLAG, SCR_CHECKFLAG))
+    ok(refs == 0, f"no script setflag/clearflag/checkflag references flag {flag:#x} ({refs})")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     sys.exit(1 if _f else 0)
