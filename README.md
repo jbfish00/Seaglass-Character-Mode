@@ -22,6 +22,13 @@ legally-obtained Seaglass v3.0 ROM.
 SHA-1 `b9f4d332d30fc88c379f9e037f9eae3b2755ead4`. Applying it to any other ROM
 will fail or corrupt.
 
+> **Updating from an earlier build of this patch?** Character Mode now records
+> "mode is on" in a different save slot, because the old one sat in a block the
+> game wipes whenever the in-game day rolls over — which quietly switched the
+> mode off at midnight. Your save, party and boxes are untouched, but if you had
+> Character Mode active you'll find it reads as off: just re-enter your
+> character's code once at the mart clipboard and it stays on for good.
+
 ## Turning Character Mode on
 
 Character Mode is **opt-in** — a normal playthrough is untouched until you
