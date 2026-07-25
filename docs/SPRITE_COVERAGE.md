@@ -242,3 +242,85 @@ aggregation of those galleries.
    `ow064` Nurse Joy.
 4. **Nothing has been staged or injected.** This is a sourcing finding only; `sprite_asset_id` is
    still `0xFFFF` everywhere.
+
+
+## 2026-07-25 — CORRECTION 3: the "never sourced" anime characters were sourced all along
+
+Correction 2 closed the Gen 6-9 gap. This closes the anime gap that predates it. The list
+"Drew, Paul, Zoey, Nando, Trip, Lyra — no GBA-style art exists anywhere" has been carried in this
+file since 2026-07-23. **Five of the six exist.** Only Trip is genuinely missing.
+
+### Pokesho (ポケしょ), by ポケモア / Pokemore — the find
+
+A Japanese fan site that ran two galleries built explicitly to GBA spec. Not a game: a pure sprite
+resource. **Both galleries are retired from the live site**; everything below came from the Wayback
+capture of **2018-08-15** and was downloaded and format-verified locally.
+
+- **Trainer gallery** (`dot_battle.html`, 68 sprites) — **64x64, <=16 colours = exact GBA trainer
+  front-pic format.** Verified: `b_shuu`/`b_shuu2` = **Drew** (two poses), `b_masato` = Max,
+  `b_rokettodan` = the Jessie+Meowth+James trio, plus Harley, Tyson, Robert, anime May, Dawn, and
+  Ash/Brock/Misty in Kanto, Hoenn and Sinnoh outfits. Measured 64x64 / 16-colour on every sample.
+- **Field gallery** (`dot_field.html`, 302 sprites) — **16x22, 16 colours, FRLG-spec, FRONT-FACING
+  FRAME ONLY.** Verified: `f_shinji` = **Paul**, `f_nozomi` = **Zoey**, `f_naoshi` = **Nando**
+  (carrying his harp), `f_shuu` = Drew, `f_kojirou` = **solo James**, `f_onnanoko_hgss` = **Lyra**.
+  Also Ritchie, Tracey, Reggie, Kenny, Ursula, Morrison, Iris, Cilan, Bianca, Cheren, N.
+- **Licence, quoted from the gallery header:** 「GBA風トレーナードット絵を展示しています。
+  **フリー素材になります**。」 ("GBA-style trainer pixel art is exhibited here. **These are free
+  materials.**") and 「すべて64×64サイズ。透明色合わせて最大16色です。**素材としての使用も可能です**。」
+  The still-live FAQ answers 「素材もらってもいいですか！？」 with 「**どうぞどうぞ！！**」
+  ("Please, go right ahead!!"). Credit as 「ポケしょ / Pokesho（ポケモア）」.
+- **Two real caveats.** (1) The field sprites are ONE FRAME — side and back must be drawn before
+  they are usable as walking sprites. (2) The galleries are retired and the author states he deletes
+  work he considers lower quality; permission was granted while published, so reusing archived
+  copies is a judgement call, not a settled one.
+
+### Supporting anime sources
+
+- **kalarie, PokéCommunity thread 407124** — 73 anime overworld sheets, **all imgur links still
+  live**, verified **144x32 = the standard FireRed 9-frame NPC sheet of 16x32 frames, GBA-native
+  drop-in**. Has **solo James and solo Jessie**, plus Meowth, Butch, Cassidy, Jenny, Joy, Brock,
+  Misty, Oak. Kanto/Orange era only. Licence: *"You're free to use any of these sprites in your
+  hack... Be sure to give proper credit though."* Needs Navenatox's Dynamic Overworld Palettes patch.
+  **This resource is literally Pokesho's front frames animated into full sheets** (its credits say
+  so) — which is the proof-of-workflow for doing the same to Paul, Zoey and Nando.
+- **aveontrainer (DeviantArt)** — ~480 deviations; posted at 128x192 but that is a clean 2x upscale
+  of a native **64x96 = 16 frames of 16x24**, i.e. a full four-direction walk cycle. Has Drew, Lyra,
+  Ritchie, Harley, Morrison, **Alain**, Serena, Iris, Bianca, Dawn, Barry, Clemont. No blanket
+  licence; takes overworld commissions — the realistic route for Trip/Zoey/Nando walk cycles.
+- **Team Aqua's Asset Repo** (`github.com/TeamAquasHideout/Team-Aquas-Asset-Repo`) — **the cleanest
+  licence found anywhere**: *"All assets are both free to use and edit by default, but if any assets
+  specifically mention not being free to edit, please respect the author's wishes."* Coverage of our
+  roster is thin (Lyra, Iris, Serena/Calem, Dawn, Barry + kalarie's Kanto anime fronts) but prefer it
+  wherever it overlaps another source.
+
+### CORRECTION to Correction 2: Paul is NOT in kalarie's resource
+
+Correction 2 recorded Paul as available from PokéCommunity 407124. That was wrong. Paul appears in
+that thread only as a **rejected submission** (post #20 by *etique*) — the maintainer turned it down
+as *"not really FR Style"* — and the attachment measures 32x48 DS-format frames, not GBA. **Paul's
+real source is Pokesho's `f_shinji`.**
+
+### The anime-arc hack question: evidenced NEGATIVE
+
+There is **no GBA anime-arc ROM hack for Sinnoh or Unova**, in existence or in development.
+*Advanced Generation* (Hoenn, Emerald) stalled at "Beta One Progress: 30%" and its thread is locked.
+*Ash Hoenn Version* claims completion but ships as a **pre-patched .gba only**, which fails our
+patch-only rule. *Johto League Showdown* is likewise pre-patched-only. *Ash Z* is a 3DS hack with 3D
+models. The Sinnoh/Unova cast art exists as standalone resources, not inside any game.
+**Pokémon Fire Ash** (RPG Maker XP + Essentials, PC) is the only known thing containing **Trip** —
+its walkthrough confirms Trip, Sawyer, Tobias, Paul, Nando and Zoey as battleable trainers — but it
+is not a ROM hack, has no stated asset licence, and **nobody has opened its `Graphics/Trainers`
+folder to confirm the sprite format.**
+
+### Where this repo now stands
+
+**22 of its characters still have no art of any kind.** Workspace-wide the remaining 26 are
+the eleven professors (Rowan, Juniper, Sycamore, Burnet, Samson Oak, Magnolia, Sonia, Laventon,
+Cerise, Sada, Turo), the Alola anime four (Lillie, Kiawe, Lana, Mallow), Guzma, Plumeria, Lusamine,
+Rose, Goh, Chloe, Tobias, Sawyer, **Trip**, Dahlia and Darach. Several of the artists found here take
+commissions and already work natively in our format.
+
+Workspace totals across the three corrections: overworld 103 -> 131 (plus 31 partial), trainer pics
+76 -> 168, back pics 13 -> 18, "nothing at all" 92 -> 26.
+
+Nothing is staged or injected. `sprite_asset_id` is still `0xFFFF` everywhere.
