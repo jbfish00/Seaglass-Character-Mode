@@ -8280,6 +8280,10 @@
     "id": 132
    },
    {
+    "const": "SPECIES_DRATINI",
+    "id": 147
+   },
+   {
     "const": "SPECIES_EEVEE",
     "id": 133
    },

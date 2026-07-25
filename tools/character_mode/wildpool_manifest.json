@@ -27363,7 +27363,7 @@
   },
   {
    "character": "Oak",
-   "pool_size": 28,
+   "pool_size": 31,
    "pool": [
     {
      "species_id": 1,
@@ -27398,6 +27398,11 @@
     {
      "species_id": 133,
      "species": "Eevee",
+     "min_level": 1
+    },
+    {
+     "species_id": 147,
+     "species": "Dratini",
      "min_level": 1
     },
     {
@@ -27476,6 +27481,11 @@
      "min_level": 18
     },
     {
+     "species_id": 148,
+     "species": "Dragonair",
+     "min_level": 30
+    },
+    {
      "species_id": 3,
      "species": "Venusaur",
      "min_level": 32
@@ -27504,6 +27514,11 @@
      "species_id": 26,
      "species": "Raichu",
      "min_level": 49
+    },
+    {
+     "species_id": 149,
+     "species": "Dragonite",
+     "min_level": 55
     }
    ]
   },

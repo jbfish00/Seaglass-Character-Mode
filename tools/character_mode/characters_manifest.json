@@ -4472,6 +4472,7 @@
     1,
     4,
     132,
+    147,
     133,
     32,
     172,
@@ -4481,7 +4482,7 @@
     151,
     150
    ],
-   "starter_count": 8,
+   "starter_count": 9,
    "has_signature": false,
    "signature_id": null,
    "sprite_asset_id": "TBD"
@@ -4491,7 +4492,7 @@
    "category": "professor",
    "generation": 2,
    "name_offset": 1114,
-   "roster_offset": 4858,
+   "roster_offset": 4860,
    "roster_species_ids": [
     298,
     69,
@@ -4519,7 +4520,7 @@
    "category": "professor",
    "generation": 3,
    "name_offset": 1118,
-   "roster_offset": 4890,
+   "roster_offset": 4892,
    "roster_species_ids": [
     304,
     1,
@@ -4556,7 +4557,7 @@
    "category": "professor",
    "generation": 4,
    "name_offset": 1124,
-   "roster_offset": 4940,
+   "roster_offset": 4942,
    "roster_species_ids": [
     190,
     155,
@@ -4574,7 +4575,7 @@
    "category": "professor",
    "generation": 5,
    "name_offset": 1130,
-   "roster_offset": 4952,
+   "roster_offset": 4954,
    "roster_species_ids": [
     172
    ],
@@ -4588,7 +4589,7 @@
    "category": "professor",
    "generation": 6,
    "name_offset": 1138,
-   "roster_offset": 4956,
+   "roster_offset": 4958,
    "roster_species_ids": [
     359,
     1,
@@ -4608,7 +4609,7 @@
    "category": "professor",
    "generation": 7,
    "name_offset": 1147,
-   "roster_offset": 4972,
+   "roster_offset": 4974,
    "roster_species_ids": [
     458,
     446
@@ -4623,7 +4624,7 @@
    "category": "professor",
    "generation": 7,
    "name_offset": 1154,
-   "roster_offset": 4978,
+   "roster_offset": 4980,
    "roster_species_ids": [
     104,
     50,
@@ -4646,7 +4647,7 @@
    "category": "professor",
    "generation": 8,
    "name_offset": 1165,
-   "roster_offset": 5000,
+   "roster_offset": 5002,
    "roster_species_ids": [
     4
    ],
@@ -4660,7 +4661,7 @@
    "category": "professor",
    "generation": 8,
    "name_offset": 1171,
-   "roster_offset": 5004,
+   "roster_offset": 5006,
    "roster_species_ids": [
     155
    ],
@@ -4674,7 +4675,7 @@
    "category": "professor",
    "generation": 8,
    "name_offset": 1180,
-   "roster_offset": 5008,
+   "roster_offset": 5010,
    "roster_species_ids": [
     1,
     4,
@@ -4696,7 +4697,7 @@
    "category": "anime",
    "generation": 4,
    "name_offset": 1187,
-   "roster_offset": 5028,
+   "roster_offset": 5030,
    "roster_species_ids": [
     381
    ],

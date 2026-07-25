@@ -1,5 +1,5 @@
 {
- "_comment": "User-approved roster additions (2026-07-23 Bulbapedia completeness audit; scope: partner pools + edge cases included, manga excluded). Merged into rosters_raw by map_species.py at map time so re-scrapes cannot silently drop them. Provenance: ../../..//approved_roster_additions_2026-07-23.json",
+ "_comment": "User-approved roster additions (2026-07-23 Bulbapedia completeness audit; scope: partner pools + edge cases included, manga excluded). Merged into rosters_raw by map_species.py at map time so re-scrapes cannot silently drop them. Also carries user-directed additions made after that audit: Oak gains Dratini (Dragonite) and Rotom, both from the anime (2026-07-24). Provenance: ../../..//approved_roster_additions_2026-07-23.json",
  "additions": {
   "Ash": [
    "Rattata"
@@ -199,6 +199,10 @@
    "Magnemite",
    "Mudkip",
    "Zapdos"
+  ],
+  "Oak": [
+   "Dratini",
+   "Rotom"
   ]
  }
 }
