@@ -103,3 +103,56 @@ technique transfers to this project once its own table addresses are located.
    inject_sprites_pilot.py`): blobs are format-compatible, only table/free-space addresses change.
 3. Per-character wiring design (what the mugshot replaces in this hack's select flow).
 4. Missing art: Drew, Paul, Zoey, Nando, Trip, Lyra; James solo pic (duo-only).
+
+## 2026-07-24 — CORRECTION: overworld coverage was undercounted (engine-native sprites)
+
+Every previous coverage number in this file came from cross-referencing ROWE's
+`sprite_report.txt`, which records only art ROWE had **staged for injection**.
+That silently undercounts overworld sprites, because most of these characters are
+NPCs in the games themselves — **this engine already ships their overworld
+graphics**. Prof. Oak is the clearest case: the old survey listed him with no
+overworld art at all, while both engine families define him
+(`OBJ_EVENT_GFX_PROF_OAK` / `EVENT_OBJ_GFX_OAK`). Referencing an existing
+graphics id is not an injection job.
+
+Re-surveyed against pokeemerald-expansion (`tools/pokeemerald_expansion_donor/include/constants/event_objects.h`, `OBJ_EVENT_GFX_*`):
+
+**45 of this repo's 192 characters already have an overworld sprite in the
+ROM** and need no art sourced:
+
+Red, Leaf, Blue, Lance, Lorelei, Bruno, Agatha, Koga, Brock, Misty, Lt. Surge,
+Erika, Sabrina, Blaine, Giovanni, Gary, Brendan, May, Steven, Wallace, Sidney,
+Phoebe, Glacia, Drake, Roxanne, Brawly, Wattson, Flannery, Norman, Winona,
+Tate, Liza, Juan, Wally, Maxie, Archie, Oak, Birch, Anabel, Tucker, Greta,
+Spenser, Noland, Lucy, Brandon
+
+Cross-repo, counting the engine tables adds **12 characters the old survey called
+empty** — Lyra, Oak, Elm, Birch and eight Frontier Brains (Anabel, Tucker, Greta,
+Spenser, Noland, Lucy, Brandon, Palmer) — and reclassifies **54 more** from "needs
+injecting" to "already there".
+
+Regenerate with `python3 RadicalRed-Character-Mode/tools/survey_engine_ow.py`
+(canonical copy lives in the RR repo; it reads every sibling repo's live
+`characters.txt`). Visual summary: the "Character Mode — Sprite Coverage by
+Character" artifact.
+
+### Three name collisions deliberately NOT counted
+
+CFRU defines `MARLON`, `PENNY` and `MELONY`, but CFRU is Unbound's engine: its
+Marlon is Unbound's own protagonist (`MARLON_PLAYER`, `YOUNG_MARLON`,
+`MARLON_ARM`), and the engine has no Gen 9 content at all, so its `PENNY` cannot
+be the Paldea character. Matching on name alone would have claimed art that does
+not depict our character.
+
+### Still open after this correction
+
+1. **The Ash Gray overworld dump is 152 sprites and only 15 were ever
+   identified** (`sprites/donors/ashgray/rip/ow/`). Ritchie and Tracey are both
+   characters in Ash Gray, so their overworld sprites are very likely already in
+   that dump — `ow014` and `ow015` (capless black-haired boys) are the leading
+   candidates. Labelling the dump is the cheapest remaining win in Phase 3.
+2. **No other anime-based hack has been sourced.** Ash Gray is the only one built
+   locally. Drew, Paul, Zoey, Nando and Trip have no art anywhere, and a hack
+   covering the Johto/Hoenn/Sinnoh anime arcs is the only plausible source.
+3. Back pics remain the real bottleneck: **13 characters across the whole
+   workspace**, essentially playable protagonists only.
