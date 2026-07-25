@@ -7092,12 +7092,28 @@
   "page": "Lucy",
   "species": [
    {
+    "const": "SPECIES_ABRA",
+    "id": 63
+   },
+   {
+    "const": "SPECIES_CYNDAQUIL",
+    "id": 155
+   },
+   {
     "const": "SPECIES_FEEBAS",
     "id": 349
    },
    {
     "const": "SPECIES_MAGIKARP",
     "id": 129
+   },
+   {
+    "const": "SPECIES_MAKUHITA",
+    "id": 296
+   },
+   {
+    "const": "SPECIES_MUNCHLAX",
+    "id": 446
    },
    {
     "const": "SPECIES_ONIX",
@@ -7110,6 +7126,14 @@
    {
     "const": "SPECIES_SHUCKLE",
     "id": 213
+   },
+   {
+    "const": "SPECIES_SKITTY",
+    "id": 300
+   },
+   {
+    "const": "SPECIES_SWINUB",
+    "id": 220
    }
   ]
  },

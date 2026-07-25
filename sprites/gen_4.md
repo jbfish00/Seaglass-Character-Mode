@@ -54,12 +54,12 @@ Final-evolution rosters in National Pokédex order, sprites with names. [← bac
 <tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/470.png"><br><sub>Leafeon</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/471.png"><br><sub>Glaceon</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/476.png"><br><sub>Probopass</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/700.png"><br><sub>Sylveon</sub></td></tr>
 </table>
 
-### Dahlia — Frontier
+### Dahlia — Frontier Brain
 <table>
 <tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/145.png"><br><sub>Zapdos</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/257.png"><br><sub>Blaziken</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/272.png"><br><sub>Ludicolo</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/308.png"><br><sub>Medicham</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/468.png"><br><sub>Togekiss</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/477.png"><br><sub>Dusknoir</sub></td></tr>
 </table>
 
-### Darach — Frontier
+### Darach — Frontier Brain
 <table>
 <tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/229.png"><br><sub>Houndoom</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/244.png"><br><sub>Entei</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/282.png"><br><sub>Gardevoir</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/475.png"><br><sub>Gallade</sub></td></tr>
 </table>
@@ -134,7 +134,7 @@ Final-evolution rosters in National Pokédex order, sprites with names. [← bac
 <tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/334.png"><br><sub>Altariaᵃ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/348.png"><br><sub>Armaldoᵃ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/407.png"><br><sub>Roseradeᵃ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/429.png"><br><sub>Mismagius</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/470.png"><br><sub>Leafeon</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/471.png"><br><sub>Glaceon</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/700.png"><br><sub>Sylveon</sub></td></tr>
 </table>
 
-### Palmer — Frontier
+### Palmer — Frontier Brain
 <table>
 <tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/149.png"><br><sub>Dragonite</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/350.png"><br><sub>Milotic</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/464.png"><br><sub>Rhyperior</sub></td></tr>
 </table>

@@ -28823,8 +28823,13 @@
   },
   {
    "character": "Lucy",
-   "pool_size": 8,
+   "pool_size": 23,
    "pool": [
+    {
+     "species_id": 63,
+     "species": "Abra",
+     "min_level": 1
+    },
     {
      "species_id": 95,
      "species": "Onix",
@@ -28836,8 +28841,28 @@
      "min_level": 1
     },
     {
+     "species_id": 155,
+     "species": "Cyndaquil",
+     "min_level": 1
+    },
+    {
      "species_id": 213,
      "species": "Shuckle",
+     "min_level": 1
+    },
+    {
+     "species_id": 220,
+     "species": "Swinub",
+     "min_level": 1
+    },
+    {
+     "species_id": 296,
+     "species": "Makuhita",
+     "min_level": 1
+    },
+    {
+     "species_id": 300,
+     "species": "Skitty",
      "min_level": 1
     },
     {
@@ -28851,8 +28876,33 @@
      "min_level": 1
     },
     {
+     "species_id": 446,
+     "species": "Munchlax",
+     "min_level": 1
+    },
+    {
+     "species_id": 156,
+     "species": "Quilava",
+     "min_level": 14
+    },
+    {
+     "species_id": 64,
+     "species": "Kadabra",
+     "min_level": 16
+    },
+    {
+     "species_id": 143,
+     "species": "Snorlax",
+     "min_level": 17
+    },
+    {
      "species_id": 208,
      "species": "Steelix",
+     "min_level": 17
+    },
+    {
+     "species_id": 301,
+     "species": "Delcatty",
      "min_level": 17
     },
     {
@@ -28864,6 +28914,31 @@
      "species_id": 130,
      "species": "Gyarados",
      "min_level": 20
+    },
+    {
+     "species_id": 297,
+     "species": "Hariyama",
+     "min_level": 24
+    },
+    {
+     "species_id": 221,
+     "species": "Piloswine",
+     "min_level": 33
+    },
+    {
+     "species_id": 157,
+     "species": "Typhlosion",
+     "min_level": 36
+    },
+    {
+     "species_id": 65,
+     "species": "Alakazam",
+     "min_level": 48
+    },
+    {
+     "species_id": 473,
+     "species": "Mamoswine",
+     "min_level": 65
     }
    ]
   },

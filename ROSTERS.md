@@ -192,7 +192,7 @@ Clefable, Alakazam, Slowbro, Hypno, Exeggutor, Jynx, Vaporeon, Jolteon, Flareon,
 
 ## Generation 3
 
-### Anabel — Frontier
+### Anabel — Frontier Brain
 **Final evolutions (17):**
 Alakazam, Vaporeon, Jolteon, Flareon, Snorlax, Espeon, Umbreon, Raikou, Entei, Salamence, Metagross, Latios, Mismagius, Weavile, Leafeon, Glaceon, Sylveon
 
@@ -204,7 +204,7 @@ Raichu, Tentacruel, Muk, Gyarados, Dragonite, Crobat, Swampert, Mightyena, Beaut
 **Final evolutions (27):**
 Venusaur, Charizard, Blastoise, Clefable, Muk, Gyarados, Meganium, Typhlosion, Feraligatr, Sceptile, Blaziken, Swampert, Mightyena, Linoone, Beautifly, Dustox, Shiftry, Pelipper, Ninjask, Shedinja, Aggron, Wailord, Tropius, Huntail, Gorebyss, Rayquaza, Jirachi
 
-### Brandon — Frontier
+### Brandon — Frontier Brain
 **Final evolutions (10):**
 Articuno, Zapdos, Moltres, Ninjask, Shedinja, Solrock, Regirock, Regice, Registeel, Dusknoir
 
@@ -232,7 +232,7 @@ Raichu, Ninetales, Arcanine, Rapidash, Magcargo, Houndoom, Blaziken, Ludicolo, C
 **Final evolutions (7):**
 Celebi, Glalie, Walrein, Regirock, Regice, Registeel, Froslass
 
-### Greta — Frontier
+### Greta — Frontier Brain
 **Final evolutions (15):**
 Gengar, Vaporeon, Jolteon, Flareon, Espeon, Umbreon, Heracross, Breloom, Ninjask, Shedinja, Hariyama, Medicham, Leafeon, Glaceon, Sylveon
 
@@ -244,9 +244,9 @@ Poliwrath, Tentacruel, Seaking, Starmie, Lapras, Lanturn, Azumarill, Politoed, C
 **Final evolutions (17):**
 Raichu, Slowbro, Hypno, Xatu, Slowking, Blaziken, Gardevoir, Grumpig, Lunatone, Solrock, Crawdaunt, Claydol, Chimecho, Kyogre, Groudon, Jirachi, Gallade
 
-### Lucy — Frontier
-**Final evolutions (5):**
-Gyarados, Steelix, Shuckle, Seviper, Milotic
+### Lucy — Frontier Brain
+**Final evolutions (11):**
+Alakazam, Gyarados, Snorlax, Typhlosion, Steelix, Shuckle, Hariyama, Delcatty, Seviper, Milotic, Mamoswine
 
 ### Maxie — Villain
 **Final evolutions (12):**
@@ -256,7 +256,7 @@ Weezing, Crobat, Houndoom, Mightyena, Swellow, Plusle, Minun, Camerupt, Milotic,
 **Final evolutions (43):**
 Venusaurᵃ, Blastoiseᵃ, Raichu, Tentacruel, Hitmonlee, Hitmonchan, Vaporeon, Jolteon, Flareon, Snorlaxᵃ, Espeon, Umbreon, Magcargo, Hitmontop, Tyranitar, Sceptile, Blaziken, Swampert, Mightyena, Beautiflyᵃ, Dustox, Ludicolo, Swellow, Pelipper, Breloom, Exploud, Delcattyᵃ, Aggron, Wailord, Camerupt, Torkoal, Altaria, Claydol, Tropius, Salamence, Latias, Latios, Kyogre, Rayquaza, Leafeon, Glaceonᵃ, Probopass, Sylveon
 
-### Noland — Frontier
+### Noland — Frontier Brain
 **Final evolutions (12):**
 Venusaur, Sandslash, Golduck, Machamp, Pinsir, Articuno, Breloom, Aggron, Manectric, Camerupt, Flygon, Rhyperior
 
@@ -276,7 +276,7 @@ Ninetales, Poliwrath, Golem, Omastar, Kabutops, Aerodactyl, Politoed, Steelix, S
 **Final evolutions (11):**
 Celebi, Mightyena, Shiftry, Sharpedo, Cacturne, Zangoose, Crawdaunt, Absol, Regirock, Regice, Registeel
 
-### Spenser — Frontier
+### Spenser — Frontier Brain
 **Final evolutions (11):**
 Venusaur, Arcanine, Lapras, Crobat, Azumarill, Blissey, Suicune, Shiftry, Slaking, Claydol, Dusknoir
 
@@ -288,7 +288,7 @@ Charizard, Raichu, Sandslash, Aerodactyl, Forretress, Skarmory, Sceptile, Blazik
 **Final evolutions (17):**
 Raichu, Slowbro, Hypno, Xatu, Slowking, Blaziken, Gardevoir, Grumpig, Lunatone, Solrock, Crawdaunt, Claydol, Chimecho, Kyogre, Groudon, Jirachi, Gallade
 
-### Tucker — Frontier
+### Tucker — Frontier Brain
 **Final evolutions (6):**
 Charizard, Arcanine, Swampert, Salamence, Metagross, Latias
 
@@ -343,11 +343,11 @@ Raichu, Clefable, Golduck, Gyarados, Vaporeon, Jolteon, Flareon, Dragonite, Typh
 **Final evolutions (20):**
 Gyarados, Vaporeon, Jolteon, Flareon, Dragonite, Crobat, Espeon, Umbreon, Houndoom, Entei, Milotic, Salamence, Honchkrow, Weavile, Magnezone, Rhyperior, Leafeon, Glaceon, Probopass, Sylveon
 
-### Dahlia — Frontier
+### Dahlia — Frontier Brain
 **Final evolutions (6):**
 Zapdos, Blaziken, Ludicolo, Medicham, Togekiss, Dusknoir
 
-### Darach — Frontier
+### Darach — Frontier Brain
 **Final evolutions (4):**
 Houndoom, Entei, Gardevoir, Gallade
 
@@ -391,7 +391,7 @@ Machamp, Hitmonlee, Hitmonchan, Dragonite, Heracross, Hitmontop, Blaziken, Garde
 **Final evolutions (15):**
 Vaporeon, Jolteon, Flareon, Typhlosion, Sunfloraᵃ, Espeon, Umbreon, Heracross, Altariaᵃ, Armaldoᵃ, Roseradeᵃ, Mismagius, Leafeon, Glaceon, Sylveon
 
-### Palmer — Frontier
+### Palmer — Frontier Brain
 **Final evolutions (3):**
 Dragonite, Milotic, Rhyperior
 

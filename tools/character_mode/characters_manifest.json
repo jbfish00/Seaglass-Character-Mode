@@ -4778,13 +4778,19 @@
    "name_offset": 1215,
    "roster_offset": 5092,
    "roster_species_ids": [
+    63,
+    155,
     349,
     129,
+    296,
+    446,
     95,
     336,
-    213
+    213,
+    300,
+    220
    ],
-   "starter_count": 5,
+   "starter_count": 11,
    "has_signature": false,
    "signature_id": null,
    "sprite_asset_id": "TBD"
@@ -4794,7 +4800,7 @@
    "category": "frontier",
    "generation": 3,
    "name_offset": 1220,
-   "roster_offset": 5104,
+   "roster_offset": 5116,
    "roster_species_ids": [
     304,
     1,
@@ -4819,7 +4825,7 @@
    "category": "frontier",
    "generation": 3,
    "name_offset": 1227,
-   "roster_offset": 5130,
+   "roster_offset": 5142,
    "roster_species_ids": [
     298,
     343,
@@ -4843,7 +4849,7 @@
    "category": "frontier",
    "generation": 3,
    "name_offset": 1235,
-   "roster_offset": 5154,
+   "roster_offset": 5166,
    "roster_species_ids": [
     371,
     374,
@@ -4862,7 +4868,7 @@
    "category": "frontier",
    "generation": 4,
    "name_offset": 1242,
-   "roster_offset": 5168,
+   "roster_offset": 5180,
    "roster_species_ids": [
     355,
     270,
@@ -4881,7 +4887,7 @@
    "category": "frontier",
    "generation": 4,
    "name_offset": 1249,
-   "roster_offset": 5182,
+   "roster_offset": 5194,
    "roster_species_ids": [
     228,
     280,
@@ -4897,7 +4903,7 @@
    "category": "frontier",
    "generation": 4,
    "name_offset": 1256,
-   "roster_offset": 5190,
+   "roster_offset": 5202,
    "roster_species_ids": [
     147,
     349,
