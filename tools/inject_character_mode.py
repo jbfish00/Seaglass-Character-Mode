@@ -54,17 +54,18 @@ BUILD = ROOT / "build"
 CM = HERE / "character_mode"
 CHARMAP = Path("/home/jbfish00/Documents/Pokemon Rowe Alteration/charmap.txt")
 
-NUM_CHARACTERS = 182  # 170 + 11 professors + Tobias (2026-07-23)
+NUM_CHARACTERS = 192  # 170 + 11 professors + Tobias + 10 Frontier Brains (2026-07-24)
 BITMAP_STRIDE = 187
 CODE_LEN = 11
 
 # --- confirmed free-block layout (all verified 0xFF) ---
 SHIM_ADDR      = 0x08ED2200
 BITMAPS_ADDR   = 0x08EDA000        # 170*187 = 31790 B
-CODES_ADDR     = 0x08EE2800        # 182*11 = 2002 B (rebased 2026-07-23; bitmaps grew to 34,034 B)
-STARTERS_ADDR  = 0x08EE3100        # 182*2 = 364 B
-SCRIPT_ADDR    = 0x08EE3800        # entry + confirm script (rebased)
-WILDPOOL_ADDR  = 0x08EE4000        # 182*176*4 = 128,128 B -> ends 0x08F03480 (2026-07-23)
+CODES_ADDR     = 0x08EE2C80        # 192*11 = 2112 B (rebased 2026-07-24: 192-char bitmaps are 35,904 B and ran past the old 0x08EE2800)
+STARTERS_ADDR  = 0x08EE3500        # 192*2 = 384 B
+SCRIPT_ADDR    = 0x08EE3800        # entry + confirm script -- KEEP FIXED: naming_open.ss
+                                   # embeds a paused script context pointing here
+WILDPOOL_ADDR  = 0x08EE5000        # 192*176*4 = 135,168 B -> ends 0x08F06000 (2026-07-24)
 FREE_END_ROM   = 0x09000000
 
 TRAMPOLINE_ADDR      = 0x08470200  # 8B 0xFF scavenge, in BL range of both sites
@@ -103,7 +104,7 @@ TRADE_COUNT      = 4
 TRADE_JUNCTIONS  = (0x29CFF5, 0x2AF873, 0x2B01EF, 0x30129E)
 TRADE_JUNCTION_BYTES = bytes([0x19,0x04,0x80,0x08,0x80, 0x19,0x05,0x80,0x0A,0x80,
                               0x25,0x00,0x01, 0x25,0x01,0x01, 0x27])
-TRADE_SCRIPT_ADDR = 0x08EE3300
+TRADE_SCRIPT_ADDR = 0x08EE3B00
 
 # script/engine constants
 YESNO_TEXT_ADDR = None             # our msg (in-script); built below

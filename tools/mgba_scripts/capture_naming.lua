@@ -13,7 +13,11 @@ local function pos()
 end
 
 local fireAt = nil
-H.breakpoint("Open", 0x08ED2270, function(fr)
+-- CM_OpenCodeEntry lives inside the recompiled shim, so its address moves on
+-- every rebuild. Pass it in from build/cm.elf (arm-none-eabi-nm) rather than
+-- trusting the literal, which is only correct until the shim is recompiled.
+local OPEN_ADDR = tonumber(os.getenv("CM_OPEN_ADDR") or "0x08ED2270")
+H.breakpoint("Open", OPEN_ADDR, function(fr)
     if not fireAt then fireAt = fr; H.log("CM_OpenCodeEntry fired f=" .. fr) end
 end)
 

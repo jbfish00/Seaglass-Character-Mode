@@ -227,3 +227,19 @@ Cerise | Professor Cerise | professor | 8
 # from Seaglass's dex, so he is LATIOS-ONLY here (starter falls back to Latios).
 # 1% legendary-inclusive wild override (vs standard 10% non-legendary) — see shim.
 Tobias | Tobias (Sinnoh) | anime | 4
+
+# --- Frontier Brains (added 2026-07-24, user request: all Frontier Brains from
+# every game; rosters = union of their game Frontier teams and their anime teams,
+# pinned in rosters_raw.json like Tobias -- a blind re-scrape credits them with
+# their opponents' Pokemon). Thorton and Argenta are excluded: rental-facility
+# Brains with no team of their own and no anime appearance -> empty roster.
+Anabel | Anabel | frontier | 3
+Brandon | Brandon + Brandon (anime) | frontier | 3
+Greta | Greta | frontier | 3
+Lucy | Lucy | frontier | 3
+Noland | Noland | frontier | 3
+Spenser | Spenser | frontier | 3
+Tucker | Tucker | frontier | 3
+Dahlia | Dahlia | frontier | 4
+Darach | Darach | frontier | 4
+Palmer | Palmer | frontier | 4

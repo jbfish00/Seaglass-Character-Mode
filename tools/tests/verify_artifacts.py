@@ -48,7 +48,7 @@ CM = ROOT / "tools" / "character_mode"
 CHARMAP = Path("/home/jbfish00/Documents/Pokemon Rowe Alteration/charmap.txt")
 
 ROM_SHA1 = "b9f4d332d30fc88c379f9e037f9eae3b2755ead4"
-NUM_CHARACTERS = 182  # 2026-07-23 rebuild (+11 professors, +Tobias; Magnolia/Sada/Turo trimmed)
+NUM_CHARACTERS = 192  # 170 + 11 professors + Tobias + 10 Frontier Brains (2026-07-24)
 BITMAP_STRIDE = 187
 CODE_LEN = 11
 
@@ -69,7 +69,7 @@ TRADE_TABLE = 0xA3DB30
 WILD_BL_SITE = 0x22BF36
 CREATE_MON_WITH_IVS = 0x081A7504
 WILD_TRAMPOLINE_ADDR = 0x08470208
-WILDPOOL_ADDR = 0x08EE4000
+WILDPOOL_ADDR = 0x08EE5000
 WILDPOOL_STRIDE = 176
 
 # Engine flag/var bookkeeping (check [13], added 2026-07-24 with the 0x945 fix).
@@ -151,8 +151,8 @@ def main():
                (TRAMPOLINE_ADDR & 0x01FFFFFF, 8),
                (WILD_BL_SITE, 4), (WILD_TRAMPOLINE_ADDR & 0x01FFFFFF, 64 - 8),
                (0xED2200, 0x2000), (0xEDA000, NUM_CHARACTERS * BITMAP_STRIDE),
-               (0xEE2800, NUM_CHARACTERS * CODE_LEN), (0xEE3100, NUM_CHARACTERS * 2),
-               (0xEE3800, 0x300), (0xEE3300, 0x400),
+               (0xEE2C80, NUM_CHARACTERS * CODE_LEN), (0xEE3500, NUM_CHARACTERS * 2),
+               (0xEE3800, 0x300), (0xEE3B00, 0x400),
                (WILDPOOL_ADDR & 0x01FFFFFF, NUM_CHARACTERS * WILDPOOL_STRIDE * 4)]
     give_sites = [i for i in range(len(orig))
                   if orig[i - 1] == 0x23 and orig[i:i + 4] == struct.pack("<I", GIVE_NATIVE)]
@@ -196,7 +196,7 @@ def main():
     ok(all_in, "every roster id + starter is set in its character's own bitmap")
 
     print("[7] codes table")
-    codes_rom = patched[0xEE2800:0xEE2800 + NUM_CHARACTERS * CODE_LEN]
+    codes_rom = patched[0xEE2C80:0xEE2C80 + NUM_CHARACTERS * CODE_LEN]
     seen = set(); good = True
     for ci, c in enumerate(manifest):
         want = enc(code_for(c["character"]), cm)
