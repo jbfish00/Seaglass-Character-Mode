@@ -58,7 +58,7 @@ To switch off, enter the code **`CMDBGOFF`**.
 ## Character codes
 
 Codes are the character's name with spaces and punctuation removed. Case is
-ignored. 182 characters across all nine generations:
+ignored. 192 characters across all nine generations:
 
 ### Gen 1 — Kanto
 
@@ -114,24 +114,31 @@ ignored. 182 characters across all nine generations:
 
 | Code | Character |
 |---|---|
+| `ANABEL` | Anabel |
 | `ARCHIE` | Archie |
 | `BIRCH` | Birch |
+| `BRANDON` | Brandon |
 | `BRAWLY` | Brawly |
 | `BRENDAN` | Brendan |
 | `DRAKE` | Drake |
 | `DREW` | Drew |
 | `FLANNERY` | Flannery |
 | `GLACIA` | Glacia |
+| `GRETA` | Greta |
 | `JUAN` | Juan |
 | `LIZA` | Liza |
+| `LUCY` | Lucy |
 | `MAXIE` | Maxie |
 | `MAY` | May |
+| `NOLAND` | Noland |
 | `NORMAN` | Norman |
 | `PHOEBE` | Phoebe |
 | `ROXANNE` | Roxanne |
 | `SIDNEY` | Sidney |
+| `SPENSER` | Spenser |
 | `STEVEN` | Steven |
 | `TATE` | Tate |
+| `TUCKER` | Tucker |
 | `WALLACE` | Wallace |
 | `WALLY` | Wally |
 | `WATTSON` | Wattson |
@@ -149,6 +156,8 @@ ignored. 182 characters across all nine generations:
 | `CRASHERWAK` | Crasher Wake |
 | `CYNTHIA` | Cynthia |
 | `CYRUS` | Cyrus |
+| `DAHLIA` | Dahlia |
+| `DARACH` | Darach |
 | `DAWN` | Dawn |
 | `FANTINA` | Fantina |
 | `FLINT` | Flint |
@@ -159,6 +168,7 @@ ignored. 182 characters across all nine generations:
 | `MARS` | Mars |
 | `MAYLENE` | Maylene |
 | `NANDO` | Nando |
+| `PALMER` | Palmer |
 | `PAUL` | Paul |
 | `ROARK` | Roark |
 | `ROWAN` | Rowan |
