@@ -10745,6 +10745,25 @@
    }
   ]
  },
+ "Volo": {
+  "category": "villain",
+  "gen": 8,
+  "page": "Volo",
+  "species": [
+   {
+    "const": "SPECIES_BUDEW",
+    "id": 406
+   },
+   {
+    "const": "SPECIES_GROWLITHE",
+    "id": 58
+   },
+   {
+    "const": "SPECIES_TOGEPI",
+    "id": 175
+   }
+  ]
+ },
  "Wallace": {
   "category": "champion",
   "gen": 3,

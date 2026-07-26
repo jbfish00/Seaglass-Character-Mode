@@ -19,7 +19,7 @@ Layers:
      to the trampoline; their originals decoded to GiveMonToPlayer.
   6. Bitmaps in-ROM == rosters_expanded.bin; every character's manifest roster
      ids + starter are set in that character's own bitmap.
-  7. Codes decode (charmap) to independently recomputed codes; 170 unique.
+  7. Codes decode (charmap) to independently recomputed codes; all unique.
   8. All 49 callnative give sites (found in the ORIGINAL by the 0x23+ptr idiom)
      now point at CM_NativeGiveGated; none un-retargeted (except our own give,
      which points at the same wrapper by design).
@@ -48,7 +48,24 @@ CM = ROOT / "tools" / "character_mode"
 CHARMAP = Path("/home/jbfish00/Documents/Pokemon Rowe Alteration/charmap.txt")
 
 ROM_SHA1 = "b9f4d332d30fc88c379f9e037f9eae3b2755ead4"
-NUM_CHARACTERS = 192  # 170 + 11 professors + Tobias + 10 Frontier Brains (2026-07-24)
+# Derived, not hardcoded. Roster growth used to mean hand-editing this AND the
+# three injection addresses below, and a stale value fails as an unrelated-looking
+# "stray bytes"/"size mismatch" error rather than as a count mismatch (Volo,
+# 2026-07-25). Read the count from the manifest and the layout from the injector
+# so this file can never disagree with the build it is verifying.
+NUM_CHARACTERS = len(json.loads(
+    (ROOT / "tools" / "character_mode" / "characters_manifest.json").read_text())["characters"])
+
+def _injector_addr(name):
+    m = re.search(rf"^{name}\s*=\s*(0x[0-9A-Fa-f]+)", 
+                  (ROOT / "tools" / "inject_character_mode.py").read_text(), re.M)
+    if not m:
+        raise SystemExit(f"verify_artifacts: cannot find {name} in inject_character_mode.py")
+    return int(m.group(1), 16)
+
+BITMAPS_ADDR  = _injector_addr("BITMAPS_ADDR")
+CODES_ADDR    = _injector_addr("CODES_ADDR")
+STARTERS_ADDR = _injector_addr("STARTERS_ADDR")
 BITMAP_STRIDE = 187
 CODE_LEN = 11
 
@@ -150,8 +167,9 @@ def main():
     windows = [(BL_CATCH, 4), (BL_GIFT, 4), (BG_EVENT_PTR_OFF, 4),
                (TRAMPOLINE_ADDR & 0x01FFFFFF, 8),
                (WILD_BL_SITE, 4), (WILD_TRAMPOLINE_ADDR & 0x01FFFFFF, 64 - 8),
-               (0xED2200, 0x2000), (0xEDA000, NUM_CHARACTERS * BITMAP_STRIDE),
-               (0xEE2C80, NUM_CHARACTERS * CODE_LEN), (0xEE3500, NUM_CHARACTERS * 2),
+               (0xED2200, 0x2000), (BITMAPS_ADDR & 0x01FFFFFF, NUM_CHARACTERS * BITMAP_STRIDE),
+               (CODES_ADDR & 0x01FFFFFF, NUM_CHARACTERS * CODE_LEN),
+               (STARTERS_ADDR & 0x01FFFFFF, NUM_CHARACTERS * 2),
                (0xEE3800, 0x300), (0xEE3B00, 0x400),
                (WILDPOOL_ADDR & 0x01FFFFFF, NUM_CHARACTERS * WILDPOOL_STRIDE * 4)]
     give_sites = [i for i in range(len(orig))
@@ -181,7 +199,8 @@ def main():
        f"trampoline = ldr/bx into shim (gate {gate:#x})")
 
     print("[6] bitmaps + roster/starter invariants")
-    ok(patched[0xEDA000:0xEDA000 + len(bitmaps)] == bitmaps, "bitmaps in-ROM == rosters_expanded.bin")
+    bbase = BITMAPS_ADDR & 0x01FFFFFF
+    ok(patched[bbase:bbase + len(bitmaps)] == bitmaps, "bitmaps in-ROM == rosters_expanded.bin")
     def onbm(ci, sp):
         bm = bitmaps[ci * BITMAP_STRIDE:(ci + 1) * BITMAP_STRIDE]
         return sp == 0 or sp >= 1489 or (bm[sp >> 3] >> (sp & 7)) & 1
@@ -196,7 +215,8 @@ def main():
     ok(all_in, "every roster id + starter is set in its character's own bitmap")
 
     print("[7] codes table")
-    codes_rom = patched[0xEE2C80:0xEE2C80 + NUM_CHARACTERS * CODE_LEN]
+    cbase = CODES_ADDR & 0x01FFFFFF
+    codes_rom = patched[cbase:cbase + NUM_CHARACTERS * CODE_LEN]
     seen = set(); good = True
     for ci, c in enumerate(manifest):
         want = enc(code_for(c["character"]), cm)
@@ -204,7 +224,7 @@ def main():
         if got[:len(want)] != want:
             good = False
         seen.add(code_for(c["character"]).upper())
-    ok(good, "all 170 codes in-ROM == recomputed from names")
+    ok(good, f"all {NUM_CHARACTERS} codes in-ROM == recomputed from names")
     ok(len(seen) == NUM_CHARACTERS, f"codes case-fold-unique ({len(seen)})")
 
     print("[8] callnative give exhaustion")

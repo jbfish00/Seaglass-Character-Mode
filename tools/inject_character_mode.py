@@ -54,18 +54,24 @@ BUILD = ROOT / "build"
 CM = HERE / "character_mode"
 CHARMAP = Path("/home/jbfish00/Documents/Pokemon Rowe Alteration/charmap.txt")
 
-NUM_CHARACTERS = 192  # 170 + 11 professors + Tobias + 10 Frontier Brains (2026-07-24)
+NUM_CHARACTERS = 193  # 170 + 11 professors + Tobias + 10 Frontier Brains + Volo (2026-07-25)
 BITMAP_STRIDE = 187
 CODE_LEN = 11
 
 # --- confirmed free-block layout (all verified 0xFF) ---
 SHIM_ADDR      = 0x08ED2200
 BITMAPS_ADDR   = 0x08EDA000        # 170*187 = 31790 B
-CODES_ADDR     = 0x08EE2C80        # 192*11 = 2112 B (rebased 2026-07-24: 192-char bitmaps are 35,904 B and ran past the old 0x08EE2800)
-STARTERS_ADDR  = 0x08EE3500        # 192*2 = 384 B
+CODES_ADDR     = 0x08EE2D00        # 193*11 = 2123 B (rebased 2026-07-25 for Volo: 193-char
+                                   # bitmaps are 36,091 B and ended at 0x08EE2CFB, 123 B past
+                                   # the old 0x08EE2C80. Every roster growth moves this.)
+STARTERS_ADDR  = 0x08EE3600        # 193*2 = 386 B (rebased 2026-07-25: codes now end at
+                                   # 0x08EE354B). Headroom to SCRIPT_ADDR is only ~126 B --
+                                   # SCRIPT_ADDR CANNOT MOVE (naming_open.ss embeds a paused
+                                   # script context pointing at it), so the next roster growth
+                                   # must relocate CODES/STARTERS below BITMAPS, not above.
 SCRIPT_ADDR    = 0x08EE3800        # entry + confirm script -- KEEP FIXED: naming_open.ss
                                    # embeds a paused script context pointing here
-WILDPOOL_ADDR  = 0x08EE5000        # 192*176*4 = 135,168 B -> ends 0x08F06000 (2026-07-24)
+WILDPOOL_ADDR  = 0x08EE5000        # 193*176*4 = 135,872 B -> ends 0x08F062C0 (2026-07-25)
 FREE_END_ROM   = 0x09000000
 
 TRAMPOLINE_ADDR      = 0x08470200  # 8B 0xFF scavenge, in BL range of both sites

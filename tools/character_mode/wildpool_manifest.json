@@ -28528,6 +28528,52 @@
    ]
   },
   {
+   "character": "Volo",
+   "pool_size": 8,
+   "pool": [
+    {
+     "species_id": 58,
+     "species": "Growlithe",
+     "min_level": 1
+    },
+    {
+     "species_id": 175,
+     "species": "Togepi",
+     "min_level": 1
+    },
+    {
+     "species_id": 406,
+     "species": "Budew",
+     "min_level": 1
+    },
+    {
+     "species_id": 59,
+     "species": "Arcanine",
+     "min_level": 17
+    },
+    {
+     "species_id": 176,
+     "species": "Togetic",
+     "min_level": 17
+    },
+    {
+     "species_id": 315,
+     "species": "Roselia",
+     "min_level": 17
+    },
+    {
+     "species_id": 407,
+     "species": "Roserade",
+     "min_level": 49
+    },
+    {
+     "species_id": 468,
+     "species": "Togekiss",
+     "min_level": 49
+    }
+   ]
+  },
+  {
    "character": "Tobias",
    "pool_size": 1,
    "pool": [

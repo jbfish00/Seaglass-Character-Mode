@@ -83,7 +83,7 @@ typedef unsigned int u32;
 #define VAR_CM_STARTER      0x40E5   /* adjacent free slot; doubles as give/confirm marker */
 #define CM_STARTER_OFF_MARKER 0xFFFF
 
-#define NUM_CHARACTERS 192  /* 170 + 11 professors + Tobias (182) + 10 Frontier Brains (183-192), 2026-07-24 */
+#define NUM_CHARACTERS 193  /* 170 + 11 professors + Tobias (182) + 10 Frontier Brains (183-192) + Volo (193), 2026-07-25 */
 #define TOBIAS_CHAR_ID 182   /* Latios-only here (Darkrai absent from Seaglass dex); 1%% wild rate (user spec) */
 #define NUM_SPECIES    1489          /* max ROM species id 1488 + 1 */
 #define BITMAP_STRIDE  187
