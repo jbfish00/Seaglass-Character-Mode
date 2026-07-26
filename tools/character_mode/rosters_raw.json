@@ -6082,6 +6082,24 @@
    "Zebstrika"
   ]
  },
+ "Volo": {
+  "category": "villain",
+  "gen": 8,
+  "page": "Volo",
+  "species": [
+   "Togepi",
+   "Togetic",
+   "Togekiss",
+   "Gible",
+   "Gabite",
+   "Garchomp",
+   "Spiritomb",
+   "Roserade",
+   "Arcanine",
+   "Lucario",
+   "Giratina"
+  ]
+ },
  "Wallace": {
   "category": "champion",
   "gen": 3,
