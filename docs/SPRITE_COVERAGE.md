@@ -488,3 +488,62 @@ overworld 132 (+31 partial), front pics 177, back pics **21** (+3 licence-gated)
 complete sets 21, nothing at all **24**.
 
 Nothing is staged or injected. `sprite_asset_id` is still `0xFFFF` everywhere.
+
+
+## 2026-07-25 — PHASE 3 WIRED (Radical Red): 164 sprites injected, sprite_asset_id is real
+
+`sprite_asset_id` was `0xFFFF` in every record from the start of this project — a placeholder for
+art that did not exist. It exists now (754 sprites staged under `sprites/donors/`), so Radical Red
+is wired.
+
+### How, and why it is engine-agnostic
+
+- `tools/character_mode/emit_sprite_table.py` picks ONE front pic per character from the staged
+  donors and emits `cm_sprite_blobs.bin` (146,896 B of LZ77 gfx+palette) and
+  `cm_sprite_offsets.bin` (210 x {u32 gfx_off, u32 pal_off}).
+- `tools/inject_character_mode.py` places both and builds an absolute-pointer table in ROM.
+- `characters.bin`'s `sprite_asset_id` is set for **164 of 210** characters; the other 46 keep
+  `0xFFFF` and get a null table entry.
+
+**⭐ This never touches `gTrainerFrontPicTable`.** The table is additive, so nothing the game already
+draws changes — no risk of swapping a real opponent's art mid-playthrough. **That also means the
+"trainer-pic tables not located" blocker recorded for Seaglass and Lazarus does not apply to this
+approach.** Those repos can be wired the same way without locating anything: the requirement is free
+space and a pointer table, not an engine table. This is the cheapest remaining Phase 3 step.
+
+### Source preference (rationale, not taste)
+
+`ashgray` (verbatim ROM-format LZ, anime art unavailable elsewhere) → `rogue` (148 of the 164; one
+consistent style across Gen 1-9) → `taar` (per-author attribution recoverable) → `hns` → `pokesho`
+→ `platinum` **last, because no per-sprite credit exists for it**.
+
+### Placement — the first build attempt failed, correctly
+
+The 0x08B71D04 block holding the shim/bitmaps/scripts/wild-data had only ~65 KB left below
+0x08D00000, and the blobs are ~147 KB. The injector's own 0xFF precondition check refused rather
+than silently overwriting content. Moved to the separate **713 KB 0xFF run at 0x08951E14**:
+`CM_SPRITE_PTRS_ADDR = 0x08952000`, `CM_SPRITE_BLOBS_ADDR = 0x08952800`.
+
+### Verification — correctness, not just "these bytes may differ"
+
+`verify_artifacts.py` section 9 checks that blobs match the artifact, that the pointer table matches
+an independent recomputation, that **every one of the 164 pointers lands inside the blob region and
+decodes to exactly 2048 B of graphics + 32 B of palette**, and that `characters.bin` agrees with the
+in-ROM table about who has art. The LZ77 decoder is written out longhand in the test rather than
+imported from `png_to_gba.py`, **so a bug in the converter cannot verify its own output.**
+
+All layers green: verify_artifacts ALL PASS, boot smoke 4/4, audit_conflicts 9/9, shim unit 9/9.
+BPS 36 KB → 172 KB (the art).
+
+### What this does NOT do
+
+**Nothing renders yet.** Radical Red's trainer card and new-game intro do not read
+`gTrainerFrontPicTable` (customization system / dedicated BG tiles), so a UI surface still has to be
+chosen — the natural one is a mugshot at the character-select confirm. The data path is complete and
+verified up to that point, and no other repo is wired yet.
+
+### Not injected (46 of 210)
+
+Ash, Kris, Tate, Maxie, Archie, Paul, Zoey, Nando, Ghetsis, Colress, Trip, Alain and 34 more —
+mostly characters where only overworld art was found, plus Volo (Legends: Arceus, absent from every
+donor set). Several of these have staged overworld sheets and simply lack a front pic.
