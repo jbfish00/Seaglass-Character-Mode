@@ -547,3 +547,12 @@ verified up to that point, and no other repo is wired yet.
 Ash, Kris, Tate, Maxie, Archie, Paul, Zoey, Nando, Ghetsis, Colress, Trip, Alain and 34 more —
 mostly characters where only overworld art was found, plus Volo (Legends: Arceus, absent from every
 donor set). Several of these have staged overworld sheets and simply lack a front pic.
+
+
+## 2026-07-25 — sprite work now has a runbook
+
+Per-repo sprite notes stay here, but the cross-cutting state, open-work priority
+order, commands, traps and attribution obligations live in **`SPRITE_PLAN.md` at the
+workspace root** (`/home/jbfish00/Documents/Character Hacks/SPRITE_PLAN.md`).
+Read that first when picking up sprite work in a fresh session; it is to sprites what
+`CHARACTER_ROSTER_PLAN.md` is to rosters.
