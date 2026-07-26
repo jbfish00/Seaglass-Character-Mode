@@ -99,3 +99,54 @@ Three more donor sets staged alongside `rogue/`, converted by
   without individual credit. **Prefer the TAAR version of a character where one
   exists with a named author**, and treat this set as the fallback for the
   Sinnoh cast.
+
+
+## Pokesho, kalarie, LouLilie — anime and rival art (added 2026-07-25)
+
+### `sprites/donors/pokesho/` (27 front pics) and `sprites/donors/pokesho_field/` (19 frames)
+- **Source**: ポケしょ / Pokesho, by ポケモア (Pokemore) — http://www.pokesho.com
+  **Both galleries are retired from the live site**; retrieved from the Wayback
+  Machine capture of **2018-08-15** (bulk archives `img_zip/icon_battle.zip` and
+  `img_zip/f_chara.zip`), 2026-07-25.
+- **Licence, verbatim from the archived gallery**:
+  「GBA風トレーナードット絵を展示しています。**フリー素材になります**。」
+  ("GBA-style trainer pixel art is exhibited here. **These are free
+  materials.**") and 「すべて64×64サイズ。透明色合わせて最大16色です。
+  **素材としての使用も可能です**。」 Site FAQ: 「素材もらってもいいですか！？」→
+  「**どうぞどうぞ！！**」 ("May I take the materials!? — **Please, go right
+  ahead!!**")
+- **Credit as**: 「ポケしょ / Pokesho（ポケモア）」
+- **Ethical note kept deliberately**: the permission above was granted while the
+  galleries were published, and the author has since retired them, stating he
+  removes work he considers lower quality. This art is used on archived
+  permission. If he ever asks for it to be withdrawn, honour that.
+- `pokesho_field/` is **reference-only** — 16x22 single front-facing frames, not
+  tile-aligned and not injectable without someone drawing the side and back
+  frames. Staged because it is the only existing GBA-style art for **Paul,
+  Zoey, Nando** and a **solo James**. See that directory's README.txt.
+
+### `sprites/donors/kalarie/` — 69 anime overworld sheets
+- **Source**: kalarie, PokéCommunity thread 407124 ("Fire Red Overworld Sprite
+  Resource"), anime section. 144x32 (one 160x32) nine-frame FireRed NPC sheets.
+- **Licence, verbatim**: *"You're free to use any of these sprites in your hack,
+  that's the whole purpose of this resource. Be sure to give proper credit
+  though."*
+- **Credit**: **Kalarie** (all anime sprites); **Pokesho** (various first frames
+  — kalarie animated Pokesho's front frames into full sheets, and says so).
+- **Technical caveat**: these do not all fit FireRed's default palettes and need
+  Navenatox's Dynamic Overworld Palettes patch.
+- **Identification caveat**: the sprites are unlabelled at source. Only
+  **Misty, Brock, Jessie and James** are confidently matched to roster
+  characters; the other 65 are staged honestly as `anime_npc_*` rather than
+  guessed at. `CONTACT_SHEET_front_frames.png` is included for a human ID pass.
+
+### `sprites/donors/loulilie/` — 4 sprites
+- **Source**: LouLilie, DeviantArt — "FRLG Rival Green as Player" and "FRLG
+  Player Blue LGPE Design".
+- **Licence, verbatim**: *"Feel free to use in your projects with credit!"*
+- **Credit**: **LouLilie**
+- Provides a second **Blue/Gary back pic** (64x320, 16 colours) extracted from a
+  pixel-perfect 2x sheet, alongside the TAAR/ShinyDragonHunter one. One
+  documented judgement call: the five aligned frames span 68px, so the window
+  chosen keeps four frames pixel-complete and clips only the tip of a thrown
+  Poké Ball leaving frame 4 — which is how FRLG back pics behave anyway.

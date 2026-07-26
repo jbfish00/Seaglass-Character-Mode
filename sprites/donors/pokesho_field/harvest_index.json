@@ -1,0 +1,154 @@
+[
+ {
+  "name": "iris_owframe",
+  "character": "Iris",
+  "kind": "field-frame",
+  "source_path": "field/f_airisu.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "bianca_owframe",
+  "character": "Bianca",
+  "kind": "field-frame",
+  "source_path": "field/f_beru.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "cheren_owframe",
+  "character": "Cheren",
+  "kind": "field-frame",
+  "source_path": "field/f_cheren.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "cilan_owframe",
+  "character": "Cilan",
+  "kind": "field-frame",
+  "source_path": "field/f_dento.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "erika_owframe",
+  "character": "Erika",
+  "kind": "field-frame",
+  "source_path": "field/f_erika_anime.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "dawn_owframe",
+  "character": "Dawn",
+  "kind": "field-frame",
+  "source_path": "field/f_hikari.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "ritchie_owframe",
+  "character": "Ritchie",
+  "kind": "field-frame",
+  "source_path": "field/f_hiroshi.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "misty_owframe",
+  "character": "Misty",
+  "kind": "field-frame",
+  "source_path": "field/f_kasumi_anime.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "james_owframe",
+  "character": "James",
+  "kind": "field-frame",
+  "source_path": "field/f_kojirou.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "james_owframe_2",
+  "character": "James",
+  "kind": "field-frame",
+  "source_path": "field/f_kojirou_kodomo.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "jessie_owframe",
+  "character": "Jessie",
+  "kind": "field-frame",
+  "source_path": "field/f_musashi.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "n_owframe",
+  "character": "N",
+  "kind": "field-frame",
+  "source_path": "field/f_n.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "nando_owframe",
+  "character": "Nando",
+  "kind": "field-frame",
+  "source_path": "field/f_naoshi.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "zoey_owframe",
+  "character": "Zoey",
+  "kind": "field-frame",
+  "source_path": "field/f_nozomi.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "lyra_owframe",
+  "character": "Lyra",
+  "kind": "field-frame",
+  "source_path": "field/f_onnanoko_hgss.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "giovanni_owframe",
+  "character": "Giovanni",
+  "kind": "field-frame",
+  "source_path": "field/f_sakaki_anime.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "paul_owframe",
+  "character": "Paul",
+  "kind": "field-frame",
+  "source_path": "field/f_shinji.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "drew_owframe",
+  "character": "Drew",
+  "kind": "field-frame",
+  "source_path": "field/f_shuu.gif",
+  "w": 16,
+  "h": 22
+ },
+ {
+  "name": "brock_owframe",
+  "character": "Brock",
+  "kind": "field-frame",
+  "source_path": "field/f_takeshi_anime.gif",
+  "w": 16,
+  "h": 22
+ }
+]

@@ -1,0 +1,97 @@
+POKESHO (ポケしょ) — GBA-style trainer & field pixel art
+========================================================
+
+CREDIT AS:  ポケしょ / Pokesho（ポケモア）
+            Pokesho / Pokemore
+
+Retrieved:  2026-07-25
+Retrieved by: automated harvest into scratchpad (not yet committed to any repo)
+
+SOURCE
+------
+Both galleries are RETIRED from the live site (www.pokesho.com now 404s these
+paths). Everything below came from the Internet Archive Wayback Machine capture
+of 2018-08-15.
+
+Bulk archives (these are what was actually downloaded — the per-file URLs were
+not needed):
+  http://web.archive.org/web/2018/http://www.pokesho.com/img_zip/f_chara.zip
+  http://web.archive.org/web/2018/http://www.pokesho.com/img_zip/icon_battle.zip
+
+Gallery index pages (saved under index/ so the filename -> character mapping is
+preserved rather than guessed):
+  http://web.archive.org/web/20180815104753/http://www.pokesho.com/dot_battle.html
+      -> index/dot_battle.html   (トレーナーギャラリー / Trainer Gallery, updated 2009-06-12)
+  http://web.archive.org/web/20180815104750/http://www.pokesho.com/dot_field.html
+      -> index/dot_field.html    (フィールドギャラリー / Field Gallery, updated 2011-04-16)
+  http://web.archive.org/web/20180815104751/http://www.pokesho.com/dl.html
+      -> index/dl.html           (お持ちかえり / download page listing the zips)
+  http://web.archive.org/web/20180815104753/http://www.pokesho.com/standard/example.html
+      -> index/standard_example.html  (site FAQ — carries the licence Q&A)
+  http://web.archive.org/web/20180815104652/http://www.pokesho.com/mokuji.html
+      -> index/mokuji.html       (site table of contents)
+
+Derived mapping files:
+  index/name_map.json        battle filename -> Japanese gallery label (68 entries)
+  index/field_sections.json  field filename -> gallery section (298 entries;
+                             sections: RGBP GSC RS E DP Pt HGSS BW 他ゲーム
+                             アニメ アニメ2 アニメ3 アニメ4 映画他 ポケスペ)
+  index/f_chara_readme.txt   the "read me.txt" shipped inside f_chara.zip
+                             (explains the version abbreviations used in filenames)
+
+LICENCE (quoted verbatim from the archived pages)
+-------------------------------------------------
+Trainer gallery header (dot_battle.html):
+
+    「GBA風トレーナードット絵を展示しています。フリー素材になります。」
+
+    "GBA-style trainer pixel art is on display here. These are free materials."
+
+  ...and immediately below it, the same page adds:
+
+    「こちらではGBA版ポケモンの仕様にあわせたトレーナーのグラフィックを展示しています。
+      すべて64×64サイズ。透明色合わせて最大16色です。素材としての使用も可能です。」
+
+    "Here we display trainer graphics matched to the specifications of the GBA
+     Pokemon games. All are 64x64 in size. Maximum 16 colours including the
+     transparent colour. Use as material is also permitted."
+
+Field gallery header (dot_field.html):
+
+    「GBA風フィールドドット絵を配布しています。」
+    「こちらでは『ファイアレッド・リーフグリーン版』の仕様にあわせた
+      フィールドグラフィックを配布しています。すべて縦22・横16ピクセルです。」
+
+    "GBA-style field pixel art is distributed here."
+    "Here we distribute field graphics matched to the specifications of
+     FireRed / LeafGreen. All are 22 pixels tall by 16 pixels wide."
+
+Site FAQ (standard/example.html), under よくあるしつもん / "Frequently asked questions":
+
+    「素材もらってもいいですか！？」
+    「どうぞどうぞ！！」
+
+    "May I take the materials!?"
+    "Please, go right ahead!!"
+
+The same FAQ also states 「ポケモンの関係者ですか！？」→「違います！！」
+("Are you affiliated with Pokemon?" — "No!!"), i.e. this is unofficial fan art.
+
+CONTENTS
+--------
+battle/   68 files — 64x64 trainer battle sprites ("front" pics).
+                     ALL 68 verified at exactly 64x64, mode P, single frame.
+field/   309 files — FRLG-spec field/overworld sprites.
+                     306 verified at exactly 16x22; 3 are slightly undersized
+                     (see manifest.json).
+                     IMPORTANT: these are a SINGLE front-facing frame each, NOT
+                     a 9-frame walk cycle. They are marked "partial" in
+                     manifest.json and need the remaining frames authored before
+                     they can be used as a complete FireRed NPC sheet.
+zips/               the two original .zip downloads, kept as-received (the
+                    redundant raw unzip directories were removed; re-extract
+                    from these if you need a pristine copy).
+
+Note: the zips contain slightly more than the 2018 gallery index pages listed
+(309 field files vs 298 indexed; 68 battle vs 68 indexed). Field entries with no
+section in the index are recorded as "unlisted-in-2018-index" in manifest.json.

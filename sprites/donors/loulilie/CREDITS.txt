@@ -1,0 +1,65 @@
+LouLilie — FRLG Blue / Green player sprite sheets
+=================================================
+
+CREDIT AS:  LouLilie
+
+Retrieved:  2026-07-25
+Retrieved by: automated harvest into scratchpad (not yet committed to any repo)
+
+SOURCES
+-------
+1. "FRLG Rival Green as Player" (male Blue/Green — the FRLG rival)
+   https://www.deviantart.com/loulilie/art/FRLG-Rival-Green-as-Player-1332331277
+   Published 2026-05-12. Uploaded at 940x560, a pixel-perfect 2x upscale of a
+   true 470x280 sheet.
+   Artist's description: "made simple additions to the FRLG Rival's sprites to
+   expand them to a player sheet, with a few fully custom sprites."
+
+2. "FRLG Player Blue LGPE Design" (female Blue/Green)
+   https://www.deviantart.com/loulilie/art/FRLG-Player-Blue-LGPE-Design-1332327988
+   Published 2026-05-12. Uploaded at 814x550, approximately 2x of 407x275.
+   Artist's description: "...Blue/Green as player in FRLG using her LGPE design,
+   while maintaining the original color palette for easy importing."
+
+LICENCE (quoted verbatim from both deviation pages)
+---------------------------------------------------
+    "Feel free to use in your projects with credit!"
+
+(Deviation 2 capitalises it as "Feel Free to use in your projects with credit!"
+ — same wording.)
+
+RETRIEVAL METHOD (worth keeping — this is the part that bites)
+--------------------------------------------------------------
+DeviantArt full-size image URLs require the ?token= query string; bare wixmp
+URLs return a 12-byte "Unauthorized". r.jina.ai does NOT work on DeviantArt, so
+the deviation pages were fetched directly with curl and a browser User-Agent,
+and the tokened URL pulled out of the markup (src/full_urls.json).
+
+Important: the markup carries several tokened variants. Only the BARE
+  .../<uuid>.png?token=...
+URL is the lossless original. The /v1/fill/... and /v1/fit/... variants are
+resized and JPEG-recompressed (q_80 / q_70) and are useless for pixel art. The
+bare variant is the shortest of the tokened URLs, which is how it was selected.
+Tokens are time-limited — they will not still work later; re-fetch the page.
+
+CONTENTS
+--------
+raw/                          the two originals exactly as downloaded
+sheet_1x_*.png                each full sheet at true 1x (the useful working copy)
+back_blue_green_rival.png     64x320, 16 colours  <- the requested deliverable
+back_blue_female.png          64x320, 15 colours
+front_blue_green_rival.png    64x64,  16 colours
+front_blue_female.png         64x64,  15 colours
+front_tall_*.png              alternate Gen4-proportioned front art, native size,
+                              >16 colours — reference only, not GBA-ready
+
+See manifest.json for per-file verification and for exactly how the back pics
+were assembled (frame alignment, and which pixels are clipped and why).
+
+SCALING VERIFICATION
+--------------------
+Sheet 1 is a genuinely pixel-perfect 2x: 0 of 131600 2x2 blocks are non-uniform,
+so downscaling is lossless.
+Sheet 2 is 2x at phase (0,0) but imperfect: 418 of 111925 blocks are non-uniform.
+Those blocks sit only in the hand-lettered "Use with credit!" text and part of
+the bottom running row — none of the extracted sprites are affected.

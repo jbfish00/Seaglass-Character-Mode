@@ -1,0 +1,87 @@
+KALARIE — anime overworld sprites (FireRed style)
+=================================================
+
+CREDIT AS:  Kalarie      — all anime overworld sprites
+            Pokesho      — various first frames of the anime overworld sprites
+                           (acknowledged by the thread author; see harvest/pokesho/)
+
+Retrieved:  2026-07-25
+Retrieved by: automated harvest into scratchpad (not yet committed to any repo)
+
+SOURCE
+------
+PokeCommunity thread 407124, "Fire Red Overworld Sprite Resource",
+anime section (thread images #58 through #126 inclusive):
+
+  https://www.pokecommunity.com/threads/fire-red-overworld-sprite-resource.407124/
+
+PokeCommunity 403s direct automated fetches, so the thread body was read through
+the r.jina.ai text proxy and saved to src/thread.md; the imgur URLs were then
+extracted from it (src/anime_urls.txt) and the images fetched straight from
+i.imgur.com, which serves them without restriction.
+
+The thread is a single page (no page 2); the last post is #20.
+
+LICENCE (quoted verbatim from the opening post)
+-----------------------------------------------
+    "You're free to use any of these sprites in your hack, that's the whole
+     purpose of this resource. Be sure to give proper credit though."
+
+The opening post also sets the contribution standard, which describes the format
+of everything here:
+
+    "Be sure they are: Good Quality, Fire Red Style and Properly Indexed.
+     Properly indexed doesn't only mean that the sprite has 16 colors, but a
+     proper sequence of colors as well."
+
+Full credit block from the thread (only the two lines relevant to this harvest
+are reproduced above; the rest cover the non-anime FireRed trainer classes):
+
+    Kalarie:   Aroma Lady, Blackbelt, Burglar, Crush Girl, Dragon Tamer,
+               Engineer, Juggler, Lady, Pokemon Breeder, Psychic (Female),
+               Rocker, Tamer, Twin, Young Couple, All Anime Sprites
+    Pokesho:   Various First Frames of Anime Overworld Sprites
+
+TECHNICAL CAVEAT (from the project brief, carry this into any repo README)
+--------------------------------------------------------------------------
+These sheets do not all fit FireRed's default overworld palettes. Using them as
+a set requires Navenatox's Dynamic Overworld Palettes patch.
+
+CONTENTS
+--------
+raw/          69 sheets, anime_058.png .. anime_126.png (numbered by their
+              position in the thread, so each file traces back to its source).
+              ALL 69 VERIFIED GOOD:
+                68 x  144x32  (standard FireRed 9-frame NPC sheet)
+                 1 x  160x32  (anime_112.png, 10-frame variant)
+                all mode P, all using <=16 colours (range 11-16).
+
+src/          thread.md      — the thread text as retrieved
+              anime_urls.txt — thread image number -> imgur URL
+
+extra/        BONUS, NOT part of the Kalarie anime section and NOT Kalarie's work:
+                paul.png    — Paul
+                damian.png  — Damian
+              Both were posted by user "etique" in reply #20 ("The ones I did ...
+              Damian / Paul") and must be credited to etique. They are 128x192
+              (a 4x4 grid of 32x48 frames, Gen4/DPPt scale) on a white
+              background with 38 and 24 colours respectively — i.e. NOT FireRed
+              format. They are staged here only because Paul is on the project's
+              still-missing-art list; they need rescaling and re-indexing to
+              <=16 colours before any GBA use. Marked ok:false in manifest.json.
+
+IDENTIFICATION CAVEAT
+---------------------
+The sprites are UNLABELLED at source: the thread posts them as a bare grid with
+no captions, the post's alt text is generic, and the imgur pages carry no
+titles. Character names in manifest.json are therefore VISUAL identifications
+made from the sprites themselves, and each entry records a confidence level:
+
+  high    (9)  Misty(062) Brock(063) James(064) Jessie(065) Meowth(066)
+               Butch(067) Cassidy(068) Officer Jenny(077) Nurse Joy(078)
+  medium  (3)  Officer Jenny variant(060) A.J.(105) Professor Oak(115)
+  low     (3)  Professor Ivy(079) Ivy's assistant(080) scientist NPC(098)
+  none   (54)  recorded as "unidentified anime NPC (thread image #N)"
+
+The 54 unidentified sheets are real, verified, usable art — only their character
+attribution is open. Do not treat the low-confidence three as settled.

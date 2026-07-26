@@ -1,0 +1,52 @@
+{
+ "source": "loulilie",
+ "format": "GBA 4bpp tiles + 16-colour BGR555 palette, plus LZ77 (BIOS type 0x10) streams of each. gfx is 64*64/2 = 2048 B for a front pic -- the exact size gTrainerFrontPicTable and CFRU's MugshotTable.size declare.",
+ "converted_by": "tools/png_to_gba.py (round-trip verified per file)",
+ "count": 4,
+ "entries": {
+  "blue_back": {
+   "kind": "back5",
+   "width": 64,
+   "height": 320,
+   "colours": 16,
+   "gfx_raw_bytes": 10240,
+   "gfx_lz_bytes": 2868,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "blue_back.png"
+  },
+  "blue_female_back": {
+   "kind": "back5",
+   "width": 64,
+   "height": 320,
+   "colours": 15,
+   "gfx_raw_bytes": 10240,
+   "gfx_lz_bytes": 3687,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "blue_female_back.png"
+  },
+  "blue_female_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 15,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 816,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "blue_female_front.png"
+  },
+  "blue_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 16,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 717,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "blue_front.png"
+  }
+ }
+}
