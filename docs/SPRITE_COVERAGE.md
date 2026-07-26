@@ -324,3 +324,81 @@ Workspace totals across the three corrections: overworld 103 -> 131 (plus 31 par
 76 -> 168, back pics 13 -> 18, "nothing at all" 92 -> 26.
 
 Nothing is staged or injected. `sprite_asset_id` is still `0xFFFF` everywhere.
+
+
+## 2026-07-25 — CORRECTION 4: front and back pics were undercounted too (Frontier Brains, Oak, Blue)
+
+Correction 1 found that **overworld** art was undercounted because the surveys were built from
+ROWE's `sprite_report.txt`, which records only art ROWE had *staged for injection*. The same bug
+applies to **trainer front pics and back pics**, and it bites hardest for characters added to the
+roster after that report was written.
+
+**The Frontier Brains are the clearest case.** All seven Hoenn Brains are battleable trainers in
+vanilla Emerald, so `TRAINER_PIC_SALON_MAIDEN_ANABEL`, `DOME_ACE_TUCKER`, `ARENA_TYCOON_GRETA`,
+`PALACE_MAVEN_SPENSER`, `FACTORY_HEAD_NOLAND`, `PIKE_QUEEN_LUCY` and `PYRAMID_KING_BRANDON` have
+always existed, with real PNGs in the donor tree. Palmer has `TRAINER_PIC_PALMER` in CFRU. They were
+recorded as "no art" purely because they joined the roster on 2026-07-24, long after ROWE's survey.
+**Anabel, Tucker, Greta, Spenser, Noland, Lucy, Brandon and Palmer all go from 1/3 to 2/3.**
+Dahlia and Darach stay at zero — Sinnoh-only Brains, no GBA-era art.
+
+**Two more found the same way, both verified by measuring the files:**
+- **Prof. Oak has a front pic in the ROM.** `TRAINER_PIC_PROF_OAK 0x84` in CFRU (so Radical Red and
+  Unbound can reference it with no injection at all), and `professor_oak_frlg.png` — 64x64,
+  16-colour, verified — in the pokeemerald-expansion tree for Seaglass and Lazarus.
+- **`TRAINER_BACK_PIC_RIVAL` is Blue/Gary's back sprite**, sitting unused in CFRU. Engine back
+  sprites really are protagonist-only otherwise, which is why this is the sole addition.
+
+### New tool: `tools/survey_engine_assets.py`
+
+Supersedes `survey_engine_ow.py`. Matches every character in every repo's live `characters.txt`
+against the CFRU / pokeemerald-expansion / pokecrystal tables for **all three** sprite types, and
+strips trainer-class prefixes (`SALON_MAIDEN_`, `LEADER_`, `ELITE_FOUR_`…) so a character matches its
+own pic regardless of title. For this repo it reports **ow 45, front 29, back 6**.
+
+Two traps encoded in it, both of which produced wrong answers before being fixed:
+1. **pokeemerald keeps back-pic symbols in `src/data/graphics/trainers.h`, not in
+   `include/constants/trainers.h`** where the front pics live. Reading the wrong file silently
+   reports zero back pics for both Emerald repos.
+2. **Those symbols are CamelCase** (`gTrainerBackPic_Brendan`), unlike every other table. An
+   uppercase-only capture matches just the leading letter, so `gTrainerBackPic_None` yields `N` —
+   which falsely handed a back sprite to the character **N**. Normalise CamelCase before matching.
+
+Known blind spot, documented in the file: an asset that ships as **art but is not wired to a trainer
+slot** has no constant to match. That is exactly how `professor_oak_frlg.png` hid on the Emerald
+side — the PNG is right there, but no `TRAINER_PIC_*OAK*` constant exists in that donor. When a
+character seems to have nothing, check the graphics directories as well as the constants.
+
+### Professors — a structural answer, not just a gap
+
+Professors don't battle, so **front pics were never drawn for them**. That single fact explains the
+whole professor gap and is worth remembering before any future search. Exceptions found:
+- **Oak** — front pic in-engine (above); for Prism, `pret/pokecrystal/gfx/trainers/oak.png` is
+  56x56 4-colour, native Gen 2 format and a direct drop-in.
+- **Birch** — `graphics/birch_speech/birch.png` is 64x64 / 16-colour (verified) but is *intro*
+  art, not a front-pic table entry; check the palette convention before injecting.
+- **Rowan** — `Team-Aquas-Asset-Repo` → `Overworld Trainer Sprites/spilledpizza/.../DP_prof_rowan.png`,
+  verified **144x32, 16-colour, with matching .pal**. Clean drop-in under that repo's
+  "free to use and edit by default" licence.
+- Zero professor front or back pics exist across all 18,299 files of the Team Aqua repo, and GitHub
+  code search returns nothing for `TRAINER_PIC_ROWAN`/`JUNIPER`/`SYCAMORE`/`LAVENTON`/`MAGNOLIA`/
+  `SONIA`. `OBJ_EVENT_GFX_PROF_ROWAN` has 83 hits but all are `pokeplatinum` — DS assets, a redraw.
+
+**Licence traps flagged:** the only Oak back pic found (Boonzeet, DeviantArt) is **CC BY-NC-ND**, and
+ND forbids exactly the 512x192 -> 64x320 re-layout it would need. Wolfang62's professor set gates the
+four most wanted: *"Please do not use them (Sycamore, Magnolia, Sonia and Laventon) without my
+permission."* aveontrainer has FRLG-style professor overworlds but states no terms at all.
+
+### Where this repo stands
+
+**21 of its characters have no art of any kind.** Workspace-wide: overworld 132 (+31 partial),
+front pics 177, back pics 20, complete sets 20, nothing-at-all **25**.
+
+### Search left unfinished — spend limit, not exhaustion
+
+The last round stopped on an account spend limit with three threads mid-verification. Recorded as
+**unverified leads, not findings**: a claimed **Lance back sprite**; a **pokefirered fork said to
+carry Volo trainer front pics** (Volo is not currently in any roster — a roster decision, not just a
+sprite one); and a DeviantArt spriter with 240+ deviations not yet enumerated. Anyone resuming should
+start there.
+
+Nothing is staged or injected. `sprite_asset_id` is still `0xFFFF` everywhere.
