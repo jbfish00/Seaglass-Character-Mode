@@ -1,0 +1,97 @@
+SPRITE HARVEST — PROVENANCE AND ATTRIBUTION
+===========================================
+
+Source repository : https://github.com/Pokabbie/pokeemerald-rogue
+Branch            : vanilla
+Commit SHA        : 79c1df5f8a2ebb423c7a48d29de0cf21ef5783e7
+Fetched           : 2026-07-25
+Fetched via       : raw.githubusercontent.com/Pokabbie/pokeemerald-rogue/79c1df5f8a2ebb423c7a48d29de0cf21ef5783e7/<path>
+
+Harvested paths (subdirectory structure preserved under this directory):
+  graphics/trainers/front_pics/**.png            (258 files)
+  graphics/trainers/back_pics/**.png             ( 18 files)
+  graphics/object_events/pics/people/**.png      (255 files)
+  Total: 531 PNGs
+
+LICENSING
+---------
+The repository has NO LICENSE file at its root. (The only LICENSE files present
+anywhere in the tree belong to the vendored upstream pokeemerald build tools:
+tools/aif2pcm, tools/bin2c, tools/gbagfx, tools/mid2agb, tools/preproc,
+tools/ramscrgen, tools/rsfont, tools/scaninc.)
+
+There is therefore no explicit grant of rights covering the sprite art. The
+project's in-game credits are the only attribution trail that exists, and they
+are reproduced in full below. Any use of this art must carry that credit list.
+
+ATTRIBUTION — "Additional Sprites" artist list
+----------------------------------------------
+Verbatim from src/data/credits.h at the commit above (the FOR_EACH_CREDIT macro
+block, entries 1001-1231, under the CREDITS_FLAG_TITLE entry "Additional
+Sprites"). 42 named artists, in credits-roll order:
+
+  AveonTrainer
+  PurpleZaffre
+  UlithiumDragon
+  HighNoonMoon
+  xDracolich
+  ZacWeavile
+  Gnomowladny
+  Beliot419
+  Brumirage
+  Kyledove
+  Kymotionian
+  cSc-A7X
+  2and2makes5
+  Pokegirl4ever
+  Fernandojl
+  Silver-Skie
+  Kid1513
+  TyranitarDark
+  Getsuei-H
+  Milomilotic11
+  Kyt666
+  kdiamo11
+  Chocosrawloid
+  SyleDude
+  Gallanty
+  Gizamimi-Pichu
+  princess-phoenix
+  LunarDusk6
+  Larryturbo
+  Kidkatt
+  Zender1752
+  SageDeoxys
+  Lasee0
+  Ezerart
+  Wolfang62
+  DarkusShadow
+  Anarlaurendil
+  Lasse00
+  shaderr31
+  CarmaNekko
+  EduarPokeN
+  TintjeMadelintje101
+
+The credits.h file does not map individual artists to individual sprite files;
+the list is collective for all additional sprite art in the project. Credit the
+whole list.
+
+Note: credits.h contains several other role sections (engine features, DS songs,
+key items menu, etc.) that are not sprite-art attribution and are not reproduced
+here. The repository owner is credited in-repo as Pokabbie; the base decomp is
+pret/pokeemerald.
+
+VERIFICATION
+------------
+Every file was opened with PIL and recorded in manifest.json alongside this
+file: mode, dimensions, palette entry count, distinct colour count, and an
+`ok` flag. 521 of 531 pass clean; the 10 exceptions are listed in manifest.json
+with a `flags` array (all are benign — half-height 16x16 NPC sheets, one blank
+placeholder, one RGBA file, one file with a padded 256-entry palette holding
+only 16 actual colours).
+
+DISTRIBUTION
+------------
+No ROM binaries were downloaded. Per workspace policy, any downstream release
+is a patch, never a modified ROM.
