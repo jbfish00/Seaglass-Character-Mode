@@ -372,7 +372,14 @@ def main():
     ok(refs == 0, f"no script setflag/clearflag/checkflag references flag {flag:#x} ({refs})")
 
     print("[15] mugshot renderer (Phase 3 render surface)")
+    # NOT `if is_file()` -- a missing build/character_sprite.bin (e.g. after a
+    # clean) silently dropped this check and the suite still reported success,
+    # 49 -> 48 passed, exit 0. This is the ONLY check binding the shipped ROM to
+    # the compiled renderer, so its absence must FAIL, not vanish.
     _mug_bin = ROOT / "build" / "character_sprite.bin"
+    ok(_mug_bin.is_file(),
+       "build/character_sprite.bin present (required to bind the ROM to the "
+       "compiled renderer; rebuild if this fails)")
     if _mug_bin.is_file():
         _mug_blob = _mug_bin.read_bytes()
         ok(patched[_m:_m + len(_mug_blob)] == _mug_blob,

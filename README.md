@@ -58,7 +58,7 @@ To switch off, enter the code **`CMDBGOFF`**.
 ## Character codes
 
 Codes are the character's name with spaces and punctuation removed. Case is
-ignored. 192 characters across all nine generations:
+ignored. 193 characters across all nine generations:
 
 ### Gen 1 — Kanto
 
@@ -175,6 +175,7 @@ ignored. 192 characters across all nine generations:
 | `SATURN` | Saturn |
 | `TOBIAS` | Tobias |
 | `VOLKNER` | Volkner |
+| `VOLO` | Volo |
 | `ZOEY` | Zoey |
 
 ### Gen 5 — Unova
