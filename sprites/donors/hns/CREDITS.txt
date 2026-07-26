@@ -1,0 +1,53 @@
+Pokemon Heart & Soul (pokemonHnS)
+=================================
+
+Source URL   : https://github.com/PokemonHnS-Development/pokemonHnS
+Branch       : main
+Commit SHA   : 751823abaf677020bcd72c45fe3e7cb2b8a576e4
+Harvested    : 2026-07-25
+Files fetched: 132 (120 images + 12 aux)
+Trees taken  : graphics/trainers/front_pics/   (111 files)
+               graphics/trainers/back_pics/    (9 files)
+               graphics/trainers/palettes/     (11 .pal files -- taken as a bonus; they pair
+                                                with the front/back art for GBA injection)
+               README.md                       (for the licence/credit text below)
+
+LICENCE STATUS
+--------------
+No LICENSE file. Terms and credits are stated in README.md (verbatim copy at
+files/README.md). Quoted:
+
+  "Not only is Heart & Soul (HnS) a first-of-its-kind, fully completed, playtested, and
+   largely faithful GSC remake / HGSS demake, it's also completely open source, and is
+   intended to be a base for a new generation of Johto rom hacks."
+
+  "If you'd like to improve, expand upon, or make your own version of HnS, feel free to take
+   advantage of the open source!"
+
+  "Heart & Soul stands on the shoulders of giants. I am not an artist or a professional
+   programmer, so much of the art and some of the code for this project was drawn from open
+   source assets. I did my best to credit all sources below and in the game credits, but if
+   you find any that I missed, please let me know."
+
+ATTRIBUTION -- SPRITES
+----------------------
+From the README's "Open Source Assets Used" section, verbatim:
+
+  #### Art -- Sprites
+  - Cesare_CBass
+  - AveonTrainer
+  - PurpleZaffre
+  - BatimaTheBat
+
+Credit all four for any trainer sprite taken from this repo, plus the project itself
+(Pokemon Heart & Soul, PokemonHnS-Development). The README does not attribute art file by
+file, so per-sprite authorship cannot be split any finer than this list.
+
+Upstream engine credit the project itself carries forward (relevant if code as well as art is
+reused): pokeemerald - pret; Modern Emerald - Resetes12; pokeemerald-expansion.
+
+CONTENT
+-------
+64x64 HGSS-style trainer front sprites, 14-16 colours, indexed. Covers the full Johto and
+Kanto gym leader / Elite Four / champion set including Lance, Blue, Misty, Brock, Red, Karen,
+Clair, Giovanni and Sabrina. All 120 images passed verification with no flags.

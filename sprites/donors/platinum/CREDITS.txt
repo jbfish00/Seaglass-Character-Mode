@@ -1,0 +1,41 @@
+pokeemerald-platinum (Sinnoh Remakes)
+=====================================
+
+Source URL   : https://github.com/sinnoh-remakes/pokeemerald-platinum
+Branch       : master
+Commit SHA   : 09091ed1d8c07c3353608ac91603ac59ab41fc70
+Harvested    : 2026-07-25
+Files fetched: 207 (196 images + 11 aux)
+Trees taken  : graphics/trainers/front_pics/  (185 files)
+               graphics/trainers/back_pics/   (11 images + 3 .pal)
+               graphics/trainers/palettes/    (6 .pal -- bonus, pairs with the art)
+               README.md, CREDITS.md          (for the credit text below)
+
+LICENCE STATUS
+--------------
+No LICENSE file in the repository. The README is the inherited RHH (Rom Hacking Hideout)
+pokeemerald-expansion README; there is no project-specific licence or asset-licence statement.
+The only stated requirement is the RHH credit line, quoted verbatim from README.md:
+
+  "If you use pokeemerald-expansion, please credit RHH (Rom Hacking Hideout). Optionally,
+   include the version number for clarity."
+
+  "Based off RHH's pokeemerald-expansion 1.14.1
+   https://github.com/rh-hideout/pokeemerald-expansion/"
+
+  "Please consider crediting all contributors involved in the project!"
+  (the contributor list is at files/CREDITS.md)
+
+CAVEAT: because there is no explicit asset licence and no per-sprite attribution, the Sinnoh
+art in this repo is of unclear provenance -- it is a fan remake project, and some sprites may
+be third-party work redistributed without individual credit. Treat this repo as
+"credit-required, licence-unstated". Credit both RHH (Rom Hacking Hideout) and the
+sinnoh-remakes/pokeemerald-platinum project, and prefer TAAR-sourced art where the same
+character is available there and carries an explicit named author.
+
+CONTENT
+-------
+64x64 indexed trainer front sprites and 64x256/64x320 back sprites in Platinum style.
+Covers Cynthia, Cyrus, Dawn, Lucas, Barry, Bertha, Lucian, Volkner, Candice, Maylene,
+Fantina, Roark, Byron, Crasher Wake and Mars/Jupiter/Saturn, plus the inherited Hoenn cast.
+All 196 images passed verification with no flags.

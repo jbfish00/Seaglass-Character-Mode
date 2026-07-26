@@ -1,0 +1,61 @@
+Team Aqua's Asset Repo (TAAR)
+=============================
+
+Source URL   : https://github.com/TeamAquasHideout/Team-Aquas-Asset-Repo
+Branch       : main
+Commit SHA   : 36b619ecd1d2df95212b375c95803af78414f78a
+Harvested    : 2026-07-25
+Files fetched: 3348 (3117 images + 231 aux: per-author README/credit files, .pal palettes,
+               .h/.c headers)
+
+LICENCE STATUS
+--------------
+No LICENSE file in the repository. Terms are stated in the repo README.md (a verbatim copy
+is at files/README.md in this directory). Quoted terms:
+
+  "This is a collection of free to use assets that are intended to be used for Generation 3
+   Pokemon decomp hacking, initially created and managed by members of the Team Aqua's Hideout
+   Discord server. ... All assets are both free to use and edit by default, but if any assets
+   specifically mention *not* being free to edit, please respect the author's wishes."
+
+  "Any assets you've made personally, or any assets you've found that are free to use,
+   provided they are submitted alongside credit to their original creator."
+
+  "Any folder that includes an actual asset that is not *exclusively* the work of one
+   individual *must supply a README.md* indicating: the original creator(s) of an asset if it
+   was part of a larger scale project; the original creator of an asset that has been modified
+   in any way (recoloured / resized etc.)"
+
+ATTRIBUTION REQUIREMENT
+-----------------------
+Free to use and edit, BUT credit to the original creator is required. TAAR is organised as
+  <asset type>/<creator or project>/...
+so the second path element of every file under files/ IS the attribution. Per-author
+README/credit files were harvested alongside the art and are the authoritative record where a
+folder aggregates work by more than one person (74 such files captured; see manifest.json
+"aux_files"). Before shipping any sprite, read the README.md in its author folder -- some
+folders re-credit an upstream creator (e.g. the "Delta231s Collaborative HGSS Resource" tree
+credits Delta231, M.vit, Mimi, aveontrainer, etique, robloxmaster342, ulithium_dragon
+separately per subfolder).
+
+Author folders present in the harvested trees (second path element) -- credit these:
+  see manifest.json; every file's `path` begins with "<tree>/<author>/".
+
+WHAT WAS HARVESTED
+------------------
+  Trainer Back Sprites/         (all author subdirectories)
+  Trainer Front Sprites/        (all author subdirectories)
+  Overworld Trainer Sprites/    (all author subdirectories)
+  Other/Phantomony/archie_mugshot.png   (+ that folder's README.md)
+  README.md                     (repo root, for the licence text above)
+Filter: .png .gif .pal .md .txt .h .c  (source files .xcf/.ase/.aseprite/.docx skipped)
+
+DELIBERATE EXCLUSION -- MISLABELLED FILES
+-----------------------------------------
+NOT downloaded:
+  Projects/Leob0505 PokeZelda Minish Quest/ui_main_menu/brendan_mugshot.png
+  Projects/Leob0505 PokeZelda Minish Quest/ui_main_menu/may_mugshot.png
+The filenames claim Brendan and May but the art depicts Minish-Cap-style characters, not the
+Hoenn protagonists. They must not be used as Brendan/May portraits. (They live under
+Projects/, which was outside the harvest scope anyway; recorded here so the trap is not
+re-discovered later.) Also recorded in manifest.json under notes.excluded_mislabelled.
