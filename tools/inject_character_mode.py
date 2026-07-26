@@ -77,6 +77,14 @@ WILDPOOL_ADDR  = 0x08EE5000        # 193*176*4 = 135,872 B -> ends 0x08F062C0 (2
 # failed later, inside the trade e2e layer. Start above it.
 CM_SPRITE_PTRS_ADDR  = 0x08f20000   # Phase 3, separate free run; additive table
 CM_SPRITE_BLOBS_ADDR = 0x08f20800
+# Mugshot renderer (src/character_sprite.c). Deliberately NOT in the main
+# injection block: the 2026-07-25 rebase left only ~126 B of headroom below
+# SCRIPT_ADDR, and SCRIPT_ADDR cannot move (naming_open.ss embeds a paused
+# script context pointing at it). This sits past the sprite art in the same
+# separate free run; splice()'s 0xFF precondition is what proves it clear.
+# No BL-reach constraint: every engine call it makes goes through a function
+# pointer, and the script reaches it by an absolute `callnative` operand.
+CM_MUGSHOT_ADDR = 0x08F42000
 FREE_END_ROM   = 0x09000000
 
 TRAMPOLINE_ADDR      = 0x08470200  # 8B 0xFF scavenge, in BL range of both sites
@@ -313,6 +321,36 @@ def main():
     hook_native = syms["CM_NativeGiveGated"]
     hook_wild   = syms["CM_WildMonSpeciesGated"]
 
+    # --- mugshot renderer: separate compile unit + link address (see
+    # CM_MUGSHOT_ADDR). Both entry points are resolved from the linked ELF
+    # rather than assumed to be in source order -- gcc may emit them either
+    # way and the `callnative` operands must be exact. ---
+    mobj, melf, mbin = BUILD / "character_sprite.o", BUILD / "character_sprite.elf", BUILD / "character_sprite.bin"
+    subprocess.run(["arm-none-eabi-gcc", "-c", "-mthumb", "-mcpu=arm7tdmi",
+                    "-O2", "-ffreestanding", "-fno-builtin", "-Wall", "-Wextra",
+                    f"-DSPRITE_PTRS_ADDR={CM_SPRITE_PTRS_ADDR:#x}",
+                    "-o", str(mobj), str(ROOT / "src" / "character_sprite.c")], check=True)
+    subprocess.run(["arm-none-eabi-ld", "-Ttext", f"{CM_MUGSHOT_ADDR:#x}",
+                    "--entry", "CM_ShowCharacterMugshot",
+                    "-o", str(melf), str(mobj)], check=True)
+    subprocess.run(["arm-none-eabi-objcopy", "-O", "binary", str(melf), str(mbin)], check=True)
+    mugshot = mbin.read_bytes()
+    _msym = subprocess.run(["arm-none-eabi-nm", str(melf)], check=True,
+                           capture_output=True, text=True).stdout
+
+    def _mug_sym(name):
+        m = re.search(rf"^([0-9a-f]+) [Tt] {name}$", _msym, re.M)
+        assert m, f"{name} not found in:\n{_msym}"
+        a = int(m.group(1), 16)
+        assert CM_MUGSHOT_ADDR <= a < CM_MUGSHOT_ADDR + len(mugshot), \
+            f"{name} at {a:#x} outside the spliced blob"
+        return a | 1                    # callnative operands carry the Thumb bit
+
+    hook_mug_show = _mug_sym("CM_ShowCharacterMugshot")
+    hook_mug_hide = _mug_sym("CM_HideCharacterMugshot")
+    print(f"mugshot renderer: {len(mugshot)} bytes @ {CM_MUGSHOT_ADDR:#x} "
+          f"(show {hook_mug_show:#x}, hide {hook_mug_hide:#x})")
+
     # --- compile + link the separate wild-encounter trampoline (long-call
     # veneer: its hook site is ~7.6 MiB from the main shim blob, out of Thumb
     # BL range, so it lives in its own tiny scavenged slot near both the hook
@@ -360,7 +398,11 @@ def main():
         e += op_releaseall() + op_end()
         # give block
         addrs["give_here"] = len(e)
+        # mugshot bracket: show before the message, hide after callstd 4
+        # returns (it blocks until the player presses A)
+        e += op_callnative(hook_mug_show)
         e += op_loadword(addrs["t_on"]) + op_callstd(4)
+        e += op_callnative(hook_mug_hide)
         e += op_copyvar(0x8000, VAR_CM_STARTER)
         e += op_bufferspecies(0, 0x8000)
         e += op_setvar(0x4001, 0x8000)
@@ -411,6 +453,7 @@ def main():
     splice(STARTERS_ADDR, starters_blob, "starters")
     splice(SCRIPT_ADDR, bytes(script), "scripts")
     splice(WILDPOOL_ADDR, wildpool, "wildpool")
+    splice(CM_MUGSHOT_ADDR, mugshot, "mugshot renderer")
 
     # --- Phase 3 character sprites (2026-07-25) ---
     # Additive: this never touches the engine's own trainer-pic table, so

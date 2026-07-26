@@ -44,6 +44,34 @@ end
 plan[#plan+1] = K.START
 plan[#plan+1] = K.A
 
+
+-- ---- character mugshot (Phase 3 render surface) ----
+-- The confirm script brackets its "Character Mode is now active!" message with
+-- callnative show/hide, so the mugshot must be on screen while that box is up.
+-- The template is located by scanning the renderer blob for its tag pair rather
+-- than hardcoding an address the build could move.
+local MUG_BASE, MUG_SPAN = 0x08F42000, 0x300
+local GSPRITES, SPRITE_COUNT, SPRITE_STRIDE = 0x02039810, 64, 0x44
+local OFF_TEMPLATE, OFF_INUSE = 0x14, 0x3E
+
+local MUG_TEMPLATE
+for a = MUG_BASE, MUG_BASE + MUG_SPAN, 4 do
+    if emu:read16(a) == 0xC0DE and emu:read16(a + 2) == 0xC0DF then MUG_TEMPLATE = a break end
+end
+
+local function countMugshot()
+    if not MUG_TEMPLATE then return -1 end
+    local n = 0
+    for i = 0, SPRITE_COUNT - 1 do
+        local s = GSPRITES + i * SPRITE_STRIDE
+        if (emu:read8(s + OFF_INUSE) & 1) ~= 0
+           and emu:read32(s + OFF_TEMPLATE) == MUG_TEMPLATE then n = n + 1 end
+    end
+    return n
+end
+
+local mugSeen, mugSampled, mugShot = 0, false, false
+
 local STEP, START0 = 40, 40
 local function at(f, key) H.onFrame(function(g) if g == f then H.press(key, 8) end end) end
 for i = 1, #plan do
@@ -70,6 +98,23 @@ end)
 -- the BG event, reopens the code entry, and can commit a stray invalid code
 -- (which overwrites VAR_CM_STARTER and muddies the asserts). ~9 presses is
 -- plenty for one msgbox; too few to drive prompt->naming->commit again.
+-- Sample across the whole post-commit window: the sprite is created while the
+-- screen is still redrawing out of the naming screen, so a shot at the first
+-- frame it exists shows a bare overworld and reads as a failure. Shoot +40.
+H.onFrame(function(f)
+    if f >= commitFrame + 20 and f <= commitFrame + 880 then
+        local n = countMugshot()
+        mugSampled = true
+        if n > mugSeen then mugSeen = n end
+        if n > 0 and not mugShot then
+            mugShot = f
+            H.log("mugshot present at frame " .. (f - commitFrame) .. " past commit")
+        end
+        if mugShot and f == mugShot + 40 then
+            emu:screenshot("tools/savestates/ui_mugshot.png")
+        end
+    end
+end)
 H.mash(K.A, commitFrame + 80, commitFrame + 500, 45)
 H.onFrame(function(f)
     if f == commitFrame + 900 then
@@ -95,6 +140,14 @@ H.onFrame(function(f)
             H.assertEq("character id", char, expectChar)
             H.assertEq("starter added to party", party, before.party + 1)
             H.assertEq("starter var cleared", starter, 0)
+            -- Report the sampling separately from the result: a window that
+            -- never ran would otherwise read as "0 sprites" and pass as if the
+            -- mugshot had simply been torn down already.
+            H.assertTrue("mugshot template located in the renderer blob",
+                         MUG_TEMPLATE ~= nil)
+            H.assertTrue("confirm message was sampled", mugSampled)
+            H.assertEq("mugshot drawn during the confirm message", mugSeen, 1)
+            H.assertEq("mugshot torn down afterwards", countMugshot(), 0)
         end
         H.finish()
     end

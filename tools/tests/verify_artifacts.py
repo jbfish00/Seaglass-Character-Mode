@@ -88,6 +88,7 @@ CREATE_MON_WITH_IVS = 0x081A7504
 WILD_TRAMPOLINE_ADDR = 0x08470208
 WILDPOOL_ADDR = 0x08EE5000
 CM_SPRITE_PTRS_ADDR  = 0x08f20000   # Phase 3 (keep in sync with the injector)
+CM_MUGSHOT_ADDR      = 0x08F42000   # mugshot renderer (src/character_sprite.c)
 CM_SPRITE_BLOBS_ADDR = 0x08f20800
 WILDPOOL_STRIDE = 176
 
@@ -174,6 +175,13 @@ def main():
         _spr_ptrs += (struct.pack("<II", 0, 0) if _gof == 0xFFFFFFFF else
                       struct.pack("<II", CM_SPRITE_BLOBS_ADDR + _gof,
                                         CM_SPRITE_BLOBS_ADDR + _pof))
+    # renderer blob length: scan from its base to the next 0xFF run
+    _m = CM_MUGSHOT_ADDR & 0x01FFFFFF
+    _mend = _m
+    while not all(b == 0xFF for b in patched[_mend:_mend + 32]):
+        _mend += 32
+    _mugshot_len = _mend - _m
+
     print("[3] diff containment")
     windows = [(BL_CATCH, 4), (BL_GIFT, 4), (BG_EVENT_PTR_OFF, 4),
                (TRAMPOLINE_ADDR & 0x01FFFFFF, 8),
@@ -184,7 +192,8 @@ def main():
                (0xEE3800, 0x300), (0xEE3B00, 0x400),
                (WILDPOOL_ADDR & 0x01FFFFFF, NUM_CHARACTERS * WILDPOOL_STRIDE * 4),
                (CM_SPRITE_BLOBS_ADDR & 0x01FFFFFF, len(_spr_blobs)),
-               (CM_SPRITE_PTRS_ADDR & 0x01FFFFFF, len(_spr_ptrs))]
+               (CM_SPRITE_PTRS_ADDR & 0x01FFFFFF, len(_spr_ptrs)),
+               (CM_MUGSHOT_ADDR & 0x01FFFFFF, _mugshot_len)]
     give_sites = [i for i in range(len(orig))
                   if orig[i - 1] == 0x23 and orig[i:i + 4] == struct.pack("<I", GIVE_NATIVE)]
     windows += [(s, 4) for s in give_sites]
@@ -361,6 +370,54 @@ def main():
     refs = sum(orig.count(bytes([op]) + struct.pack("<H", flag))
                for op in (SCR_SETFLAG, SCR_CLEARFLAG, SCR_CHECKFLAG))
     ok(refs == 0, f"no script setflag/clearflag/checkflag references flag {flag:#x} ({refs})")
+
+    print("[15] mugshot renderer (Phase 3 render surface)")
+    _mug_bin = ROOT / "build" / "character_sprite.bin"
+    if _mug_bin.is_file():
+        _mug_blob = _mug_bin.read_bytes()
+        ok(patched[_m:_m + len(_mug_blob)] == _mug_blob,
+           f"renderer blob in ROM == build/character_sprite.bin ({len(_mug_blob)} B)")
+    ok(patched[_m + 1] == 0xB5, "renderer starts with push {..,lr}")
+
+    # The two callnative operands are re-derived from the ROM: find both 0x23
+    # ops inside the script window and check where they point.
+    _mug_ops = []
+    _mug_lo, _mug_hi = 0xEE3800, 0xEE3B00
+    _mug_i = _mug_lo
+    while _mug_i < _mug_hi - 5:
+        if patched[_mug_i] == 0x23:
+            _mug_t = struct.unpack_from("<I", patched, _mug_i + 1)[0]
+            if CM_MUGSHOT_ADDR <= (_mug_t & ~1) < CM_MUGSHOT_ADDR + _mugshot_len:
+                _mug_ops.append(_mug_t)
+        _mug_i += 1
+    ok(len(_mug_ops) == 2, f"script names exactly two mugshot entry points ({len(_mug_ops)})")
+    ok(all(a & 1 for a in _mug_ops), "both mugshot operands are Thumb pointers")
+    ok(len(set(_mug_ops)) == 2, "show and hide are distinct entry points")
+
+    # Re-locate the SpriteTemplate and check every pointer it hands the engine.
+    # A wrong address here draws garbage rather than crashing.
+    _MUG_ANIM, _MUG_AFFINE, _MUG_CB = 0x08A500CC, 0x08A500D0, 0x0800414D
+    _mug_tmpl = None
+    for _mug_o in range(_m, _mend - 24, 4):
+        _mug_w = struct.unpack_from("<5I", patched, _mug_o + 4)
+        if _mug_w[1] == _MUG_ANIM and _mug_w[3] == _MUG_AFFINE and _mug_w[4] == _MUG_CB:
+            _mug_tmpl = _mug_o
+            break
+    ok(_mug_tmpl is not None, "SpriteTemplate located in the renderer blob")
+    if _mug_tmpl is not None:
+        _mug_tt, _mug_pt = struct.unpack_from("<HH", patched, _mug_tmpl)
+        _mug_oam, _x1, _mug_img, _x2, _x3 = struct.unpack_from("<5I", patched, _mug_tmpl + 4)
+        ok(_mug_tt != _mug_pt and 0xFFFF not in (_mug_tt, _mug_pt),
+           f"template tile/palette tags distinct and non-TAG_NONE ({_mug_tt:#x}/{_mug_pt:#x})")
+        ok(_mug_img == 0, "template images == NULL (required when tileTag != TAG_NONE)")
+        _mug_oam_in = CM_MUGSHOT_ADDR <= _mug_oam < CM_MUGSHOT_ADDR + _mugshot_len
+        ok(_mug_oam_in, f"template oam pointer inside the renderer blob ({_mug_oam:#x})")
+        if _mug_oam_in:
+            _a0, _a1, _a2, _a3 = struct.unpack_from("<4H", patched, _mug_oam & 0x01FFFFFF)
+            ok((_a0 >> 14) == 0 and ((_a0 >> 13) & 1) == 0
+               and (_a1 >> 14) == 3 and ((_a2 >> 10) & 3) == 0,
+               f"OAM describes a 64x64 4bpp square sprite at priority 0 "
+               f"(attr0={_a0:#06x} attr1={_a1:#06x} attr2={_a2:#06x})")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     sys.exit(1 if _f else 0)
