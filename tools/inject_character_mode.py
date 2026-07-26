@@ -72,6 +72,11 @@ STARTERS_ADDR  = 0x08EE3600        # 193*2 = 386 B (rebased 2026-07-25: codes no
 SCRIPT_ADDR    = 0x08EE3800        # entry + confirm script -- KEEP FIXED: naming_open.ss
                                    # embeds a paused script context pointing here
 WILDPOOL_ADDR  = 0x08EE5000        # 193*176*4 = 135,872 B -> ends 0x08F062C0 (2026-07-25)
+# 0x08F10000 is NOT free: tools/tests/build_trade_testrom.py uses it as its
+# scratch script address. Placing the sprite table there built fine and only
+# failed later, inside the trade e2e layer. Start above it.
+CM_SPRITE_PTRS_ADDR  = 0x08f20000   # Phase 3, separate free run; additive table
+CM_SPRITE_BLOBS_ADDR = 0x08f20800
 FREE_END_ROM   = 0x09000000
 
 TRAMPOLINE_ADDR      = 0x08470200  # 8B 0xFF scavenge, in BL range of both sites
@@ -406,6 +411,32 @@ def main():
     splice(STARTERS_ADDR, starters_blob, "starters")
     splice(SCRIPT_ADDR, bytes(script), "scripts")
     splice(WILDPOOL_ADDR, wildpool, "wildpool")
+
+    # --- Phase 3 character sprites (2026-07-25) ---
+    # Additive: this never touches the engine's own trainer-pic table, so
+    # nothing the game already draws changes, and locating that table is not a
+    # prerequisite. Blobs first, then a table of absolute ROM pointers.
+    _spr_b = CM / "cm_sprite_blobs.bin"
+    _spr_o = CM / "cm_sprite_offsets.bin"
+    if _spr_b.is_file() and _spr_o.is_file():
+        _blobs = _spr_b.read_bytes()
+        _offs = _spr_o.read_bytes()
+        assert len(_offs) == NUM_CHARACTERS * 8, (len(_offs), NUM_CHARACTERS)
+        _ptrs = bytearray()
+        _wired = 0
+        for _i in range(NUM_CHARACTERS):
+            _g, _p = struct.unpack_from("<II", _offs, _i * 8)
+            if _g == 0xFFFFFFFF:
+                _ptrs += struct.pack("<II", 0, 0)
+            else:
+                _ptrs += struct.pack("<II", CM_SPRITE_BLOBS_ADDR + _g,
+                                            CM_SPRITE_BLOBS_ADDR + _p)
+                _wired += 1
+        splice(CM_SPRITE_BLOBS_ADDR, _blobs, "character sprite blobs")
+        splice(CM_SPRITE_PTRS_ADDR, bytes(_ptrs), "character sprite pointers")
+        print(f"character sprites: {_wired}/{NUM_CHARACTERS} wired, "
+              f"{len(_blobs):,} B @ {CM_SPRITE_BLOBS_ADDR:#x}, table @ {CM_SPRITE_PTRS_ADDR:#x}")
+
 
     tramp = struct.pack("<HH", 0x4B00, 0x4718) + struct.pack("<I", hook_gate)
     assert TRAMPOLINE_ADDR % 4 == 0

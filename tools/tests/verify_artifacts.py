@@ -87,6 +87,8 @@ WILD_BL_SITE = 0x22BF36
 CREATE_MON_WITH_IVS = 0x081A7504
 WILD_TRAMPOLINE_ADDR = 0x08470208
 WILDPOOL_ADDR = 0x08EE5000
+CM_SPRITE_PTRS_ADDR  = 0x08f20000   # Phase 3 (keep in sync with the injector)
+CM_SPRITE_BLOBS_ADDR = 0x08f20800
 WILDPOOL_STRIDE = 176
 
 # Engine flag/var bookkeeping (check [13], added 2026-07-24 with the 0x945 fix).
@@ -163,6 +165,15 @@ def main():
        "flips-apply == built ROM byte-identical")
     tmp.unlink(missing_ok=True)
 
+
+    _spr_blobs = (ROOT / "tools" / "character_mode" / "cm_sprite_blobs.bin").read_bytes() if (ROOT / "tools" / "character_mode" / "cm_sprite_blobs.bin").is_file() else b""
+    _spr_offs = (ROOT / "tools" / "character_mode" / "cm_sprite_offsets.bin").read_bytes() if (ROOT / "tools" / "character_mode" / "cm_sprite_offsets.bin").is_file() else b""
+    _spr_ptrs = bytearray()
+    for _i in range(len(_spr_offs) // 8):
+        _gof, _pof = struct.unpack_from("<II", _spr_offs, _i * 8)
+        _spr_ptrs += (struct.pack("<II", 0, 0) if _gof == 0xFFFFFFFF else
+                      struct.pack("<II", CM_SPRITE_BLOBS_ADDR + _gof,
+                                        CM_SPRITE_BLOBS_ADDR + _pof))
     print("[3] diff containment")
     windows = [(BL_CATCH, 4), (BL_GIFT, 4), (BG_EVENT_PTR_OFF, 4),
                (TRAMPOLINE_ADDR & 0x01FFFFFF, 8),
@@ -171,7 +182,9 @@ def main():
                (CODES_ADDR & 0x01FFFFFF, NUM_CHARACTERS * CODE_LEN),
                (STARTERS_ADDR & 0x01FFFFFF, NUM_CHARACTERS * 2),
                (0xEE3800, 0x300), (0xEE3B00, 0x400),
-               (WILDPOOL_ADDR & 0x01FFFFFF, NUM_CHARACTERS * WILDPOOL_STRIDE * 4)]
+               (WILDPOOL_ADDR & 0x01FFFFFF, NUM_CHARACTERS * WILDPOOL_STRIDE * 4),
+               (CM_SPRITE_BLOBS_ADDR & 0x01FFFFFF, len(_spr_blobs)),
+               (CM_SPRITE_PTRS_ADDR & 0x01FFFFFF, len(_spr_ptrs))]
     give_sites = [i for i in range(len(orig))
                   if orig[i - 1] == 0x23 and orig[i:i + 4] == struct.pack("<I", GIVE_NATIVE)]
     windows += [(s, 4) for s in give_sites]
