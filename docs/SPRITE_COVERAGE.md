@@ -402,3 +402,89 @@ sprite one); and a DeviantArt spriter with 240+ deviations not yet enumerated. A
 start there.
 
 Nothing is staged or injected. `sprite_asset_id` is still `0xFFFF` everywhere.
+
+
+## 2026-07-25 — CORRECTION 5: back sprites found, and the "mugshot" is not a new asset class
+
+### Lance is the first non-protagonist with a GBA back sprite
+
+Two independent sheets, both downloaded and measured:
+- `TeamAquasHideout/Team-Aquas-Asset-Repo` -> `Trainer Back Sprites/yoshord/lance_(lets_go).png`
+  — **64x384, indexed, 16 colours = SIX 64x64 frames** (Let's Go design). yoshord's README ships the
+  matching `sAnimCmd_Lance_Back[]` array, and notes you can instead drop frame 1 or 2 and reuse the
+  Red/Leaf `AnimCmd`. Repo licence: *"free to use and edit by default... provided they are submitted
+  alongside credit to their original creator."* Credit yoshord.
+- `ShinyDragonHunter/pokefirereddx-old` -> `graphics/trainers/back_pics/lance_back_pic.png`
+  — **64x256, 4 frames** (HGSS design, visually distinct). No LICENSE; credit ShinyDragonHunter.
+
+**Blue/Gary now has three sources**: the engine's own `TRAINER_BACK_PIC_RIVAL` (Correction 4),
+TAAR's `ShinyDragonHunter/rival.png` (**64x320, 16c, verified**), and LouLilie's FRLG Rival Green
+sheet (**64x320, 16c**, extracted from a pixel-perfect 2x upscale; *"Feel free to use in your
+projects with credit!"*).
+
+### Three back sprites exist but are LICENCE-GATED — Gladion, Lucy, Lillie
+
+All three are in `Enhanced-Projects/Emerald-Enhanced` and all three measure clean
+(Gladion 64x384, Lucy and Lillie 64x256, 16 colours, verified by download). **Do not use them
+yet.** Its README: *"Emerald Enhanced is NOT free to clone and redistribute... If you intend to use
+Art from this project, you must obtain permission from an executive of Enhanced Projects."* They
+state they rarely decline. Nobody has asked. These are recorded as gated, NOT as held.
+
+### Hard negative on the rest
+
+Authenticated GitHub code search, 38+ queries across all public code, returned **zero** results for
+back sprites of **Cynthia, Silver, Misty, Brock, Cyrus, Leon, Colress, Ghetsis and Prof. Oak** —
+under both the `TRAINER_BACK_PIC_*` and `gTrainerBackPic_*` spellings and by asset path. Bulbagarden
+confirms official non-protagonist backs exist only at DS resolution (HGSS Lance and Silver). The
+structural reason: **GBA back sprites were only ever drawn for characters the player controls.**
+
+Method note worth keeping: `TRAINER_BACK_PIC_LANCE` returns zero hits — pokefirereddx spells it
+`gTrainerBackPic_Lance`. Constant-name searches alone would have missed the only Lance sheet that
+exists; the path-string queries are what found it.
+
+### The CFRU "mugshot" is a trainer front pic, not a new format
+
+`Mugshot_DP_Tabled_Sprite_VS_Symbol` is not an asset class — it is a concatenation of three
+pre-battle-transition settings (DP-style bars, sprite-from-table flag, VS symbol on the player side).
+The sprite it loads is **64x64, 4bpp, <=16 colours, LZ77-compressed, size = 64*64/2 = 2048** — the
+exact format we already inject — indexed by *trainer front-pic id*. `sPreBattleMugshotSprites` ships
+empty in every public CFRU fork (checked in nine).
+
+Consequences:
+- Only **two** community mugshots exist anywhere: a genuine Cynthia (`spilledpizza/DP_cynthia_mugshot.png`,
+  64x64 14c) and an Archie (`Phantomony/archie_mugshot.png`), both in Team Aqua's repo. A third pair
+  labelled `brendan_mugshot`/`may_mugshot` there is **mislabelled** — viewing them shows Minish-Cap
+  style art of neither character.
+- ROWE's tree already holds **46 pre-built `cm_*.4bpp.lz` blobs at exactly 2048 bytes uncompressed**
+  — literally the value CFRU's `MugshotTable.size` field wants. Drop-in today.
+- Two constraints: the table is hard-sized `[147]` and gated on `trainerPicId < 147`, which RR and
+  Unbound both exceed; and its enabling flag is **0x924**, inside the daily-swept 0x920-0x95F range
+  that already caused the Character Mode flag bug on the Emerald hacks.
+
+### ⚠️ Closes an outstanding item, and contradicts a recorded doubt
+
+`gTrainerFrontPicTable` = **0x0823957C** and `gTrainerFrontPicPaletteTable` = **0x08239A1C** were
+verified valid in **both shipped ROMs** (Radical Red 4.1 and Unbound v2.1.1.1) by locating CFRU's
+`VS_Sprite` blob in each, dumping the referencing literal pools, and decoding real sprites back out.
+
+- This **closes Unbound's outstanding item #1** ("locate its trainer-pic tables").
+- It **contradicts the doubt recorded in RR's own notes** that there was "no guarantee Radical Red's
+  actual compiled binary has this table at the same address". It does.
+- Radical Red already contains the Kanto cast at vanilla FRLG indices (Blue 0x6A, Lance 0x73,
+  Brock 0x74, Misty 0x75, Oak 0x84, May 0x86, Sabrina 0x7A, Giovanni 0x6C — all decoded and viewed).
+  **Unbound has remapped these indices** and needs its own survey.
+
+### ⚠️ Unresolved contradiction — RichardPT's Alain
+
+One search reported RichardPT's Alain as a complete GBA-native engine set. A later one measured the
+same artist's Gladion — same Derlo lineage — at **32x44 overworld and 50x114 front pic**, i.e.
+DS/Essentials proportions, and expects Alain to match. **Nobody has measured the Alain files
+directly.** Alain is currently counted as fully covered in the matrix; treat that row as unconfirmed
+until someone downloads and measures it.
+
+### Totals
+
+overworld 132 (+31 partial), front pics 177, back pics **21** (+3 licence-gated),
+complete sets 21, nothing at all **24**.
+
+Nothing is staged or injected. `sprite_asset_id` is still `0xFFFF` everywhere.
