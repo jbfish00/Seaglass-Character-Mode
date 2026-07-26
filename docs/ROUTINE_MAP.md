@@ -437,3 +437,53 @@ straight back to the real caller, invisibly. See `src/character_mode.c`'s
 for the per-character override-pool data (non-legendary roster bases,
 expanded through the donor evolution graph, each member tagged with a canon
 "first appears at this level" estimate from the donor's `EVO_LEVEL` params).
+
+---
+
+## CONFIRMED — OAM sprite API (Phase 3 mugshot renderer, 2026-07-26)
+
+Derived by `tools/find_sprite_api.py` (ported from Lazarus) and confirmed
+**byte-exact by disassembly**, one at a time.
+
+⚠️ **Every one of these differs from Lazarus's**, despite the same author and the
+same pokeemerald-expansion base — these are different builds. Copying that repo's
+table would have been silently wrong. Re-derive, never copy.
+
+| symbol | Seaglass | (Lazarus, for contrast) |
+|---|---|---|
+| `gSprites` | **`0x02039810`** | `0x0203B5CC` |
+| `CreateSprite` | **`0x08003A38`** | `0x08003A40` |
+| `CreateSpriteAt` | **`0x08003B1C`** | `0x08003B24` |
+| `SpriteCallbackDummy` | **`0x0800414C`** | `0x08004140` |
+| `gDummySpriteAnimTable` | **`0x08A500CC`** | `0x08E68F18` |
+| `gDummySpriteAffineAnimTable` | **`0x08A500D0`** | `0x08E68F1C` |
+| `LZ77UnCompWram` | **`0x08366D78`** | `0x083E5EC0` |
+| `LZ77UnCompVram` | **`0x08366D7C`** | `0x083E5EC4` |
+| `LoadCompressedSpriteSheet` | **`0x080F5B5C`** | `0x080FCEE4` |
+| `LoadCompressedSpritePalette` | **`0x080F5C14`** | `0x080FCF9C` |
+| `LoadSpriteSheet` | **`0x0800548C`** | `0x08005410` |
+| `LoadSpritePalette` | **`0x080056D4`** | `0x080056C4` |
+| `FreeSpriteTilesByTag` | **`0x08005528`** | *(never located)* |
+| `FreeSpritePaletteByTag` | **`0x080057FC`** | `0x08005828` |
+| `IndexOfSpritePaletteTag` | **`0x080057BC`** | `0x080057E8` |
+| `GetSpriteTileStartByTag` | **`0x080055C8`** | `0x080055B8` |
+| tile tag table | `0x03006344` (64 × u16) | `0x03004838` |
+| tile range table | `0x030063C4` | `0x030048B8` |
+| palette tag table | `0x03006644` (16 × u16) | `0x03004B38` |
+
+**Struct layouts are identical across all three engine families** — verified in
+`CreateSpriteAt`'s own code, not assumed: `struct Sprite` stride **`0x44`**,
+`inUse` at **`+0x3E` bit 0**, `template` at **`+0x14`**. `struct SpriteTemplate` =
+`{u16 tileTag, u16 paletteTag, ptr oam, ptr anims, ptr images, ptr affineAnims,
+ptr callback}`. `CompressedSpriteSheet` = `{ptr data, u16 size, u16 tag}` with size
+**decompressed** (2048 for 64x64 4bpp); `CompressedSpritePalette` =
+`{ptr data, u16 tag}`.
+
+`gScriptCmdTable[0x23]` = **`0x081EC8CC`** = `ScrCmd_callnative` (ScriptReadWord →
+indirect call → return FALSE), so a script can call injected C with an absolute
+pointer and the renderer has **no BL-reach constraint anywhere**.
+
+**Renderer placement**: `0x08F42000`, past the sprite blobs in the same separate
+free run (clear to `0x09000000`). Deliberately NOT in the main injection block —
+that has ~126 B of headroom below `SCRIPT_ADDR`, and `SCRIPT_ADDR` cannot move
+because `naming_open.ss` embeds a paused script context pointing at it.
