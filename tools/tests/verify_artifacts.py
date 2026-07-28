@@ -90,7 +90,29 @@ WILDPOOL_ADDR = 0x08EE5000
 CM_SPRITE_PTRS_ADDR  = 0x08f20000   # Phase 3 (keep in sync with the injector)
 CM_MUGSHOT_ADDR      = 0x08F42000   # mugshot renderer (src/character_sprite.c)
 CM_SPRITE_BLOBS_ADDR = 0x08f20800
-WILDPOOL_STRIDE = 176
+# Derived, like NUM_CHARACTERS above and for the same reason. emit_wildpool.py's
+# POOL_STRIDE is authoritative and publishes itself here; restating it was how
+# this file agreed with the injector while both disagreed with the compiled shim
+# for four days (see check [16]).
+WILDPOOL_STRIDE = json.loads(
+    (ROOT / "tools" / "character_mode" / "wildpool_manifest.json").read_text())["pool_stride"]
+
+# Build fingerprint exported by src/character_mode.c (check [16]).
+CM_FINGERPRINT_MAGIC = 0x4D435346
+SHIM_ADDR = 0x08ED2200
+SHIM_REGION = 0x2000
+
+# 1% legendary wild encounters (check [17]). Derived from the injector and the
+# emitter's manifest, never restated -- an unregistered data region surfaces as
+# "stray bytes in diff containment", never as a missing table, which is exactly
+# how this one first failed.
+LEGENDARY_ADDR = _injector_addr("LEGENDARY_ADDR")
+_LEG = json.loads((ROOT / "tools" / "character_mode"
+                   / "legendaries_manifest.json").read_text())
+LEGENDARY_COUNT = _LEG["count"]
+# The flags array is SB1+0x13C0..0x14EB (vars start at 0x14EC), so flags above
+# 0x95F do not exist at all.
+FLAG_SPACE_END = 0x95F
 
 # Engine flag/var bookkeeping (check [13], added 2026-07-24 with the 0x945 fix).
 SB1_FLAGS_OFF = 0x13C0           # SaveBlock1.flags (docs/ROUTINE_MAP.md)
@@ -191,6 +213,8 @@ def main():
                (STARTERS_ADDR & 0x01FFFFFF, NUM_CHARACTERS * 2),
                (0xEE3800, 0x300), (0xEE3B00, 0x400),
                (WILDPOOL_ADDR & 0x01FFFFFF, NUM_CHARACTERS * WILDPOOL_STRIDE * 4),
+               (LEGENDARY_ADDR & 0x01FFFFFF,
+                LEGENDARY_COUNT * 4 + NUM_CHARACTERS * 4),
                (CM_SPRITE_BLOBS_ADDR & 0x01FFFFFF, len(_spr_blobs)),
                (CM_SPRITE_PTRS_ADDR & 0x01FFFFFF, len(_spr_ptrs)),
                (CM_MUGSHOT_ADDR & 0x01FFFFFF, _mugshot_len)]
@@ -236,18 +260,53 @@ def main():
             all_in = False
     ok(all_in, "every roster id + starter is set in its character's own bitmap")
 
-    print("[7] codes table")
+    print("[7] codes table + playability threshold")
     cbase = CODES_ADDR & 0x01FFFFFF
     codes_rom = patched[cbase:cbase + NUM_CHARACTERS * CODE_LEN]
     seen = set(); good = True
+    # The threshold is enforced by POISONING the code slot of every hidden
+    # character (see the injector). Checked in BOTH directions below: an offered
+    # character whose code stopped working, and a hidden character whose code
+    # still works, must each fail. A one-directional check would pass just as
+    # happily if the gate poisoned everybody or nobody.
+    hidden_bad_offered = []      # offered but unmatchable  -> lost a character
+    hidden_bad_gated = []        # hidden but matchable     -> gate did not bite
     for ci, c in enumerate(manifest):
         want = enc(code_for(c["character"]), cm)
         got = codes_rom[ci * CODE_LEN:ci * CODE_LEN + CODE_LEN]
-        if got[:len(want)] != want:
-            good = False
-        seen.add(code_for(c["character"]).upper())
-    ok(good, f"all {NUM_CHARACTERS} codes in-ROM == recomputed from names")
-    ok(len(seen) == NUM_CHARACTERS, f"codes case-fold-unique ({len(seen)})")
+        # A slot is matchable iff it contains a 0xFF terminator: the entered
+        # buffer is pre-cleared to 0xFF and the screen caps at CODE_LEN-1
+        # characters, so entered[CODE_LEN-1] is always 0xFF and codeEq() can
+        # only return a match on a simultaneous terminator.
+        matchable = 0xFF in got
+        if c.get("hidden"):
+            if matchable:
+                hidden_bad_gated.append(c["character"])
+        else:
+            if got[:len(want)] != want:
+                good = False
+            if not matchable:
+                hidden_bad_offered.append(c["character"])
+            seen.add(code_for(c["character"]).upper())
+    n_hidden = sum(1 for c in manifest if c.get("hidden"))
+    n_offered = NUM_CHARACTERS - n_hidden
+    ok(good, f"all {n_offered} offered codes in-ROM == recomputed from names")
+    ok(len(seen) == n_offered, f"offered codes case-fold-unique ({len(seen)})")
+
+    drops = json.loads((CM / "character_drops.json").read_text())["unselectable"]
+    manifest_hidden = {c["character"] for c in manifest if c.get("hidden")}
+    emitted_names = {c["character"] for c in manifest}
+    ok(manifest_hidden == set(drops) & emitted_names,
+       f"manifest hidden set == character_drops.json ∩ emitted ({n_hidden})")
+    ok(not hidden_bad_gated,
+       f"every hidden character's code slot is unmatchable "
+       f"({len(hidden_bad_gated)} still selectable: {hidden_bad_gated[:5]})")
+    ok(not hidden_bad_offered,
+       f"every offered character's code slot is still matchable "
+       f"({len(hidden_bad_offered)} wrongly gated: {hidden_bad_offered[:5]})")
+    ok(n_hidden > 0 and n_offered > 0,
+       f"the threshold gates SOME characters and spares others "
+       f"({n_offered} offered / {n_hidden} hidden) -- neither all nor nothing")
 
     print("[8] callnative give exhaustion")
     ok(len(give_sites) == 49, f"49 give sites in original ({len(give_sites)})")
@@ -317,6 +376,13 @@ def main():
     const_to_name = {v: k for k, v in name_to_const.items()}
     legend_names = {const_to_name[c] for c in LEGENDARY_BASES if c in const_to_name}
     sp_table = json.loads((CM / "rom_species_table.json").read_text())["species"]
+    # Exempt by character INDEX, not by name. The name-keyed exemption that used
+    # to live here still passed while the shim's hardcoded TOBIAS_CHAR_ID pointed
+    # at Volo -- it was checking the data, which was right, and the rate branch,
+    # which was wrong, went unexamined. tobias_id is the value check [16] then
+    # asserts the compiled shim actually agrees with.
+    tobias_id = next((i + 1 for i, c in enumerate(manifest)
+                      if c["character"] == "Tobias"), 0)
     leaks = 0
     empty_pool_but_nonempty_roster = 0
     for ci, c in enumerate(manifest):
@@ -328,7 +394,7 @@ def main():
                 break
             n_entries += 1
             if sp_table.get(str(sid)) in legend_names:
-                if c["character"] == "Tobias":
+                if ci + 1 == tobias_id:
                     pass  # legendary-INCLUSIVE by design (Latios @1%%, user spec 2026-07-23)
                 else:
                     leaks += 1
@@ -425,6 +491,147 @@ def main():
                and (_a1 >> 14) == 3 and ((_a2 >> 10) & 3) == 0,
                f"OAM describes a 64x64 4bpp square sprite at priority 0 "
                f"(attr0={_a0:#06x} attr1={_a1:#06x} attr2={_a2:#06x})")
+
+    print("[17] 1%% legendary wild encounters")
+    # Re-derived from characters_manifest.json rather than read back from the
+    # .bin, so agreeing with itself is not enough.
+    _lg_blob = (CM / "legendaries.bin").read_bytes()
+    _lg_off = LEGENDARY_ADDR & 0x01FFFFFF
+    ok(patched[_lg_off:_lg_off + len(_lg_blob)] == _lg_blob,
+       f"legendaries in-ROM == legendaries.bin ({len(_lg_blob)} B)")
+    _lg_want = sorted({s for c in manifest
+                       for s in c["roster_species_ids"][c["starter_count"]:]})
+    ok(len(_lg_want) == LEGENDARY_COUNT,
+       f"distinct legendaries re-derived from the manifest == "
+       f"emitter's count ({len(_lg_want)} vs {LEGENDARY_COUNT})")
+    ok(len(_lg_blob) == LEGENDARY_COUNT * 4 + NUM_CHARACTERS * 4,
+       "legendaries.bin size == ids + flags + per-character masks")
+    _lg_ids = list(struct.unpack_from(f"<{LEGENDARY_COUNT}H", _lg_blob, 0))
+    _lg_flags = list(struct.unpack_from(f"<{LEGENDARY_COUNT}H", _lg_blob,
+                                        LEGENDARY_COUNT * 2))
+    ok(_lg_ids == _lg_want, "in-ROM legendary ids == manifest-derived set")
+
+    # Flag hygiene. Every one of these ranges has already cost this repo real
+    # time: 0x945 sat in the daily sweep and switched Character Mode off at
+    # midnight, and anything above 0x95F is not in the flags array at all.
+    ok(len(set(_lg_flags)) == LEGENDARY_COUNT,
+       f"all {LEGENDARY_COUNT} legendary flags distinct")
+    _lg_oob = [f for f in _lg_flags if f > FLAG_SPACE_END]
+    ok(not _lg_oob, f"every legendary flag inside the flags array "
+                    f"(<= {FLAG_SPACE_END:#x}); out of bounds: "
+                    f"{[hex(f) for f in _lg_oob]}")
+    _lg_temp = [f for f in _lg_flags if TEMP_FLAGS_START <= f <= TEMP_FLAGS_END]
+    ok(not _lg_temp, f"no legendary flag in the temp sweep "
+                     f"({TEMP_FLAGS_START:#x}-{TEMP_FLAGS_END:#x}): "
+                     f"{[hex(f) for f in _lg_temp]}")
+    _lg_daily = [f for f in _lg_flags if DAILY_FLAGS_START <= f <= DAILY_FLAGS_END]
+    ok(not _lg_daily, f"no legendary flag in the daily sweep "
+                      f"({DAILY_FLAGS_START:#x}-{DAILY_FLAGS_END:#x}) -- a flag "
+                      f"here would un-catch every legendary at midnight: "
+                      f"{[hex(f) for f in _lg_daily]}")
+    _lg_cmflag = re.search(r"#define\s+FLAG_CHARACTER_MODE\s+(0x[0-9A-Fa-f]+)",
+                           (ROOT / "src" / "character_mode.c").read_text())
+    ok(_lg_cmflag and int(_lg_cmflag.group(1), 16) not in _lg_flags,
+       "no legendary flag collides with FLAG_CHARACTER_MODE")
+    _lg_refs = {f: sum(orig.count(bytes([op]) + struct.pack("<H", f))
+                       for op in (SCR_SETFLAG, SCR_CLEARFLAG, SCR_CHECKFLAG))
+                for f in _lg_flags}
+    _lg_used = {hex(f): n for f, n in _lg_refs.items() if n}
+    ok(not _lg_used,
+       f"no script setflag/clearflag/checkflag touches any legendary flag "
+       f"({_lg_used})")
+
+    # Per-character masks, re-derived. The bit order here is the contract the
+    # shim indexes sLegendaryIds with; getting it backwards would offer the
+    # wrong legendary and still look plausible.
+    _lg_maskoff = LEGENDARY_COUNT * 4
+    _lg_idx = {s: i for i, s in enumerate(_lg_ids)}
+    _lg_bad, _lg_with = [], 0
+    for _lg_ci, _lg_c in enumerate(manifest):
+        _lg_want_mask = 0
+        for _lg_s in _lg_c["roster_species_ids"][_lg_c["starter_count"]:]:
+            _lg_want_mask |= 1 << _lg_idx[_lg_s]
+        _lg_got, = struct.unpack_from("<I", _lg_blob, _lg_maskoff + _lg_ci * 4)
+        if _lg_got != _lg_want_mask:
+            _lg_bad.append(_lg_c["character"])
+        if _lg_want_mask:
+            _lg_with += 1
+    ok(not _lg_bad,
+       f"every character's legendary mask matches their roster "
+       f"({len(_lg_bad)} wrong: {_lg_bad[:5]})")
+    ok(0 < _lg_with < NUM_CHARACTERS,
+       f"some characters have a legendary and some do not ({_lg_with} of "
+       f"{NUM_CHARACTERS}) -- neither all nor nothing")
+    # No legendary may be reachable through the ORDINARY 10% pool -- that is what
+    # keeps the two rates distinct -- EXCEPT Tobias, whose pool is deliberately
+    # legendary-inclusive (Latios at 1%, user spec 2026-07-23) and who carries
+    # the same exemption in check [12].
+    # ⚠️ Tobias is NOT double-served: his whole roster is that one Latios, so it
+    # sits in his starter slice and his legendary MASK IS ZERO -- the 1% roll
+    # skips him entirely and his Latios stays repeatable via the pool, which is
+    # what the spec wants for an all-legendary roster. Do not "fix" the mask.
+    _lg_leak = []
+    for _lg_ci, _lg_c in enumerate(manifest):
+        if _lg_ci + 1 == tobias_id:
+            continue
+        _lg_rec = wildpool[_lg_ci * WILDPOOL_STRIDE * 4:
+                           (_lg_ci + 1) * WILDPOOL_STRIDE * 4]
+        for _lg_k in range(WILDPOOL_STRIDE):
+            _lg_sid, = struct.unpack_from("<H", _lg_rec, _lg_k * 4)
+            if _lg_sid == 0:
+                break
+            if _lg_sid in _lg_idx:
+                _lg_leak.append((_lg_c["character"], _lg_sid))
+    ok(not _lg_leak,
+       f"no legendary id in any ordinary wild pool except Tobias's "
+       f"({len(_lg_leak)} leaks: {_lg_leak[:5]})")
+    _lg_tob = manifest[tobias_id - 1] if tobias_id else None
+    ok(_lg_tob is None or not _lg_tob["roster_species_ids"][_lg_tob["starter_count"]:],
+       "Tobias's legendary mask is empty -- his Latios stays repeatable via the "
+       "pool rather than being retired on catch by the 1% roll")
+
+    # ⚠️ Every local below is _fp*-prefixed on purpose. A bare `_p` or `_f` here
+    # shadows the module-level PASS/FAIL COUNTERS that the summary line reads,
+    # and the run reports a nonsense total instead of a result (that once printed
+    # "135160 passed, 0 failed"). Same trap as section 15's _mug* prefix.
+    print("[16] compiled shim constants (read back out of the built ROM)")
+    # THE CHECK THE OTHER FIFTEEN WERE MISSING. Every section above validates an
+    # emitted .bin, a patched byte range, or the C source TEXT. None of them ever
+    # looked at the value the compiler actually baked into the shim, which is why
+    # WILDPOOL_STRIDE sat at 104 against 176-byte data, and TOBIAS_CHAR_ID at 182
+    # (Volo) against Tobias at 183, for four days with a green suite.
+    # src/character_mode.c exports CM_BuildFingerprint into its own .text.* slice
+    # so the constants land in the spliced blob; we find it by its magic.
+    _fp_magic = struct.pack("<I", CM_FINGERPRINT_MAGIC)
+    _fp_region = patched[SHIM_ADDR & 0x01FFFFFF:
+                         (SHIM_ADDR & 0x01FFFFFF) + SHIM_REGION]
+    ok(_fp_region.count(_fp_magic) == 1,
+       f"exactly one build fingerprint in the shim blob "
+       f"({_fp_region.count(_fp_magic)} found)")
+    if _fp_region.count(_fp_magic) == 1:
+        _fp_at = _fp_region.find(_fp_magic)
+        (_fp_sig, _fp_nchars, _fp_stride,
+         _fp_tobias, _fp_bmstride) = struct.unpack_from("<5I", _fp_region, _fp_at)
+        ok(_fp_sig == CM_FINGERPRINT_MAGIC, "fingerprint magic")
+        ok(_fp_nchars == NUM_CHARACTERS,
+           f"shim compiled NUM_CHARACTERS={_fp_nchars} == manifest {NUM_CHARACTERS}")
+        ok(_fp_stride == WILDPOOL_STRIDE,
+           f"shim compiled WILDPOOL_STRIDE={_fp_stride} == "
+           f"wildpool_manifest pool_stride {WILDPOOL_STRIDE}")
+        ok(_fp_tobias == tobias_id,
+           f"shim compiled TOBIAS_CHAR_ID={_fp_tobias} == manifest index of "
+           f"Tobias {tobias_id}"
+           + (f" (would be {manifest[_fp_tobias - 1]['character']})"
+              if 0 < _fp_tobias <= len(manifest) and _fp_tobias != tobias_id
+              else ""))
+        ok(_fp_bmstride == BITMAP_STRIDE,
+           f"shim compiled BITMAP_STRIDE={_fp_bmstride} == {BITMAP_STRIDE}")
+        # The stride is only correct if the shim's own view of the table also
+        # fits the region the injector reserved -- catches a stride that agrees
+        # with the manifest while the table itself was sized from something else.
+        ok(_fp_nchars * _fp_stride * 4 == len(wildpool),
+           f"shim's view of the wild pool ({_fp_nchars}x{_fp_stride}x4 = "
+           f"{_fp_nchars * _fp_stride * 4} B) == wildpool.bin ({len(wildpool)} B)")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     sys.exit(1 if _f else 0)

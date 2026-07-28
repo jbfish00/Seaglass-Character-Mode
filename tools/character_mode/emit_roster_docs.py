@@ -194,8 +194,17 @@ def main():
         base = canonical.get(donor[const]["dex"], const)
         return not donor[base]["children"]
 
+    # Docs list only SELECTABLE characters (user rule, 2026-07-25). A hidden
+    # character keeps its table slot and its bitmap -- indices must not move --
+    # but listing it would promise a roster for someone the CODE screen refuses.
+    # Note this iterates the manifest with its ORIGINAL index i, so the bitmap
+    # slice still lines up after the skip.
     chars = []
+    n_hidden_skipped = 0
     for i, rec in enumerate(manifest):
+        if rec.get("hidden"):
+            n_hidden_skipped += 1
+            continue
         bits = bitmaps[i * stride:(i + 1) * stride]
         finals = set()
         for sid, name in rom_names.items():
@@ -293,8 +302,10 @@ def main():
             f.write("\n".join(page).rstrip() + "\n")
 
     print("wrote ROSTERS.md, ROSTERS_SPRITES.md and %d sprites/gen_*.md: "
-          "%d characters, %d final-evolution entries"
-          % (len(gens), len(chars), sum(len(c["finals"]) for c in chars)))
+          "%d selectable characters (%d hidden by the threshold, not listed), "
+          "%d final-evolution entries"
+          % (len(gens), len(chars), n_hidden_skipped,
+             sum(len(c["finals"]) for c in chars)))
 
 
 if __name__ == "__main__":

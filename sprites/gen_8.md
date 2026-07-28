@@ -2,11 +2,6 @@
 
 Final-evolution rosters in National Pokédex order, sprites with names. [← back to index](../ROSTERS_SPRITES.md)
 
-### Allister — Gym Leader
-<table>
-<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/94.png"><br><sub>Gengarᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/222.png"><br><sub>Corsola</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/477.png"><br><sub>Dusknoirᵍ</sub></td></tr>
-</table>
-
 ### Bea — Gym Leader
 <table>
 <tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/6.png"><br><sub>Charizard</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/62.png"><br><sub>Poliwrath</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/68.png"><br><sub>Machampᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/106.png"><br><sub>Hitmonlee</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/107.png"><br><sub>Hitmonchan</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/149.png"><br><sub>Dragonite</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/186.png"><br><sub>Politoed</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/237.png"><br><sub>Hitmontopᵍ</sub></td></tr>
@@ -48,11 +43,6 @@ Final-evolution rosters in National Pokédex order, sprites with names. [← bac
 <tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/899.png"><br><sub>Wyrdeerᵃ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/900.png"><br><sub>Kleavorᵃ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/979.png"><br><sub>Annihilapeᵃ</sub></td></tr>
 </table>
 
-### Gordie — Gym Leader
-<table>
-<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/131.png"><br><sub>Lapras</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/213.png"><br><sub>Shuckleᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/248.png"><br><sub>Tyranitarᵍ</sub></td></tr>
-</table>
-
 ### Hop — Rival
 <table>
 <tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/6.png"><br><sub>Charizard</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/68.png"><br><sub>Machamp</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/143.png"><br><sub>Snorlaxᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/144.png"><br><sub>Articuno</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/145.png"><br><sub>Zapdos</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/146.png"><br><sub>Moltres</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/377.png"><br><sub>Regirock</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/378.png"><br><sub>Regice</sub></td></tr>
@@ -62,11 +52,6 @@ Final-evolution rosters in National Pokédex order, sprites with names. [← bac
 ### Kabu — Gym Leader
 <table>
 <tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/38.png"><br><sub>Ninetalesᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/59.png"><br><sub>Arcanineᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/146.png"><br><sub>Moltres</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/323.png"><br><sub>Camerupt</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/324.png"><br><sub>Torkoal</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/350.png"><br><sub>Milotic</sub></td></tr>
-</table>
-
-### Laventon — Professor
-<table>
-<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/157.png"><br><sub>Typhlosion</sub></td></tr>
 </table>
 
 ### Leon — Champion
@@ -89,29 +74,4 @@ Final-evolution rosters in National Pokédex order, sprites with names. [← bac
 ### Nessa — Gym Leader
 <table>
 <tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/119.png"><br><sub>Seaking</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/130.png"><br><sub>Gyarados</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/195.png"><br><sub>Quagsireᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/211.png"><br><sub>Qwilfish</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/279.png"><br><sub>Pelipperᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/350.png"><br><sub>Milotic</sub></td></tr>
-</table>
-
-### Opal — Gym Leader
-<table>
-<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/26.png"><br><sub>Raichu</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/110.png"><br><sub>Weezingᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/303.png"><br><sub>Mawileᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/468.png"><br><sub>Togekissᵍ</sub></td></tr>
-</table>
-
-### Raihan — Gym Leader
-<table>
-<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/6.png"><br><sub>Charizard</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/324.png"><br><sub>Torkoalᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/330.png"><br><sub>Flygonᵍ</sub></td></tr>
-</table>
-
-### Rose — Villain
-<table>
-<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/6.png"><br><sub>Charizard</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/53.png"><br><sub>Persian</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/350.png"><br><sub>Milotic</sub></td></tr>
-</table>
-
-### Sonia — Professor
-<table>
-<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/6.png"><br><sub>Charizard</sub></td></tr>
-</table>
-
-### Volo — Villain
-<table>
-<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/59.png"><br><sub>Arcanine</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/407.png"><br><sub>Roserade</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/468.png"><br><sub>Togekiss</sub></td></tr>
 </table>

@@ -83,8 +83,19 @@ typedef unsigned int u32;
 #define VAR_CM_STARTER      0x40E5   /* adjacent free slot; doubles as give/confirm marker */
 #define CM_STARTER_OFF_MARKER 0xFFFF
 
-#define NUM_CHARACTERS 193  /* 170 + 11 professors + Tobias (182) + 10 Frontier Brains (183-192) + Volo (193), 2026-07-25 */
-#define TOBIAS_CHAR_ID 182   /* Latios-only here (Darkrai absent from Seaglass dex); 1%% wild rate (user spec) */
+/* NUM_CHARACTERS and TOBIAS_CHAR_ID are passed in by the injector, derived from
+   characters_manifest.json -- never hardcoded here. Both were, and both went
+   stale when Volo was inserted on 2026-07-25: TOBIAS_CHAR_ID stayed 182, which
+   is now VOLO, so Volo drew Tobias's 1%% legendary-inclusive rate and Tobias's
+   Latios fired at 10%%. A stale NUM_CHARACTERS is the worse half of the pair --
+   too high and gateActive() TRUSTS an out-of-range index instead of rejecting
+   it. */
+#ifndef NUM_CHARACTERS
+#error "compile with -DNUM_CHARACTERS= (derive it from characters_manifest.json)"
+#endif
+#ifndef TOBIAS_CHAR_ID
+#error "compile with -DTOBIAS_CHAR_ID= (derive it from characters_manifest.json; 0 if absent)"
+#endif
 #define NUM_SPECIES    1489          /* max ROM species id 1488 + 1 */
 #define BITMAP_STRIDE  187
 #define CODE_LEN       11
@@ -134,9 +145,83 @@ typedef unsigned int u32;
 #ifndef WILDPOOL_ADDR
 #error "compile with -DWILDPOOL_ADDR="
 #endif
-#define WILDPOOL_STRIDE 104   /* entries/char; tools/character_mode/emit_wildpool.py */
+/* Entries per character. Authoritative value is emit_wildpool.py's POOL_STRIDE,
+   published as `pool_stride` in wildpool_manifest.json and passed in by the
+   injector. It was hardcoded 104 here and shipped that way after the data moved
+   to 176 on 2026-07-23, so every character but #1 indexed 416 B per character
+   into a 704 B stride -- a misaligned slice of somebody else's pool, and every
+   pool truncated at 104 entries. Nothing caught it: verify_artifacts checked
+   the .bin, never the constant the compiler baked in. */
+#ifndef WILDPOOL_STRIDE
+#error "compile with -DWILDPOOL_STRIDE= (read pool_stride from wildpool_manifest.json)"
+#endif
 typedef struct { u16 species; u8 minLevel; u8 _pad; } WildPoolEntry;
 #define sWildPool ((const WildPoolEntry *) WILDPOOL_ADDR)
+
+/* --- 1%% legendary wild encounters (game_plans/legendary_encounters.md) ---
+ * Data from tools/character_mode/emit_legendaries.py. Three arrays, laid out
+ * back to back; LEGENDARY_COUNT comes in as -D so the layout cannot drift from
+ * the emitter (the WILDPOOL_STRIDE bug shipped for exactly that reason).
+ *
+ * ⚠️ "Caught" is tracked with one dedicated FLAG per legendary, not with the
+ * Pokedex caught bitmap the spec prefers. The dex accessor is not located in
+ * this ROM -- four probe strategies failed, all recorded in
+ * game_plans/seaglass.md 5b -- and this is the fallback that plan sanctions. It
+ * costs 20 bits of save state instead of zero. If the dex is ever found, only
+ * caught() below changes.
+ *
+ * ⚠️ The flags are NOT consecutive: there is no run of 20 free flags anywhere in
+ * this ROM (longest is 8), so the flag id is looked up from the table rather
+ * than computed as BASE + index. Do not "simplify" that.
+ */
+#ifndef LEGENDARY_ADDR
+#error "compile with -DLEGENDARY_ADDR= -DLEGENDARY_COUNT="
+#endif
+#ifndef LEGENDARY_COUNT
+#error "compile with -DLEGENDARY_COUNT= (from legendaries_manifest.json)"
+#endif
+#define sLegendaryIds   ((const u16 *) (LEGENDARY_ADDR))
+#define sLegendaryFlags ((const u16 *) (LEGENDARY_ADDR + LEGENDARY_COUNT * 2))
+#define sCharLegendary  ((const u32 *) (LEGENDARY_ADDR + LEGENDARY_COUNT * 4))
+
+/* Has this legendary already been caught? The single point that would change if
+   the Pokedex bitmap is ever located. */
+static int caught(int i)
+{
+    return FlagGet(sLegendaryFlags[i]) != 0;
+}
+
+/* Record a catch. Called from the acquisition gate, which every catch and every
+   script gift already passes through -- so "offered until caught" needs no new
+   hook site. Marks regardless of whether the mon went to the party or the PC:
+   it is caught either way. */
+static void markCaught(u32 species)
+{
+    int i;
+    for (i = 0; i < LEGENDARY_COUNT; i++) {
+        if (sLegendaryIds[i] == species) {
+            FlagSet(sLegendaryFlags[i]);
+            return;
+        }
+    }
+}
+
+/* Build fingerprint -- the values this translation unit ACTUALLY compiled with,
+   parked in the shim blob so a verifier can read them back out of the BUILT ROM
+   rather than re-reading the source text or the emitted .bin. That gap is
+   exactly what let the two constants above ship wrong. Lives in a .text.*
+   section, not .rodata, so it is spliced inside the shim blob at a predictable
+   offset instead of wherever ld's default script would page-align a new
+   segment. The magic is what verify_artifacts scans for. */
+#define CM_FINGERPRINT_MAGIC 0x4D435346u   /* 'FSCM' little-endian */
+__attribute__((used, section(".text.cm_fingerprint")))
+const u32 CM_BuildFingerprint[5] = {
+    CM_FINGERPRINT_MAGIC,
+    NUM_CHARACTERS,
+    WILDPOOL_STRIDE,
+    TOBIAS_CHAR_ID,
+    BITMAP_STRIDE,
+};
 
 /* --- helpers --- */
 
@@ -244,6 +329,10 @@ u8 CM_GiveMonToPlayerGated(void *mon)
     if (gateActive() && gPlayerPartyCount != 0
      && !GetMonData(mon, MON_DATA_IS_EGG, 0)) {
         u32 species = GetMonData(mon, MON_DATA_SPECIES, 0);
+        /* "Offered until caught": retire this legendary from the 1%% roll.
+           Done BEFORE the roster branch so it lands whether the mon joins the
+           party or is routed to the PC -- it is caught either way. */
+        markCaught(species);
         if (!onRoster(*GetVarPointer(VAR_CM_CHAR), species))
             return CopyMonToPC(mon);
     }
@@ -265,6 +354,7 @@ void CM_NativeGiveGated(void *ctx)
         u8 *mon = gPlayerParty + (after - 1) * MON_SIZE;
         if (!GetMonData(mon, MON_DATA_IS_EGG, 0)) {
             u32 species = GetMonData(mon, MON_DATA_SPECIES, 0);
+            markCaught(species);           /* script gifts retire it too */
             if (!onRoster(*GetVarPointer(VAR_CM_CHAR), species)
              && CopyMonToPC(mon) == 1) {   /* boxes full -> stays in party */
                 int j;
@@ -334,6 +424,55 @@ u16 CM_WildMonSpeciesGated(u16 species, u8 level)
         return species;                    /* CM off: fully inert */
     charId = *GetVarPointer(VAR_CM_CHAR);
     seed = wildSeed(species, level);
+
+    /* --- 1%% legendary roll, BEFORE the ordinary 10%% override ---
+     *
+     * ⚠️ INDEPENDENCE. This must NOT reuse `seed % 100` the way the override
+     * below does. Seaglass has no writable RAM and deliberately avoids the game
+     * RNG, so both decisions come from one wildSeed(); testing `seed % 100 < 1`
+     * here and `seed % 100 >= 10` below would make the legendary hit a strict
+     * SUBSET of the override hit rather than an independent event -- every
+     * legendary encounter would also have been a roster override, and the two
+     * rates would be silently entangled. The extra mix step below decorrelates
+     * them, the same trick the tie-break at the end of this function uses.
+     * Constants are distinct from the tie-break's so the two draws do not track
+     * each other either.
+     *
+     * ⚠️ THE DATA CHECK PRECEDES EVERYTHING. Reading the mask first costs
+     * nothing for the 117 of 193 characters with no legendary. (The usual
+     * reason for this rule -- not consuming a Random() and shifting the game's
+     * encounter stream -- does not bite here, because wildSeed() reads hardware
+     * registers rather than the engine RNG. Ordering it this way anyway keeps
+     * the rule true in every game.) */
+    {
+        u32 mask = sCharLegendary[charId - 1];
+        if (mask) {
+            u32 lseed = seed * 2246822519u + 374761393u;
+            if (lseed % 100 < 1) {
+                u32 avail = 0;
+                int n = 0;
+                for (i = 0; i < LEGENDARY_COUNT; i++) {
+                    if (((mask >> i) & 1) && !caught(i)) {
+                        avail |= 1u << i;
+                        n++;
+                    }
+                }
+                if (n) {                   /* all caught -> fall through, no reroll */
+                    u32 pick2;
+                    lseed = lseed * 1664525u + 1013904223u;
+                    pick2 = lseed % (u32) n;
+                    for (i = 0; i < LEGENDARY_COUNT; i++) {
+                        if ((avail >> i) & 1) {
+                            if (pick2 == 0)
+                                return sLegendaryIds[i];
+                            pick2--;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     /* Tobias (user spec 2026-07-23): 1%% per roll; everyone else 10%%. His
      * pool is his (legendary) signature Latios via the starter_count slice. */
     if (seed % 100 >= ((charId == TOBIAS_CHAR_ID) ? 1 : 10))

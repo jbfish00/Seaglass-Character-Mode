@@ -2,7 +2,141 @@
  "_comment": "User-approved roster additions (2026-07-23 Bulbapedia completeness audit; scope: partner pools + edge cases included, manga excluded). Merged into rosters_raw by map_species.py at map time so re-scrapes cannot silently drop them. Also carries user-directed additions made after that audit: Oak gains Dratini (Dragonite) and Rotom, both from the anime (2026-07-24). Also: Pike Queen Lucy's six Pokemon 'at home' from the anime (Abra, Snorlax, Cyndaquil, Swinub, Makuhita, Skitty), which sit inside a TrainerPoke desc and were missed by the owner-scoped extraction (user-corrected 2026-07-25). Provenance: ../../..//approved_roster_additions_2026-07-23.json",
  "additions": {
   "Ash": [
-   "Rattata"
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Caterpie"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Chikorita"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Cyndaquil"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Gligar"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Grimer"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Hoothoot"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Krabby"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Mankey"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Mime jr."
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Munchlax"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Noibat"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Phanpy"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Pidgey"
+   },
+   "Rattata",
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Roggenrola"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Sandile"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Sewaddle"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Snorunt"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Tepig"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Treecko"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Turtwig"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Tympole"
+   }
+  ],
+  "Bede": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "IrnValiant"
+   }
+  ],
+  "Birch": [
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'At his Lab' (Pokémon the Series)",
+    "species": "Lotad"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'At his Lab' (Pokémon the Series)",
+    "species": "Sharpedo"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'At his Lab' (Pokémon the Series)",
+    "species": "Shroomish"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'At his Lab' (Pokémon the Series)",
+    "species": "Wailmer"
+   }
   ],
   "Byron": [
    "Beldum",
@@ -12,8 +146,54 @@
    "Wingull"
   ],
   "Calem": [
+   {
+    "owned_form": "Altaria",
+    "source": "X/Y (rival battles + Multi Battle partner teams)",
+    "species": "Altaria"
+   },
+   {
+    "owned_form": "Clefable",
+    "source": "X/Y (rival battles + Multi Battle partner teams)",
+    "species": "Clefable"
+   },
+   {
+    "owned_form": "Flareon",
+    "source": "X/Y (rival battles + Multi Battle partner teams)",
+    "species": "Flareon"
+   },
+   {
+    "owned_form": "Jolteon",
+    "source": "X/Y (rival battles + Multi Battle partner teams)",
+    "species": "Jolteon"
+   },
+   {
+    "owned_form": "Vaporeon",
+    "source": "X/Y (rival battles + Multi Battle partner teams)",
+    "species": "Vaporeon"
+   },
    "Xerneas",
    "Yveltal"
+  ],
+  "Cheren": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Porygon"
+   }
+  ],
+  "Chloe": [
+   {
+    "owned_form": "Rotom",
+    "source": "Pokemon Journeys (anime) - full page sweep",
+    "species": "Rotom"
+   }
+  ],
+  "Cynthia": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Porygon"
+   }
   ],
   "Cyrus": [
    "Rotom"
@@ -30,11 +210,31 @@
   ],
   "Fantina": [
    "Corphish",
+   {
+    "owned_form": "Crawdaunt",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Single Battles Rank 5)",
+    "species": "Crawdaunt"
+   },
+   {
+    "owned_form": "Dragonite",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Single Battles Rank 5)",
+    "species": "Dragonite"
+   },
    "Dratini",
    "Nincada",
-   "Sableye"
+   "Sableye",
+   {
+    "owned_form": "Shedinja",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Single Battles Rank 5)",
+    "species": "Shedinja"
+   }
   ],
   "Flint": [
+   {
+    "owned_form": "Blaziken",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower)",
+    "species": "Blaziken"
+   },
    "Entei",
    "Rotom",
    "Torchic",
@@ -42,45 +242,318 @@
   ],
   "Gardenia": [
    "Bulbasaur",
+   {
+    "owned_form": "Cradily",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower)",
+    "species": "Cradily"
+   },
    "Feebas",
    "Lileep",
+   {
+    "owned_form": "Milotic",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower)",
+    "species": "Milotic"
+   },
+   {
+    "owned_form": "Ninetales",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower)",
+    "species": "Ninetales"
+   },
    "Rotom",
+   {
+    "owned_form": "Shiftry",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower)",
+    "species": "Shiftry"
+   },
+   {
+    "owned_form": "Venusaur",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower)",
+    "species": "Venusaur"
+   },
    "Vulpix"
   ],
+  "Gary": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Horsea"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Houndour"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Spearow"
+   }
+  ],
   "Giovanni": [
+   {
+    "owned_form": "Exeggutor",
+    "source": "Ultra Sun/Ultra Moon (Battle Agency)",
+    "species": "Exeggutor"
+   },
+   {
+    "owned_form": "Gyarados",
+    "source": "Ultra Sun/Ultra Moon (Battle Agency)",
+    "species": "Gyarados"
+   },
    "Koffing"
   ],
   "Gloria": [
    "Glastrier",
    "Spectrier"
   ],
+  "Goh": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Carvanha"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Ferroseed"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Nincada"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Numel"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Petilil"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Seel"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Spinarak"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Swablu"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Tyrogue"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Zubat"
+   }
+  ],
+  "Gordie": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Stonjourne"
+   }
+  ],
   "Hassel": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Archaludon"
+   },
    "Gible"
   ],
+  "Hau": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Blacefalon"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Crabrawler"
+   }
+  ],
   "Hilbert": [
+   {
+    "owned_form": "Accelgor",
+    "source": "Black/White (Battle Subway)",
+    "species": "Accelgor"
+   },
    "Alomomola",
+   {
+    "owned_form": "Amoonguss",
+    "source": "Black/White (Battle Subway)",
+    "species": "Amoonguss"
+   },
    "Archen",
+   {
+    "owned_form": "Archeops",
+    "source": "Black/White (Battle Subway)",
+    "species": "Archeops"
+   },
    "Audino",
    "Axew",
+   {
+    "owned_form": "Beartic",
+    "source": "Black/White (Battle Subway)",
+    "species": "Beartic"
+   },
+   {
+    "owned_form": "Bisharp",
+    "source": "Black/White (Battle Subway)",
+    "species": "Bisharp"
+   },
+   {
+    "owned_form": "Bouffalant",
+    "source": "Black/White (Battle Subway)",
+    "species": "Bouffalant"
+   },
+   {
+    "owned_form": "Braviary",
+    "source": "Black/White (Battle Subway)",
+    "species": "Braviary"
+   },
+   {
+    "owned_form": "Chandelure",
+    "source": "Black/White (Battle Subway)",
+    "species": "Chandelure"
+   },
+   {
+    "owned_form": "Cofagrigus",
+    "source": "Black/White (Battle Subway)",
+    "species": "Cofagrigus"
+   },
+   {
+    "owned_form": "Conkeldurr",
+    "source": "Black/White (Battle Subway)",
+    "species": "Conkeldurr"
+   },
    "Cryogonal",
    "Cubchoo",
+   {
+    "owned_form": "Darmanitan",
+    "source": "Black/White (Battle Subway)",
+    "species": "Darmanitan"
+   },
    "Drilbur",
+   {
+    "owned_form": "Druddigon",
+    "source": "Black/White (Battle Subway)",
+    "species": "Druddigon"
+   },
    "Durant",
+   {
+    "owned_form": "Eelektross",
+    "source": "Black/White (Battle Subway)",
+    "species": "Eelektross"
+   },
+   {
+    "owned_form": "Escavalier",
+    "source": "Black/White (Battle Subway)",
+    "species": "Escavalier"
+   },
+   {
+    "owned_form": "Excadrill",
+    "source": "Black/White (Battle Subway)",
+    "species": "Excadrill"
+   },
    "Ferroseed",
+   {
+    "owned_form": "Ferrothorn",
+    "source": "Black/White (Battle Subway)",
+    "species": "Ferrothorn"
+   },
    "Foongus",
    "Frillish",
+   {
+    "owned_form": "Gigalith",
+    "source": "Black/White (Battle Subway)",
+    "species": "Gigalith"
+   },
+   {
+    "owned_form": "Golurk",
+    "source": "Black/White (Battle Subway)",
+    "species": "Golurk"
+   },
    "Gothita",
+   {
+    "owned_form": "Gothitelle",
+    "source": "Black/White (Battle Subway)",
+    "species": "Gothitelle"
+   },
+   {
+    "owned_form": "Haxorus",
+    "source": "Black/White (Battle Subway)",
+    "species": "Haxorus"
+   },
+   {
+    "owned_form": "Jellicent",
+    "source": "Black/White (Battle Subway)",
+    "species": "Jellicent"
+   },
    "Karrablast",
    "Klink",
+   {
+    "owned_form": "Klinklang",
+    "source": "Black/White (Battle Subway)",
+    "species": "Klinklang"
+   },
+   {
+    "owned_form": "Krookodile",
+    "source": "Black/White (Battle Subway)",
+    "species": "Krookodile"
+   },
+   {
+    "owned_form": "Lilligant",
+    "source": "Black/White (Battle Subway)",
+    "species": "Lilligant"
+   },
    "Litwick",
+   {
+    "owned_form": "Mandibuzz",
+    "source": "Black/White (Battle Subway)",
+    "species": "Mandibuzz"
+   },
    "Mienfoo",
+   {
+    "owned_form": "Mienshao",
+    "source": "Black/White (Battle Subway)",
+    "species": "Mienshao"
+   },
    "Munna",
+   {
+    "owned_form": "Musharna",
+    "source": "Black/White (Battle Subway)",
+    "species": "Musharna"
+   },
    "Pawniard",
    "Petilil",
+   {
+    "owned_form": "Reuniclus",
+    "source": "Black/White (Battle Subway)",
+    "species": "Reuniclus"
+   },
    "Roggenrola",
    "Rufflet",
    "Sandile",
    "Sawk",
+   {
+    "owned_form": "Scrafty",
+    "source": "Black/White (Battle Subway)",
+    "species": "Scrafty"
+   },
    "Scraggy",
    "Shelmet",
    "Solosis",
@@ -88,14 +561,257 @@
    "Timburr",
    "Tynamo",
    "Vanillite",
+   {
+    "owned_form": "Vanilluxe",
+    "source": "Black/White (Battle Subway)",
+    "species": "Vanilluxe"
+   },
    "Vullaby",
    "Yamask"
   ],
   "Hilda": [
+   {
+    "owned_form": "Accelgor",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Accelgor"
+   },
+   {
+    "owned_form": "Alomomola",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Alomomola"
+   },
+   {
+    "owned_form": "Amoonguss",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Amoonguss"
+   },
+   {
+    "owned_form": "Archeops",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Archeops"
+   },
+   {
+    "owned_form": "Audino",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Audino"
+   },
+   {
+    "owned_form": "Beartic",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Beartic"
+   },
+   {
+    "owned_form": "Bisharp",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Bisharp"
+   },
+   {
+    "owned_form": "Bouffalant",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Bouffalant"
+   },
+   {
+    "owned_form": "Braviary",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Braviary"
+   },
+   {
+    "owned_form": "Chandelure",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Chandelure"
+   },
    "Clobbopus",
+   {
+    "owned_form": "Cofagrigus",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Cofagrigus"
+   },
+   {
+    "owned_form": "Conkeldurr",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Conkeldurr"
+   },
+   {
+    "owned_form": "Cryogonal",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Cryogonal"
+   },
+   {
+    "owned_form": "Darmanitan",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Darmanitan"
+   },
    "Diancie",
+   {
+    "owned_form": "Druddigon",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Druddigon"
+   },
+   {
+    "owned_form": "Durant",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Durant"
+   },
+   {
+    "owned_form": "Eelektross",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Eelektross"
+   },
+   {
+    "owned_form": "Escavalier",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Escavalier"
+   },
+   {
+    "owned_form": "Excadrill",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Excadrill"
+   },
+   {
+    "owned_form": "Ferrothorn",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Ferrothorn"
+   },
+   {
+    "owned_form": "Gigalith",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Gigalith"
+   },
+   {
+    "owned_form": "Golurk",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Golurk"
+   },
+   {
+    "owned_form": "Gothitelle",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Gothitelle"
+   },
+   {
+    "owned_form": "Haxorus",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Haxorus"
+   },
    "Iron Leaves",
-   "Tornadus"
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "IronLeaves"
+   },
+   {
+    "owned_form": "Jellicent",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Jellicent"
+   },
+   {
+    "owned_form": "Klinklang",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Klinklang"
+   },
+   {
+    "owned_form": "Krookodile",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Krookodile"
+   },
+   {
+    "owned_form": "Lilligant",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Lilligant"
+   },
+   {
+    "owned_form": "Mandibuzz",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Mandibuzz"
+   },
+   {
+    "owned_form": "Mienshao",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Mienshao"
+   },
+   {
+    "owned_form": "Musharna",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Musharna"
+   },
+   {
+    "owned_form": "Reuniclus",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Reuniclus"
+   },
+   {
+    "owned_form": "Sawk",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Sawk"
+   },
+   {
+    "owned_form": "Scrafty",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Scrafty"
+   },
+   {
+    "owned_form": "Throh",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Throh"
+   },
+   "Tornadus",
+   {
+    "owned_form": "Vanilluxe",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Vanilluxe"
+   }
+  ],
+  "Hop": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Phantump"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Rookidee"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Toxel"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Yamper"
+   }
+  ],
+  "Iono": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "FluttrMane"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "RagingBolt"
+   }
+  ],
+  "James": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Mime jr."
+   }
+  ],
+  "Juniper": [
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Black 2 and White 2 (her Pokémon)",
+    "species": "Cinccino"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Black 2 and White 2 (her Pokémon)",
+    "species": "Watchog"
+   }
   ],
   "Jupiter": [
    "Absol",
@@ -103,13 +819,145 @@
    "Larvitar",
    "Nidoran-M"
   ],
+  "Kabu": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Sizzlipede"
+   }
+  ],
   "Katy": [
    "Combee"
   ],
+  "Kiawe (anime)": [
+   {
+    "owned_form": "Arcanine",
+    "source": "Ultra Sun/Ultra Moon (Battle Tree; also Mina's trial & US post-game battle)",
+    "species": "Arcanine"
+   },
+   {
+    "owned_form": "Kangaskhan",
+    "source": "Sun/Ultra Sun (Battle Tree)",
+    "species": "Kangaskhan"
+   },
+   {
+    "owned_form": "Magmar",
+    "source": "Sun/Moon/Ultra Sun/Ultra Moon (given away)",
+    "species": "Magmar"
+   },
+   {
+    "owned_form": "Talonflame",
+    "source": "Ultra Sun/Ultra Moon (Battle Tree; also Mina's trial & US post-game battle)",
+    "species": "Talonflame"
+   }
+  ],
+  "Kofu": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Crabrawler"
+   }
+  ],
+  "Korrina": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Crabrawler"
+   }
+  ],
+  "Kukui": [
+   {
+    "owned_form": "Crabominable",
+    "source": "Sun/Moon + Ultra Sun/Ultra Moon (Battle Royal Dome, Master Rank)",
+    "species": "Crabominable"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Crabrawler"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Ultra Sun and Ultra Moon — opening cinematic",
+    "species": "Cutiefly"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Sun/Moon & Ultra Sun/Ultra Moon — 'Residing in laboratory'",
+    "species": "Murkrow"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Sun/Moon & Ultra Sun/Ultra Moon — 'Residing in laboratory'",
+    "species": "Poliwhirl"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Sun/Moon & Ultra Sun/Ultra Moon — 'Residing in laboratory'",
+    "species": "Snubbull"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Sun/Moon & Ultra Sun/Ultra Moon — 'Residing in laboratory'",
+    "species": "Stufful"
+   }
+  ],
+  "Lana (anime)": [
+   {
+    "owned_form": "Chinchou",
+    "source": "Sun/Moon (Brooklet Hill trial captain battle)",
+    "species": "Chinchou"
+   },
+   {
+    "owned_form": "Cloyster",
+    "source": "Ultra Sun/Ultra Moon (Mina's trial, post-game battle)",
+    "species": "Cloyster"
+   },
+   {
+    "owned_form": "Lanturn",
+    "source": "Ultra Sun/Ultra Moon (Mina's trial, post-game battle)",
+    "species": "Lanturn"
+   },
+   {
+    "owned_form": "Shellder",
+    "source": "Sun/Moon (Brooklet Hill trial captain battle)",
+    "species": "Shellder"
+   }
+  ],
   "Lillie (anime)": [
-   "Blacephalon"
+   "Blacephalon",
+   {
+    "owned_form": "Comfey",
+    "source": "Ultra Sun/Ultra Moon (Battle Tree partner)",
+    "species": "Comfey"
+   },
+   {
+    "owned_form": "Ribombee",
+    "source": "Ultra Sun/Ultra Moon (Battle Tree partner)",
+    "species": "Ribombee"
+   }
+  ],
+  "Lucas": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Porygon"
+   }
+  ],
+  "Lucy": [
+   "Abra",
+   "Cyndaquil",
+   "Makuhita",
+   "Skitty",
+   "Snorlax",
+   "Swinub"
   ],
   "Lusamine": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Blacefalon"
+   },
    "Drifloon",
    "Litten",
    "Magby",
@@ -120,53 +968,928 @@
    "Snubbull",
    "Staryu"
   ],
+  "Magnolia": [
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'Traveling with' (Rotom Phone)",
+    "species": "Rotom"
+   }
+  ],
+  "Mallow (anime)": [
+   {
+    "owned_form": "Comfey",
+    "source": "Moon / Ultra Moon (Battle Tree)",
+    "species": "Comfey"
+   },
+   {
+    "owned_form": "Lurantis",
+    "source": "Moon / Ultra Moon (Battle Tree)",
+    "species": "Lurantis"
+   },
+   {
+    "owned_form": "Phantump",
+    "source": "Moon (Lush Jungle trial captain battle)",
+    "species": "Phantump"
+   },
+   {
+    "owned_form": "Sceptile",
+    "source": "Moon / Ultra Moon (Battle Tree)",
+    "species": "Sceptile"
+   },
+   {
+    "owned_form": "Shiinotic",
+    "source": "Moon (Lush Jungle trial captain battle) + Ultra Sun/Ultra Moon (Mina's trial, post-game battle)",
+    "species": "Shiinotic"
+   },
+   {
+    "owned_form": "Talonflame",
+    "source": "Moon / Ultra Moon (Battle Tree)",
+    "species": "Talonflame"
+   },
+   {
+    "owned_form": "Toucannon",
+    "source": "Moon / Ultra Moon (Battle Tree)",
+    "species": "Toucannon"
+   },
+   {
+    "owned_form": "Trevenant",
+    "source": "Moon / Ultra Moon (Battle Tree) + Ultra Sun/Ultra Moon (Mina's trial, post-game battle)",
+    "species": "Trevenant"
+   }
+  ],
   "Mars": [
+   {
+    "owned_form": "Crobat",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Double Battles Rank 9, Team C)",
+    "species": "Crobat"
+   },
    "Eevee",
+   {
+    "owned_form": "Espeon",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Double Battles Rank 9, Team B)",
+    "species": "Espeon"
+   },
+   {
+    "owned_form": "Raichu",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Double Battles Rank 9, Team A)",
+    "species": "Raichu"
+   },
+   {
+    "owned_form": "Togekiss",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Double Battles Rank 9, Team B)",
+    "species": "Togekiss"
+   },
    "Togepi"
   ],
+  "May": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Bulbasaur"
+   }
+  ],
   "Maylene": [
+   {
+    "owned_form": "Blaziken",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Single Battles Rank 3, Team A; also Doubles Rank 5 Team C)",
+    "species": "Blaziken"
+   },
+   {
+    "owned_form": "Dragonite",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Single Battles Rank 3, Team B)",
+    "species": "Dragonite"
+   },
    "Dratini",
+   {
+    "owned_form": "Empoleon",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Single Battles Rank 3, Team A)",
+    "species": "Empoleon"
+   },
    "Torchic"
   ],
+  "Nate": [
+   {
+    "owned_form": "Accelgor",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Accelgor"
+   },
+   {
+    "owned_form": "Alomomola",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Alomomola"
+   },
+   {
+    "owned_form": "Amoonguss",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Amoonguss"
+   },
+   {
+    "owned_form": "Archeops",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Archeops"
+   },
+   {
+    "owned_form": "Audino",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Audino"
+   },
+   {
+    "owned_form": "Beartic",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Beartic"
+   },
+   {
+    "owned_form": "Bisharp",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Bisharp"
+   },
+   {
+    "owned_form": "Bouffalant",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Bouffalant"
+   },
+   {
+    "owned_form": "Chandelure",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Chandelure"
+   },
+   {
+    "owned_form": "Cofagrigus",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Cofagrigus"
+   },
+   {
+    "owned_form": "Conkeldurr",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Conkeldurr"
+   },
+   {
+    "owned_form": "Cryogonal",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Cryogonal"
+   },
+   {
+    "owned_form": "Darmanitan",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Darmanitan"
+   },
+   {
+    "owned_form": "Druddigon",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Druddigon"
+   },
+   {
+    "owned_form": "Durant",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Durant"
+   },
+   {
+    "owned_form": "Eelektross",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Eelektross"
+   },
+   {
+    "owned_form": "Escavalier",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Escavalier"
+   },
+   {
+    "owned_form": "Excadrill",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Excadrill"
+   },
+   {
+    "owned_form": "Ferrothorn",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Ferrothorn"
+   },
+   {
+    "owned_form": "Gigalith",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Gigalith"
+   },
+   {
+    "owned_form": "Golurk",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Golurk"
+   },
+   {
+    "owned_form": "Gothitelle",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Gothitelle"
+   },
+   {
+    "owned_form": "Jellicent",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Jellicent"
+   },
+   {
+    "owned_form": "Klinklang",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Klinklang"
+   },
+   {
+    "owned_form": "Krookodile",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Krookodile"
+   },
+   {
+    "owned_form": "Lilligant",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Lilligant"
+   },
+   {
+    "owned_form": "Mandibuzz",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Mandibuzz"
+   },
+   {
+    "owned_form": "Mienshao",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Mienshao"
+   },
+   {
+    "owned_form": "Musharna",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Musharna"
+   },
+   {
+    "owned_form": "Reuniclus",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Reuniclus"
+   },
+   {
+    "owned_form": "Sawk",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Sawk"
+   },
+   {
+    "owned_form": "Scrafty",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Scrafty"
+   },
+   {
+    "owned_form": "Throh",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Throh"
+   },
+   {
+    "owned_form": "Vanilluxe",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Vanilluxe"
+   }
+  ],
   "Nemona": [
-   "Scream Tail"
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Dunsparce"
+   },
+   "Scream Tail",
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "ScreamTail"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Wattrel"
+   }
+  ],
+  "Noland": [
+   {
+    "owned_form": "normal",
+    "source": "Pokemon Adventures (Emerald arc, PS306 onward)",
+    "species": "Mawile"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokemon Masters EX (sync pair, Variety Sync Pair Scout)",
+    "species": "Ninjask"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokemon Adventures (Emerald arc, PS324) — Smeargle (x3)",
+    "species": "Smeargle"
+   }
+  ],
+  "Oak": [
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Beedrill"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Bellossom"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Bellsprout"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Butterfree"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Caterpie"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — M04 (Oak's past self, 'Sam')",
+    "species": "Charmeleon"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Corsola"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Dewgong"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Dodrio"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — The Mastermind of Mirage Pokémon",
+    "species": "Dragonite"
+   },
+   "Dratini",
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Dugtrio"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Electrode"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Exeggcute"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Exeggutor"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Geodude"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Gloom"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Goldeen"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Growlithe"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Gyarados"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Hoothoot"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Hoppip"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Horsea"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Jumpluff"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Kakuna"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Krabby"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Magikarp"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Mankey"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Marowak"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Muk"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Nidoran♀"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Nidoran♂"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Ninetales"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Oddish"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Onix"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Paras"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Parasect"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Pidgeotto"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Pidove"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Poliwag"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Poliwhirl"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Ponyta"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Primeape"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Psyduck"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Quagsire"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Raichu"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Rapidash"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Raticate"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Rattata"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Rhydon"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Rhyhorn"
+   },
+   "Rotom",
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Sandshrew"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Sandslash"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Seadra"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — HS15 (dub only)",
+    "species": "Seaking"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Seel"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Skiploom"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Slowpoke"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Snorlax"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Spearow"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Starly"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Starmie"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Staryu"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Taillow"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Tangela"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Tentacool"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Tentacruel"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Victreebel"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Vileplume"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Voltorb"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Oak Corral ('Other' section, Pokémon the Series)",
+    "species": "Weepinbell"
+   }
+  ],
+  "Palmer": [
+   {
+    "owned_form": "normal",
+    "source": "Pokemon Adventures (Platinum arc flashback, PS438 'The Final Dimensional Duel VIII')",
+    "species": "Cranidos"
+   }
   ],
   "Poppy": [
-   "Iron Treads"
+   "Iron Treads",
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "IronTreads"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Rookidee"
+   }
+  ],
+  "Raihan": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Archaludon"
+   }
+  ],
+  "Red": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Bellsprout"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Doduo"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Ekans"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Gastly"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Happiny"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Kabuto"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Meowth"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Nidoran♀"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Ponyta"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Tyrogue"
+   }
   ],
   "Roark": [
    "Bagon",
    "Lunatone",
+   {
+    "owned_form": "Salamence",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Single Battles Rank 1, Team B)",
+    "species": "Salamence"
+   },
+   {
+    "owned_form": "Slowbro",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Single Battles Rank 1, Team A)",
+    "species": "Slowbro"
+   },
    "Slowpoke",
    "Torkoal"
   ],
   "Rosa": [
+   {
+    "owned_form": "Accelgor",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Accelgor"
+   },
    "Alomomola",
+   {
+    "owned_form": "Amoonguss",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Amoonguss"
+   },
    "Archen",
+   {
+    "owned_form": "Archeops",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Archeops"
+   },
    "Audino",
    "Axew",
+   {
+    "owned_form": "Beartic",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Beartic"
+   },
+   {
+    "owned_form": "Bisharp",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Bisharp"
+   },
    "Bouffalant",
+   {
+    "owned_form": "Braviary",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Braviary"
+   },
+   {
+    "owned_form": "Chandelure",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Chandelure"
+   },
+   {
+    "owned_form": "Cofagrigus",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Cofagrigus"
+   },
+   {
+    "owned_form": "Conkeldurr",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Conkeldurr"
+   },
    "Cryogonal",
    "Cubchoo",
+   {
+    "owned_form": "Darmanitan",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Darmanitan"
+   },
    "Darumaka",
    "Drilbur",
+   {
+    "owned_form": "Druddigon",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Druddigon"
+   },
    "Durant",
+   {
+    "owned_form": "Eelektross",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Eelektross"
+   },
+   {
+    "owned_form": "Escavalier",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Escavalier"
+   },
+   {
+    "owned_form": "Excadrill",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Excadrill"
+   },
    "Ferroseed",
+   {
+    "owned_form": "Ferrothorn",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Ferrothorn"
+   },
    "Foongus",
    "Frillish",
+   {
+    "owned_form": "Gigalith",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Gigalith"
+   },
    "Golett",
+   {
+    "owned_form": "Golurk",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Golurk"
+   },
    "Gothita",
+   {
+    "owned_form": "Gothitelle",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Gothitelle"
+   },
+   {
+    "owned_form": "Haxorus",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Haxorus"
+   },
+   {
+    "owned_form": "Jellicent",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Jellicent"
+   },
    "Karrablast",
    "Klink",
+   {
+    "owned_form": "Klinklang",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Klinklang"
+   },
+   {
+    "owned_form": "Krookodile",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Krookodile"
+   },
+   {
+    "owned_form": "Lilligant",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Lilligant"
+   },
    "Litwick",
+   {
+    "owned_form": "Mandibuzz",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Mandibuzz"
+   },
    "Mienfoo",
+   {
+    "owned_form": "Mienshao",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Mienshao"
+   },
    "Munna",
+   {
+    "owned_form": "Musharna",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Musharna"
+   },
    "Pawniard",
    "Petilil",
+   {
+    "owned_form": "Reuniclus",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Reuniclus"
+   },
    "Roggenrola",
    "Rufflet",
    "Sandile",
    "Sawk",
+   {
+    "owned_form": "Scrafty",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Scrafty"
+   },
    "Scraggy",
    "Shelmet",
    "Solosis",
@@ -174,8 +1897,109 @@
    "Timburr",
    "Tynamo",
    "Vanillite",
+   {
+    "owned_form": "Vanilluxe",
+    "source": "Black/White & Black 2/White 2 (Battle Subway — Multi Train partner)",
+    "species": "Vanilluxe"
+   },
    "Vullaby",
    "Yamask"
+  ],
+  "Rowan": [
+   {
+    "owned_form": "normal",
+    "source": "Anime — Pokémon Journeys (Alternate World Professor Rowan, 'Used in his studies')",
+    "species": "Kricketot"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — Pokémon Journeys (Alternate World Professor Rowan, 'Used in his studies')",
+    "species": "Shinx"
+   }
+  ],
+  "Sada": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "BruteBonet"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "FluttrMane"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Scarlet — The Indigo Disk (Area Zero research)",
+    "species": "Gouging Fire"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "GougngFire"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Scarlet (Area Zero time-machine research)",
+    "species": "Great Tusk"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Scarlet — The Indigo Disk (Area Zero research)",
+    "species": "Raging Bolt"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "RagingBolt"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "RoarngMoon"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "SandyShock"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "ScreamTail"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "SlithrWing"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Scarlet — The Teal Mask / Indigo Disk (Area Zero research)",
+    "species": "Walking Wake"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "WalkngWake"
+   }
+  ],
+  "Saturn": [
+   {
+    "owned_form": "Absol",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Double Battles Rank 4)",
+    "species": "Absol"
+   },
+   {
+    "owned_form": "Sableye",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Double Battles Rank 4)",
+    "species": "Sableye"
+   },
+   {
+    "owned_form": "Tyranitar",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Double Battles Rank 4)",
+    "species": "Tyranitar"
+   }
   ],
   "Selene": [
    "Buzzwole",
@@ -189,28 +2013,183 @@
    "Espurr",
    "Fletchling"
   ],
+  "Sonia": [
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'Traveling with' (Rotom Phone)",
+    "species": "Rotom"
+   }
+  ],
   "Sophocles": [
+   {
+    "owned_form": "Electivire",
+    "source": "Sun/Moon + Ultra Sun/Ultra Moon (Pokemon League Title Defense; Battle Agency boss)",
+    "species": "Electivire"
+   },
    "Elekid",
    "Geodude",
-   "Magnemite"
+   {
+    "owned_form": "Alolan Golem",
+    "source": "Sun/Moon + Ultra Sun/Ultra Moon (Pokemon League Title Defense; Mina's trial US; Battle Agency boss)",
+    "species": "Golem"
+   },
+   "Magnemite",
+   {
+    "owned_form": "Magnezone",
+    "source": "Sun/Moon + Ultra Sun/Ultra Moon (Pokemon League Title Defense; Mina's trial US; Battle Agency boss)",
+    "species": "Magnezone"
+   }
+  ],
+  "Sycamore": [
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'Seen in his lab' (Professor Sycamore (anime))",
+    "species": "Azurill"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'Seen in his lab' (Professor Sycamore (anime))",
+    "species": "Caterpie"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'Seen in his lab' (Professor Sycamore (anime))",
+    "species": "Combee"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'Seen in his lab' (Professor Sycamore (anime))",
+    "species": "Fletchling"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'Seen in his lab' (Professor Sycamore (anime))",
+    "species": "Helioptile"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'Seen in his lab' (Professor Sycamore (anime))",
+    "species": "Linoone"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'Seen in his lab' (Professor Sycamore (anime))",
+    "species": "Marill"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'Seen in his lab' (Professor Sycamore (anime))",
+    "species": "Psyduck"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'Seen in his lab' (Professor Sycamore (anime))",
+    "species": "Scatterbug"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'Seen in his lab' (Professor Sycamore (anime))",
+    "species": "Weedle"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Anime — 'Seen in his lab' (Professor Sycamore (anime))",
+    "species": "Zigzagoon"
+   }
+  ],
+  "Turo": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "IrnValiant"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Violet — The Indigo Disk (Area Zero research)",
+    "species": "Iron Boulder"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Violet — The Indigo Disk (Area Zero research)",
+    "species": "Iron Crown"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Violet — The Teal Mask / Indigo Disk (Area Zero research)",
+    "species": "Iron Leaves"
+   },
+   {
+    "owned_form": "normal",
+    "source": "Pokémon Violet (Area Zero time-machine research)",
+    "species": "Iron Treads"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "IronBundle"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "IronJuglis"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "IronThorns"
+   }
+  ],
+  "Victor": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Kubfu"
+   },
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Scorbunny"
+   }
   ],
   "Volkner": [
+   {
+    "owned_form": "Gyarados",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Single Battles Rank 8, Team B)",
+    "species": "Gyarados"
+   },
    "Magikarp",
    "Magnemite",
+   {
+    "owned_form": "Magnezone",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Single Battles Rank 8, Team A)",
+    "species": "Magnezone"
+   },
    "Mudkip",
+   {
+    "owned_form": "Swampert",
+    "source": "Brilliant Diamond/Shining Pearl (Battle Tower, Master Class Single Battles Rank 8, Team C)",
+    "species": "Swampert"
+   },
    "Zapdos"
   ],
-  "Oak": [
-   "Dratini",
-   "Rotom"
+  "Volo": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Growlithe"
+   },
+   {
+    "owned_form": "Hisuian Arcanine",
+    "source": "Legends: Arceus",
+    "species": "Hisuian Arcanine"
+   }
   ],
-  "Lucy": [
-   "Abra",
-   "Cyndaquil",
-   "Makuhita",
-   "Skitty",
-   "Snorlax",
-   "Swinub"
+  "Wallace": [
+   {
+    "owned_form": null,
+    "source": null,
+    "species": "Blacefalon"
+   }
   ]
  }
 }

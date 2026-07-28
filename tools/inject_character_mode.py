@@ -54,9 +54,21 @@ BUILD = ROOT / "build"
 CM = HERE / "character_mode"
 CHARMAP = Path("/home/jbfish00/Documents/Pokemon Rowe Alteration/charmap.txt")
 
-NUM_CHARACTERS = 193  # 170 + 11 professors + Tobias + 10 Frontier Brains + Volo (2026-07-25)
+# Derived, never hardcoded -- and passed on to the shim as -D. A hardcoded count
+# in the C shim is the dangerous direction: too high and gateActive() trusts an
+# out-of-range character index instead of rejecting it.
+_MANIFEST = json.loads((HERE / "character_mode" / "characters_manifest.json").read_text())
+NUM_CHARACTERS = len(_MANIFEST["characters"])
 BITMAP_STRIDE = 187
 CODE_LEN = 11
+
+# Tobias gets the 1% legendary-inclusive wild rate (user spec 2026-07-23);
+# everyone else 10%. Derived by NAME, because the id moved when Volo was
+# inserted ahead of him on 2026-07-25 and the shim's hardcoded 182 -- now Volo --
+# went with it unnoticed. 0 when he is not in the roster: ids are 1-based, so
+# the branch goes dead rather than landing on whoever inherited the slot.
+TOBIAS_CHAR_ID = next((i + 1 for i, c in enumerate(_MANIFEST["characters"])
+                       if c["character"] == "Tobias"), 0)
 
 # --- confirmed free-block layout (all verified 0xFF) ---
 SHIM_ADDR      = 0x08ED2200
@@ -106,7 +118,20 @@ GIVE_NATIVE_COUNT = 49
 # every wild-roll table (grass/cave, surf, rock smash, all fishing tiers).
 WILD_BL_SITE          = 0x22BF36
 CREATE_MON_WITH_IVS   = 0x081A7504
-WILDPOOL_STRIDE       = 176
+# Read from the emitter's own manifest, not restated here, and passed on to the
+# shim as -DWILDPOOL_STRIDE. emit_wildpool.py's POOL_STRIDE is the one
+# authoritative definition; three copies of it disagreeing with a fourth in the
+# C shim is what shipped the 104-vs-176 bug.
+WILDPOOL_STRIDE = json.loads(
+    (HERE / "character_mode" / "wildpool_manifest.json").read_text())["pool_stride"]
+
+# 1% legendary wild encounters. Its own free run: the wildpool ends at
+# 0x08F062C0 and build_trade_testrom.py squats 0x08F10000, so this sits between
+# them. splice()'s 0xFF precondition is what actually proves it clear.
+LEGENDARY_ADDR = 0x08F08000
+_LEG_MANIFEST = json.loads(
+    (HERE / "character_mode" / "legendaries_manifest.json").read_text())
+LEGENDARY_COUNT = _LEG_MANIFEST["count"]
 
 BG_EVENT_PTR_OFF = 0x123ACC        # only ref to the clipboard script
 ORIG_CLIPBOARD   = 0x08311CCB
@@ -250,24 +275,60 @@ def main():
     assert len(bitmaps) == NUM_CHARACTERS * BITMAP_STRIDE, len(bitmaps)
     wildpool = (CM / "wildpool.bin").read_bytes()
     assert len(wildpool) == NUM_CHARACTERS * WILDPOOL_STRIDE * 4, len(wildpool)
+    legendaries = (CM / "legendaries.bin").read_bytes()
+    assert len(legendaries) == LEGENDARY_COUNT * 4 + NUM_CHARACTERS * 4, (
+        len(legendaries), LEGENDARY_COUNT, NUM_CHARACTERS)
 
     # --- code + starter tables ---
+    #
+    # THE PLAYABILITY THRESHOLD IS ENFORCED HERE, by poisoning the code slot of
+    # every hidden character. Seaglass selects by typed code rather than by a
+    # menu, so there is no list to filter and no shim change is needed -- an
+    # unmatchable code slot IS the gate, and a hidden character's code is then
+    # refused exactly like an unknown one.
+    #
+    # Why 11 non-terminator bytes rather than "a lead byte the screen cannot
+    # produce" (which is what game_plans/seaglass.md suggested): that would
+    # require knowing the CODE keyboard's exact character set, which we do not.
+    # This is unmatchable by CONSTRUCTION instead. CM_OpenCodeEntry pre-clears
+    # all CODE_LEN (11) bytes of gStringVar2 to 0xFF and the screen accepts at
+    # most 10 characters, so entered[10] is ALWAYS 0xFF. codeEq() walks all 11
+    # bytes and only returns a match on a simultaneous 0xFF, so a stored code
+    # with no 0xFF anywhere can never match any reachable entry -- including 10
+    # spaces, which is the closest a player could get.
+    # 0xFE (newline) is used as the fill because it is also not producible on a
+    # naming screen, so the property holds twice over for independent reasons.
+    #
+    # Hidden characters KEEP their index -- saves store the character INDEX, and
+    # an already-selected hidden character keeps working. This blocks NEW
+    # selection only.
+    CODE_POISON = b"\xFE" * CODE_LEN
     codes = bytearray()
     seen = {}
     starters = []
     typed = []
+    n_hidden = 0
     for c in chars:
         code = code_for(c["character"])
         key = code.upper()
         assert 1 <= len(code) <= 10, (c["character"], code)
         assert key not in seen, f"code collision: {code} ({c['character']} vs {seen[key]})"
         seen[key] = c["character"]
-        typed.append(code)
-        enc = enc_text(code, cm)
-        assert len(enc) <= CODE_LEN
-        codes += enc + b"\xFF" * (CODE_LEN - len(enc))
+        if c.get("hidden"):
+            n_hidden += 1
+            typed.append(None)               # not offered; excluded from codes.txt
+            codes += CODE_POISON
+        else:
+            typed.append(code)
+            enc = enc_text(code, cm)
+            assert len(enc) <= CODE_LEN
+            assert 0xFF in enc + b"\xFF" * (CODE_LEN - len(enc)), code
+            codes += enc + b"\xFF" * (CODE_LEN - len(enc))
         sig = c["signature_id"] if c.get("has_signature") and c.get("signature_id") else c["roster_species_ids"][0]
         starters.append(sig)
+    assert n_hidden == sum(1 for c in chars if c.get("hidden"))
+    print(f"threshold: {NUM_CHARACTERS - n_hidden} offered, {n_hidden} hidden "
+          f"(code slots poisoned; indices unchanged)")
     starters_blob = b"".join(struct.pack("<H", s) for s in starters)
 
     # off-roster debug species for CMDBGGIVE2: lowest valid id not on char-1 bitmap
@@ -294,6 +355,11 @@ def main():
                     f"-DTRADE_RECV_OFF={TRADE_RECV_OFF}",
                     f"-DTRADE_COUNT={TRADE_COUNT}",
                     f"-DWILDPOOL_ADDR={WILDPOOL_ADDR:#x}",
+                    f"-DWILDPOOL_STRIDE={WILDPOOL_STRIDE}",
+                    f"-DNUM_CHARACTERS={NUM_CHARACTERS}",
+                    f"-DTOBIAS_CHAR_ID={TOBIAS_CHAR_ID}",
+                    f"-DLEGENDARY_ADDR={LEGENDARY_ADDR:#x}",
+                    f"-DLEGENDARY_COUNT={LEGENDARY_COUNT}",
                     "-o", str(obj), str(ROOT / "src" / "character_mode.c")],
                    check=True)
     libgcc = subprocess.run(["arm-none-eabi-gcc", "-mthumb", "-mcpu=arm7tdmi",
@@ -314,6 +380,9 @@ def main():
         assert need in syms, f"missing symbol {need}"
     assert len(shim) <= BITMAPS_ADDR - SHIM_ADDR, f"shim too big: {len(shim)}"
     print(f"shim: {len(shim)} bytes @ {SHIM_ADDR:#x}")
+    print(f"shim constants (derived, -D): NUM_CHARACTERS={NUM_CHARACTERS} "
+          f"WILDPOOL_STRIDE={WILDPOOL_STRIDE} TOBIAS_CHAR_ID={TOBIAS_CHAR_ID}"
+          f"{'' if TOBIAS_CHAR_ID else ' (Tobias not in roster -- 1%% branch dead)'}")
 
     hook_open   = syms["CM_OpenCodeEntry"]
     hook_match  = syms["CM_MatchCode"]
@@ -453,6 +522,7 @@ def main():
     splice(STARTERS_ADDR, starters_blob, "starters")
     splice(SCRIPT_ADDR, bytes(script), "scripts")
     splice(WILDPOOL_ADDR, wildpool, "wildpool")
+    splice(LEGENDARY_ADDR, legendaries, "legendaries")
     splice(CM_MUGSHOT_ADDR, mugshot, "mugshot renderer")
 
     # --- Phase 3 character sprites (2026-07-25) ---
@@ -561,10 +631,16 @@ def main():
     if bps.exists():
         print(f"patch: {bps} ({bps.stat().st_size} bytes)")
 
+    # Offered characters only -- a hidden character's code does not work, so
+    # listing it would send a player to a code that gets refused. Lazarus's
+    # codes.txt is the same shape (123 lines for 238 characters).
+    _offered = [(code, c, s) for code, c, s in zip(typed, chars, starters)
+                if code is not None]
     (BUILD / "codes.txt").write_text(
         "\n".join(f"{code}\t{c['character']}\tstarter={s}"
-                  for code, c, s in zip(typed, chars, starters)) + "\n")
-    print(f"code list: {BUILD/'codes.txt'} ({len(typed)} characters)")
+                  for code, c, s in _offered) + "\n")
+    print(f"code list: {BUILD/'codes.txt'} "
+          f"({len(_offered)} selectable of {len(typed)} characters)")
     print("Debug codes: CMDBGOFF, CMDBGGIVE1, CMDBGGIVE2 (case-insensitive)")
 
 

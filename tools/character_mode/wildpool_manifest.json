@@ -3,7 +3,7 @@
  "characters": [
   {
    "character": "Red",
-   "pool_size": 97,
+   "pool_size": 100,
    "pool": [
     {
      "species_id": 1,
@@ -48,6 +48,11 @@
     {
      "species_id": 25,
      "species": "Pikachu",
+     "min_level": 1
+    },
+    {
+     "species_id": 29,
+     "species": "Nidoran\u2640",
      "min_level": 1
     },
     {
@@ -223,6 +228,11 @@
     {
      "species_id": 8,
      "species": "Wartortle",
+     "min_level": 16
+    },
+    {
+     "species_id": 30,
+     "species": "Nidorina",
      "min_level": 16
     },
     {
@@ -459,6 +469,11 @@
      "species_id": 321,
      "species": "Wailord",
      "min_level": 40
+    },
+    {
+     "species_id": 31,
+     "species": "Nidoqueen",
+     "min_level": 48
     },
     {
      "species_id": 34,
@@ -5117,7 +5132,7 @@
   },
   {
    "character": "Giovanni",
-   "pool_size": 77,
+   "pool_size": 81,
    "pool": [
     {
      "species_id": 4,
@@ -5200,6 +5215,11 @@
      "min_level": 1
     },
     {
+     "species_id": 102,
+     "species": "Exeggcute",
+     "min_level": 1
+    },
+    {
      "species_id": 104,
      "species": "Cubone",
      "min_level": 1
@@ -5222,6 +5242,11 @@
     {
      "species_id": 128,
      "species": "Tauros",
+     "min_level": 1
+    },
+    {
+     "species_id": 129,
+     "species": "Magikarp",
      "min_level": 1
     },
     {
@@ -5297,6 +5322,11 @@
     {
      "species_id": 91,
      "species": "Cloyster",
+     "min_level": 17
+    },
+    {
+     "species_id": 103,
+     "species": "Exeggutor",
      "min_level": 17
     },
     {
@@ -5387,6 +5417,11 @@
     {
      "species_id": 107,
      "species": "Hitmonchan",
+     "min_level": 20
+    },
+    {
+     "species_id": 130,
+     "species": "Gyarados",
      "min_level": 20
     },
     {
@@ -18384,7 +18419,7 @@
   },
   {
    "character": "Mars",
-   "pool_size": 28,
+   "pool_size": 31,
    "pool": [
     {
      "species_id": 41,
@@ -18404,6 +18439,11 @@
     {
      "species_id": 133,
      "species": "Eevee",
+     "min_level": 1
+    },
+    {
+     "species_id": 172,
+     "species": "Pichu",
      "min_level": 1
     },
     {
@@ -18430,6 +18470,11 @@
      "species_id": 386,
      "species": "Deoxys",
      "min_level": 1
+    },
+    {
+     "species_id": 25,
+     "species": "Pikachu",
+     "min_level": 17
     },
     {
      "species_id": 35,
@@ -18500,6 +18545,11 @@
      "species_id": 125,
      "species": "Electabuzz",
      "min_level": 30
+    },
+    {
+     "species_id": 26,
+     "species": "Raichu",
+     "min_level": 49
     },
     {
      "species_id": 36,
@@ -18696,7 +18746,7 @@
   },
   {
    "character": "Saturn",
-   "pool_size": 30,
+   "pool_size": 35,
    "pool": [
     {
      "species_id": 41,
@@ -18744,8 +18794,18 @@
      "min_level": 1
     },
     {
+     "species_id": 246,
+     "species": "Larvitar",
+     "min_level": 1
+    },
+    {
      "species_id": 280,
      "species": "Ralts",
+     "min_level": 1
+    },
+    {
+     "species_id": 302,
+     "species": "Sableye",
      "min_level": 1
     },
     {
@@ -18756,6 +18816,11 @@
     {
      "species_id": 318,
      "species": "Carvanha",
+     "min_level": 1
+    },
+    {
+     "species_id": 359,
+     "species": "Absol",
      "min_level": 1
     },
     {
@@ -18804,6 +18869,11 @@
      "min_level": 30
     },
     {
+     "species_id": 247,
+     "species": "Pupitar",
+     "min_level": 30
+    },
+    {
      "species_id": 282,
      "species": "Gardevoir",
      "min_level": 30
@@ -18832,6 +18902,11 @@
      "species_id": 169,
      "species": "Crobat",
      "min_level": 54
+    },
+    {
+     "species_id": 248,
+     "species": "Tyranitar",
+     "min_level": 55
     },
     {
      "species_id": 76,
@@ -20953,7 +21028,7 @@
   },
   {
    "character": "Calem",
-   "pool_size": 13,
+   "pool_size": 18,
    "pool": [
     {
      "species_id": 4,
@@ -20966,6 +21041,16 @@
      "min_level": 1
     },
     {
+     "species_id": 173,
+     "species": "Cleffa",
+     "min_level": 1
+    },
+    {
+     "species_id": 333,
+     "species": "Swablu",
+     "min_level": 1
+    },
+    {
      "species_id": 359,
      "species": "Absol",
      "min_level": 1
@@ -20974,6 +21059,11 @@
      "species_id": 5,
      "species": "Charmeleon",
      "min_level": 16
+    },
+    {
+     "species_id": 35,
+     "species": "Clefairy",
+     "min_level": 17
     },
     {
      "species_id": 134,
@@ -21016,9 +21106,19 @@
      "min_level": 17
     },
     {
+     "species_id": 334,
+     "species": "Altaria",
+     "min_level": 35
+    },
+    {
      "species_id": 6,
      "species": "Charizard",
      "min_level": 36
+    },
+    {
+     "species_id": 36,
+     "species": "Clefable",
+     "min_level": 49
     }
    ]
   },
@@ -22551,7 +22651,7 @@
   },
   {
    "character": "Kukui",
-   "pool_size": 30,
+   "pool_size": 38,
    "pool": [
     {
      "species_id": 1,
@@ -22561,6 +22661,11 @@
     {
      "species_id": 37,
      "species": "Vulpix",
+     "min_level": 1
+    },
+    {
+     "species_id": 60,
+     "species": "Poliwag",
      "min_level": 1
     },
     {
@@ -22586,6 +22691,16 @@
     {
      "species_id": 172,
      "species": "Pichu",
+     "min_level": 1
+    },
+    {
+     "species_id": 198,
+     "species": "Murkrow",
+     "min_level": 1
+    },
+    {
+     "species_id": 209,
+     "species": "Snubbull",
      "min_level": 1
     },
     {
@@ -22649,6 +22764,21 @@
      "min_level": 17
     },
     {
+     "species_id": 430,
+     "species": "Honchkrow",
+     "min_level": 17
+    },
+    {
+     "species_id": 210,
+     "species": "Granbull",
+     "min_level": 23
+    },
+    {
+     "species_id": 61,
+     "species": "Poliwhirl",
+     "min_level": 25
+    },
+    {
      "species_id": 97,
      "species": "Hypno",
      "min_level": 26
@@ -22687,6 +22817,16 @@
      "species_id": 26,
      "species": "Raichu",
      "min_level": 49
+    },
+    {
+     "species_id": 62,
+     "species": "Poliwrath",
+     "min_level": 57
+    },
+    {
+     "species_id": 186,
+     "species": "Politoed",
+     "min_level": 57
     },
     {
      "species_id": 462,
@@ -24105,7 +24245,7 @@
   },
   {
    "character": "Kiawe (anime)",
-   "pool_size": 23,
+   "pool_size": 29,
    "pool": [
     {
      "species_id": 4,
@@ -24115,6 +24255,11 @@
     {
      "species_id": 41,
      "species": "Zubat",
+     "min_level": 1
+    },
+    {
+     "species_id": 58,
+     "species": "Growlithe",
      "min_level": 1
     },
     {
@@ -24133,6 +24278,11 @@
      "min_level": 1
     },
     {
+     "species_id": 115,
+     "species": "Kangaskhan",
+     "min_level": 1
+    },
+    {
      "species_id": 128,
      "species": "Tauros",
      "min_level": 1
@@ -24140,6 +24290,11 @@
     {
      "species_id": 239,
      "species": "Elekid",
+     "min_level": 1
+    },
+    {
+     "species_id": 240,
+     "species": "Magby",
      "min_level": 1
     },
     {
@@ -24161,6 +24316,11 @@
      "species_id": 5,
      "species": "Charmeleon",
      "min_level": 16
+    },
+    {
+     "species_id": 59,
+     "species": "Arcanine",
+     "min_level": 17
     },
     {
      "species_id": 105,
@@ -24193,6 +24353,11 @@
      "min_level": 30
     },
     {
+     "species_id": 126,
+     "species": "Magmar",
+     "min_level": 30
+    },
+    {
      "species_id": 342,
      "species": "Crawdaunt",
      "min_level": 30
@@ -24221,13 +24386,23 @@
      "species_id": 466,
      "species": "Electivire",
      "min_level": 62
+    },
+    {
+     "species_id": 467,
+     "species": "Magmortar",
+     "min_level": 62
     }
    ]
   },
   {
    "character": "Lana (anime)",
-   "pool_size": 26,
+   "pool_size": 30,
    "pool": [
+    {
+     "species_id": 90,
+     "species": "Shellder",
+     "min_level": 1
+    },
     {
      "species_id": 128,
      "species": "Tauros",
@@ -24246,6 +24421,11 @@
     {
      "species_id": 147,
      "species": "Dratini",
+     "min_level": 1
+    },
+    {
+     "species_id": 170,
+     "species": "Chinchou",
      "min_level": 1
     },
     {
@@ -24277,6 +24457,11 @@
      "species_id": 458,
      "species": "Mantyke",
      "min_level": 1
+    },
+    {
+     "species_id": 91,
+     "species": "Cloyster",
+     "min_level": 17
     },
     {
      "species_id": 134,
@@ -24344,6 +24529,11 @@
      "min_level": 22
     },
     {
+     "species_id": 171,
+     "species": "Lanturn",
+     "min_level": 27
+    },
+    {
      "species_id": 148,
      "species": "Dragonair",
      "min_level": 30
@@ -24362,7 +24552,7 @@
   },
   {
    "character": "Mallow (anime)",
-   "pool_size": 14,
+   "pool_size": 17,
    "pool": [
     {
      "species_id": 128,
@@ -24385,6 +24575,11 @@
      "min_level": 1
     },
     {
+     "species_id": 252,
+     "species": "Treecko",
+     "min_level": 1
+    },
+    {
      "species_id": 328,
      "species": "Trapinch",
      "min_level": 1
@@ -24398,6 +24593,11 @@
      "species_id": 458,
      "species": "Mantyke",
      "min_level": 1
+    },
+    {
+     "species_id": 253,
+     "species": "Grovyle",
+     "min_level": 16
     },
     {
      "species_id": 25,
@@ -24423,6 +24623,11 @@
      "species_id": 329,
      "species": "Vibrava",
      "min_level": 35
+    },
+    {
+     "species_id": 254,
+     "species": "Sceptile",
+     "min_level": 36
     },
     {
      "species_id": 330,
@@ -27363,7 +27568,7 @@
   },
   {
    "character": "Oak",
-   "pool_size": 31,
+   "pool_size": 122,
    "pool": [
     {
      "species_id": 1,
@@ -27381,13 +27586,178 @@
      "min_level": 1
     },
     {
+     "species_id": 10,
+     "species": "Caterpie",
+     "min_level": 1
+    },
+    {
+     "species_id": 13,
+     "species": "Weedle",
+     "min_level": 1
+    },
+    {
      "species_id": 16,
      "species": "Pidgey",
      "min_level": 1
     },
     {
+     "species_id": 19,
+     "species": "Rattata",
+     "min_level": 1
+    },
+    {
+     "species_id": 21,
+     "species": "Spearow",
+     "min_level": 1
+    },
+    {
+     "species_id": 27,
+     "species": "Sandshrew",
+     "min_level": 1
+    },
+    {
+     "species_id": 29,
+     "species": "Nidoran\u2640",
+     "min_level": 1
+    },
+    {
      "species_id": 32,
      "species": "Nidoran\u2642",
+     "min_level": 1
+    },
+    {
+     "species_id": 37,
+     "species": "Vulpix",
+     "min_level": 1
+    },
+    {
+     "species_id": 43,
+     "species": "Oddish",
+     "min_level": 1
+    },
+    {
+     "species_id": 46,
+     "species": "Paras",
+     "min_level": 1
+    },
+    {
+     "species_id": 50,
+     "species": "Diglett",
+     "min_level": 1
+    },
+    {
+     "species_id": 54,
+     "species": "Psyduck",
+     "min_level": 1
+    },
+    {
+     "species_id": 56,
+     "species": "Mankey",
+     "min_level": 1
+    },
+    {
+     "species_id": 58,
+     "species": "Growlithe",
+     "min_level": 1
+    },
+    {
+     "species_id": 60,
+     "species": "Poliwag",
+     "min_level": 1
+    },
+    {
+     "species_id": 69,
+     "species": "Bellsprout",
+     "min_level": 1
+    },
+    {
+     "species_id": 72,
+     "species": "Tentacool",
+     "min_level": 1
+    },
+    {
+     "species_id": 74,
+     "species": "Geodude",
+     "min_level": 1
+    },
+    {
+     "species_id": 77,
+     "species": "Ponyta",
+     "min_level": 1
+    },
+    {
+     "species_id": 79,
+     "species": "Slowpoke",
+     "min_level": 1
+    },
+    {
+     "species_id": 84,
+     "species": "Doduo",
+     "min_level": 1
+    },
+    {
+     "species_id": 86,
+     "species": "Seel",
+     "min_level": 1
+    },
+    {
+     "species_id": 88,
+     "species": "Grimer",
+     "min_level": 1
+    },
+    {
+     "species_id": 95,
+     "species": "Onix",
+     "min_level": 1
+    },
+    {
+     "species_id": 98,
+     "species": "Krabby",
+     "min_level": 1
+    },
+    {
+     "species_id": 100,
+     "species": "Voltorb",
+     "min_level": 1
+    },
+    {
+     "species_id": 102,
+     "species": "Exeggcute",
+     "min_level": 1
+    },
+    {
+     "species_id": 104,
+     "species": "Cubone",
+     "min_level": 1
+    },
+    {
+     "species_id": 111,
+     "species": "Rhyhorn",
+     "min_level": 1
+    },
+    {
+     "species_id": 114,
+     "species": "Tangela",
+     "min_level": 1
+    },
+    {
+     "species_id": 116,
+     "species": "Horsea",
+     "min_level": 1
+    },
+    {
+     "species_id": 118,
+     "species": "Goldeen",
+     "min_level": 1
+    },
+    {
+     "species_id": 120,
+     "species": "Staryu",
+     "min_level": 1
+    },
+    {
+     "species_id": 129,
+     "species": "Magikarp",
      "min_level": 1
     },
     {
@@ -27406,9 +27776,59 @@
      "min_level": 1
     },
     {
+     "species_id": 163,
+     "species": "Hoothoot",
+     "min_level": 1
+    },
+    {
      "species_id": 172,
      "species": "Pichu",
      "min_level": 1
+    },
+    {
+     "species_id": 187,
+     "species": "Hoppip",
+     "min_level": 1
+    },
+    {
+     "species_id": 194,
+     "species": "Wooper",
+     "min_level": 1
+    },
+    {
+     "species_id": 222,
+     "species": "Corsola",
+     "min_level": 1
+    },
+    {
+     "species_id": 276,
+     "species": "Taillow",
+     "min_level": 1
+    },
+    {
+     "species_id": 446,
+     "species": "Munchlax",
+     "min_level": 1
+    },
+    {
+     "species_id": 11,
+     "species": "Metapod",
+     "min_level": 7
+    },
+    {
+     "species_id": 14,
+     "species": "Kakuna",
+     "min_level": 7
+    },
+    {
+     "species_id": 12,
+     "species": "Butterfree",
+     "min_level": 10
+    },
+    {
+     "species_id": 15,
+     "species": "Beedrill",
+     "min_level": 10
     },
     {
      "species_id": 2,
@@ -27426,6 +27846,11 @@
      "min_level": 16
     },
     {
+     "species_id": 30,
+     "species": "Nidorina",
+     "min_level": 16
+    },
+    {
      "species_id": 33,
      "species": "Nidorino",
      "min_level": 16
@@ -27433,6 +27858,31 @@
     {
      "species_id": 25,
      "species": "Pikachu",
+     "min_level": 17
+    },
+    {
+     "species_id": 38,
+     "species": "Ninetales",
+     "min_level": 17
+    },
+    {
+     "species_id": 59,
+     "species": "Arcanine",
+     "min_level": 17
+    },
+    {
+     "species_id": 103,
+     "species": "Exeggutor",
+     "min_level": 17
+    },
+    {
+     "species_id": 105,
+     "species": "Marowak",
+     "min_level": 17
+    },
+    {
+     "species_id": 121,
+     "species": "Starmie",
      "min_level": 17
     },
     {
@@ -27451,6 +27901,11 @@
      "min_level": 17
     },
     {
+     "species_id": 143,
+     "species": "Snorlax",
+     "min_level": 17
+    },
+    {
      "species_id": 196,
      "species": "Espeon",
      "min_level": 17
@@ -27458,6 +27913,21 @@
     {
      "species_id": 197,
      "species": "Umbreon",
+     "min_level": 17
+    },
+    {
+     "species_id": 199,
+     "species": "Slowking",
+     "min_level": 17
+    },
+    {
+     "species_id": 208,
+     "species": "Steelix",
+     "min_level": 17
+    },
+    {
+     "species_id": 465,
+     "species": "Tangrowth",
      "min_level": 17
     },
     {
@@ -27481,14 +27951,134 @@
      "min_level": 18
     },
     {
+     "species_id": 188,
+     "species": "Skiploom",
+     "min_level": 18
+    },
+    {
+     "species_id": 20,
+     "species": "Raticate",
+     "min_level": 20
+    },
+    {
+     "species_id": 22,
+     "species": "Fearow",
+     "min_level": 20
+    },
+    {
+     "species_id": 130,
+     "species": "Gyarados",
+     "min_level": 20
+    },
+    {
+     "species_id": 164,
+     "species": "Noctowl",
+     "min_level": 20
+    },
+    {
+     "species_id": 195,
+     "species": "Quagsire",
+     "min_level": 20
+    },
+    {
+     "species_id": 44,
+     "species": "Gloom",
+     "min_level": 21
+    },
+    {
+     "species_id": 70,
+     "species": "Weepinbell",
+     "min_level": 21
+    },
+    {
+     "species_id": 28,
+     "species": "Sandslash",
+     "min_level": 22
+    },
+    {
+     "species_id": 277,
+     "species": "Swellow",
+     "min_level": 22
+    },
+    {
+     "species_id": 47,
+     "species": "Parasect",
+     "min_level": 24
+    },
+    {
+     "species_id": 61,
+     "species": "Poliwhirl",
+     "min_level": 25
+    },
+    {
+     "species_id": 75,
+     "species": "Graveler",
+     "min_level": 25
+    },
+    {
+     "species_id": 51,
+     "species": "Dugtrio",
+     "min_level": 26
+    },
+    {
+     "species_id": 189,
+     "species": "Jumpluff",
+     "min_level": 27
+    },
+    {
+     "species_id": 57,
+     "species": "Primeape",
+     "min_level": 28
+    },
+    {
+     "species_id": 99,
+     "species": "Kingler",
+     "min_level": 28
+    },
+    {
+     "species_id": 73,
+     "species": "Tentacruel",
+     "min_level": 30
+    },
+    {
+     "species_id": 101,
+     "species": "Electrode",
+     "min_level": 30
+    },
+    {
      "species_id": 148,
      "species": "Dragonair",
      "min_level": 30
     },
     {
+     "species_id": 85,
+     "species": "Dodrio",
+     "min_level": 31
+    },
+    {
      "species_id": 3,
      "species": "Venusaur",
      "min_level": 32
+    },
+    {
+     "species_id": 117,
+     "species": "Seadra",
+     "min_level": 32
+    },
+    {
+     "species_id": 55,
+     "species": "Golduck",
+     "min_level": 33
+    },
+    {
+     "species_id": 119,
+     "species": "Seaking",
+     "min_level": 33
+    },
+    {
+     "species_id": 87,
+     "species": "Dewgong",
+     "min_level": 34
     },
     {
      "species_id": 6,
@@ -27506,6 +28096,31 @@
      "min_level": 36
     },
     {
+     "species_id": 80,
+     "species": "Slowbro",
+     "min_level": 37
+    },
+    {
+     "species_id": 89,
+     "species": "Muk",
+     "min_level": 38
+    },
+    {
+     "species_id": 78,
+     "species": "Rapidash",
+     "min_level": 40
+    },
+    {
+     "species_id": 112,
+     "species": "Rhydon",
+     "min_level": 42
+    },
+    {
+     "species_id": 31,
+     "species": "Nidoqueen",
+     "min_level": 48
+    },
+    {
      "species_id": 34,
      "species": "Nidoking",
      "min_level": 48
@@ -27516,9 +28131,54 @@
      "min_level": 49
     },
     {
+     "species_id": 45,
+     "species": "Vileplume",
+     "min_level": 53
+    },
+    {
+     "species_id": 71,
+     "species": "Victreebel",
+     "min_level": 53
+    },
+    {
+     "species_id": 182,
+     "species": "Bellossom",
+     "min_level": 53
+    },
+    {
      "species_id": 149,
      "species": "Dragonite",
      "min_level": 55
+    },
+    {
+     "species_id": 62,
+     "species": "Poliwrath",
+     "min_level": 57
+    },
+    {
+     "species_id": 76,
+     "species": "Golem",
+     "min_level": 57
+    },
+    {
+     "species_id": 186,
+     "species": "Politoed",
+     "min_level": 57
+    },
+    {
+     "species_id": 1370,
+     "species": "Annihilape",
+     "min_level": 60
+    },
+    {
+     "species_id": 230,
+     "species": "Kingdra",
+     "min_level": 64
+    },
+    {
+     "species_id": 464,
+     "species": "Rhyperior",
+     "min_level": 74
     }
    ]
   },
@@ -27720,7 +28380,7 @@
   },
   {
    "character": "Birch",
-   "pool_size": 60,
+   "pool_size": 67,
    "pool": [
     {
      "species_id": 1,
@@ -27798,6 +28458,11 @@
      "min_level": 1
     },
     {
+     "species_id": 270,
+     "species": "Lotad",
+     "min_level": 1
+    },
+    {
      "species_id": 273,
      "species": "Seedot",
      "min_level": 1
@@ -27808,6 +28473,11 @@
      "min_level": 1
     },
     {
+     "species_id": 285,
+     "species": "Shroomish",
+     "min_level": 1
+    },
+    {
      "species_id": 290,
      "species": "Nincada",
      "min_level": 1
@@ -27815,6 +28485,11 @@
     {
      "species_id": 304,
      "species": "Aron",
+     "min_level": 1
+    },
+    {
+     "species_id": 318,
+     "species": "Carvanha",
      "min_level": 1
     },
     {
@@ -27855,6 +28530,11 @@
     {
      "species_id": 156,
      "species": "Quilava",
+     "min_level": 14
+    },
+    {
+     "species_id": 271,
+     "species": "Lombre",
      "min_level": 14
     },
     {
@@ -27943,6 +28623,11 @@
      "min_level": 20
     },
     {
+     "species_id": 286,
+     "species": "Breloom",
+     "min_level": 23
+    },
+    {
      "species_id": 279,
      "species": "Pelipper",
      "min_level": 25
@@ -27950,6 +28635,11 @@
     {
      "species_id": 160,
      "species": "Feraligatr",
+     "min_level": 30
+    },
+    {
+     "species_id": 319,
+     "species": "Sharpedo",
      "min_level": 30
     },
     {
@@ -28011,6 +28701,11 @@
      "species_id": 306,
      "species": "Aggron",
      "min_level": 42
+    },
+    {
+     "species_id": 272,
+     "species": "Ludicolo",
+     "min_level": 46
     },
     {
      "species_id": 275,
@@ -28103,7 +28798,7 @@
   },
   {
    "character": "Sycamore",
-   "pool_size": 18,
+   "pool_size": 31,
    "pool": [
     {
      "species_id": 1,
@@ -28121,6 +28816,21 @@
      "min_level": 1
     },
     {
+     "species_id": 10,
+     "species": "Caterpie",
+     "min_level": 1
+    },
+    {
+     "species_id": 13,
+     "species": "Weedle",
+     "min_level": 1
+    },
+    {
+     "species_id": 54,
+     "species": "Psyduck",
+     "min_level": 1
+    },
+    {
      "species_id": 127,
      "species": "Pinsir",
      "min_level": 1
@@ -28131,14 +28841,44 @@
      "min_level": 1
     },
     {
+     "species_id": 263,
+     "species": "Zigzagoon",
+     "min_level": 1
+    },
+    {
      "species_id": 280,
      "species": "Ralts",
+     "min_level": 1
+    },
+    {
+     "species_id": 298,
+     "species": "Azurill",
      "min_level": 1
     },
     {
      "species_id": 359,
      "species": "Absol",
      "min_level": 1
+    },
+    {
+     "species_id": 11,
+     "species": "Metapod",
+     "min_level": 7
+    },
+    {
+     "species_id": 14,
+     "species": "Kakuna",
+     "min_level": 7
+    },
+    {
+     "species_id": 12,
+     "species": "Butterfree",
+     "min_level": 10
+    },
+    {
+     "species_id": 15,
+     "species": "Beedrill",
+     "min_level": 10
     },
     {
      "species_id": 2,
@@ -28161,6 +28901,21 @@
      "min_level": 16
     },
     {
+     "species_id": 183,
+     "species": "Marill",
+     "min_level": 17
+    },
+    {
+     "species_id": 184,
+     "species": "Azumarill",
+     "min_level": 18
+    },
+    {
+     "species_id": 264,
+     "species": "Linoone",
+     "min_level": 20
+    },
+    {
      "species_id": 281,
      "species": "Kirlia",
      "min_level": 20
@@ -28174,6 +28929,11 @@
      "species_id": 3,
      "species": "Venusaur",
      "min_level": 32
+    },
+    {
+     "species_id": 55,
+     "species": "Golduck",
+     "min_level": 33
     },
     {
      "species_id": 6,
@@ -28990,7 +29750,7 @@
   },
   {
    "character": "Noland",
-   "pool_size": 26,
+   "pool_size": 31,
    "pool": [
     {
      "species_id": 1,
@@ -29023,8 +29783,23 @@
      "min_level": 1
     },
     {
+     "species_id": 235,
+     "species": "Smeargle",
+     "min_level": 1
+    },
+    {
      "species_id": 285,
      "species": "Shroomish",
+     "min_level": 1
+    },
+    {
+     "species_id": 290,
+     "species": "Nincada",
+     "min_level": 1
+    },
+    {
+     "species_id": 303,
+     "species": "Mawile",
      "min_level": 1
     },
     {
@@ -29051,6 +29826,16 @@
      "species_id": 2,
      "species": "Ivysaur",
      "min_level": 16
+    },
+    {
+     "species_id": 292,
+     "species": "Shedinja",
+     "min_level": 17
+    },
+    {
+     "species_id": 291,
+     "species": "Ninjask",
+     "min_level": 20
     },
     {
      "species_id": 28,

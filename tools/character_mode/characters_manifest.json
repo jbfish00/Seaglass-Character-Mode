@@ -3,6 +3,8 @@
  "record_count": 193,
  "record_size_bytes": 12,
  "skipped_empty_roster": [],
+ "hidden_count": 40,
+ "selectable_count": 153,
  "warnings": [],
  "characters": [
   {
@@ -33,6 +35,7 @@
     129,
     52,
     446,
+    29,
     32,
     299,
     172,
@@ -58,17 +61,18 @@
     245,
     145
    ],
-   "starter_count": 38,
+   "starter_count": 39,
    "has_signature": true,
    "signature_id": 25,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Leaf",
    "category": "protagonist",
    "generation": 1,
    "name_offset": 4,
-   "roster_offset": 92,
+   "roster_offset": 94,
    "roster_species_ids": [
     133,
     1,
@@ -82,14 +86,15 @@
    "starter_count": 6,
    "has_signature": true,
    "signature_id": 133,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Blue",
    "category": "champion",
    "generation": 1,
    "name_offset": 9,
-   "roster_offset": 110,
+   "roster_offset": 112,
    "roster_species_ids": [
     16,
     63,
@@ -130,14 +135,15 @@
    "starter_count": 34,
    "has_signature": true,
    "signature_id": 16,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Lance",
    "category": "champion",
    "generation": 1,
    "name_offset": 14,
-   "roster_offset": 182,
+   "roster_offset": 184,
    "roster_species_ids": [
     147,
     142,
@@ -171,14 +177,15 @@
    "starter_count": 23,
    "has_signature": true,
    "signature_id": 147,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Lorelei",
    "category": "elite4",
    "generation": 1,
    "name_offset": 20,
-   "roster_offset": 240,
+   "roster_offset": 242,
    "roster_species_ids": [
     131,
     63,
@@ -204,14 +211,15 @@
    "starter_count": 19,
    "has_signature": true,
    "signature_id": 131,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Bruno",
    "category": "elite4",
    "generation": 1,
    "name_offset": 28,
-   "roster_offset": 282,
+   "roster_offset": 284,
    "roster_species_ids": [
     66,
     173,
@@ -247,14 +255,15 @@
    "starter_count": 30,
    "has_signature": true,
    "signature_id": 66,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Agatha",
    "category": "elite4",
    "generation": 1,
    "name_offset": 34,
-   "roster_offset": 344,
+   "roster_offset": 346,
    "roster_species_ids": [
     92,
     63,
@@ -278,14 +287,15 @@
    "starter_count": 18,
    "has_signature": true,
    "signature_id": 92,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Koga",
    "category": "elite4",
    "generation": 1,
    "name_offset": 41,
-   "roster_offset": 382,
+   "roster_offset": 384,
    "roster_species_ids": [
     109,
     4,
@@ -327,14 +337,15 @@
    "starter_count": 33,
    "has_signature": true,
    "signature_id": 109,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Brock",
    "category": "gymleader",
    "generation": 1,
    "name_offset": 46,
-   "roster_offset": 456,
+   "roster_offset": 458,
    "roster_species_ids": [
     95,
     142,
@@ -386,14 +397,15 @@
    "starter_count": 45,
    "has_signature": true,
    "signature_id": 95,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Misty",
    "category": "gymleader",
    "generation": 1,
    "name_offset": 52,
-   "roster_offset": 550,
+   "roster_offset": 552,
    "roster_species_ids": [
     120,
     298,
@@ -444,14 +456,15 @@
    "starter_count": 43,
    "has_signature": true,
    "signature_id": 120,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Lt. Surge",
    "category": "gymleader",
    "generation": 1,
    "name_offset": 58,
-   "roster_offset": 642,
+   "roster_offset": 644,
    "roster_species_ids": [
     25,
     63,
@@ -487,14 +500,15 @@
    "starter_count": 28,
    "has_signature": true,
    "signature_id": 25,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Erika",
    "category": "gymleader",
    "generation": 1,
    "name_offset": 68,
-   "roster_offset": 704,
+   "roster_offset": 706,
    "roster_species_ids": [
     43,
     69,
@@ -525,14 +539,15 @@
    "starter_count": 25,
    "has_signature": true,
    "signature_id": 43,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Sabrina",
    "category": "gymleader",
    "generation": 1,
    "name_offset": 74,
-   "roster_offset": 756,
+   "roster_offset": 758,
    "roster_species_ids": [
     63,
     374,
@@ -569,14 +584,15 @@
    "starter_count": 27,
    "has_signature": true,
    "signature_id": 63,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Blaine",
    "category": "gymleader",
    "generation": 1,
    "name_offset": 82,
-   "roster_offset": 820,
+   "roster_offset": 822,
    "roster_species_ids": [
     58,
     4,
@@ -611,14 +627,15 @@
    "starter_count": 27,
    "has_signature": true,
    "signature_id": 58,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Giovanni",
    "category": "villain",
    "generation": 1,
    "name_offset": 89,
-   "roster_offset": 880,
+   "roster_offset": 882,
    "roster_species_ids": [
     111,
     69,
@@ -626,6 +643,7 @@
     104,
     50,
     133,
+    102,
     92,
     74,
     207,
@@ -636,6 +654,7 @@
     98,
     131,
     66,
+    129,
     52,
     446,
     198,
@@ -653,17 +672,18 @@
     150,
     146
    ],
-   "starter_count": 30,
+   "starter_count": 32,
    "has_signature": true,
    "signature_id": 111,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Ash",
    "category": "anime",
    "generation": 1,
    "name_offset": 98,
-   "roster_offset": 946,
+   "roster_offset": 952,
    "roster_species_ids": [
     25,
     190,
@@ -708,14 +728,15 @@
    "starter_count": 37,
    "has_signature": true,
    "signature_id": 25,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Gary",
    "category": "anime",
    "generation": 1,
    "name_offset": 102,
-   "roster_offset": 1026,
+   "roster_offset": 1032,
    "roster_species_ids": [
     7,
     63,
@@ -760,14 +781,15 @@
    "starter_count": 37,
    "has_signature": true,
    "signature_id": 7,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Ritchie",
    "category": "anime",
    "generation": 1,
    "name_offset": 107,
-   "roster_offset": 1106,
+   "roster_offset": 1112,
    "roster_species_ids": [
     25,
     371,
@@ -792,14 +814,15 @@
    "starter_count": 17,
    "has_signature": true,
    "signature_id": 25,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Tracey",
    "category": "anime",
    "generation": 1,
    "name_offset": 115,
-   "roster_offset": 1146,
+   "roster_offset": 1152,
    "roster_species_ids": [
     123,
     298,
@@ -814,14 +837,15 @@
    "starter_count": 9,
    "has_signature": true,
    "signature_id": 123,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Jessie",
    "category": "anime",
    "generation": 1,
    "name_offset": 122,
-   "roster_offset": 1166,
+   "roster_offset": 1172,
    "roster_species_ids": [
     23,
     190,
@@ -866,14 +890,15 @@
    "starter_count": 37,
    "has_signature": true,
    "signature_id": 23,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "James",
    "category": "anime",
    "generation": 1,
    "name_offset": 129,
-   "roster_offset": 1246,
+   "roster_offset": 1252,
    "roster_species_ids": [
     109,
     304,
@@ -913,14 +938,15 @@
    "starter_count": 33,
    "has_signature": true,
    "signature_id": 109,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Ethan",
    "category": "protagonist",
    "generation": 2,
    "name_offset": 135,
-   "roster_offset": 1316,
+   "roster_offset": 1322,
    "roster_species_ids": [
     155,
     298,
@@ -943,14 +969,15 @@
    "starter_count": 14,
    "has_signature": true,
    "signature_id": 155,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Kris",
    "category": "protagonist",
    "generation": 2,
    "name_offset": 141,
-   "roster_offset": 1352,
+   "roster_offset": 1358,
    "roster_species_ids": [
     158,
     438,
@@ -971,14 +998,15 @@
    "starter_count": 11,
    "has_signature": true,
    "signature_id": 158,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Lyra",
    "category": "protagonist",
    "generation": 2,
    "name_offset": 146,
-   "roster_offset": 1384,
+   "roster_offset": 1390,
    "roster_species_ids": [
     152,
     298,
@@ -1000,14 +1028,15 @@
    "starter_count": 14,
    "has_signature": true,
    "signature_id": 152,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Will",
    "category": "elite4",
    "generation": 2,
    "name_offset": 151,
-   "roster_offset": 1418,
+   "roster_offset": 1424,
    "roster_species_ids": [
     177,
     63,
@@ -1034,14 +1063,15 @@
    "starter_count": 15,
    "has_signature": true,
    "signature_id": 177,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Karen",
    "category": "elite4",
    "generation": 2,
    "name_offset": 156,
-   "roster_offset": 1462,
+   "roster_offset": 1468,
    "roster_species_ids": [
     133,
     359,
@@ -1069,14 +1099,15 @@
    "starter_count": 16,
    "has_signature": true,
    "signature_id": 133,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Janine",
    "category": "gymleader",
    "generation": 2,
    "name_offset": 162,
-   "roster_offset": 1508,
+   "roster_offset": 1514,
    "roster_species_ids": [
     167,
     406,
@@ -1100,14 +1131,15 @@
    "starter_count": 17,
    "has_signature": true,
    "signature_id": 167,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Falkner",
    "category": "gymleader",
    "generation": 2,
    "name_offset": 169,
-   "roster_offset": 1546,
+   "roster_offset": 1552,
    "roster_species_ids": [
     163,
     142,
@@ -1143,14 +1175,15 @@
    "starter_count": 24,
    "has_signature": true,
    "signature_id": 163,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Bugsy",
    "category": "gymleader",
    "generation": 2,
    "name_offset": 177,
-   "roster_offset": 1608,
+   "roster_offset": 1614,
    "roster_species_ids": [
     123,
     347,
@@ -1183,14 +1216,15 @@
    "starter_count": 25,
    "has_signature": true,
    "signature_id": 123,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Whitney",
    "category": "gymleader",
    "generation": 2,
    "name_offset": 183,
-   "roster_offset": 1664,
+   "roster_offset": 1670,
    "roster_species_ids": [
     241,
     190,
@@ -1224,14 +1258,15 @@
    "starter_count": 26,
    "has_signature": true,
    "signature_id": 241,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Morty",
    "category": "gymleader",
    "generation": 2,
    "name_offset": 191,
-   "roster_offset": 1722,
+   "roster_offset": 1728,
    "roster_species_ids": [
     92,
     438,
@@ -1261,14 +1296,15 @@
    "starter_count": 21,
    "has_signature": true,
    "signature_id": 92,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Chuck",
    "category": "gymleader",
    "generation": 2,
    "name_offset": 197,
-   "roster_offset": 1772,
+   "roster_offset": 1778,
    "roster_species_ids": [
     60,
     152,
@@ -1290,14 +1326,15 @@
    "starter_count": 15,
    "has_signature": true,
    "signature_id": 60,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Jasmine",
    "category": "gymleader",
    "generation": 2,
    "name_offset": 203,
-   "roster_offset": 1806,
+   "roster_offset": 1812,
    "roster_species_ids": [
     95,
     374,
@@ -1323,14 +1360,15 @@
    "starter_count": 20,
    "has_signature": true,
    "signature_id": 95,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Pryce",
    "category": "gymleader",
    "generation": 2,
    "name_offset": 211,
-   "roster_offset": 1848,
+   "roster_offset": 1854,
    "roster_species_ids": [
     220,
     173,
@@ -1361,14 +1399,15 @@
    "starter_count": 21,
    "has_signature": true,
    "signature_id": 220,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Clair",
    "category": "gymleader",
    "generation": 2,
    "name_offset": 217,
-   "roster_offset": 1900,
+   "roster_offset": 1906,
    "roster_species_ids": [
     116,
     142,
@@ -1393,14 +1432,15 @@
    "starter_count": 17,
    "has_signature": true,
    "signature_id": 116,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Silver",
    "category": "rival",
    "generation": 2,
    "name_offset": 223,
-   "roster_offset": 1940,
+   "roster_offset": 1946,
    "roster_species_ids": [
     158,
     63,
@@ -1423,14 +1463,15 @@
    "starter_count": 12,
    "has_signature": true,
    "signature_id": 158,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Archer",
    "category": "villain",
    "generation": 2,
    "name_offset": 230,
-   "roster_offset": 1976,
+   "roster_offset": 1982,
    "roster_species_ids": [
     228,
     69,
@@ -1453,14 +1494,15 @@
    "starter_count": 17,
    "has_signature": true,
    "signature_id": 228,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Ariana",
    "category": "villain",
    "generation": 2,
    "name_offset": 237,
-   "roster_offset": 2012,
+   "roster_offset": 2018,
    "roster_species_ids": [
     23,
     69,
@@ -1479,14 +1521,15 @@
    "starter_count": 13,
    "has_signature": true,
    "signature_id": 23,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Brendan",
    "category": "protagonist",
    "generation": 3,
    "name_offset": 244,
-   "roster_offset": 2040,
+   "roster_offset": 2046,
    "roster_species_ids": [
     252,
     304,
@@ -1518,14 +1561,15 @@
    "starter_count": 23,
    "has_signature": true,
    "signature_id": 252,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "May",
    "category": "protagonist",
    "generation": 3,
    "name_offset": 252,
-   "roster_offset": 2094,
+   "roster_offset": 2100,
    "roster_species_ids": [
     255,
     304,
@@ -1564,14 +1608,15 @@
    "starter_count": 29,
    "has_signature": true,
    "signature_id": 255,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Steven",
    "category": "champion",
    "generation": 3,
    "name_offset": 256,
-   "roster_offset": 2162,
+   "roster_offset": 2168,
    "roster_species_ids": [
     374,
     142,
@@ -1599,14 +1644,15 @@
    "starter_count": 18,
    "has_signature": true,
    "signature_id": 374,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Wallace",
    "category": "champion",
    "generation": 3,
    "name_offset": 263,
-   "roster_offset": 2208,
+   "roster_offset": 2214,
    "roster_species_ids": [
     349,
     339,
@@ -1638,14 +1684,15 @@
    "starter_count": 20,
    "has_signature": true,
    "signature_id": 349,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Sidney",
    "category": "elite4",
    "generation": 3,
    "name_offset": 271,
-   "roster_offset": 2262,
+   "roster_offset": 2268,
    "roster_species_ids": [
     359,
     331,
@@ -1662,14 +1709,15 @@
    "starter_count": 7,
    "has_signature": true,
    "signature_id": 359,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Phoebe",
    "category": "elite4",
    "generation": 3,
    "name_offset": 278,
-   "roster_offset": 2286,
+   "roster_offset": 2292,
    "roster_species_ids": [
     355,
     200,
@@ -1683,14 +1731,15 @@
    "starter_count": 4,
    "has_signature": true,
    "signature_id": 355,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Glacia",
    "category": "elite4",
    "generation": 3,
    "name_offset": 285,
-   "roster_offset": 2304,
+   "roster_offset": 2310,
    "roster_species_ids": [
     363,
     361,
@@ -1702,14 +1751,15 @@
    "starter_count": 2,
    "has_signature": true,
    "signature_id": 363,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Drake",
    "category": "elite4",
    "generation": 3,
    "name_offset": 292,
-   "roster_offset": 2318,
+   "roster_offset": 2324,
    "roster_species_ids": [
     371,
     116,
@@ -1724,14 +1774,15 @@
    "starter_count": 6,
    "has_signature": true,
    "signature_id": 371,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Roxanne",
    "category": "gymleader",
    "generation": 3,
    "name_offset": 298,
-   "roster_offset": 2338,
+   "roster_offset": 2344,
    "roster_species_ids": [
     299,
     142,
@@ -1751,14 +1802,15 @@
    "starter_count": 13,
    "has_signature": true,
    "signature_id": 299,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Brawly",
    "category": "gymleader",
    "generation": 3,
    "name_offset": 306,
-   "roster_offset": 2368,
+   "roster_offset": 2374,
    "roster_species_ids": [
     296,
     173,
@@ -1775,14 +1827,15 @@
    "starter_count": 10,
    "has_signature": true,
    "signature_id": 296,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Wattson",
    "category": "gymleader",
    "generation": 3,
    "name_offset": 313,
-   "roster_offset": 2392,
+   "roster_offset": 2398,
    "roster_species_ids": [
     309,
     173,
@@ -1803,14 +1856,15 @@
    "starter_count": 14,
    "has_signature": true,
    "signature_id": 309,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Flannery",
    "category": "gymleader",
    "generation": 3,
    "name_offset": 321,
-   "roster_offset": 2424,
+   "roster_offset": 2430,
    "roster_species_ids": [
     324,
     341,
@@ -1829,14 +1883,15 @@
    "starter_count": 12,
    "has_signature": true,
    "signature_id": 324,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Norman",
    "category": "gymleader",
    "generation": 3,
    "name_offset": 330,
-   "roster_offset": 2452,
+   "roster_offset": 2458,
    "roster_species_ids": [
     287,
     190,
@@ -1860,14 +1915,15 @@
    "starter_count": 18,
    "has_signature": true,
    "signature_id": 287,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Winona",
    "category": "gymleader",
    "generation": 3,
    "name_offset": 337,
-   "roster_offset": 2490,
+   "roster_offset": 2496,
    "roster_species_ids": [
     333,
     304,
@@ -1892,14 +1948,15 @@
    "starter_count": 16,
    "has_signature": true,
    "signature_id": 333,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Tate",
    "category": "gymleader",
    "generation": 3,
    "name_offset": 344,
-   "roster_offset": 2530,
+   "roster_offset": 2536,
    "roster_species_ids": [
     338,
     343,
@@ -1920,14 +1977,15 @@
    "starter_count": 12,
    "has_signature": true,
    "signature_id": 338,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Liza",
    "category": "gymleader",
    "generation": 3,
    "name_offset": 349,
-   "roster_offset": 2562,
+   "roster_offset": 2568,
    "roster_species_ids": [
     337,
     343,
@@ -1948,14 +2006,15 @@
    "starter_count": 12,
    "has_signature": true,
    "signature_id": 337,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Juan",
    "category": "gymleader",
    "generation": 3,
    "name_offset": 354,
-   "roster_offset": 2594,
+   "roster_offset": 2600,
    "roster_species_ids": [
     116,
     298,
@@ -1983,14 +2042,15 @@
    "starter_count": 20,
    "has_signature": true,
    "signature_id": 116,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Wally",
    "category": "rival",
    "generation": 3,
    "name_offset": 359,
-   "roster_offset": 2640,
+   "roster_offset": 2646,
    "roster_species_ids": [
     280,
     298,
@@ -2003,14 +2063,15 @@
    "starter_count": 7,
    "has_signature": true,
    "signature_id": 280,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Maxie",
    "category": "villain",
    "generation": 3,
    "name_offset": 365,
-   "roster_offset": 2656,
+   "roster_offset": 2662,
    "roster_species_ids": [
     322,
     349,
@@ -2028,14 +2089,15 @@
    "starter_count": 10,
    "has_signature": true,
    "signature_id": 322,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Archie",
    "category": "villain",
    "generation": 3,
    "name_offset": 371,
-   "roster_offset": 2682,
+   "roster_offset": 2688,
    "roster_species_ids": [
     318,
     147,
@@ -2058,14 +2120,15 @@
    "starter_count": 15,
    "has_signature": true,
    "signature_id": 318,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Drew",
    "category": "anime",
    "generation": 3,
    "name_offset": 378,
-   "roster_offset": 2718,
+   "roster_offset": 2724,
    "roster_species_ids": [
     406,
     359,
@@ -2091,14 +2154,15 @@
    "starter_count": 20,
    "has_signature": true,
    "signature_id": 406,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Lucas",
    "category": "protagonist",
    "generation": 4,
    "name_offset": 383,
-   "roster_offset": 2760,
+   "roster_offset": 2766,
    "roster_species_ids": [
     63,
     359,
@@ -2120,14 +2184,15 @@
    "starter_count": 16,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Dawn",
    "category": "protagonist",
    "generation": 4,
    "name_offset": 389,
-   "roster_offset": 2794,
+   "roster_offset": 2800,
    "roster_species_ids": [
     63,
     190,
@@ -2165,14 +2230,15 @@
    "starter_count": 32,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Cynthia",
    "category": "champion",
    "generation": 4,
    "name_offset": 394,
-   "roster_offset": 2860,
+   "roster_offset": 2866,
    "roster_species_ids": [
     406,
     173,
@@ -2194,14 +2260,15 @@
    "starter_count": 16,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Aaron",
    "category": "elite4",
    "generation": 4,
    "name_offset": 402,
-   "roster_offset": 2894,
+   "roster_offset": 2900,
    "roster_species_ids": [
     173,
     214,
@@ -2215,14 +2282,15 @@
    "starter_count": 8,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Bertha",
    "category": "elite4",
    "generation": 4,
    "name_offset": 408,
-   "roster_offset": 2912,
+   "roster_offset": 2918,
    "roster_species_ids": [
     339,
     438,
@@ -2240,14 +2308,15 @@
    "starter_count": 12,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Flint",
    "category": "elite4",
    "generation": 4,
    "name_offset": 415,
-   "roster_offset": 2938,
+   "roster_offset": 2944,
    "roster_species_ids": [
     4,
     133,
@@ -2267,14 +2336,15 @@
    "starter_count": 12,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Lucian",
    "category": "elite4",
    "generation": 4,
    "name_offset": 421,
-   "roster_offset": 2968,
+   "roster_offset": 2974,
    "roster_species_ids": [
     63,
     133,
@@ -2289,14 +2359,15 @@
    "starter_count": 9,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Roark",
    "category": "gymleader",
    "generation": 4,
    "name_offset": 428,
-   "roster_offset": 2988,
+   "roster_offset": 2994,
    "roster_species_ids": [
     142,
     347,
@@ -2320,14 +2391,15 @@
    "starter_count": 18,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Gardenia",
    "category": "gymleader",
    "generation": 4,
    "name_offset": 434,
-   "roster_offset": 3026,
+   "roster_offset": 3032,
    "roster_species_ids": [
     406,
     190,
@@ -2352,14 +2424,15 @@
    "starter_count": 19,
    "has_signature": true,
    "signature_id": 406,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Maylene",
    "category": "gymleader",
    "generation": 4,
    "name_offset": 443,
-   "roster_offset": 3066,
+   "roster_offset": 3072,
    "roster_species_ids": [
     190,
     147,
@@ -2376,14 +2449,15 @@
    "starter_count": 11,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Crasher Wake",
    "category": "gymleader",
    "generation": 4,
    "name_offset": 451,
-   "roster_offset": 3090,
+   "roster_offset": 3096,
    "roster_species_ids": [
     347,
     318,
@@ -2402,14 +2476,15 @@
    "starter_count": 12,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Fantina",
    "category": "gymleader",
    "generation": 4,
    "name_offset": 464,
-   "roster_offset": 3118,
+   "roster_offset": 3124,
    "roster_species_ids": [
     200,
     341,
@@ -2425,14 +2500,15 @@
    "starter_count": 10,
    "has_signature": true,
    "signature_id": 200,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Byron",
    "category": "gymleader",
    "generation": 4,
    "name_offset": 472,
-   "roster_offset": 3140,
+   "roster_offset": 3146,
    "roster_species_ids": [
     347,
     304,
@@ -2454,14 +2530,15 @@
    "starter_count": 15,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Candice",
    "category": "gymleader",
    "generation": 4,
    "name_offset": 478,
-   "roster_offset": 3174,
+   "roster_offset": 3180,
    "roster_species_ids": [
     361,
     84,
@@ -2481,14 +2558,15 @@
    "starter_count": 11,
    "has_signature": true,
    "signature_id": 361,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Volkner",
    "category": "gymleader",
    "generation": 4,
    "name_offset": 486,
-   "roster_offset": 3204,
+   "roster_offset": 3210,
    "roster_species_ids": [
     190,
     170,
@@ -2510,14 +2588,15 @@
    "starter_count": 15,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Barry",
    "category": "rival",
    "generation": 4,
    "name_offset": 494,
-   "roster_offset": 3238,
+   "roster_offset": 3244,
    "roster_species_ids": [
     406,
     147,
@@ -2537,14 +2616,15 @@
    "starter_count": 14,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Cyrus",
    "category": "villain",
    "generation": 4,
    "name_offset": 500,
-   "roster_offset": 3268,
+   "roster_offset": 3274,
    "roster_species_ids": [
     215,
     371,
@@ -2563,14 +2643,15 @@
    "starter_count": 12,
    "has_signature": true,
    "signature_id": 215,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Mars",
    "category": "villain",
    "generation": 4,
    "name_offset": 506,
-   "roster_offset": 3296,
+   "roster_offset": 3302,
    "roster_species_ids": [
     173,
     386,
@@ -2578,21 +2659,23 @@
     239,
     115,
     81,
+    172,
     175,
     193,
     41
    ],
-   "starter_count": 9,
+   "starter_count": 10,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Jupiter",
    "category": "villain",
    "generation": 4,
    "name_offset": 511,
-   "roster_offset": 3316,
+   "roster_offset": 3324,
    "roster_species_ids": [
     359,
     318,
@@ -2609,18 +2692,21 @@
    "starter_count": 11,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Saturn",
    "category": "villain",
    "generation": 4,
    "name_offset": 519,
-   "roster_offset": 3340,
+   "roster_offset": 3348,
    "roster_species_ids": [
     63,
+    359,
     318,
     74,
+    246,
     240,
     129,
     312,
@@ -2629,19 +2715,21 @@
     280,
     223,
     111,
+    302,
     41
    ],
-   "starter_count": 12,
+   "starter_count": 15,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Paul",
    "category": "anime",
    "generation": 4,
    "name_offset": 526,
-   "roster_offset": 3366,
+   "roster_offset": 3380,
    "roster_species_ids": [
     239,
     304,
@@ -2668,14 +2756,15 @@
    "starter_count": 18,
    "has_signature": true,
    "signature_id": 239,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Zoey",
    "category": "anime",
    "generation": 4,
    "name_offset": 531,
-   "roster_offset": 3410,
+   "roster_offset": 3424,
    "roster_species_ids": [
     190,
     155,
@@ -2688,14 +2777,15 @@
    "starter_count": 7,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Nando",
    "category": "anime",
    "generation": 4,
    "name_offset": 536,
-   "roster_offset": 3426,
+   "roster_offset": 3440,
    "roster_species_ids": [
     406,
     347,
@@ -2709,14 +2799,15 @@
    "starter_count": 8,
    "has_signature": true,
    "signature_id": 406,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Hilbert",
    "category": "protagonist",
    "generation": 5,
    "name_offset": 542,
-   "roster_offset": 3444,
+   "roster_offset": 3458,
    "roster_species_ids": [
     133,
     261
@@ -2724,14 +2815,15 @@
    "starter_count": 2,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Nate",
    "category": "protagonist",
    "generation": 5,
    "name_offset": 550,
-   "roster_offset": 3450,
+   "roster_offset": 3464,
    "roster_species_ids": [
     58,
     336
@@ -2739,14 +2831,15 @@
    "starter_count": 2,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Iris",
    "category": "champion",
    "generation": 5,
    "name_offset": 555,
-   "roster_offset": 3456,
+   "roster_offset": 3470,
    "roster_species_ids": [
     304,
     371,
@@ -2759,14 +2852,15 @@
    "starter_count": 6,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Shauntal",
    "category": "elite4",
    "generation": 5,
    "name_offset": 560,
-   "roster_offset": 3472,
+   "roster_offset": 3486,
    "roster_species_ids": [
     92,
     200,
@@ -2776,14 +2870,15 @@
    "starter_count": 4,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Marshal",
    "category": "elite4",
    "generation": 5,
    "name_offset": 569,
-   "roster_offset": 3482,
+   "roster_offset": 3496,
    "roster_species_ids": [
     66,
     307,
@@ -2792,14 +2887,15 @@
    "starter_count": 3,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Grimsley",
    "category": "elite4",
    "generation": 5,
    "name_offset": 577,
-   "roster_offset": 3490,
+   "roster_offset": 3504,
    "roster_species_ids": [
     359,
     318,
@@ -2810,14 +2906,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Caitlin",
    "category": "elite4",
    "generation": 5,
    "name_offset": 586,
-   "roster_offset": 3502,
+   "roster_offset": 3516,
    "roster_species_ids": [
     63,
     374,
@@ -2827,14 +2924,15 @@
    "starter_count": 4,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Cilan",
    "category": "gymleader",
    "generation": 5,
    "name_offset": 594,
-   "roster_offset": 3512,
+   "roster_offset": 3526,
    "roster_species_ids": [
     190,
     173,
@@ -2845,14 +2943,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Chili",
    "category": "gymleader",
    "generation": 5,
    "name_offset": 600,
-   "roster_offset": 3524,
+   "roster_offset": 3538,
    "roster_species_ids": [
     173,
     58,
@@ -2862,14 +2961,15 @@
    "starter_count": 4,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Cress",
    "category": "gymleader",
    "generation": 5,
    "name_offset": 606,
-   "roster_offset": 3534,
+   "roster_offset": 3548,
    "roster_species_ids": [
     298,
     173,
@@ -2880,14 +2980,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Lenora",
    "category": "gymleader",
    "generation": 5,
    "name_offset": 612,
-   "roster_offset": 3546,
+   "roster_offset": 3560,
    "roster_species_ids": [
     173,
     206,
@@ -2897,14 +2998,15 @@
    "starter_count": 4,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Burgh",
    "category": "gymleader",
    "generation": 5,
    "name_offset": 619,
-   "roster_offset": 3556,
+   "roster_offset": 3570,
    "roster_species_ids": [
     214,
     175
@@ -2912,14 +3014,15 @@
    "starter_count": 2,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Elesa",
    "category": "gymleader",
    "generation": 5,
    "name_offset": 625,
-   "roster_offset": 3562,
+   "roster_offset": 3576,
    "roster_species_ids": [
     179,
     172,
@@ -2928,14 +3031,15 @@
    "starter_count": 3,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Clay",
    "category": "gymleader",
    "generation": 5,
    "name_offset": 631,
-   "roster_offset": 3570,
+   "roster_offset": 3584,
    "roster_species_ids": [
     343,
     95,
@@ -2946,14 +3050,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Skyla",
    "category": "gymleader",
    "generation": 5,
    "name_offset": 636,
-   "roster_offset": 3582,
+   "roster_offset": 3596,
    "roster_species_ids": [
     187,
     172,
@@ -2963,14 +3068,15 @@
    "starter_count": 4,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Brycen",
    "category": "gymleader",
    "generation": 5,
    "name_offset": 642,
-   "roster_offset": 3592,
+   "roster_offset": 3606,
    "roster_species_ids": [
     318,
     214,
@@ -2983,14 +3089,15 @@
    "starter_count": 7,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Drayden",
    "category": "gymleader",
    "generation": 5,
    "name_offset": 649,
-   "roster_offset": 3608,
+   "roster_offset": 3622,
    "roster_species_ids": [
     371,
     147,
@@ -3000,14 +3107,15 @@
    "starter_count": 4,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Cheren",
    "category": "gymleader",
    "generation": 5,
    "name_offset": 657,
-   "roster_offset": 3618,
+   "roster_offset": 3632,
    "roster_species_ids": [
     351,
     58,
@@ -3019,14 +3127,15 @@
    "starter_count": 6,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Roxie",
    "category": "gymleader",
    "generation": 5,
    "name_offset": 664,
-   "roster_offset": 3632,
+   "roster_offset": 3646,
    "roster_species_ids": [
     88,
     109,
@@ -3036,14 +3145,15 @@
    "starter_count": 4,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Marlon",
    "category": "gymleader",
    "generation": 5,
    "name_offset": 670,
-   "roster_offset": 3642,
+   "roster_offset": 3656,
    "roster_species_ids": [
     458,
     90,
@@ -3054,14 +3164,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Hugh",
    "category": "rival",
    "generation": 5,
    "name_offset": 677,
-   "roster_offset": 3654,
+   "roster_offset": 3668,
    "roster_species_ids": [
     88,
     58,
@@ -3072,14 +3183,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "N",
    "category": "rival",
    "generation": 5,
    "name_offset": 682,
-   "roster_offset": 3666,
+   "roster_offset": 3680,
    "roster_species_ids": [
     347,
     170,
@@ -3107,14 +3219,15 @@
    "starter_count": 22,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Colress",
    "category": "villain",
    "generation": 5,
    "name_offset": 684,
-   "roster_offset": 3712,
+   "roster_offset": 3726,
    "roster_species_ids": [
     374,
     147,
@@ -3128,30 +3241,34 @@
    "starter_count": 8,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Calem",
    "category": "protagonist",
    "generation": 6,
    "name_offset": 692,
-   "roster_offset": 3730,
+   "roster_offset": 3744,
    "roster_species_ids": [
     359,
     4,
-    133
+    173,
+    133,
+    333
    ],
-   "starter_count": 3,
+   "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Serena",
    "category": "protagonist",
    "generation": 6,
    "name_offset": 698,
-   "roster_offset": 3738,
+   "roster_offset": 3756,
    "roster_species_ids": [
     359,
     1,
@@ -3168,14 +3285,15 @@
    "starter_count": 11,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Diantha",
    "category": "champion",
    "generation": 6,
    "name_offset": 705,
-   "roster_offset": 3762,
+   "roster_offset": 3780,
    "roster_species_ids": [
     280,
     359,
@@ -3186,14 +3304,15 @@
    "starter_count": 4,
    "has_signature": true,
    "signature_id": 280,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Malva",
    "category": "elite4",
    "generation": 6,
    "name_offset": 713,
-   "roster_offset": 3774,
+   "roster_offset": 3792,
    "roster_species_ids": [
     4,
     309,
@@ -3205,14 +3324,15 @@
    "starter_count": 6,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Siebold",
    "category": "elite4",
    "generation": 6,
    "name_offset": 719,
-   "roster_offset": 3788,
+   "roster_offset": 3806,
    "roster_species_ids": [
     4,
     129,
@@ -3223,14 +3343,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Wikstrom",
    "category": "elite4",
    "generation": 6,
    "name_offset": 727,
-   "roster_offset": 3800,
+   "roster_offset": 3818,
    "roster_species_ids": [
     299,
     280,
@@ -3240,14 +3361,15 @@
    "starter_count": 4,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Viola",
    "category": "gymleader",
    "generation": 6,
    "name_offset": 736,
-   "roster_offset": 3810,
+   "roster_offset": 3828,
    "roster_species_ids": [
     95,
     172,
@@ -3256,14 +3378,15 @@
    "starter_count": 3,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Grant",
    "category": "gymleader",
    "generation": 6,
    "name_offset": 742,
-   "roster_offset": 3818,
+   "roster_offset": 3836,
    "roster_species_ids": [
     439,
     95,
@@ -3273,14 +3396,15 @@
    "starter_count": 4,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Korrina",
    "category": "gymleader",
    "generation": 6,
    "name_offset": 748,
-   "roster_offset": 3828,
+   "roster_offset": 3846,
    "roster_species_ids": [
     359,
     4,
@@ -3295,14 +3419,15 @@
    "starter_count": 9,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Ramos",
    "category": "gymleader",
    "generation": 6,
    "name_offset": 756,
-   "roster_offset": 3848,
+   "roster_offset": 3866,
    "roster_species_ids": [
     69,
     102,
@@ -3314,14 +3439,15 @@
    "starter_count": 6,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Clemont",
    "category": "gymleader",
    "generation": 6,
    "name_offset": 762,
-   "roster_offset": 3862,
+   "roster_offset": 3880,
    "roster_species_ids": [
     190,
     309,
@@ -3339,14 +3465,15 @@
    "starter_count": 11,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Valerie",
    "category": "gymleader",
    "generation": 6,
    "name_offset": 770,
-   "roster_offset": 3888,
+   "roster_offset": 3906,
    "roster_species_ids": [
     133,
     371,
@@ -3356,14 +3483,15 @@
    "starter_count": 4,
    "has_signature": true,
    "signature_id": 133,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Shauna",
    "category": "rival",
    "generation": 6,
    "name_offset": 778,
-   "roster_offset": 3898,
+   "roster_offset": 3916,
    "roster_species_ids": [
     1,
     4,
@@ -3375,14 +3503,15 @@
    "starter_count": 6,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Lysandre",
    "category": "villain",
    "generation": 6,
    "name_offset": 785,
-   "roster_offset": 3912,
+   "roster_offset": 3930,
    "roster_species_ids": [
     129,
     4,
@@ -3395,14 +3524,15 @@
    "starter_count": 7,
    "has_signature": true,
    "signature_id": 129,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Alain",
    "category": "anime",
    "generation": 6,
    "name_offset": 794,
-   "roster_offset": 3928,
+   "roster_offset": 3946,
    "roster_species_ids": [
     4,
     374,
@@ -3414,14 +3544,15 @@
    "starter_count": 6,
    "has_signature": true,
    "signature_id": 4,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Sawyer",
    "category": "anime",
    "generation": 6,
    "name_offset": 800,
-   "roster_offset": 3942,
+   "roster_offset": 3960,
    "roster_species_ids": [
     252,
     371,
@@ -3434,14 +3565,15 @@
    "starter_count": 7,
    "has_signature": true,
    "signature_id": 252,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Elio",
    "category": "protagonist",
    "generation": 7,
    "name_offset": 807,
-   "roster_offset": 3958,
+   "roster_offset": 3976,
    "roster_species_ids": [
     133,
     102,
@@ -3451,14 +3583,15 @@
    "starter_count": 4,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Selene",
    "category": "protagonist",
    "generation": 7,
    "name_offset": 812,
-   "roster_offset": 3968,
+   "roster_offset": 3986,
    "roster_species_ids": [
     133,
     102,
@@ -3469,14 +3602,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Kukui",
    "category": "champion",
    "generation": 7,
    "name_offset": 819,
-   "roster_offset": 3980,
+   "roster_offset": 3998,
    "roster_species_ids": [
     63,
     1,
@@ -3488,21 +3622,25 @@
     240,
     81,
     446,
+    198,
     172,
+    60,
+    209,
     37,
     320
    ],
-   "starter_count": 13,
+   "starter_count": 16,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Hau",
    "category": "champion",
    "generation": 7,
    "name_offset": 825,
-   "roster_offset": 4008,
+   "roster_offset": 4032,
    "roster_species_ids": [
     172,
     133,
@@ -3515,14 +3653,15 @@
    "starter_count": 7,
    "has_signature": true,
    "signature_id": 172,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Molayne",
    "category": "elite4",
    "generation": 7,
    "name_offset": 829,
-   "roster_offset": 4024,
+   "roster_offset": 4048,
    "roster_species_ids": [
     50,
     374,
@@ -3535,14 +3674,15 @@
    "starter_count": 7,
    "has_signature": true,
    "signature_id": 50,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Kahili",
    "category": "elite4",
    "generation": 7,
    "name_offset": 837,
-   "roster_offset": 4040,
+   "roster_offset": 4064,
    "roster_species_ids": [
     227,
     41
@@ -3550,14 +3690,15 @@
    "starter_count": 2,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Acerola",
    "category": "elite4",
    "generation": 7,
    "name_offset": 844,
-   "roster_offset": 4046,
+   "roster_offset": 4070,
    "roster_species_ids": [
     104,
     92,
@@ -3570,14 +3711,15 @@
    "starter_count": 7,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Hala",
    "category": "gymleader",
    "generation": 7,
    "name_offset": 852,
-   "roster_offset": 4062,
+   "roster_offset": 4086,
    "roster_species_ids": [
     66,
     296,
@@ -3591,14 +3733,15 @@
    "starter_count": 8,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Olivia",
    "category": "gymleader",
    "generation": 7,
    "name_offset": 857,
-   "roster_offset": 4080,
+   "roster_offset": 4104,
    "roster_species_ids": [
     347,
     438,
@@ -3611,14 +3754,15 @@
    "starter_count": 7,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Nanu",
    "category": "gymleader",
    "generation": 7,
    "name_offset": 864,
-   "roster_offset": 4096,
+   "roster_offset": 4120,
    "roster_species_ids": [
     52,
     359,
@@ -3629,14 +3773,15 @@
    "starter_count": 5,
    "has_signature": true,
    "signature_id": 52,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Hapu",
    "category": "gymleader",
    "generation": 7,
    "name_offset": 869,
-   "roster_offset": 4108,
+   "roster_offset": 4132,
    "roster_species_ids": [
     222,
     50,
@@ -3646,14 +3791,15 @@
    "starter_count": 4,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Gladion",
    "category": "rival",
    "generation": 7,
    "name_offset": 874,
-   "roster_offset": 4118,
+   "roster_offset": 4142,
    "roster_species_ids": [
     359,
     1,
@@ -3675,14 +3821,15 @@
    "starter_count": 16,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Guzma",
    "category": "villain",
    "generation": 7,
    "name_offset": 882,
-   "roster_offset": 4152,
+   "roster_offset": 4176,
    "roster_species_ids": [
     115,
     198,
@@ -3695,14 +3842,15 @@
    "starter_count": 7,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Plumeria",
    "category": "villain",
    "generation": 7,
    "name_offset": 888,
-   "roster_offset": 4168,
+   "roster_offset": 4192,
    "roster_species_ids": [
     96,
     133,
@@ -3713,14 +3861,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Lusamine",
    "category": "villain",
    "generation": 7,
    "name_offset": 897,
-   "roster_offset": 4180,
+   "roster_offset": 4204,
    "roster_species_ids": [
     359,
     374,
@@ -3741,14 +3890,15 @@
    "starter_count": 15,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Lillie (anime)",
    "category": "anime",
    "generation": 7,
    "name_offset": 906,
-   "roster_offset": 4212,
+   "roster_offset": 4236,
    "roster_species_ids": [
     37,
     10,
@@ -3767,38 +3917,44 @@
    "starter_count": 13,
    "has_signature": true,
    "signature_id": 37,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Kiawe (anime)",
    "category": "anime",
    "generation": 7,
    "name_offset": 913,
-   "roster_offset": 4240,
+   "roster_offset": 4264,
    "roster_species_ids": [
     4,
     341,
     104,
     239,
     92,
+    58,
+    115,
+    240,
     458,
     95,
     128,
     320,
     41
    ],
-   "starter_count": 10,
+   "starter_count": 13,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Lana (anime)",
    "category": "anime",
    "generation": 7,
    "name_offset": 919,
-   "roster_offset": 4262,
+   "roster_offset": 4292,
    "roster_species_ids": [
+    170,
     147,
     133,
     349,
@@ -3806,22 +3962,24 @@
     458,
     200,
     446,
+    90,
     283,
     128,
     320,
     382
    ],
-   "starter_count": 10,
+   "starter_count": 12,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Mallow (anime)",
    "category": "anime",
    "generation": 7,
    "name_offset": 924,
-   "roster_offset": 4286,
+   "roster_offset": 4320,
    "roster_species_ids": [
     349,
     131,
@@ -3829,19 +3987,21 @@
     200,
     172,
     128,
-    328
+    328,
+    252
    ],
-   "starter_count": 7,
+   "starter_count": 8,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Sophocles",
    "category": "anime",
    "generation": 7,
    "name_offset": 931,
-   "roster_offset": 4302,
+   "roster_offset": 4338,
    "roster_species_ids": [
     374,
     341,
@@ -3860,14 +4020,15 @@
    "starter_count": 13,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Leon",
    "category": "champion",
    "generation": 8,
    "name_offset": 941,
-   "roster_offset": 4330,
+   "roster_offset": 4366,
    "roster_species_ids": [
     4,
     147,
@@ -3883,14 +4044,15 @@
    "starter_count": 10,
    "has_signature": true,
    "signature_id": 4,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Milo",
    "category": "gymleader",
    "generation": 8,
    "name_offset": 946,
-   "roster_offset": 4352,
+   "roster_offset": 4388,
    "roster_species_ids": [
     840,
     270,
@@ -3901,14 +4063,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Nessa",
    "category": "gymleader",
    "generation": 8,
    "name_offset": 951,
-   "roster_offset": 4364,
+   "roster_offset": 4400,
    "roster_species_ids": [
     349,
     118,
@@ -3920,14 +4083,15 @@
    "starter_count": 6,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Kabu",
    "category": "gymleader",
    "generation": 8,
    "name_offset": 957,
-   "roster_offset": 4378,
+   "roster_offset": 4414,
    "roster_species_ids": [
     349,
     58,
@@ -3939,14 +4103,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Bea",
    "category": "gymleader",
    "generation": 8,
    "name_offset": 962,
-   "roster_offset": 4392,
+   "roster_offset": 4428,
    "roster_species_ids": [
     66,
     4,
@@ -3958,14 +4123,15 @@
    "starter_count": 6,
    "has_signature": true,
    "signature_id": 66,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Allister",
    "category": "gymleader",
    "generation": 8,
    "name_offset": 966,
-   "roster_offset": 4406,
+   "roster_offset": 4442,
    "roster_species_ids": [
     92,
     222,
@@ -3974,14 +4140,15 @@
    "starter_count": 3,
    "has_signature": true,
    "signature_id": 92,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Opal",
    "category": "gymleader",
    "generation": 8,
    "name_offset": 975,
-   "roster_offset": 4414,
+   "roster_offset": 4450,
    "roster_species_ids": [
     109,
     303,
@@ -3991,14 +4158,15 @@
    "starter_count": 4,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Gordie",
    "category": "gymleader",
    "generation": 8,
    "name_offset": 980,
-   "roster_offset": 4424,
+   "roster_offset": 4460,
    "roster_species_ids": [
     131,
     246,
@@ -4007,14 +4175,15 @@
    "starter_count": 3,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Raihan",
    "category": "gymleader",
    "generation": 8,
    "name_offset": 987,
-   "roster_offset": 4432,
+   "roster_offset": 4468,
    "roster_species_ids": [
     4,
     324,
@@ -4023,14 +4192,15 @@
    "starter_count": 3,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Hop",
    "category": "rival",
    "generation": 8,
    "name_offset": 994,
-   "roster_offset": 4440,
+   "roster_offset": 4476,
    "roster_species_ids": [
     4,
     66,
@@ -4045,14 +4215,15 @@
    "starter_count": 3,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Bede",
    "category": "rival",
    "generation": 8,
    "name_offset": 998,
-   "roster_offset": 4460,
+   "roster_offset": 4496,
    "roster_species_ids": [
     10,
     133,
@@ -4069,14 +4240,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Marnie",
    "category": "rival",
    "generation": 8,
    "name_offset": 1003,
-   "roster_offset": 4484,
+   "roster_offset": 4520,
    "roster_species_ids": [
     303,
     144,
@@ -4089,14 +4261,15 @@
    "starter_count": 1,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Rose",
    "category": "villain",
    "generation": 8,
    "name_offset": 1010,
-   "roster_offset": 4500,
+   "roster_offset": 4536,
    "roster_species_ids": [
     4,
     349,
@@ -4105,14 +4278,15 @@
    "starter_count": 3,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Goh",
    "category": "anime",
    "generation": 8,
    "name_offset": 1015,
-   "roster_offset": 4508,
+   "roster_offset": 4544,
    "roster_species_ids": [
     359,
     142,
@@ -4186,14 +4360,15 @@
    "starter_count": 65,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Chloe",
    "category": "anime",
    "generation": 8,
    "name_offset": 1019,
-   "roster_offset": 4646,
+   "roster_offset": 4682,
    "roster_species_ids": [
     133,
     366,
@@ -4209,14 +4384,15 @@
    "starter_count": 10,
    "has_signature": true,
    "signature_id": 133,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Nemona",
    "category": "champion",
    "generation": 9,
    "name_offset": 1025,
-   "roster_offset": 4668,
+   "roster_offset": 4704,
    "roster_species_ids": [
     206,
     355,
@@ -4234,14 +4410,15 @@
    "starter_count": 11,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Rika",
    "category": "elite4",
    "generation": 9,
    "name_offset": 1032,
-   "roster_offset": 4694,
+   "roster_offset": 4730,
    "roster_species_ids": [
     194,
     339,
@@ -4253,14 +4430,15 @@
    "starter_count": 6,
    "has_signature": true,
    "signature_id": 194,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Poppy",
    "category": "elite4",
    "generation": 9,
    "name_offset": 1037,
-   "roster_offset": 4708,
+   "roster_offset": 4744,
    "roster_species_ids": [
     1345,
     81,
@@ -4269,14 +4447,15 @@
    "starter_count": 3,
    "has_signature": true,
    "signature_id": 1345,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Hassel",
    "category": "elite4",
    "generation": 9,
    "name_offset": 1043,
-   "roster_offset": 4716,
+   "roster_offset": 4752,
    "roster_species_ids": [
     840,
     147
@@ -4284,14 +4463,15 @@
    "starter_count": 2,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Katy",
    "category": "gymleader",
    "generation": 9,
    "name_offset": 1050,
-   "roster_offset": 4722,
+   "roster_offset": 4758,
    "roster_species_ids": [
     216,
     50,
@@ -4303,14 +4483,15 @@
    "starter_count": 6,
    "has_signature": true,
    "signature_id": 216,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Brassius",
    "category": "gymleader",
    "generation": 9,
    "name_offset": 1055,
-   "roster_offset": 4736,
+   "roster_offset": 4772,
    "roster_species_ids": [
     438,
     840,
@@ -4321,14 +4502,15 @@
    "starter_count": 5,
    "has_signature": true,
    "signature_id": 438,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Iono",
    "category": "gymleader",
    "generation": 9,
    "name_offset": 1064,
-   "roster_offset": 4748,
+   "roster_offset": 4784,
    "roster_species_ids": [
     239,
     81,
@@ -4339,14 +4521,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Kofu",
    "category": "gymleader",
    "generation": 9,
    "name_offset": 1069,
-   "roster_offset": 4760,
+   "roster_offset": 4796,
    "roster_species_ids": [
     285,
     361,
@@ -4356,14 +4539,15 @@
    "starter_count": 4,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Larry",
    "category": "gymleader",
    "generation": 9,
    "name_offset": 1074,
-   "roster_offset": 4770,
+   "roster_offset": 4806,
    "roster_species_ids": [
     206,
     74,
@@ -4378,14 +4562,15 @@
    "starter_count": 9,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Ryme",
    "category": "gymleader",
    "generation": 9,
    "name_offset": 1080,
-   "roster_offset": 4790,
+   "roster_offset": 4826,
    "roster_species_ids": [
     56,
     353
@@ -4393,14 +4578,15 @@
    "starter_count": 2,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Tulip",
    "category": "gymleader",
    "generation": 9,
    "name_offset": 1085,
-   "roster_offset": 4796,
+   "roster_offset": 4832,
    "roster_species_ids": [
     50,
     203,
@@ -4410,14 +4596,15 @@
    "starter_count": 4,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Grusha",
    "category": "gymleader",
    "generation": 9,
    "name_offset": 1091,
-   "roster_offset": 4806,
+   "roster_offset": 4842,
    "roster_species_ids": [
     54,
     215,
@@ -4428,14 +4615,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Arven",
    "category": "rival",
    "generation": 9,
    "name_offset": 1098,
-   "roster_offset": 4818,
+   "roster_offset": 4854,
    "roster_species_ids": [
     133,
     90
@@ -4443,14 +4631,15 @@
    "starter_count": 2,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Penny",
    "category": "rival",
    "generation": 9,
    "name_offset": 1104,
-   "roster_offset": 4824,
+   "roster_offset": 4860,
    "roster_species_ids": [
     133,
     90,
@@ -4460,39 +4649,80 @@
    "starter_count": 4,
    "has_signature": true,
    "signature_id": 133,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Oak",
    "category": "professor",
    "generation": 1,
    "name_offset": 1110,
-   "roster_offset": 4834,
+   "roster_offset": 4870,
    "roster_species_ids": [
+    69,
     1,
+    10,
     4,
+    222,
+    104,
+    50,
     132,
+    84,
     147,
     133,
+    102,
+    74,
+    118,
+    88,
+    58,
+    163,
+    187,
+    116,
+    98,
+    129,
+    56,
+    446,
+    29,
     32,
+    43,
+    95,
+    46,
     172,
     16,
+    60,
+    77,
+    54,
+    19,
+    111,
+    27,
+    86,
+    79,
+    21,
     7,
+    120,
+    276,
+    114,
+    72,
+    100,
+    37,
+    13,
+    194,
     144,
     151,
     150
    ],
-   "starter_count": 9,
+   "starter_count": 48,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Elm",
    "category": "professor",
    "generation": 2,
    "name_offset": 1114,
-   "roster_offset": 4860,
+   "roster_offset": 4974,
    "roster_species_ids": [
     298,
     69,
@@ -4513,28 +4743,32 @@
    "starter_count": 15,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Birch",
    "category": "professor",
    "generation": 3,
    "name_offset": 1118,
-   "roster_offset": 4892,
+   "roster_offset": 5006,
    "roster_species_ids": [
     304,
     1,
+    318,
     4,
     152,
     366,
     173,
     155,
     88,
+    270,
     129,
     258,
     290,
     261,
     273,
+    285,
     7,
     255,
     158,
@@ -4547,17 +4781,18 @@
     385,
     384
    ],
-   "starter_count": 22,
+   "starter_count": 25,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Rowan",
    "category": "professor",
    "generation": 4,
    "name_offset": 1124,
-   "roster_offset": 4942,
+   "roster_offset": 5062,
    "roster_species_ids": [
     190,
     155,
@@ -4568,48 +4803,56 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Juniper",
    "category": "professor",
    "generation": 5,
    "name_offset": 1130,
-   "roster_offset": 4954,
+   "roster_offset": 5074,
    "roster_species_ids": [
     172
    ],
    "starter_count": 1,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Sycamore",
    "category": "professor",
    "generation": 6,
    "name_offset": 1138,
-   "roster_offset": 4958,
+   "roster_offset": 5078,
    "roster_species_ids": [
     359,
+    298,
     1,
+    10,
     4,
     127,
+    54,
     280,
     7,
-    255
+    255,
+    13,
+    263
    ],
-   "starter_count": 7,
+   "starter_count": 12,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Burnet",
    "category": "professor",
    "generation": 7,
    "name_offset": 1147,
-   "roster_offset": 4974,
+   "roster_offset": 5104,
    "roster_species_ids": [
     458,
     446
@@ -4617,14 +4860,15 @@
    "starter_count": 2,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Samson Oak",
    "category": "professor",
    "generation": 7,
    "name_offset": 1154,
-   "roster_offset": 4980,
+   "roster_offset": 5110,
    "roster_species_ids": [
     104,
     50,
@@ -4640,42 +4884,45 @@
    "starter_count": 10,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Sonia",
    "category": "professor",
    "generation": 8,
    "name_offset": 1165,
-   "roster_offset": 5002,
+   "roster_offset": 5132,
    "roster_species_ids": [
     4
    ],
    "starter_count": 1,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Laventon",
    "category": "professor",
    "generation": 8,
    "name_offset": 1171,
-   "roster_offset": 5006,
+   "roster_offset": 5136,
    "roster_species_ids": [
     155
    ],
    "starter_count": 1,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Cerise",
    "category": "professor",
    "generation": 8,
    "name_offset": 1180,
-   "roster_offset": 5010,
+   "roster_offset": 5140,
    "roster_species_ids": [
     1,
     4,
@@ -4690,14 +4937,15 @@
    "starter_count": 7,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Volo",
    "category": "villain",
    "generation": 8,
    "name_offset": 1187,
-   "roster_offset": 5030,
+   "roster_offset": 5160,
    "roster_species_ids": [
     406,
     58,
@@ -4706,28 +4954,30 @@
    "starter_count": 3,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   },
   {
    "character": "Tobias",
    "category": "anime",
    "generation": 4,
    "name_offset": 1192,
-   "roster_offset": 5038,
+   "roster_offset": 5168,
    "roster_species_ids": [
     381
    ],
    "starter_count": 1,
    "has_signature": true,
    "signature_id": 381,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Anabel",
    "category": "frontier",
    "generation": 3,
    "name_offset": 1199,
-   "roster_offset": 5042,
+   "roster_offset": 5172,
    "roster_species_ids": [
     63,
     371,
@@ -4743,14 +4993,15 @@
    "starter_count": 7,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Brandon",
    "category": "frontier",
    "generation": 3,
    "name_offset": 1206,
-   "roster_offset": 5064,
+   "roster_offset": 5194,
    "roster_species_ids": [
     355,
     290,
@@ -4765,14 +5016,15 @@
    "starter_count": 3,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Greta",
    "category": "frontier",
    "generation": 3,
    "name_offset": 1214,
-   "roster_offset": 5084,
+   "roster_offset": 5214,
    "roster_species_ids": [
     133,
     92,
@@ -4785,14 +5037,15 @@
    "starter_count": 7,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Lucy",
    "category": "frontier",
    "generation": 3,
    "name_offset": 1220,
-   "roster_offset": 5100,
+   "roster_offset": 5230,
    "roster_species_ids": [
     63,
     155,
@@ -4809,39 +5062,44 @@
    "starter_count": 11,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Noland",
    "category": "frontier",
    "generation": 3,
    "name_offset": 1225,
-   "roster_offset": 5124,
+   "roster_offset": 5254,
    "roster_species_ids": [
     304,
     1,
     309,
     66,
+    303,
+    290,
     322,
     127,
     54,
     111,
     27,
     285,
+    235,
     328,
     144
    ],
-   "starter_count": 11,
+   "starter_count": 14,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Spenser",
    "category": "frontier",
    "generation": 3,
    "name_offset": 1232,
-   "roster_offset": 5150,
+   "roster_offset": 5286,
    "roster_species_ids": [
     298,
     343,
@@ -4858,14 +5116,15 @@
    "starter_count": 10,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Tucker",
    "category": "frontier",
    "generation": 3,
    "name_offset": 1240,
-   "roster_offset": 5174,
+   "roster_offset": 5310,
    "roster_species_ids": [
     371,
     374,
@@ -4877,14 +5136,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Dahlia",
    "category": "frontier",
    "generation": 4,
    "name_offset": 1247,
-   "roster_offset": 5188,
+   "roster_offset": 5324,
    "roster_species_ids": [
     355,
     270,
@@ -4896,14 +5156,15 @@
    "starter_count": 5,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Darach",
    "category": "frontier",
    "generation": 4,
    "name_offset": 1254,
-   "roster_offset": 5202,
+   "roster_offset": 5338,
    "roster_species_ids": [
     228,
     280,
@@ -4912,14 +5173,15 @@
    "starter_count": 2,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": false
   },
   {
    "character": "Palmer",
    "category": "frontier",
    "generation": 4,
    "name_offset": 1261,
-   "roster_offset": 5210,
+   "roster_offset": 5346,
    "roster_species_ids": [
     147,
     349,
@@ -4928,7 +5190,8 @@
    "starter_count": 3,
    "has_signature": false,
    "signature_id": null,
-   "sprite_asset_id": "TBD"
+   "sprite_asset_id": "TBD",
+   "hidden": true
   }
  ]
 }

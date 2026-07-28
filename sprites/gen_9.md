@@ -18,24 +18,9 @@ Final-evolution rosters in National Pokédex order, sprites with names. [← bac
 <tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/38.png"><br><sub>Ninetalesᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/55.png"><br><sub>Golduck</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/334.png"><br><sub>Altariaᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/362.png"><br><sub>Glalie</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/461.png"><br><sub>Weavileᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/478.png"><br><sub>Froslass</sub></td></tr>
 </table>
 
-### Hassel — Elite Four
-<table>
-<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/149.png"><br><sub>Dragoniteᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/841.png"><br><sub>Flappleᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/842.png"><br><sub>Appletun</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/1019.png"><br><sub>Hydrapple</sub></td></tr>
-</table>
-
-### Iono — Gym Leader
-<table>
-<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/26.png"><br><sub>Raichu</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/101.png"><br><sub>Electrode</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/429.png"><br><sub>Mismagiusᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/462.png"><br><sub>Magnezone</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/466.png"><br><sub>Electivire</sub></td></tr>
-</table>
-
 ### Katy — Gym Leader
 <table>
 <tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/26.png"><br><sub>Raichu</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/51.png"><br><sub>Dugtrio</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/195.png"><br><sub>Quagsire</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/205.png"><br><sub>Forretressᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/214.png"><br><sub>Heracrossᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/901.png"><br><sub>Ursalunaᵍ</sub></td></tr>
-</table>
-
-### Kofu — Gym Leader
-<table>
-<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/160.png"><br><sub>Feraligatrᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/279.png"><br><sub>Pelipperᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/286.png"><br><sub>Breloom</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/362.png"><br><sub>Glalie</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/478.png"><br><sub>Froslass</sub></td></tr>
 </table>
 
 ### Larry — Gym Leader
@@ -57,22 +42,7 @@ Final-evolution rosters in National Pokédex order, sprites with names. [← bac
 <tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/471.png"><br><sub>Glaceonᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/700.png"><br><sub>Sylveonᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/959.png"><br><sub>Tinkaton</sub></td></tr>
 </table>
 
-### Poppy — Elite Four
-<table>
-<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/208.png"><br><sub>Steelix</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/462.png"><br><sub>Magnezoneᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/959.png"><br><sub>Tinkatonᵍ</sub></td></tr>
-</table>
-
 ### Rika — Elite Four
 <table>
 <tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/51.png"><br><sub>Dugtrioᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/195.png"><br><sub>Quagsire</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/232.png"><br><sub>Donphanᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/323.png"><br><sub>Cameruptᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/340.png"><br><sub>Whiscashᵍ</sub></td></tr>
-</table>
-
-### Ryme — Gym Leader
-<table>
-<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/354.png"><br><sub>Banetteᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/979.png"><br><sub>Annihilape</sub></td></tr>
-</table>
-
-### Tulip — Gym Leader
-<table>
-<tr><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/51.png"><br><sub>Dugtrio</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/195.png"><br><sub>Quagsire</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/282.png"><br><sub>Gardevoirᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/475.png"><br><sub>Galladeᵍ</sub></td><td align="center" width="80"><img width="56" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/981.png"><br><sub>Farigirafᵍ</sub></td></tr>
 </table>

@@ -57,254 +57,216 @@ To switch off, enter the code **`CMDBGOFF`**.
 
 ## Character codes
 
-Codes are the character's name with spaces and punctuation removed. Case is
-ignored. 193 characters across all nine generations:
+Codes are the character's name with spaces and punctuation removed.
+Case is ignored. **153 selectable characters** across all nine
+generations:
 
 ### Gen 1 — Kanto
 
 | Code | Character |
 |---|---|
-| `AGATHA` | Agatha |
-| `ASH` | Ash |
-| `BLAINE` | Blaine |
-| `BLUE` | Blue |
-| `BROCK` | Brock |
-| `BRUNO` | Bruno |
-| `ERIKA` | Erika |
-| `GARY` | Gary |
-| `GIOVANNI` | Giovanni |
-| `JAMES` | James |
-| `JESSIE` | Jessie |
-| `KOGA` | Koga |
-| `LANCE` | Lance |
-| `LEAF` | Leaf |
-| `LORELEI` | Lorelei |
-| `LTSURGE` | Lt. Surge |
-| `MISTY` | Misty |
-| `OAK` | Oak |
-| `RED` | Red |
-| `RITCHIE` | Ritchie |
-| `SABRINA` | Sabrina |
-| `TRACEY` | Tracey |
+| `Agatha` | Agatha |
+| `Ash` | Ash |
+| `Blaine` | Blaine |
+| `Blue` | Blue |
+| `Brock` | Brock |
+| `Bruno` | Bruno |
+| `Erika` | Erika |
+| `Gary` | Gary |
+| `Giovanni` | Giovanni |
+| `James` | James |
+| `Jessie` | Jessie |
+| `Koga` | Koga |
+| `Lance` | Lance |
+| `Leaf` | Leaf |
+| `Lorelei` | Lorelei |
+| `LtSurge` | Lt. Surge |
+| `Misty` | Misty |
+| `Oak` | Oak |
+| `Red` | Red |
+| `Ritchie` | Ritchie |
+| `Sabrina` | Sabrina |
+| `Tracey` | Tracey |
 
 ### Gen 2 — Johto
 
 | Code | Character |
 |---|---|
-| `ARCHER` | Archer |
-| `ARIANA` | Ariana |
-| `BUGSY` | Bugsy |
-| `CHUCK` | Chuck |
-| `CLAIR` | Clair |
-| `ELM` | Elm |
-| `ETHAN` | Ethan |
-| `FALKNER` | Falkner |
-| `JANINE` | Janine |
-| `JASMINE` | Jasmine |
-| `KAREN` | Karen |
-| `KRIS` | Kris |
-| `LYRA` | Lyra |
-| `MORTY` | Morty |
-| `PRYCE` | Pryce |
-| `SILVER` | Silver |
-| `WHITNEY` | Whitney |
-| `WILL` | Will |
+| `Archer` | Archer |
+| `Ariana` | Ariana |
+| `Bugsy` | Bugsy |
+| `Chuck` | Chuck |
+| `Clair` | Clair |
+| `Elm` | Elm |
+| `Ethan` | Ethan |
+| `Falkner` | Falkner |
+| `Janine` | Janine |
+| `Jasmine` | Jasmine |
+| `Karen` | Karen |
+| `Kris` | Kris |
+| `Lyra` | Lyra |
+| `Morty` | Morty |
+| `Pryce` | Pryce |
+| `Silver` | Silver |
+| `Whitney` | Whitney |
+| `Will` | Will |
 
 ### Gen 3 — Hoenn
 
 | Code | Character |
 |---|---|
-| `ANABEL` | Anabel |
-| `ARCHIE` | Archie |
-| `BIRCH` | Birch |
-| `BRANDON` | Brandon |
-| `BRAWLY` | Brawly |
-| `BRENDAN` | Brendan |
-| `DRAKE` | Drake |
-| `DREW` | Drew |
-| `FLANNERY` | Flannery |
-| `GLACIA` | Glacia |
-| `GRETA` | Greta |
-| `JUAN` | Juan |
-| `LIZA` | Liza |
-| `LUCY` | Lucy |
-| `MAXIE` | Maxie |
-| `MAY` | May |
-| `NOLAND` | Noland |
-| `NORMAN` | Norman |
-| `PHOEBE` | Phoebe |
-| `ROXANNE` | Roxanne |
-| `SIDNEY` | Sidney |
-| `SPENSER` | Spenser |
-| `STEVEN` | Steven |
-| `TATE` | Tate |
-| `TUCKER` | Tucker |
-| `WALLACE` | Wallace |
-| `WALLY` | Wally |
-| `WATTSON` | Wattson |
-| `WINONA` | Winona |
+| `Anabel` | Anabel |
+| `Archie` | Archie |
+| `Birch` | Birch |
+| `Brandon` | Brandon |
+| `Brawly` | Brawly |
+| `Brendan` | Brendan |
+| `Drake` | Drake |
+| `Drew` | Drew |
+| `Flannery` | Flannery |
+| `Glacia` | Glacia |
+| `Greta` | Greta |
+| `Juan` | Juan |
+| `Liza` | Liza |
+| `Lucy` | Lucy |
+| `Maxie` | Maxie |
+| `May` | May |
+| `Noland` | Noland |
+| `Norman` | Norman |
+| `Phoebe` | Phoebe |
+| `Roxanne` | Roxanne |
+| `Sidney` | Sidney |
+| `Spenser` | Spenser |
+| `Steven` | Steven |
+| `Tate` | Tate |
+| `Tucker` | Tucker |
+| `Wallace` | Wallace |
+| `Wally` | Wally |
+| `Wattson` | Wattson |
+| `Winona` | Winona |
 
 ### Gen 4 — Sinnoh
 
 | Code | Character |
 |---|---|
-| `AARON` | Aaron |
-| `BARRY` | Barry |
-| `BERTHA` | Bertha |
-| `BYRON` | Byron |
-| `CANDICE` | Candice |
-| `CRASHERWAK` | Crasher Wake |
-| `CYNTHIA` | Cynthia |
-| `CYRUS` | Cyrus |
-| `DAHLIA` | Dahlia |
-| `DARACH` | Darach |
-| `DAWN` | Dawn |
-| `FANTINA` | Fantina |
-| `FLINT` | Flint |
-| `GARDENIA` | Gardenia |
-| `JUPITER` | Jupiter |
-| `LUCAS` | Lucas |
-| `LUCIAN` | Lucian |
-| `MARS` | Mars |
-| `MAYLENE` | Maylene |
-| `NANDO` | Nando |
-| `PALMER` | Palmer |
-| `PAUL` | Paul |
-| `ROARK` | Roark |
-| `ROWAN` | Rowan |
-| `SATURN` | Saturn |
-| `TOBIAS` | Tobias |
-| `VOLKNER` | Volkner |
-| `VOLO` | Volo |
-| `ZOEY` | Zoey |
+| `Aaron` | Aaron |
+| `Barry` | Barry |
+| `Bertha` | Bertha |
+| `Byron` | Byron |
+| `Candice` | Candice |
+| `CrasherWak` | Crasher Wake |
+| `Cynthia` | Cynthia |
+| `Cyrus` | Cyrus |
+| `Dahlia` | Dahlia |
+| `Darach` | Darach |
+| `Dawn` | Dawn |
+| `Fantina` | Fantina |
+| `Flint` | Flint |
+| `Gardenia` | Gardenia |
+| `Jupiter` | Jupiter |
+| `Lucas` | Lucas |
+| `Lucian` | Lucian |
+| `Mars` | Mars |
+| `Maylene` | Maylene |
+| `Nando` | Nando |
+| `Paul` | Paul |
+| `Roark` | Roark |
+| `Saturn` | Saturn |
+| `Tobias` | Tobias |
+| `Volkner` | Volkner |
+| `Zoey` | Zoey |
 
 ### Gen 5 — Unova
 
 | Code | Character |
 |---|---|
-| `BRYCEN` | Brycen |
-| `BURGH` | Burgh |
-| `CAITLIN` | Caitlin |
-| `CHEREN` | Cheren |
-| `CHILI` | Chili |
-| `CILAN` | Cilan |
-| `CLAY` | Clay |
-| `COLRESS` | Colress |
-| `CRESS` | Cress |
-| `DRAYDEN` | Drayden |
-| `ELESA` | Elesa |
-| `GRIMSLEY` | Grimsley |
-| `HILBERT` | Hilbert |
-| `HUGH` | Hugh |
-| `IRIS` | Iris |
-| `JUNIPER` | Juniper |
-| `LENORA` | Lenora |
-| `MARLON` | Marlon |
-| `MARSHAL` | Marshal |
+| `Brycen` | Brycen |
+| `Cheren` | Cheren |
+| `Colress` | Colress |
+| `Cress` | Cress |
+| `Hilbert` | Hilbert |
+| `Iris` | Iris |
 | `N` | N |
-| `NATE` | Nate |
-| `ROXIE` | Roxie |
-| `SHAUNTAL` | Shauntal |
-| `SKYLA` | Skyla |
 
 ### Gen 6 — Kalos
 
 | Code | Character |
 |---|---|
-| `ALAIN` | Alain |
-| `CALEM` | Calem |
-| `CLEMONT` | Clemont |
-| `DIANTHA` | Diantha |
-| `GRANT` | Grant |
-| `KORRINA` | Korrina |
-| `LYSANDRE` | Lysandre |
-| `MALVA` | Malva |
-| `RAMOS` | Ramos |
-| `SAWYER` | Sawyer |
-| `SERENA` | Serena |
-| `SHAUNA` | Shauna |
-| `SIEBOLD` | Siebold |
-| `SYCAMORE` | Sycamore |
-| `VALERIE` | Valerie |
-| `VIOLA` | Viola |
-| `WIKSTROM` | Wikstrom |
+| `Alain` | Alain |
+| `Calem` | Calem |
+| `Clemont` | Clemont |
+| `Diantha` | Diantha |
+| `Korrina` | Korrina |
+| `Lysandre` | Lysandre |
+| `Malva` | Malva |
+| `Ramos` | Ramos |
+| `Sawyer` | Sawyer |
+| `Serena` | Serena |
+| `Shauna` | Shauna |
+| `Sycamore` | Sycamore |
+| `Valerie` | Valerie |
+| `Wikstrom` | Wikstrom |
 
 ### Gen 7 — Alola
 
 | Code | Character |
 |---|---|
-| `ACEROLA` | Acerola |
-| `BURNET` | Burnet |
-| `ELIO` | Elio |
-| `GLADION` | Gladion |
-| `GUZMA` | Guzma |
-| `HALA` | Hala |
-| `HAPU` | Hapu |
-| `HAU` | Hau |
-| `KAHILI` | Kahili |
-| `KIAWEANIME` | Kiawe (anime) |
-| `KUKUI` | Kukui |
-| `LANAANIME` | Lana (anime) |
-| `LILLIEANIM` | Lillie (anime) |
-| `LUSAMINE` | Lusamine |
-| `MALLOWANIM` | Mallow (anime) |
-| `MOLAYNE` | Molayne |
-| `NANU` | Nanu |
-| `OLIVIA` | Olivia |
-| `PLUMERIA` | Plumeria |
-| `SAMSONOAK` | Samson Oak |
-| `SELENE` | Selene |
-| `SOPHOCLES` | Sophocles |
+| `Acerola` | Acerola |
+| `Elio` | Elio |
+| `Gladion` | Gladion |
+| `Guzma` | Guzma |
+| `Hala` | Hala |
+| `Hau` | Hau |
+| `Kiaweanime` | Kiawe (anime) |
+| `Kukui` | Kukui |
+| `Lanaanime` | Lana (anime) |
+| `Lillieanim` | Lillie (anime) |
+| `Lusamine` | Lusamine |
+| `Mallowanim` | Mallow (anime) |
+| `Molayne` | Molayne |
+| `Olivia` | Olivia |
+| `Plumeria` | Plumeria |
+| `SamsonOak` | Samson Oak |
+| `Selene` | Selene |
+| `Sophocles` | Sophocles |
 
 ### Gen 8 — Galar
 
 | Code | Character |
 |---|---|
-| `ALLISTER` | Allister |
-| `BEA` | Bea |
-| `BEDE` | Bede |
-| `CERISE` | Cerise |
-| `CHLOE` | Chloe |
-| `GOH` | Goh |
-| `GORDIE` | Gordie |
-| `HOP` | Hop |
-| `KABU` | Kabu |
-| `LAVENTON` | Laventon |
-| `LEON` | Leon |
-| `MARNIE` | Marnie |
-| `MILO` | Milo |
-| `NESSA` | Nessa |
-| `OPAL` | Opal |
-| `RAIHAN` | Raihan |
-| `ROSE` | Rose |
-| `SONIA` | Sonia |
+| `Bea` | Bea |
+| `Bede` | Bede |
+| `Cerise` | Cerise |
+| `Chloe` | Chloe |
+| `Goh` | Goh |
+| `Hop` | Hop |
+| `Kabu` | Kabu |
+| `Leon` | Leon |
+| `Marnie` | Marnie |
+| `Milo` | Milo |
+| `Nessa` | Nessa |
 
 ### Gen 9 — Paldea
 
 | Code | Character |
 |---|---|
-| `ARVEN` | Arven |
-| `BRASSIUS` | Brassius |
-| `GRUSHA` | Grusha |
-| `HASSEL` | Hassel |
-| `IONO` | Iono |
-| `KATY` | Katy |
-| `KOFU` | Kofu |
-| `LARRY` | Larry |
-| `NEMONA` | Nemona |
-| `PENNY` | Penny |
-| `POPPY` | Poppy |
-| `RIKA` | Rika |
-| `RYME` | Ryme |
-| `TULIP` | Tulip |
+| `Arven` | Arven |
+| `Brassius` | Brassius |
+| `Grusha` | Grusha |
+| `Katy` | Katy |
+| `Larry` | Larry |
+| `Nemona` | Nemona |
+| `Penny` | Penny |
+| `Rika` | Rika |
 
-### Debug codes
+### Characters that are not offered in Seaglass
 
-| Code | Effect |
-|---|---|
-| `CMDBGOFF` | Turn Character Mode off |
-| `CMDBGGIVE1` | Give your current character's starter (testing) |
-| `CMDBGGIVE2` | Give a deliberately off-roster mon (testing the PC-routing) |
+40 of the 193 characters in the table are **not selectable here** and their codes are refused.
+Seaglass's dex is a curated subset -- all of Gen 1-3 plus a small set of
+later cross-gen evolutions -- so those characters cannot field six fully
+evolved Pokemon in this game, and picking them would mean catching almost
+nothing for the whole run. They keep their slot internally so existing
+saves still load correctly; they simply cannot be chosen.
 
 ## Notes & limitations
 

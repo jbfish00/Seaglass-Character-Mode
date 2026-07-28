@@ -53,6 +53,21 @@ grep -q "HARNESS RESULT: PASS" /tmp/sg_ui_zzz.log && echo "  PASS invalid code r
     || { echo "  FAIL invalid-code reject (see /tmp/sg_ui_zzz.log)"; exit 1; }
 
 echo
+# The threshold's live proof. Layer 4e shows an UNKNOWN code is refused; this
+# shows a REAL character's code is refused because they are under the threshold.
+# Without it, "hidden" is only ever asserted against bytes in the ROM, never
+# against the running matcher -- and a gate that poisoned nobody would still
+# pass every static check that reads the same table it was written from.
+# Clay is deliberately chosen: he is under the threshold on the current data AND
+# would stay under it if the sibling additions overlay were ported, so this layer
+# does not silently become a no-op the next time the rosters move.
+echo "=== Layer 4e2: hidden character refused (CLAY is under the threshold) ==="
+timeout 120 env CM_CODE=CLAY CM_EXPECT=reject "$MGBA" --script tools/mgba_scripts/cm_ui_activate.lua \
+    -t tools/savestates/naming_open.ss "$ROM" > /tmp/sg_ui_hidden.log 2>&1 || true
+grep -q "HARNESS RESULT: PASS" /tmp/sg_ui_hidden.log && echo "  PASS hidden character refused (CLAY)" \
+    || { echo "  FAIL hidden character NOT refused (see /tmp/sg_ui_hidden.log)"; exit 1; }
+
+echo
 echo "=== Layer 4f: deactivation (CMDBGOFF clears preset CM char 10) ==="
 timeout 120 env CM_CODE=CMDBGOFF CM_EXPECT=off CM_PRESET_CHAR=10 "$MGBA" --script tools/mgba_scripts/cm_ui_activate.lua \
     -t tools/savestates/naming_open.ss "$ROM" > /tmp/sg_ui_off.log 2>&1 || true
@@ -93,6 +108,47 @@ echo "=== Layer 5b: wild-encounter stage-fit (forced high level -> evolved stage
 python3 tools/tests/verify_wild_override.py > /tmp/sg_wild_stage.log 2>&1
 grep -q "RESULT: PASS" /tmp/sg_wild_stage.log && echo "  PASS wild stage-fit + rate + legendary exclusion" \
     || { echo "  FAIL wild stage-fit (see /tmp/sg_wild_stage.log)"; cat /tmp/sg_wild_stage.log; exit 1; }
+
+echo
+# Layer 5b proves the pool is read correctly for char 1 -- and char 1 CANNOT
+# fail: its record starts at byte 0, so it reads correctly under any stride.
+# This second run is the one that actually exercises the (charId-1)*STRIDE
+# arithmetic. Glacia is one of only 13 characters whose pool is disjoint from
+# what the shipped 104-stride bug read, so a misaligned slice shows up as a
+# species that is simply not hers. See verify_wild_override.py's CHAR_ID note.
+echo "=== Layer 5b2: wild-encounter pool indexing (char 45 Glacia -- NON-first character) ==="
+CM_WILD_CHAR=45 python3 tools/tests/verify_wild_override.py > /tmp/sg_wild_stage45.log 2>&1
+grep -q "RESULT: PASS" /tmp/sg_wild_stage45.log && echo "  PASS wild pool indexing (char 45 reads its OWN pool)" \
+    || { echo "  FAIL wild pool indexing char 45 (see /tmp/sg_wild_stage45.log)"; cat /tmp/sg_wild_stage45.log; exit 1; }
+
+echo
+# The POSITIVE assertion the legendary spec demands. Every other wild assertion
+# here is "no legendary appeared", which a completely dead feature satisfies just
+# as well as a correct one. This proves the roll fires, at 1%, and -- the trap
+# unique to Seaglass, which derives both decisions from one wildSeed() -- that a
+# legendary hit is NOT nested inside the ordinary 10% override.
+echo "=== Layer 5d: 1% legendary roll fires, at rate, independently (exhaustive) ==="
+python3 tools/tests/verify_legendary_roll.py > /tmp/sg_legendary.log 2>&1
+grep -q "RESULT: PASS" /tmp/sg_legendary.log && echo "  PASS legendary roll fires + rate + independence" \
+    || { echo "  FAIL legendary roll (see /tmp/sg_legendary.log)"; cat /tmp/sg_legendary.log; exit 1; }
+
+echo
+# Layer 5d proves the arithmetic offline. These two prove the SHIPPED SHIM does
+# it, in the running ROM. They are a differential pair on one forced roll --
+# identical inputs, differing only in the caught flag -- because either half
+# alone is the weak assertion the spec warns about.
+echo "=== Layer 5e: legendary OFFERED when uncaught (char 3 Blue -> Zapdos, live) ==="
+timeout 200 env CM_CHAR=3 EXPECT_SPECIES=145 "$MGBA" --script tools/mgba_scripts/cm_legendary_test.lua \
+    -t tools/savestates/at_8_8.ss "$ROM" > /tmp/sg_leg_on.log 2>&1 || true
+grep -q "HARNESS RESULT: PASS" /tmp/sg_leg_on.log && echo "  PASS legendary offered when uncaught" \
+    || { echo "  FAIL legendary not offered (see /tmp/sg_leg_on.log)"; exit 1; }
+
+echo
+echo "=== Layer 5e2: same roll, already caught -> legendary WITHHELD ==="
+timeout 200 env CM_CHAR=3 EXPECT_SPECIES=145 CM_EXPECT=caught "$MGBA" --script tools/mgba_scripts/cm_legendary_test.lua \
+    -t tools/savestates/at_8_8.ss "$ROM" > /tmp/sg_leg_off.log 2>&1 || true
+grep -q "HARNESS RESULT: PASS" /tmp/sg_leg_off.log && echo "  PASS caught legendary withheld" \
+    || { echo "  FAIL caught legendary still offered (see /tmp/sg_leg_off.log)"; exit 1; }
 
 echo
 echo "=== Layer 5c: wild-encounter choke-point proof (BL 0x0822BF36 is the sole land-path caller) ==="

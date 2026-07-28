@@ -22,7 +22,19 @@ ROM = ROOT / "build" / "seaglass_cm.gba"
 SAVESTATE = ROOT / "tools" / "savestates" / "at_8_8.ss"
 CM = ROOT / "tools" / "character_mode"
 
-CHAR_ID = 1  # Red
+# Which character to drive. Overridable so the suite can run this layer for
+# more than one character -- see run_tests.sh layers 5b and 5b2.
+#
+# ⚠️ char 1 ALONE CANNOT DETECT A STRIDE BUG. Its pool starts at byte 0, so it
+# reads correctly under ANY WILDPOOL_STRIDE, and this layer was char-1-only
+# while the shim's stride was 104 against 176-byte records -- every other
+# character read a misaligned slice of somebody else's pool and the suite stayed
+# green for four days. Worse, only 13 of 193 characters have a pool disjoint
+# from what the buggy stride actually read, so most characters would still have
+# passed a pool-membership check: the failure mode is a plausible-looking wrong
+# Pokemon, not an obviously invalid one. CM_WILD_CHAR=45 (Glacia, 6 entries) is
+# one of the 13, picked for that. Recompute the disjoint set if the roster moves.
+CHAR_ID = int(os.environ.get("CM_WILD_CHAR", "1"))
 
 _p = _f = 0
 def ok(cond, msg):
