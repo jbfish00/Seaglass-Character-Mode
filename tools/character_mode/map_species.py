@@ -322,10 +322,18 @@ def merge_removals(raw):
     An overlay for the same reason as the additions: a re-scrape would bring
     every one of them back, and the file carries the citation for each removal.
 
+    ⚠️ THIS IS ONLY THE CHEAP HALF, and the docstring that used to sit here
+    claimed otherwise: "the file lists only species whose ENTIRE family was
+    removed -- so plain subtraction is correct here." It is not correct. The
+    scraper often lists a later stage under its own name, and that stage walks
+    the family straight back in once names canonicalize to family bases --
+    Radical Red hit exactly this, where Leaf's Charmander was removed while
+    "Charizard" stayed in her raw list and she kept the whole line.
+
     THE FAMILY RULE (user, 2026-07-25): a full evolution family is allowed
-    whenever any single member of it is canon, forwards and backwards. The file
-    is generated with that already applied -- it lists only species whose ENTIRE
-    family was removed -- so plain subtraction is correct here.
+    whenever any single member of it is canon, forwards and backwards. The half
+    that actually enforces it is the family-level sweep in main(), which runs
+    after canonicalization and is shielded by audit_keeps.json.
     """
     path = os.path.join(HERE, "roster_removals.json")
     if not os.path.isfile(path):

@@ -77,7 +77,18 @@ def main():
 
     dropped, kept, exempt = [], [], []
     for char, info in sorted(mapped.items()):
-        name = re.sub(r"\s*\(anime\)$", "", char)
+        # ⚠️ Use the roster's OWN key, verbatim. This used to strip a trailing
+        # " (anime)", which made the emitted name unmatchable: every consumer
+        # (emit_characters, verify_artifacts) looks these up against
+        # rosters_mapped.json / the manifest, where the key IS "Kiawe (anime)".
+        # A stripped name therefore hides NOBODY -- silently, because a name
+        # that matches nothing simply never fires. It went unnoticed only
+        # because no (anime) character had ever fallen under the threshold;
+        # applying the audit's removals overlay put Kiawe, Lillie and Mallow
+        # under it and emit_characters' "matches no character" guard caught it
+        # immediately. Same shape as the audit's page-name-vs-menu-name trap
+        # that blanked the Source column for all four Alola captains.
+        name = char
         consts = [s["const"] for s in info["species"]]
         if any(c in LEGENDARY_BASES for c in consts):
             exempt.append(name)

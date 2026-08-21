@@ -105,15 +105,42 @@ def display_name(disp):
 
 
 def load_order(mapped):
-    order = []
+    """Table order, with ALREADY-SHIPPED SLOTS PINNED.
+
+    ⚠️ A save stores the character INDEX, not its name, so the position of every
+    character already in characters_manifest.json is load-bearing and this
+    function must never renumber one. The threshold has always honoured that --
+    a character below it keeps its slot and is merely hidden -- but the roster
+    pipeline did not: a character whose roster became EMPTY was dropped from the
+    table entirely, silently shifting everyone after it.
+
+    That is not hypothetical. Applying the audit's removals overlay on
+    2026-08-20 emptied Rowan, Juniper and Sonia (slots 173, 174 and 178), which
+    renumbered the 17 characters after them -- a save on any of those 17 would
+    have loaded as a different character.
+
+    So: every character already in the manifest keeps its slot, in its recorded
+    order, even if its roster is now empty (it will simply be hidden). New
+    characters are appended after them. characters.txt only decides the order of
+    genuinely new arrivals.
+    """
+    shipped = []
+    mpath = os.path.join(HERE, "characters_manifest.json")
+    if os.path.isfile(mpath):
+        with open(mpath, encoding="utf-8") as f:
+            shipped = [c["character"] for c in json.load(f)["characters"]]
+
+    order = list(shipped)
+    seen = set(order)
     with open(os.path.join(HERE, "characters.txt")) as f:
         for line in f:
             line = line.strip()
             if not line or line.startswith("#"):
                 continue
             disp = line.split("|")[0].strip()
-            if disp in mapped:
+            if disp in mapped and disp not in seen:
                 order.append(disp)
+                seen.add(disp)
     return order
 
 
@@ -134,13 +161,26 @@ def build_rosters(mapped, order):
     function of consts, independent of whether numeric ids exist yet."""
     base_of = _signature_base_map()
     built = {}
-    skipped = []
+    skipped = []          # kept for the report's shape; nothing lands here now
+    empty = []            # slots retained with an empty roster
     warnings = []
     for disp in order:
-        info = mapped[disp]
+        info = mapped.get(disp, {"species": []})
         species = info["species"]
         if not species:
-            skipped.append(disp)
+            # An empty roster no longer drops the character. It keeps its slot
+            # (see load_order) and derive_drops.py will have it under the
+            # threshold anyway, so it is emitted as a hidden record with an
+            # empty roster rather than renumbering everyone behind it.
+            built[disp] = {
+                "category": info.get("category"),
+                "generation": info.get("gen", 0) or 1,
+                "ordered_consts": [],
+                "starter_count": 0,
+                "has_signature": False,
+                "signature_const": None,
+            }
+            empty.append(disp)
             continue
 
         consts = [s["const"] for s in species]
@@ -182,6 +222,10 @@ def build_rosters(mapped, order):
             "has_signature": bool(has_signature),
             "signature_const": sig_const,
         }
+    if empty:
+        warnings.append("%d character(s) have an EMPTY roster and keep their "
+                        "slot as hidden records: %s"
+                        % (len(empty), ", ".join(sorted(empty))))
     return built, skipped, warnings
 
 

@@ -58,7 +58,7 @@ To switch off, enter the code **`CMDBGOFF`**.
 ## Character codes
 
 Codes are the character's name with spaces and punctuation removed.
-Case is ignored. **153 selectable characters** across all nine
+Case is ignored. **114 selectable characters** across all nine
 generations:
 
 ### Gen 1 — Kanto
@@ -86,7 +86,6 @@ generations:
 | `Red` | Red |
 | `Ritchie` | Ritchie |
 | `Sabrina` | Sabrina |
-| `Tracey` | Tracey |
 
 ### Gen 2 — Johto
 
@@ -121,10 +120,7 @@ generations:
 | `Brandon` | Brandon |
 | `Brawly` | Brawly |
 | `Brendan` | Brendan |
-| `Drake` | Drake |
-| `Drew` | Drew |
 | `Flannery` | Flannery |
-| `Glacia` | Glacia |
 | `Greta` | Greta |
 | `Juan` | Juan |
 | `Liza` | Liza |
@@ -163,12 +159,10 @@ generations:
 | `Fantina` | Fantina |
 | `Flint` | Flint |
 | `Gardenia` | Gardenia |
-| `Jupiter` | Jupiter |
 | `Lucas` | Lucas |
 | `Lucian` | Lucian |
 | `Mars` | Mars |
 | `Maylene` | Maylene |
-| `Nando` | Nando |
 | `Paul` | Paul |
 | `Roark` | Roark |
 | `Saturn` | Saturn |
@@ -180,88 +174,55 @@ generations:
 
 | Code | Character |
 |---|---|
-| `Brycen` | Brycen |
-| `Cheren` | Cheren |
-| `Colress` | Colress |
-| `Cress` | Cress |
 | `Hilbert` | Hilbert |
-| `Iris` | Iris |
 | `N` | N |
 
 ### Gen 6 — Kalos
 
 | Code | Character |
 |---|---|
-| `Alain` | Alain |
 | `Calem` | Calem |
-| `Clemont` | Clemont |
-| `Diantha` | Diantha |
-| `Korrina` | Korrina |
-| `Lysandre` | Lysandre |
-| `Malva` | Malva |
 | `Ramos` | Ramos |
-| `Sawyer` | Sawyer |
 | `Serena` | Serena |
 | `Shauna` | Shauna |
 | `Sycamore` | Sycamore |
 | `Valerie` | Valerie |
-| `Wikstrom` | Wikstrom |
 
 ### Gen 7 — Alola
 
 | Code | Character |
 |---|---|
-| `Acerola` | Acerola |
 | `Elio` | Elio |
 | `Gladion` | Gladion |
 | `Guzma` | Guzma |
-| `Hala` | Hala |
 | `Hau` | Hau |
-| `Kiaweanime` | Kiawe (anime) |
 | `Kukui` | Kukui |
 | `Lanaanime` | Lana (anime) |
-| `Lillieanim` | Lillie (anime) |
 | `Lusamine` | Lusamine |
-| `Mallowanim` | Mallow (anime) |
 | `Molayne` | Molayne |
-| `Olivia` | Olivia |
-| `Plumeria` | Plumeria |
-| `SamsonOak` | Samson Oak |
 | `Selene` | Selene |
-| `Sophocles` | Sophocles |
 
 ### Gen 8 — Galar
 
 | Code | Character |
 |---|---|
-| `Bea` | Bea |
 | `Bede` | Bede |
-| `Cerise` | Cerise |
 | `Chloe` | Chloe |
 | `Goh` | Goh |
 | `Hop` | Hop |
-| `Kabu` | Kabu |
-| `Leon` | Leon |
 | `Marnie` | Marnie |
 | `Milo` | Milo |
-| `Nessa` | Nessa |
 
 ### Gen 9 — Paldea
 
 | Code | Character |
 |---|---|
-| `Arven` | Arven |
-| `Brassius` | Brassius |
-| `Grusha` | Grusha |
-| `Katy` | Katy |
-| `Larry` | Larry |
-| `Nemona` | Nemona |
 | `Penny` | Penny |
 | `Rika` | Rika |
 
 ### Characters that are not offered in Seaglass
 
-40 of the 193 characters in the table are **not selectable here** and their codes are refused.
+79 of the 193 characters in the table are **not selectable here** and their codes are refused.
 Seaglass's dex is a curated subset -- all of Gen 1-3 plus a small set of
 later cross-gen evolutions -- so those characters cannot field six fully
 evolved Pokemon in this game, and picking them would mean catching almost

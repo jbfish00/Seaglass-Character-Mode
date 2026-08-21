@@ -258,14 +258,36 @@ def main():
         bm = bitmaps[ci * BITMAP_STRIDE:(ci + 1) * BITMAP_STRIDE]
         return sp == 0 or sp >= 1489 or (bm[sp >> 3] >> (sp & 7)) & 1
     all_in = True
+    empty_slots = []
     for ci, c in enumerate(manifest):
         for sp in c["roster_species_ids"]:
             if not onbm(ci, sp):
                 all_in = False
-        starter = c["signature_id"] if c.get("has_signature") and c.get("signature_id") else c["roster_species_ids"][0]
+        # ⚠️ Empty rosters need an explicit branch in EVERY consumer -- this is
+        # the second place that bit (the injector was the first). Since
+        # 2026-08-20 a character whose roster empties keeps its slot as a hidden
+        # record instead of being dropped, because a save stores the character
+        # INDEX. Those records have no roster and therefore no starter.
+        ids = c["roster_species_ids"]
+        if c.get("has_signature") and c.get("signature_id"):
+            starter = c["signature_id"]
+        elif ids:
+            starter = ids[0]
+        else:
+            empty_slots.append(c["character"])
+            continue
         if not onbm(ci, starter):
             all_in = False
     ok(all_in, "every roster id + starter is set in its character's own bitmap")
+    # An empty roster is only acceptable on a HIDDEN record. If one were ever
+    # offered, selecting it would grant SPECIES_NONE and the player could catch
+    # nothing for the entire run -- the exact failure the threshold exists to
+    # prevent.
+    _offered_empty = [c["character"] for c in manifest
+                      if not c["roster_species_ids"] and not c.get("hidden")]
+    ok(not _offered_empty,
+       "no OFFERED character has an empty roster (%d empty, all hidden)"
+       % len(empty_slots))
 
     print("[7] codes table + playability threshold")
     cbase = CODES_ADDR & 0x01FFFFFF

@@ -334,7 +334,25 @@ def main():
             assert len(enc) <= CODE_LEN
             assert 0xFF in enc + b"\xFF" * (CODE_LEN - len(enc)), code
             codes += enc + b"\xFF" * (CODE_LEN - len(enc))
-        sig = c["signature_id"] if c.get("has_signature") and c.get("signature_id") else c["roster_species_ids"][0]
+        # ⚠️ An EMPTY roster needs its own branch here. Since 2026-08-20 a
+        # character whose roster empties out keeps its table slot as a hidden
+        # record rather than being dropped, because a save stores the character
+        # INDEX and dropping one renumbers everyone behind it. Three characters
+        # are in that state (Juniper, Rowan, Sonia). They are hidden, so no
+        # starter of theirs can ever be granted -- but this line ran for every
+        # record regardless and died on roster_species_ids[0].
+        # ("Empty rosters need an explicit branch in every consumer" is a
+        # standing trap in this project; this is that trap, in this file.)
+        ids = c["roster_species_ids"]
+        if c.get("has_signature") and c.get("signature_id"):
+            sig = c["signature_id"]
+        elif ids:
+            sig = ids[0]
+        else:
+            assert c.get("hidden"), (
+                "%s has an empty roster but is OFFERED -- it would grant "
+                "SPECIES_NONE as a starter" % c["character"])
+            sig = 0                          # SPECIES_NONE; unreachable slot
         starters.append(sig)
     assert n_hidden == sum(1 for c in chars if c.get("hidden"))
     print(f"threshold: {NUM_CHARACTERS - n_hidden} offered, {n_hidden} hidden "
