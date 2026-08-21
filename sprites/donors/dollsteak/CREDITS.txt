@@ -1,0 +1,82 @@
+SPRITE HARVEST — PROVENANCE AND ATTRIBUTION
+===========================================
+Set name   : pc_dollsteak
+Harvested  : 2026-07-28
+Target     : Pokemon ROWE Character Mode front pic — LILLIE
+
+SOURCE
+------
+Thread   : "The DS-Style 64x64 Trainer Sprite Resource" — The PokeCommunity Forums
+URL      : https://www.pokecommunity.com/threads/the-ds-style-64x64-trainer-sprite-resource.308798/page-3
+Thread OP: MrDollSteak
+Sprite   : posted in that thread as post #46 (2018-01-04) by **Shinya-kun & Mika-kun**
+
+LICENCE — verbatim
+------------------
+Thread opening post (MrDollSteak):
+  "Also, before anyone asks, you **ARE** allowed to use these for your hack, this is
+   the entire point of the resource! Just make sure you credit this thread if you do
+   use any of the sprites."
+  and, separately: "Not **ALL** sprites are indexed in the imgur links"
+
+Contributor's own post (Shinya-kun & Mika-kun, #46):
+  "I make some sprites using the other ones as base."
+
+⚠ HONEST NOTE ON THE GRANT. The blanket permission above is the THREAD OWNER's, and
+this particular sprite was contributed to the thread by a third party. The thread's
+whole stated purpose is a shared, free-to-use resource and the contributor posted it
+into that resource, so the grant is reasonably read to cover it — but it is not the
+contributor's own words. Credit BOTH names, and if either asks for withdrawal,
+honour it. This is the same "archived / inferred permission" judgement class as the
+Pokesho set already in this project, and it is recorded here rather than glossed.
+
+ATTRIBUTION CHAIN
+-----------------
+  Shinya-kun & Mika-kun  — the Lillie sprite itself
+  MrDollSteak            — the resource thread the grant comes from
+  Game Freak / Nintendo / Creatures — the underlying official character design
+
+FILES
+-----
+  lillie_front_source_rgba.png   AS DOWNLOADED, unmodified. 64x64 but RGBA
+                                 truecolour, so NOT injectable as-is.
+  lillie_front.png               Deliberately indexed by this harvest. INJECTABLE.
+
+⚠ HOW THE ORIGINAL WAS OBTAINED, because it constrains the file. The indexed PNG the
+contributor attached (pokecommunity.com/attachments/lillie-unsegure-png.84299/)
+returns HTTP 403 and is not in the Wayback Machine under any URL form tried
+(attachment slug, attachment.php?attachmentid=, data.pokecommunity.com full path, an
+images.weserv.nl proxy). The only reachable copy is the forum CDN's DISPLAY copy at
+  https://data.pokecommunity.com/attachments/7/7134-7f5b55548850b33efb55b184b76a8b3f.jpg
+which is not Cloudflare-gated and is a PNG in spite of the .jpg extension — but the
+CDN re-encoded it to truecolour, discarding the index information.
+
+THE CONVERSION, AND WHY IT IS SAFE
+----------------------------------
+Not a quantisation. The source measures **exactly 16 distinct RGB values, every
+pixel alpha=255**, so a 16-entry indexed palette is exact, not lossy. The conversion
+ASSERTS `len(distinct_opaque_colours) <= 16` and refuses rather than guessing — the
+same guard `import_donor_front_pics.to_indexed()` applies to rogue/lysandre_front.png,
+and it exists because silently dropping colours to fit 4bpp yields plausible-looking
+corrupt art that is only ever caught by eye.
+
+Three properties were then verified on the written file, not assumed:
+  * pixel-for-pixel identical to the source after converting back to RGB
+    (0 differing pixels of 4096)
+  * palette written with EXACTLY 16 entries and index range 0..15 — deliberately
+    not left at PIL's default 256-entry padding, which is the SPRITE_PLAN section 5
+    trap (a PNG declaring 256 entries while using 16 colours; `to_4bpp`'s `& 0xF`
+    mangles it silently when the indices are out of range, and passes only by luck
+    when they are not)
+  * the source's corner pixel colour (248, 208, 224) is forced to **index 0**, the
+    background slot pokeemerald front pics require
+
+FORMAT VERIFICATION
+-------------------
+  lillie_front.png              P, 64x64, 16 palette entries, indices 0..15 — injectable
+  lillie_front_source_rgba.png  RGBA, 64x64, 16 opaque colours — kept for audit only
+
+DISTRIBUTION
+------------
+No ROM binaries were downloaded. Any downstream release is a patch, never a
+modified ROM.

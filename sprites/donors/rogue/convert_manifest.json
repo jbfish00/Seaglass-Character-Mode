@@ -1,0 +1,54 @@
+[
+ {
+  "src": "/home/jbfish00/Documents/Character Hacks/Seaglass-Character-Mode/sprites/donors/rogue/ghetsis_front.png",
+  "name": "ghetsis_front",
+  "kind": "front",
+  "ok": true,
+  "width": 64,
+  "height": 64,
+  "colours": 15,
+  "gfx_raw_bytes": 2048,
+  "gfx_lz_bytes": 1189,
+  "pal_raw_bytes": 32,
+  "pal_lz_bytes": 40
+ },
+ {
+  "src": "/home/jbfish00/Documents/Character Hacks/Seaglass-Character-Mode/sprites/donors/rogue/kiawe_front.png",
+  "name": "kiawe_front",
+  "kind": "front",
+  "ok": true,
+  "width": 64,
+  "height": 64,
+  "colours": 16,
+  "gfx_raw_bytes": 2048,
+  "gfx_lz_bytes": 770,
+  "pal_raw_bytes": 32,
+  "pal_lz_bytes": 40
+ },
+ {
+  "src": "/home/jbfish00/Documents/Character Hacks/Seaglass-Character-Mode/sprites/donors/rogue/lana_front.png",
+  "name": "lana_front",
+  "kind": "front",
+  "ok": true,
+  "width": 64,
+  "height": 64,
+  "colours": 16,
+  "gfx_raw_bytes": 2048,
+  "gfx_lz_bytes": 806,
+  "pal_raw_bytes": 32,
+  "pal_lz_bytes": 40
+ },
+ {
+  "src": "/home/jbfish00/Documents/Character Hacks/Seaglass-Character-Mode/sprites/donors/rogue/mallow_front.png",
+  "name": "mallow_front",
+  "kind": "front",
+  "ok": true,
+  "width": 64,
+  "height": 64,
+  "colours": 16,
+  "gfx_raw_bytes": 2048,
+  "gfx_lz_bytes": 943,
+  "pal_raw_bytes": 32,
+  "pal_lz_bytes": 40
+ }
+]

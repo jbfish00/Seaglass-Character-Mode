@@ -59,3 +59,17 @@ The filenames claim Brendan and May but the art depicts Minish-Cap-style charact
 Hoenn protagonists. They must not be used as Brendan/May portraits. (They live under
 Projects/, which was outside the harvest scope anyway; recorded here so the trap is not
 re-discovered later.) Also recorded in manifest.json under notes.excluded_mislabelled.
+
+ADDENDUM — 2026-07-29
+---------------------
+  thorton_front.png   Trainer Front Sprites/BrandonXL/thorton.png
+                      Artist: BrandonXL. Author folder README: "## Thorton
+                      Front Sprite / - Trainer Front sprite / - Made by
+                      BrandonXL".
+
+⚠ DELIBERATE CHOICE, not a preference-order accident. Thorton was available from
+two measured-clean sources: this one and Greenphx's (PokeCommunity 463927). The
+user chose BrandonXL/TAAR on 2026-07-29 — TAAR carries an explicit free-to-use
+grant plus a named creator per folder, the strongest licence position of any set
+staged here. Greenphx's copy is deliberately NOT staged, so no importer can pick
+it silently.

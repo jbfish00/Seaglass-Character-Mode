@@ -87,9 +87,16 @@ WILD_BL_SITE = 0x22BF36
 CREATE_MON_WITH_IVS = 0x081A7504
 WILD_TRAMPOLINE_ADDR = 0x08470208
 WILDPOOL_ADDR = 0x08EE5000
-CM_SPRITE_PTRS_ADDR  = 0x08f20000   # Phase 3 (keep in sync with the injector)
-CM_MUGSHOT_ADDR      = 0x08F42000   # mugshot renderer (src/character_sprite.c)
-CM_SPRITE_BLOBS_ADDR = 0x08f20800
+# Phase 3. ⚠️ These three were hardcoded with a "keep in sync with the injector"
+# comment -- the exact arrangement check [16] exists to stop. On 2026-07-29 four
+# more portraits grew the art blob past the renderer, CM_MUGSHOT_ADDR was rebased
+# 0x08F42000 -> 0x08F60000 in the injector, and this file kept verifying the old
+# address: SIX checks failed, including "all diffs inside intended windows",
+# which reported 299 stray bytes and looked like a corrupt build rather than a
+# stale constant. Derived now, like NUM_CHARACTERS and WILDPOOL_STRIDE.
+CM_SPRITE_PTRS_ADDR  = _injector_addr("CM_SPRITE_PTRS_ADDR")
+CM_MUGSHOT_ADDR      = _injector_addr("CM_MUGSHOT_ADDR")
+CM_SPRITE_BLOBS_ADDR = _injector_addr("CM_SPRITE_BLOBS_ADDR")
 # Derived, like NUM_CHARACTERS above and for the same reason. emit_wildpool.py's
 # POOL_STRIDE is authoritative and publishes itself here; restating it was how
 # this file agreed with the injector while both disagreed with the compiled shim

@@ -95,3 +95,19 @@ DISTRIBUTION
 ------------
 No ROM binaries were downloaded. Per workspace policy, any downstream release
 is a patch, never a modified ROM.
+
+ADDENDUM — 2026-07-29 staging-filter fix
+----------------------------------------
+Four front pics from the SAME upstream commit as the harvest above were present
+upstream but never copied into this directory by the 2026-07-25 staging pass — a
+filter miss, not new upstream content:
+
+  ghetsis_front.png   graphics/trainers/front_pics/team/plasma_ghetsis_front_pic.png
+  kiawe_front.png     graphics/trainers/front_pics/alola/kiawe.png
+  lana_front.png      graphics/trainers/front_pics/alola/lana.png
+  mallow_front.png    graphics/trainers/front_pics/alola/mallow.png
+
+Same licence position and the same "Additional Sprites" credit roll reproduced
+above — that list travels with any subset of this art. The .4bpp/.gbapal/.lz
+blobs beside them were produced here by tools/png_to_gba.py, which round-trips
+every blob through its own decompressor before writing.

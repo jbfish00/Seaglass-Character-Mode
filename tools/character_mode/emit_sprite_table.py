@@ -39,7 +39,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 DONORS = ROOT / "sprites" / "donors"
 
-PREFERENCE = ["ashgray", "rogue", "taar", "hns", "pokesho", "loulilie", "platinum"]
+PREFERENCE = ["ashgray", "rogue", "taar", "hns", "pokesho", "dollsteak", "loulilie", "platinum"]
 
 slug = lambda s: re.sub(r"[^a-z0-9]+", "_", s.lower()).strip("_")
 
@@ -56,8 +56,20 @@ ALIAS = {
 
 def candidates(character):
     """Every staged front pic for this character, best source first."""
-    stems = [slug(character)]
-    a = ALIAS.get(character, "")
+    # ⚠️ STRIP " (anime)" FIRST, or the four Alola captains can never match.
+    # `slug("Kiawe (anime)")` is `kiawe_anime`, and the staged art is
+    # `kiawe_front` -- so before 2026-07-29 NO character whose display name
+    # carried the suffix had a portrait in any repo, and all four sat in the
+    # manifest's `missing` list looking like an art gap. It was a matcher gap.
+    # Mirrors ROWE's import_donor_front_pics.py, which strips it already.
+    # Checked before landing: the suffix appears on exactly four display names
+    # per repo (Lillie, Kiawe, Lana, Mallow), none of the stripped stems
+    # collides with another character, and no anime-styled alternate is
+    # shadowed -- ashgray's `<name>_anime_front` files are reached by their own
+    # stems, which are unaffected by this.
+    base = character[:-len(" (anime)")] if character.endswith(" (anime)") else character
+    stems = [slug(base)]
+    a = ALIAS.get(character, ALIAS.get(base, ""))
     if a:
         stems.append(a)
     elif a is None:

@@ -1,0 +1,15 @@
+[
+ {
+  "src": "/home/jbfish00/Documents/Character Hacks/Seaglass-Character-Mode/sprites/donors/taar/thorton_front.png",
+  "name": "thorton_front",
+  "kind": "front",
+  "ok": true,
+  "width": 64,
+  "height": 64,
+  "colours": 14,
+  "gfx_raw_bytes": 2048,
+  "gfx_lz_bytes": 836,
+  "pal_raw_bytes": 32,
+  "pal_lz_bytes": 40
+ }
+]

@@ -150,3 +150,44 @@ Three more donor sets staged alongside `rogue/`, converted by
   documented judgement call: the five aligned frames span 68px, so the window
   chosen keeps four frames pixel-complete and clips only the tip of a thrown
   Poké Ball leaving frame 4 — which is how FRLG back pics behave anyway.
+
+---
+
+## MrDollSteak's thread — Lillie (added 2026-07-29)
+
+One front pic, staged as `sprites/donors/dollsteak/`.
+
+- **Source**: MrDollSteak's "The DS-Style 64x64 Trainer Sprite Resource",
+  PokeCommunity thread 308798. The sprite was contributed to that thread by
+  **Shinya-kun & Mika-kun**.
+- **Licence, verbatim** (thread OP, MrDollSteak): *"you **ARE** allowed to use
+  these for your hack, this is the entire point of the resource! Just make sure
+  you credit this thread if you do use any of the sprites."*
+- **Credit**: **Shinya-kun & Mika-kun** (the sprite) and **MrDollSteak** (the
+  resource thread the grant comes from).
+- ⚠️ **The grant is the thread OWNER's, not the contributor's.** The thread's
+  stated purpose is a shared free-to-use resource and the sprite was posted into
+  it, so the grant reasonably reads as covering it — but that inference is ours.
+  Same judgement class as the Pokesho set above. **If either artist asks for
+  withdrawal, honour it.**
+- The PNG was indexed by this project from the forum CDN's re-encoded truecolour
+  copy (the contributor's own indexed attachment is HTTP 403 and absent from the
+  Wayback Machine). The conversion is lossless, not a quantisation — the source
+  holds exactly 16 distinct fully-opaque colours, and the converter asserts that
+  rather than guessing. `lillie_rgba_source.png` is the unmodified download,
+  kept so the conversion stays auditable.
+
+### Also 2026-07-29 — five sprites that were already credited here
+
+**Ghetsis, Kiawe, Lana** and **Mallow** (Emerald Rogue) and **Thorton** (Team
+Aqua's Asset Repo, artist **BrandonXL**) were staged the same day. They are from
+the same upstream commits as the sets already credited above — the 2026-07-25
+staging pass simply missed them — so no new credit is owed, and the existing
+Emerald Rogue and TAAR sections cover them. Noted so the additions are not
+mistaken for new sourcing.
+
+⚠️ Before this pass **no character whose display name ended in "(anime)" had a
+portrait in any repo**: `slug("Kiawe (anime)")` is `kiawe_anime`, which can never
+match the staged `kiawe_front`. All four sat in the sprite manifest's `missing`
+list looking like an art gap when it was a matcher gap. Fixed in
+`emit_sprite_table.py`.

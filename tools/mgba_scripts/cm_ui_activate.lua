@@ -50,7 +50,14 @@ plan[#plan+1] = K.A
 -- callnative show/hide, so the mugshot must be on screen while that box is up.
 -- The template is located by scanning the renderer blob for its tag pair rather
 -- than hardcoding an address the build could move.
-local MUG_BASE, MUG_SPAN = 0x08F42000, 0x300
+-- ⚠️ ...except the BLOB BASE was itself hardcoded, which is the same bug one
+-- level up. On 2026-07-29 the renderer was rebased 0x08F42000 -> 0x08F60000 to
+-- make room for four more portraits, and this layer failed with "template not
+-- located in the renderer blob" while Character Mode itself was working
+-- perfectly -- the flag, character and starter all asserted green in the same
+-- run. run_tests.sh now exports CM_MUGSHOT_ADDR straight from the injector.
+local MUG_BASE = tonumber(os.getenv("CM_MUGSHOT_ADDR") or "") or 0x08F60000
+local MUG_SPAN = 0x300
 local GSPRITES, SPRITE_COUNT, SPRITE_STRIDE = 0x02039810, 64, 0x44
 local OFF_TEMPLATE, OFF_INUSE = 0x14, 0x3E
 

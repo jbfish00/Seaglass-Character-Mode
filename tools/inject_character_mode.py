@@ -96,7 +96,17 @@ CM_SPRITE_BLOBS_ADDR = 0x08f20800
 # separate free run; splice()'s 0xFF precondition is what proves it clear.
 # No BL-reach constraint: every engine call it makes goes through a function
 # pointer, and the script reaches it by an absolute `callnative` operand.
-CM_MUGSHOT_ADDR = 0x08F42000
+#
+# ⚠️ REBASED 2026-07-29: 0x08F42000 -> 0x08F60000. It was placed immediately
+# past the sprite art with ~2 KB to spare, and staging four more portraits took
+# the blob from 135,200 to 138,776 B -- ending at 0x08F42618, i.e. 1,560 B INTO
+# the renderer. splice() caught it ("target not 0xFF @ 0x8f20800") rather than
+# letting it corrupt anything, but the message names the blob, not the thing it
+# collided with, so the assert below now says so directly.
+# The whole run 0x08F20000..0x09000000 is 0xFF in the base ROM and holds nothing
+# but our own regions, so this rebase costs nothing and buys ~120 KB of blob
+# headroom -- the art would have to nearly double again to reach it.
+CM_MUGSHOT_ADDR = 0x08F60000
 FREE_END_ROM   = 0x09000000
 
 TRAMPOLINE_ADDR      = 0x08470200  # 8B 0xFF scavenge, in BL range of both sites
@@ -535,6 +545,17 @@ def main():
         _blobs = _spr_b.read_bytes()
         _offs = _spr_o.read_bytes()
         assert len(_offs) == NUM_CHARACTERS * 8, (len(_offs), NUM_CHARACTERS)
+        # Name the collision before splice() reports it as a bare 0xFF failure.
+        # The art region is the only thing here that grows with the roster, and
+        # it grew into the renderer once already (2026-07-29).
+        _blob_end = CM_SPRITE_BLOBS_ADDR + len(_blobs)
+        assert _blob_end <= CM_MUGSHOT_ADDR, (
+            "sprite art overruns the mugshot renderer: blobs are %d B, ending at "
+            "%#x, but CM_MUGSHOT_ADDR is %#x (over by %d B). Raise CM_MUGSHOT_ADDR "
+            "-- the run is free to %#x -- and re-inject."
+            % (len(_blobs), _blob_end, CM_MUGSHOT_ADDR,
+               _blob_end - CM_MUGSHOT_ADDR, FREE_END_ROM))
+        assert CM_MUGSHOT_ADDR < FREE_END_ROM, "CM_MUGSHOT_ADDR past the free run"
         _ptrs = bytearray()
         _wired = 0
         for _i in range(NUM_CHARACTERS):
