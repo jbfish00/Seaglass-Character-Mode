@@ -204,6 +204,36 @@ function H.assertTrue(what, cond)
 end
 
 function H.finish()
+    -- ⚠️ 2026-08-20 (../game_plans/rowe_parity.md §1): until today this function
+    -- emitted RESULT: PASS whenever #failures == 0, while `passes` was printed
+    -- and never tested. A layer that asserted NOTHING -- because it
+    -- mis-navigated, lost its savestate, wedged before reaching its checks, or
+    -- had them edited away -- was indistinguishable from one that passed, and
+    -- every runner in this repo greps only the RESULT line. ROWE had the
+    -- identical hole: deleting 35 of its 36 Check() calls still reported
+    -- ALL RUNS PASS.
+    --
+    -- Both guards live HERE rather than only in the runners, so an ad-hoc
+    -- invocation cannot lie either:
+    --   1. zero assertions is a FAIL, unconditionally.
+    --   2. CM_EXPECT_CHECKS=<n> pins the tally. A changed tally is a
+    --      regression even when every assertion that DID run passed -- that is
+    --      how a probe list that generated fewer rows, or a loop that exited
+    --      early, goes green while quietly checking less.
+    local expected = nil
+    if os and os.getenv then
+        expected = tonumber(os.getenv("CM_EXPECT_CHECKS") or "")
+    end
+    if passes == 0 then
+        table.insert(failures,
+            "ZERO assertions ran -- a run that asserts nothing is not a pass")
+    elseif expected and passes ~= expected then
+        table.insert(failures, string.format(
+            "TALLY CHANGED: expected %d assertions, ran %d -- a changed tally is "
+            .. "a regression even when the run says PASS. If the change is "
+            .. "intentional, update the expected count in the runner.",
+            expected, passes))
+    end
     H.log("---- SUMMARY ----")
     H.log(string.format("PASSED %d, FAILED %d", passes, #failures))
     for _, f in ipairs(failures) do
