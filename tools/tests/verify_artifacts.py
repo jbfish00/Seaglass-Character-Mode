@@ -640,6 +640,35 @@ def main():
            f"shim's view of the wild pool ({_fp_nchars}x{_fp_stride}x4 = "
            f"{_fp_nchars * _fp_stride * 4} B) == wildpool.bin ({len(wildpool)} B)")
 
+    # [17] Battle Pyramid guard.
+    # CM_WildMonSpeciesGated refuses to override inside the Battle Pyramid,
+    # because the pyramid's wild table stores INDICES in its species field and
+    # GenerateBattlePyramidWildMon does wildMons[species - 1] on a 12-byte
+    # stride. The guard calls the ROM's own predicate by hardcoded address, so
+    # pin the bytes there: if that address ever meant something else, the shim
+    # would be asking a different question and the override would silently come
+    # back inside the pyramid.
+    print("\n[17] Battle Pyramid guard")
+    _INBP = 0x0808B034
+    # Read out of this ROM 2026-08-20 -- byte-identical to Lazarus's predicate
+    # at its own 0x0808C264. Do NOT hand-transcribe this from a disassembly
+    # listing; the first attempt at exactly that in the sibling repo was wrong
+    # in two bytes, which pins a signature that can never match.
+    _sig = bytes.fromhex("064b5b8a18007b3b6a38ff38ff3b424250415a42534118437047")
+    ok(bytes(patched[_INBP - 0x08000000: _INBP - 0x08000000 + len(_sig)]) == _sig,
+       "InBattlePyramid signature intact at 0x0808B034")
+    _lit = struct.unpack_from("<I", patched, 0x0808B050 - 0x08000000)[0]
+    ok(_lit == 0x0200B04C,
+       f"its gMapHeader literal is 0x0200B04C (got {_lit:#010x})")
+    _src = (ROOT / "src" / "character_mode.c").read_text()
+    ok("if (InBattlePyramid())" in _src,
+       "the wild override still guards on InBattlePyramid")
+    # .find(), not .index(): with the guard tampered away the latter raises and
+    # the verifier dies mid-run, which is a crash rather than a reported FAIL.
+    _g, _s = _src.find("if (InBattlePyramid())"), _src.find("wildSeed(species, level)")
+    ok(_g != -1 and _s != -1 and _g < _s,
+       "the guard precedes the seed draw, so nothing is consumed in the pyramid")
+
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     sys.exit(1 if _f else 0)
 

@@ -118,6 +118,15 @@ typedef unsigned int u32;
 #define DoNamingScreen  ((void (*)(u8, u8 *, u16, u16, u32, void (*)(void))) 0x08174415)
 #define OrigNativeGive  ((void (*)(void *))              0x081F2175)
 
+/* InBattlePyramid() -- gMapHeader(0x0200B04C).mapLayoutId(+0x12) == 361 || 378.
+   Disassembled in THIS ROM at 0x0808B034; the body is exactly
+       r0 = (layoutId == 361) | (layoutId == 378)
+   i.e. LAYOUT_..._BATTLE_PYRAMID_FLOOR and ..._TOP. Byte-for-byte the same
+   predicate Lazarus has at 0x0808C264, same two layout ids. Needed by the wild
+   override -- see the ⚠️ block in CM_WildMonSpeciesGated. verify_artifacts.py
+   pins the signature so this address cannot silently become another predicate. */
+#define InBattlePyramid ((u8   (*)(void))                 0x0808B035)
+
 /* Return-to-field callback that ALSO continues the paused (waitstate) script.
  * 0x08179C85 sets gFieldCallback = the continue-script field callback then
  * returns to field -- the exact path ShowEasyChatScreen uses so the original
@@ -422,6 +431,34 @@ u16 CM_WildMonSpeciesGated(u16 species, u8 level)
 
     if (!gateActive())
         return species;                    /* CM off: fully inert */
+
+    /* ⚠️ NEVER override inside the Battle Pyramid. Its encounter tables do not
+     * store species at all -- they store INDICES. GenerateBattlePyramidWildMon
+     * (0x0808AD8C) does
+     *     id = GetMonData(&gEnemyParty[0], MON_DATA_SPECIES) - 1;
+     *     ... wildMons[id] ...
+     * on a 12-byte stride (sizeof(struct PyramidWildMon)) into an 8-entry round
+     * table, so a real roster species makes `id` several hundred: it reads
+     * kilobytes past the table and writes a garbage species, which then indexes
+     * the base-stats and front-anim tables.
+     *
+     * ⚠️ THIS REPO WAS RECORDED AS CLEAR OF THIS BUG AND WAS NOT. The verdict
+     * (docs/ROUTINE_MAP.md:389, ../game_plans/rowe_parity.md §2) rested on "no
+     * facility caller is retargeted" -- true, and irrelevant, because the
+     * pyramid does not use a facility caller. It reuses the ORDINARY land path,
+     * one level above our hook:
+     *     0x0822C544  the pyramid branch
+     *       -> TryGenerateWildMon  0x0822BFB8
+     *          -> CreateWildMon    0x0822BEF0   (contains our retargeted BL
+     *                                            0x0822BF36)
+     *       -> GenerateBattlePyramidWildMon 0x0808AD8C
+     * Measured 2026-08-20 by searching for the (species-1)*12 instruction
+     * sequence, which occurs exactly twice in this ROM (0x0808ADD6,
+     * 0x0808AEFA) and nowhere else -- so the pyramid is the only table here
+     * with index semantics, but it IS reachable. Lazarus had the identical
+     * defect and the identical wrong verdict. */
+    if (InBattlePyramid())
+        return species;
     charId = *GetVarPointer(VAR_CM_CHAR);
     seed = wildSeed(species, level);
 
