@@ -224,7 +224,12 @@ def main():
                 LEGENDARY_COUNT * 4 + NUM_CHARACTERS * 4),
                (CM_SPRITE_BLOBS_ADDR & 0x01FFFFFF, len(_spr_blobs)),
                (CM_SPRITE_PTRS_ADDR & 0x01FFFFFF, len(_spr_ptrs)),
-               (CM_MUGSHOT_ADDR & 0x01FFFFFF, _mugshot_len)]
+               (CM_MUGSHOT_ADDR & 0x01FFFFFF, _mugshot_len),
+               # encounter marker: the per-character intro strings. Its
+               # trampoline needs no window of its own -- it lives inside the
+               # 64-byte scavenge run already covered above.
+               (0xF12000, NUM_CHARACTERS * 64),
+               (0x086EAA, 4)]
     give_sites = [i for i in range(len(orig))
                   if orig[i - 1] == 0x23 and orig[i:i + 4] == struct.pack("<I", GIVE_NATIVE)]
     windows += [(s, 4) for s in give_sites]
@@ -690,6 +695,55 @@ def main():
     _g, _s = _src.find("if (InBattlePyramid())"), _src.find("wildSeed(species, level)")
     ok(_g != -1 and _s != -1 and _g < _s,
        "the guard precedes the seed draw, so nothing is consumed in the pyramid")
+
+    # [18] Encounter marker.
+    print("\n[18] encounter marker")
+    _MARKER_ADDR, _MARKER_STRIDE = 0x08F12000, 64
+    _TEXT_WILD = 0x084C646C
+    _BL, _EXPAND, _TRAMP = 0x086EAA, 0x080876DC, 0x08470230
+    _mk = (CM / "marker_strings.bin").read_bytes()
+    ok(len(_mk) == NUM_CHARACTERS * _MARKER_STRIDE,
+       f"marker_strings.bin is {NUM_CHARACTERS}x{_MARKER_STRIDE} "
+       f"({len(_mk)} B)")
+    _in_rom = bytes(patched[_MARKER_ADDR - 0x08000000:
+                            _MARKER_ADDR - 0x08000000 + len(_mk)])
+    ok(_in_rom == _mk, "marker strings in ROM == marker_strings.bin")
+    # The shim compares src against this exact address; if the string moved,
+    # the marker would silently never fire.
+    ok(bytes(patched[_TEXT_WILD - 0x08000000:_TEXT_WILD - 0x08000000 + 19])
+       == bytes.fromhex("d1dde0d800fd0600d5e4e4d9d5e6d9d8abfbff"),
+       "the wild-intro string is still at 0x084C646C")
+    # BL retarget, decoded independently in both directions.
+    def _bl_target(site):
+        h1, h2 = struct.unpack_from("<HH", patched, site)
+        if (h1 & 0xF800) != 0xF000 or (h2 & 0xF800) != 0xF800:
+            return None
+        off = ((h1 & 0x7FF) << 12) | ((h2 & 0x7FF) << 1)
+        if off & 0x400000:
+            off -= 0x800000
+        return 0x08000000 + site + 4 + off
+    ok(_bl_target(_BL) == _TRAMP,
+       f"the intro BL now points at the marker trampoline ({_TRAMP:#x})")
+    _orig = ROM_IN.read_bytes()
+    _oh1, _oh2 = struct.unpack_from("<HH", _orig, _BL)
+    _ooff = ((_oh1 & 0x7FF) << 12) | ((_oh2 & 0x7FF) << 1)
+    if _ooff & 0x400000:
+        _ooff -= 0x800000
+    ok(0x08000000 + _BL + 4 + _ooff == _EXPAND,
+       "and originally pointed at BattleStringExpandPlaceholders")
+    # The trampoline must not have eaten the wild trampoline that shares this
+    # 64-byte scavenge run.
+    ok(bytes(patched[_TRAMP - 0x08000000:_TRAMP - 0x08000000 + 4])
+       == struct.pack("<HH", 0x4B00, 0x4718),
+       "marker trampoline is ldr r3,[pc]; bx r3")
+    _hook = struct.unpack_from("<I", patched, _TRAMP - 0x08000000 + 4)[0]
+    ok(_hook & 1 and SHIM_ADDR <= (_hook & ~1) < SHIM_ADDR + 0x2000,
+       f"its literal is a Thumb pointer into the shim ({_hook:#010x})")
+    # Every character's slot must be a terminated string, or a character whose
+    # marker overran its stride would render whatever follows.
+    _bad = [i for i in range(NUM_CHARACTERS)
+            if 0xFF not in _mk[i * _MARKER_STRIDE:(i + 1) * _MARKER_STRIDE]]
+    ok(not _bad, f"every marker slot is 0xFF-terminated ({len(_bad)} bad)")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     sys.exit(1 if _f else 0)

@@ -186,6 +186,42 @@ grep -q "HARNESS RESULT: PASS" /tmp/sg_leg_off.log && echo "  PASS caught legend
     || { echo "  FAIL caught legendary still offered (see /tmp/sg_leg_off.log)"; exit 1; }
 
 echo
+# The encounter marker (../game_plans/rowe_parity.md §3). All three runs force
+# the rolled species at the wild trampoline so the marker's precondition is
+# deterministic rather than waiting on a 10% override.
+#
+# 6b is the control that matters, and it is a DIFFERENT CHARACTER, not merely
+# "mode off": a shim that ignored charId and always returned the first
+# character's string would pass 6a and 6c and only fail here. This repo has
+# been bitten by exactly that before -- its wild-pool test could not see a
+# broken stride because it only ever ran character 1.
+echo "=== Layer 6a: encounter marker names the character (char 1 Red) ==="
+timeout 250 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=3 CM_CHAR=1 \
+    CM_FORCE_SPECIES=1 CM_EXPECT_NAME=RED "$MGBA" \
+    --script tools/mgba_scripts/cm_marker_test.lua \
+    -t tools/savestates/at_8_8.ss "$ROM" > /tmp/sg_marker_red.log 2>&1 || true
+grep -q "HARNESS RESULT: PASS" /tmp/sg_marker_red.log && echo "  PASS marker names RED" \
+    || { echo "  FAIL marker (see /tmp/sg_marker_red.log)"; exit 1; }
+
+echo
+echo "=== Layer 6b: marker indexes by character (char 10 Misty, NOT Red) ==="
+timeout 250 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=3 CM_CHAR=10 \
+    CM_FORCE_SPECIES=116 CM_EXPECT_NAME=MISTY "$MGBA" \
+    --script tools/mgba_scripts/cm_marker_test.lua \
+    -t tools/savestates/at_8_8.ss "$ROM" > /tmp/sg_marker_misty.log 2>&1 || true
+grep -q "HARNESS RESULT: PASS" /tmp/sg_marker_misty.log && echo "  PASS marker names MISTY" \
+    || { echo "  FAIL marker indexing (see /tmp/sg_marker_misty.log)"; exit 1; }
+
+echo
+echo "=== Layer 6c: marker inert with CM off (vanilla intro) ==="
+timeout 250 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=3 CM_ON=0 \
+    CM_FORCE_SPECIES=1 CM_EXPECT_NAME= "$MGBA" \
+    --script tools/mgba_scripts/cm_marker_test.lua \
+    -t tools/savestates/at_8_8.ss "$ROM" > /tmp/sg_marker_off.log 2>&1 || true
+grep -q "HARNESS RESULT: PASS" /tmp/sg_marker_off.log && echo "  PASS marker inert with CM off" \
+    || { echo "  FAIL marker inert (see /tmp/sg_marker_off.log)"; exit 1; }
+
+echo
 echo "=== Layer 5c: wild-encounter choke-point proof (BL 0x0822BF36 is the sole land-path caller) ==="
 # Proves, on a REACHABLE land encounter, that the exact BL we retarget is
 # executed and is the ONLY caller of CreateMonWithIVs for the wild mon --

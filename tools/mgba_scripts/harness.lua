@@ -224,15 +224,20 @@ function H.finish()
     if os and os.getenv then
         expected = tonumber(os.getenv("CM_EXPECT_CHECKS") or "")
     end
-    if passes == 0 then
+    -- Count assertions RUN, not assertions PASSED. Comparing against `passes`
+    -- means a single genuine failure also trips the tally guard, which reports
+    -- a structural change ("expected 3, ran 2") when nothing structural
+    -- happened -- misleading on exactly the runs someone is already debugging.
+    local ran = passes + #failures
+    if ran == 0 then
         table.insert(failures,
             "ZERO assertions ran -- a run that asserts nothing is not a pass")
-    elseif expected and passes ~= expected then
+    elseif expected and ran ~= expected then
         table.insert(failures, string.format(
             "TALLY CHANGED: expected %d assertions, ran %d -- a changed tally is "
             .. "a regression even when the run says PASS. If the change is "
             .. "intentional, update the expected count in the runner.",
-            expected, passes))
+            expected, ran))
     end
     H.log("---- SUMMARY ----")
     H.log(string.format("PASSED %d, FAILED %d", passes, #failures))

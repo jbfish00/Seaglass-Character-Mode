@@ -111,6 +111,26 @@ FREE_END_ROM   = 0x09000000
 
 TRAMPOLINE_ADDR      = 0x08470200  # 8B 0xFF scavenge, in BL range of both sites
 WILD_TRAMPOLINE_ADDR = 0x08470208  # same 64B scavenge run, immediately after; 40B used
+# Encounter marker (../game_plans/rowe_parity.md §3). Third user of the same
+# verified 64-byte 0xFF scavenge run at 0x08470200; the wild trampoline ends at
+# 0x08470230, leaving 16 B. 4-aligned, and 3.91 MB from the hook site at
+# 0x08086EAA -- inside the +-4 MB Thumb BL window, with no margin to spare, so
+# check the reach again if either address ever moves.
+MARKER_TRAMPOLINE_ADDR = 0x08470230
+# The BL inside BufferStringBattle that every intro string funnels through:
+#   ldr r0, =<one of several strings> ; b 0x08086EA8
+#   0x08086EA8: ldr r1, =dst ; bl BattleStringExpandPlaceholders
+MARKER_BL_SITE   = 0x086EAA
+EXPAND_STRING    = 0x080876DC
+TEXT_WILD_APPEARED = 0x084C646C     # "Wild {FD}{06} appeared!{FB}"
+# 193*64 = 12,352 B, in the run verified 0xFF from 0x08F0A000 to 0x08F1C000.
+# ⚠️ NOT 0x08F10000: tools/tests/build_trade_testrom.py already writes its
+# test script there, and it asserts the space is clear -- so the first choice
+# broke the trade layer rather than corrupting anything. Kept as an assert
+# below so the next allocation in this region cannot land on it silently.
+MARKER_ADDR      = 0x08F12000
+TRADE_TEST_SCRIPT_ADDR = 0x08F10000  # owned by tools/tests/build_trade_testrom.py
+MARKER_STRIDE    = 64
 
 # --- confirmed hook sites (docs/ROUTINE_MAP.md) ---
 BL_SITE_CATCH = 0x0A6A46
@@ -383,6 +403,7 @@ def main():
                     f"-DTRADE_RECV_OFF={TRADE_RECV_OFF}",
                     f"-DTRADE_COUNT={TRADE_COUNT}",
                     f"-DWILDPOOL_ADDR={WILDPOOL_ADDR:#x}",
+                    f"-DMARKER_ADDR={MARKER_ADDR:#x}",
                     f"-DWILDPOOL_STRIDE={WILDPOOL_STRIDE}",
                     f"-DNUM_CHARACTERS={NUM_CHARACTERS}",
                     f"-DTOBIAS_CHAR_ID={TOBIAS_CHAR_ID}",
@@ -417,6 +438,7 @@ def main():
     hook_gate   = syms["CM_GiveMonToPlayerGated"] | 1
     hook_native = syms["CM_NativeGiveGated"]
     hook_wild   = syms["CM_WildMonSpeciesGated"]
+    hook_marker = syms["CM_BattleStringGated"] | 1
 
     # --- mugshot renderer: separate compile unit + link address (see
     # CM_MUGSHOT_ADDR). Both entry points are resolved from the linked ELF
@@ -596,6 +618,29 @@ def main():
     assert WILD_TRAMPOLINE_ADDR % 2 == 0
     splice(WILD_TRAMPOLINE_ADDR, wild_tramp, "wild trampoline")
 
+    # --- encounter marker: per-character intro strings + its trampoline ---
+    marker_blob = (CM / "marker_strings.bin").read_bytes()
+    assert len(marker_blob) == NUM_CHARACTERS * MARKER_STRIDE, (
+        f"marker_strings.bin is {len(marker_blob)} B, expected "
+        f"{NUM_CHARACTERS * MARKER_STRIDE} for {NUM_CHARACTERS} characters "
+        f"-- re-run emit_marker_strings.py")
+    assert not (MARKER_ADDR <= TRADE_TEST_SCRIPT_ADDR
+                < MARKER_ADDR + len(marker_blob)), (
+        f"marker strings {MARKER_ADDR:#x}.."
+        f"{MARKER_ADDR + len(marker_blob):#x} swallow the trade test script at "
+        f"{TRADE_TEST_SCRIPT_ADDR:#x}")
+    splice(MARKER_ADDR, marker_blob, "encounter marker strings")
+    assert MARKER_TRAMPOLINE_ADDR % 4 == 0
+    assert MARKER_TRAMPOLINE_ADDR >= WILD_TRAMPOLINE_ADDR + len(wild_tramp), (
+        f"marker trampoline at {MARKER_TRAMPOLINE_ADDR:#x} overlaps the wild "
+        f"trampoline, which ends at "
+        f"{WILD_TRAMPOLINE_ADDR + len(wild_tramp):#x}")
+    splice(MARKER_TRAMPOLINE_ADDR,
+           struct.pack("<HH", 0x4B00, 0x4718) + struct.pack("<I", hook_marker),
+           "marker trampoline")
+    print(f"encounter marker: {len(marker_blob):,} B @ {MARKER_ADDR:#x}, "
+          f"stride {MARKER_STRIDE}, trampoline @ {MARKER_TRAMPOLINE_ADDR:#x}")
+
     # --- patches (verify-then-write) ---
     for site in (BL_SITE_CATCH, BL_SITE_GIFT):
         cur = bytes(data[site:site + 4])
@@ -607,6 +652,23 @@ def main():
     expect = thumb_bl(0x08000000 + WILD_BL_SITE, CREATE_MON_WITH_IVS)
     assert cur == expect, (f"wild BL site {WILD_BL_SITE:#x}: {cur.hex()} != {expect.hex()}")
     data[WILD_BL_SITE:WILD_BL_SITE + 4] = thumb_bl(0x08000000 + WILD_BL_SITE, WILD_TRAMPOLINE_ADDR)
+
+    # The shim compares `src` against TEXT_WILD_APPEARED by hardcoded address,
+    # so prove that address still holds that exact string before moving the BL.
+    # Get this wrong and the marker simply never fires -- silently.
+    _want = bytes.fromhex("d1dde0d800fd0600d5e4e4d9d5e6d9d8abfbff")
+    _got = bytes(data[TEXT_WILD_APPEARED - 0x08000000:
+                      TEXT_WILD_APPEARED - 0x08000000 + len(_want)])
+    assert _got == _want, (
+        f"TEXT_WILD_APPEARED {TEXT_WILD_APPEARED:#x}: {_got.hex()} != "
+        f"{_want.hex()} -- the wild intro string moved")
+
+    cur = bytes(data[MARKER_BL_SITE:MARKER_BL_SITE + 4])
+    expect = thumb_bl(0x08000000 + MARKER_BL_SITE, EXPAND_STRING)
+    assert cur == expect, (
+        f"marker BL site {MARKER_BL_SITE:#x}: {cur.hex()} != {expect.hex()}")
+    data[MARKER_BL_SITE:MARKER_BL_SITE + 4] = thumb_bl(
+        0x08000000 + MARKER_BL_SITE, MARKER_TRAMPOLINE_ADDR)
 
     cur = struct.unpack_from("<I", data, BG_EVENT_PTR_OFF)[0]
     assert cur == ORIG_CLIPBOARD, f"BG ptr: {cur:#x} != {ORIG_CLIPBOARD:#x}"

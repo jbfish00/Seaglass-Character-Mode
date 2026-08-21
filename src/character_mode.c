@@ -332,6 +332,71 @@ void CM_MatchCode(void *ctx)
     *result = 0;                     /* script: "invalid code" msg */
 }
 
+/* --- 2c. wild-encounter marker (../../game_plans/rowe_parity.md §3) ---
+ *
+ * The wild intro names the active character when the Pokemon that appeared is
+ * on that character's roster:
+ *
+ *     Wild GIBLE appeared,
+ *     destined for CYNTHIA!
+ *
+ * WHY. The 10%% override hands out a family ROOT, and a family root is
+ * indistinguishable from something the map's own table could have produced.
+ * ROWE measured the consequence -- the median selectable character matches
+ * ~2%% of the game's own wild slots, so the override is doing nearly all the
+ * work of building a team, invisibly -- and Platinum proved the failure mode
+ * is real: a playthrough reported as "no on-roster encounters" turned out to
+ * have no bug at all. Naming the character was the fix there too. Rates are
+ * NOT touched; this is a message and nothing else.
+ *
+ * HOW. BufferStringBattle picks one of several intro strings into r0 and falls
+ * into a single BattleStringExpandPlaceholders(src, dst) call at 0x08086EAA.
+ * That one BL is retargeted here; every other battle string passes straight
+ * through untouched, because we substitute only when `src` is exactly the
+ * wild-intro pointer.
+ *
+ * ⚠️ DELIBERATE DEVIATION FROM ROWE, and it is a real one. ROWE marks only
+ * when the OVERRIDE fired, which it can do because it is a decomp with a byte
+ * of RAM to remember that in. This ROM has none -- its legendary feature
+ * already had to spend 20 save flags for want of writable RAM -- so the test
+ * here is "is the wild mon on the roster", which needs no state at all and is
+ * true whether the override or the map's own table produced it. That answers
+ * the question the player actually has ("is this one mine to keep?"), and it
+ * cannot claim something false. It does mean a natural on-roster encounter is
+ * marked too, which ROWE's would not be.
+ *
+ * The mon's own name still comes from the engine: the strings keep the
+ * {FD}{06} B_OPPONENT_MON1_NAME placeholder copied verbatim out of the
+ * original, so the expander sees exactly what it always saw.
+ *
+ * Double battles are left alone on purpose -- two opponents, only one of which
+ * could be the roster mon, so a marker would name half a battle. Same call
+ * ROWE made. */
+#ifndef MARKER_ADDR
+#error "compile with -DMARKER_ADDR= (marker_strings.bin injection address)"
+#endif
+#define MARKER_STRIDE 64
+/* "Wild {FD}{06} appeared!{FB}" -- the plain single-wild intro, the only one we
+   substitute. Its address is asserted by the injector before the BL is moved. */
+#define TEXT_WILD_APPEARED ((const u8 *) 0x084C646C)
+#define OrigExpandString ((void (*)(const u8 *, u8 *)) 0x080876DD)
+/* gEnemyParty = gPlayerParty + 6 * MON_SIZE, i.e. 0x02019E78 --
+   the same address tools/mgba_scripts/harness.lua records as verified. */
+#define gEnemyParty (gPlayerParty + 6 * MON_SIZE)
+
+void CM_BattleStringGated(const u8 *src, u8 *dst)
+{
+    if (src == TEXT_WILD_APPEARED && gateActive()) {
+        u16 charId = *GetVarPointer(VAR_CM_CHAR);
+        u32 species = GetMonData(gEnemyParty, MON_DATA_SPECIES, 0);
+
+        if (species != 0 && onRoster(charId, species))
+            src = (const u8 *) (MARKER_ADDR
+                                + (u32) (charId - 1) * MARKER_STRIDE);
+    }
+    OrigExpandString(src, dst);
+}
+
 /* --- 3. acquisition gate --- */
 u8 CM_GiveMonToPlayerGated(void *mon)
 {
