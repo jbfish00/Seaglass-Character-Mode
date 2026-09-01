@@ -157,11 +157,21 @@ def _signature_base_map():
 
 def build_rosters(mapped, order):
     """Compute starter/legendary split + signature placement per character.
-    Returns (per-character dict, skipped-empty list, warnings list) -- pure
+    Returns (per-character dict, empty-roster list, warnings list) -- pure
     function of consts, independent of whether numeric ids exist yet."""
     base_of = _signature_base_map()
     built = {}
-    skipped = []          # kept for the report's shape; nothing lands here now
+    # There used to be a second list here, `skipped`, commented "kept for the
+    # report's shape; nothing lands here now" -- and it was what build_rosters
+    # RETURNED, while `empty` below (the list actually appended to) was never
+    # returned at all. Consequences, both real: characters_manifest.json's
+    # skipped_empty_roster was permanently [], so the characters with genuinely
+    # empty rosters were reported NOWHERE (rowe_parity.md §10 warns they hide in
+    # "a report line nobody reads" -- here there was no line); and the two
+    # `if disp in skipped: continue` sites downstream were dead code that only
+    # LOOKED like it dropped those records. Returning the real list without
+    # deleting those sites would start dropping records and renumber every
+    # character behind them, which is the index shift the whole design avoids.
     empty = []            # slots retained with an empty roster
     warnings = []
     for disp in order:
@@ -226,18 +236,70 @@ def build_rosters(mapped, order):
         warnings.append("%d character(s) have an EMPTY roster and keep their "
                         "slot as hidden records: %s"
                         % (len(empty), ", ".join(sorted(empty))))
-    return built, skipped, warnings
+    return built, empty, warnings
+
+
+
+# ---------------------------------------------------------------------------
+# The empty-roster INVENTORY.
+#
+# rowe_parity.md §10.  A character whose roster maps to nothing is listed here
+# with the species that went missing, and the emitter FAILS if the observed set
+# differs in either direction -- so a NEW silent skip becomes a failed build
+# instead of a line in a log.
+#
+# This repo needed it more than its siblings: build_rosters returned a vestigial
+# always-empty list, so these three were reported nowhere at all and the
+# manifest advertised zero.
+#
+# MEASURED 2026-09-01 and all three are genuine ROM absences.  Method: capture
+# Stage A's output (post-audit, post-additions, pre-dex-filter) and confirm
+# every surviving const appears in Stage B's own stageb_unmatched.txt.  Both
+# stages reproduce rosters_mapped.json byte-for-byte, so the data is not stale
+# either.  There is no Iscan here.
+#
+# Do NOT test absence with unresolved_ids.json -- its pending_phase1_species key
+# lists EVERY species Stage A saw, so it answers "present" for nothing and reads
+# as a clean bill of health.  stageb_unmatched.txt is the real list.
+#
+# Magnolia, Sada and Turo also map to nothing but are absent from characters.txt
+# entirely (the deliberate dex-absent trim), so they never reach this code.
+EMPTY_ROSTER_EXPECTED = {
+    "Juniper":   "ARCHEN, KARRABLAST, MINCCINO, OSHAWOTT, PATRAT, SHELMET, SNIVY, TEPIG",
+    "Rowan":     "CHIMCHAR, KRICKETOT, PIPLUP, SHINX, STARLY, TURTWIG",
+    "Sonia":     "BOUNSWEET, ROOKIDEE, ROTOM, YAMPER",
+}
+
+
+def assert_empty_inventory(empty):
+    """Fail the emit unless the empty rosters are exactly the ones above."""
+    seen, want = set(empty), set(EMPTY_ROSTER_EXPECTED)
+    added, gone = sorted(seen - want), sorted(want - seen)
+    if not added and not gone:
+        return
+    msg = ["empty-roster inventory mismatch -- see EMPTY_ROSTER_EXPECTED"]
+    for c in added:
+        msg.append("  NEW empty roster: %s. Something stopped resolving; find "
+                   "out why before adding it to the inventory." % c)
+    for c in gone:
+        msg.append("  %s is NO LONGER empty -- it gained a roster. Saves store "
+                   "the character INDEX, so before emitting a character who "
+                   "gains a first roster, move their line to the END of "
+                   "characters.txt or every later index shifts." % c)
+    raise SystemExit("\n".join(msg))
 
 
 def cmd_dry_run(mapped, order):
     charmap = load_charmap(CHARMAP_PATH)
-    built, skipped, warnings = build_rosters(mapped, order)
+    built, empty, warnings = build_rosters(mapped, order)
+    assert_empty_inventory(empty)
 
     names_blob = bytearray()
     manifest = []
     for disp in order:
-        if disp in skipped:
-            continue
+        # No `continue` for an empty roster: it keeps its slot deliberately,
+        # because saves store the character INDEX. derive_drops.py puts it under
+        # the playability threshold, so it is emitted and then hidden.
         b = built[disp]
         name_off = len(names_blob)
         names_blob += encode_text(display_name(disp), charmap)
@@ -257,12 +319,12 @@ def cmd_dry_run(mapped, order):
         f.write(names_blob)
     with open(os.path.join(HERE, "characters_manifest.json"), "w") as f:
         json.dump({"mode": "dry_run_names_topology_only",
-                   "record_count": len(order) - len(skipped),
-                   "skipped_empty_roster": skipped,
+                   "record_count": len(order),
+                   "empty_roster": empty,
                    "warnings": warnings,
                    "characters": manifest}, f, indent=1)
 
-    print("[dry-run] validated %d characters (%d skipped empty)" % (len(order) - len(skipped), len(skipped)))
+    print("[dry-run] validated %d characters (%d with an empty roster, slot kept for index stability)" % (len(order), len(empty)))
     print("  names.bin: %d bytes (real, final content)" % len(names_blob))
     print("  characters.bin / rosters.bin: NOT written -- species ids are all")
     print("  PENDING_PHASE1; run with --final once Stage B fills in real ids.")
@@ -274,7 +336,8 @@ def cmd_dry_run(mapped, order):
 
 def cmd_final(mapped, order):
     charmap = load_charmap(CHARMAP_PATH)
-    built, skipped, warnings = build_rosters(mapped, order)
+    built, empty, warnings = build_rosters(mapped, order)
+    assert_empty_inventory(empty)
 
     # id lookup: const -> real numeric id, sourced from rosters_mapped.json's
     # per-species "id" field. Fail loudly if anything is still PENDING_PHASE1.
@@ -322,11 +385,12 @@ def cmd_final(mapped, order):
     rosters_blob = bytearray()
     records = bytearray()
     manifest = []
-    hidden_bits = bytearray((len(order) - len(skipped) + 7) // 8)
+    hidden_bits = bytearray((len(order) + 7) // 8)
 
     for disp in order:
-        if disp in skipped:
-            continue
+        # No `continue` for an empty roster: it keeps its slot deliberately,
+        # because saves store the character INDEX. derive_drops.py puts it under
+        # the playability threshold, so it is emitted and then hidden.
         b = built[disp]
         name_off = len(names_blob)
         names_blob += encode_text(display_name(disp), charmap)
@@ -385,13 +449,13 @@ def cmd_final(mapped, order):
     with open(os.path.join(HERE, "names.bin"), "wb") as f:
         f.write(names_blob)
     with open(os.path.join(HERE, "characters_manifest.json"), "w") as f:
-        json.dump({"mode": "final", "record_count": len(order) - len(skipped),
-                   "record_size_bytes": 12, "skipped_empty_roster": skipped,
+        json.dump({"mode": "final", "record_count": len(order),
+                   "record_size_bytes": 12, "empty_roster": empty,
                    "hidden_count": n_hidden,
                    "selectable_count": len(manifest) - n_hidden,
                    "warnings": warnings, "characters": manifest}, f, indent=1)
 
-    print("[final] emitted %d characters (%d skipped empty)" % (len(order) - len(skipped), len(skipped)))
+    print("[final] emitted %d characters (%d with an empty roster, slot kept for index stability)" % (len(order), len(empty)))
     print("  threshold: %d offered, %d hidden (kept their table slot)"
           % (len(manifest) - n_hidden, n_hidden))
     print("  characters.bin: %d bytes (%d records x 12)" % (len(records), len(records) // 12))

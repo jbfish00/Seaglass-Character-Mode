@@ -2,7 +2,11 @@
  "mode": "final",
  "record_count": 193,
  "record_size_bytes": 12,
- "skipped_empty_roster": [],
+ "empty_roster": [
+  "Rowan",
+  "Juniper",
+  "Sonia"
+ ],
  "hidden_count": 79,
  "selectable_count": 114,
  "warnings": [
