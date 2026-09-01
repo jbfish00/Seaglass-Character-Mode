@@ -31,12 +31,16 @@ Layers:
 """
 import hashlib
 import json
+import os
 import re
 import struct
 import subprocess
 import sys
 import unicodedata
 from pathlib import Path
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from cm_tally import assert_tally  # noqa: E402
 
 HERE = Path(__file__).parent
 ROOT = HERE.parent.parent
@@ -128,6 +132,12 @@ DAILY_FLAGS_START, DAILY_FLAGS_END = 0x920, 0x95F
 SCR_SETFLAG, SCR_CLEARFLAG, SCR_CHECKFLAG = 0x29, 0x2A, 0x2B
 
 _p = _f = 0
+
+# How many checks this layer must run. A deliberate LITERAL, never a total
+# recomputed from the data the checks iterate: such a total drifts in lockstep
+# with what it is meant to pin and therefore cannot fail. Bump it in the same
+# commit that adds or removes a check. See tools/tests/cm_tally.py.
+EXPECT_CHECKS = 88
 def ok(cond, msg):
     global _p, _f
     if cond:
@@ -746,6 +756,8 @@ def main():
     ok(not _bad, f"every marker slot is 0xFF-terminated ({len(_bad)} bad)")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
+    if assert_tally(_p + _f, EXPECT_CHECKS, "verify_artifacts"):
+        sys.exit(1)
     sys.exit(1 if _f else 0)
 
 

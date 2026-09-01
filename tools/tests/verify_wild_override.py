@@ -16,6 +16,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from cm_tally import assert_tally  # noqa: E402
+
 ROOT = Path(__file__).parent.parent.parent
 MGBA = ROOT / "tools" / "mgba_src" / "build" / "mgba-headless"
 ROM = ROOT / "build" / "seaglass_cm.gba"
@@ -37,6 +40,12 @@ CM = ROOT / "tools" / "character_mode"
 CHAR_ID = int(os.environ.get("CM_WILD_CHAR", "1"))
 
 _p = _f = 0
+
+# How many checks this layer must run. A deliberate LITERAL, never a total
+# recomputed from the data the checks iterate: such a total drifts in lockstep
+# with what it is meant to pin and therefore cannot fail. Bump it in the same
+# commit that adds or removes a check. See tools/tests/cm_tally.py.
+EXPECT_CHECKS = 7
 def ok(cond, msg):
     global _p, _f
     if cond:
@@ -166,6 +175,9 @@ def main():
     ok(r is not None and not r["overridden"], "CM off: never overridden (control)")
 
     print(f"\n{_p} passed, {_f} failed")
+    if assert_tally(_p + _f, EXPECT_CHECKS, "verify_wild_override"):
+        print("RESULT: FAIL")
+        sys.exit(1)
     print("RESULT: PASS" if _f == 0 else "RESULT: FAIL")
     sys.exit(1 if _f else 0)
 

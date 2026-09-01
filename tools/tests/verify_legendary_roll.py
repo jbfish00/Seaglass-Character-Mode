@@ -21,9 +21,13 @@ copied, and the parse failing is a test failure.
 Exit 0 = pass.
 """
 import json
+import os
 import re
 import sys
 from pathlib import Path
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from cm_tally import assert_tally  # noqa: E402
 
 ROOT = Path(__file__).parent.parent.parent
 SRC = ROOT / "src" / "character_mode.c"
@@ -32,6 +36,12 @@ CM = ROOT / "tools" / "character_mode"
 M32 = 0xFFFFFFFF
 
 _p = _f = 0
+
+# How many checks this layer must run. A deliberate LITERAL, never a total
+# recomputed from the data the checks iterate: such a total drifts in lockstep
+# with what it is meant to pin and therefore cannot fail. Bump it in the same
+# commit that adds or removes a check. See tools/tests/cm_tally.py.
+EXPECT_CHECKS = 8
 
 
 def ok(cond, msg):
@@ -144,6 +154,9 @@ def main():
        f"roll untestable")
 
     print(f"\n{_p} passed, {_f} failed")
+    if assert_tally(_p + _f, EXPECT_CHECKS, "verify_legendary_roll"):
+        print("RESULT: FAIL")
+        sys.exit(1)
     print("RESULT: " + ("PASS" if not _f else "FAIL"))
     sys.exit(1 if _f else 0)
 
