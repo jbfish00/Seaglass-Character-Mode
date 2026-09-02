@@ -9,10 +9,16 @@ handing the player a Pokemon must eventually touch that byte. It proves the SET
 of writers has not changed; it does **not** prove each one is gated. This file
 records what reverse engineering found each one to be.
 
-Verdicts: **GATED** -- the project's enforcement covers it. **EXEMPT** --
+Verdicts: **UNGATED** -- measured, reachable, and covered by NO gate: a known
+hole. **GATED** -- the project's enforcement covers it. **EXEMPT** --
 deliberately not gated, with the reason. **NOT-A-WRITER** -- the scan reports
 it, RE showed it is a read (see the detector note). **UNVERIFIED** -- a real
 "go look", not a clean bill of health.
+
+An UNGATED row is pinned by `EXPECT_UNGATED` in the checker rather than failing
+the suite, so a SECOND hole fails loudly while a recorded, understood one waits
+on a design decision. A checker that is permanently red is a checker nobody
+runs -- this workspace has had exactly that happen once already.
 
 ## Two things that generalise, and both bite
 

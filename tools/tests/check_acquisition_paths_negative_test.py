@@ -20,6 +20,7 @@ The tampered copies are written beside the original so its `from cm_tally
 import` still resolves, and removed in a finally block. Nothing writes to the
 ROM or to the real checker.
 """
+import ast
 import os
 import re
 import subprocess
@@ -46,6 +47,22 @@ def main():
         if mutated is None:
             got = run(REAL)
         else:
+            # A tamper that produces a SyntaxError also exits 1, which would
+            # look like the checker catching it. Four times in this workspace a
+            # result has turned out to be a bad tamper rather than a real
+            # finding; assert the mutation is valid Python AND that it actually
+            # changed something, so neither can be mistaken for evidence.
+            if mutated == src:
+                print("  FAIL  %-50s TAMPER CHANGED NOTHING" % label)
+                fails.append(label + " (inert tamper)")
+                return
+            try:
+                ast.parse(mutated)
+            except SyntaxError as e:
+                print("  FAIL  %-50s TAMPER IS NOT VALID PYTHON: %s"
+                      % (label, e))
+                fails.append(label + " (broken tamper)")
+                return
             p = os.path.join(HERE, "_tmp_acq_%d.py" % len(tmps))
             tmps.append(p)
             open(p, "w", encoding="utf-8").write(mutated)
@@ -61,8 +78,11 @@ def main():
         case("control: the real inventory passes", 0)
 
         # delete the first inventory row
-        m = re.search(r"^    0x[0-9a-fA-F]+: \(\"[A-Z]+\",\n\s+\"[^\"]*\"\),\n",
-                      src, re.M)
+        # Multi-line reasons are the norm, so match a whole row: the verdict
+        # tuple plus every continuation string up to the closing "),".
+        m = re.search(r"^    0x[0-9a-fA-F]+: \(\"[A-Z-]+\",\n"
+                      r"(?:\s+\"(?:[^\"\\]|\\.)*\"\n)*"
+                      r"\s+\"(?:[^\"\\]|\\.)*\"\),\n", src, re.M)
         if not m:
             print("  FAIL  could not find an inventory row to delete "
                   "-- the tamper hit nothing, which is not the same as the "
@@ -80,6 +100,23 @@ def main():
         # an inventory with no enforcement point at all
         case("an inventory with no GATED writer fails", 1,
              src.replace('("GATED",', '("UNVERIFIED",'))
+
+        # check 4, both directions: a NEW ungated path must fail, and a known
+        # one that quietly stopped being ungated must fail too.
+        case("a new UNGATED path fails", 1,
+             src.replace("INVENTORY = {",
+                         'INVENTORY = {\n    0x00040c3e: ("UNGATED", "pretend hole"),',
+                         1).replace('    0x00040c3e: ("EXEMPT",', '    0x000c3e00: ("EXEMPT",', 1)
+             if '0x00040c3e: ("EXEMPT",' in src else
+             src.replace("EXPECT_UNGATED = frozenset({", "EXPECT_UNGATED = frozenset({0x00000004, ", 1)
+             if "EXPECT_UNGATED = frozenset({" in src else
+             src.replace("EXPECT_UNGATED = frozenset()",
+                         "EXPECT_UNGATED = frozenset({0x00000004})", 1))
+        case("an UNGATED path that vanished from the set fails", 1,
+             src.replace('("UNGATED",', '("EXEMPT",', 1)
+             if '("UNGATED",' in src else
+             src.replace("EXPECT_UNGATED = frozenset()",
+                         "EXPECT_UNGATED = frozenset({0x00000008})", 1))
 
         case("control: the real inventory still passes", 0)
     finally:

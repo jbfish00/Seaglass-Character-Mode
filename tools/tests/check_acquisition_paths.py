@@ -53,7 +53,10 @@ ROM = os.path.join(ROOT, 'rom/seaglass v3.0.gba')
 PARTY_COUNT = 0x02019c1d
 
 # How many checks this layer must run. A deliberate LITERAL -- see cm_tally.py.
-EXPECT_CHECKS = 3
+EXPECT_CHECKS = 4
+
+# Measured, reachable, and covered by NO gate. A second one must fail check 4.
+EXPECT_UNGATED = frozenset()
 
 # ldr site -> (verdict, why). Every writer the scan finds must be listed here.
 #   GATED      the project's enforcement covers this path
@@ -185,12 +188,33 @@ def main():
     check("at least one GATED writer is present (the enforcement point)",
           bool(gated), "no GATED writer found among %d" % len(found))
 
+    # 4. no NEW ungated acquisition path. UNGATED means measured, reachable and
+    #    NOT covered by any gate -- a known hole, pinned here so that finding a
+    #    SECOND one fails the suite instead of arriving silently. Pinning it
+    #    rather than failing on its existence is deliberate: the suite must stay
+    #    green while a recorded, understood hole waits on a design decision,
+    #    or it becomes a red checker nobody runs.
+    ungated = frozenset(o for o in INVENTORY if INVENTORY[o][0] == "UNGATED")
+    check("the set of UNGATED acquisition paths is exactly the known one",
+          ungated == EXPECT_UNGATED,
+          "new: %s | disappeared: %s"
+          % (", ".join("%#010x" % (0x08000000 + o)
+                       for o in sorted(ungated - EXPECT_UNGATED)) or "none",
+             ", ".join("%#010x" % (0x08000000 + o)
+                       for o in sorted(EXPECT_UNGATED - ungated)) or "none"))
+    if ungated:
+        print("  🔴 %d UNGATED path(s) -- reachable and covered by no gate:"
+              % len(ungated))
+        for o in sorted(ungated):
+            print("       %#010x" % (0x08000000 + o))
+
     unver = sorted(o for o in INVENTORY if INVENTORY[o][0] == "UNVERIFIED")
-    print("\n  verdicts: %d GATED, %d EXEMPT, %d NOT-A-WRITER, %d UNVERIFIED"
+    print("\n  verdicts: %d GATED, %d EXEMPT, %d NOT-A-WRITER, %d UNGATED, "
+          "%d UNVERIFIED"
           % (sum(1 for v in INVENTORY.values() if v[0] == "GATED"),
              sum(1 for v in INVENTORY.values() if v[0] == "EXEMPT"),
              sum(1 for v in INVENTORY.values() if v[0] == "NOT-A-WRITER"),
-             len(unver)))
+             len(ungated), len(unver)))
     print("  NOT-A-WRITER: the scan reports these, and reverse engineering "
           "showed they are\n    reads, not stores. They stay listed on "
           "purpose -- the detector is deliberately\n    conservative, so "
