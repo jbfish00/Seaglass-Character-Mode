@@ -117,6 +117,29 @@ gPlayerParty long after the slot pointer has been computed into r0, so its own
 copy went unseen -- and the "at least one GATED copy is present" check failed,
 which is how it was noticed. It now drops just that register and keeps going.
 **A checker whose anchor assertion fails is telling you about the checker.**
+
+## ⭐ Reconciling the two inventories
+
+Every copy site above was checked against `check_acquisition_paths.py`: does a
+party-COUNT writer live in the same routine?
+
+**Validated on the known positives first** — every **GATED** copy shares its
+routine with its **GATED** count writer (Radical Red `0x0907D7CE` ↔
+`0x0907D7FA`; Lazarus `0x081C40E4` ↔ `0x081C4118`; Seaglass `0x081AA5D4` ↔
+`0x081AA608` and `0x081F1F6C` ↔ `0x081F203A`), and the identified EXEMPT ones
+pair up too (`LoadPlayerParty`, the party save/restore). The relationship holds
+wherever it should, so the absences below mean something.
+
+🔴 **Every UNVERIFIED copy site sits in a routine with NO count writer at all.**
+Those are precisely the sites `check_acquisition_paths.py` is structurally
+blind to — it can only see a routine that touches the count byte.
+
+⚠️ **That is not by itself alarming.** A slot swap, a party reorder and a
+reduced-party save/restore change no count either, and three of the EXEMPT
+entries are exactly those. The point is narrower and it is the reason this file
+has two halves: **a routine that writes a mon into the party without touching
+the count is invisible to the count inventory**, whether it is benign or not.
+Read the two together; neither is sufficient alone.
 """
 
 

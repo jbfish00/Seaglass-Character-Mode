@@ -69,13 +69,25 @@ INVENTORY = {
                  "region (callee 0x081A94A0); containing routine not yet "
                  "identified. It reaches the party through a known copy "
                  "primitive, so it cannot be introducing a species by an "
-                 "unknown mechanism -- but WHAT it copies is unexamined"),
+                 "unknown mechanism -- but WHAT it copies is unexamined. ⭐ "
+                 "RECONCILED 2026-09-02: NO party-count writer shares this "
+                 "routine, so check_acquisition_paths.py is structurally "
+                 "blind to it. That is not by itself alarming -- a swap or "
+                 "a reorder changes no count either -- but it is exactly "
+                 "the class this second inventory exists to see, and it is "
+                 "why the two must be read together"),
     0x000b9c76: ("UNVERIFIED",
                  "mon-sized copy into a party slot inside the 0x080B9C76 "
                  "region (callee 0x081A94A0); containing routine not yet "
                  "identified. It reaches the party through a known copy "
                  "primitive, so it cannot be introducing a species by an "
-                 "unknown mechanism -- but WHAT it copies is unexamined"),
+                 "unknown mechanism -- but WHAT it copies is unexamined. ⭐ "
+                 "RECONCILED 2026-09-02: NO party-count writer shares this "
+                 "routine, so check_acquisition_paths.py is structurally "
+                 "blind to it. That is not by itself alarming -- a swap or "
+                 "a reorder changes no count either -- but it is exactly "
+                 "the class this second inventory exists to see, and it is "
+                 "why the two must be read together"),
     0x00144efa: ("EXEMPT",
                  "the twin of Lazarus 0x001542B6: inside the routine that "
                  "saves and restores gPlayerPartyCount around a subsystem "
@@ -86,7 +98,13 @@ INVENTORY = {
                  "region (callee 0x08368EF0 (memcpy)); containing routine "
                  "not yet identified. It reaches the party through a known "
                  "copy primitive, so it cannot be introducing a species by "
-                 "an unknown mechanism -- but WHAT it copies is unexamined"),
+                 "an unknown mechanism -- but WHAT it copies is unexamined. "
+                 "⭐ RECONCILED 2026-09-02: NO party-count writer shares "
+                 "this routine, so check_acquisition_paths.py is "
+                 "structurally blind to it. That is not by itself alarming "
+                 "-- a swap or a reorder changes no count either -- but it "
+                 "is exactly the class this second inventory exists to see, "
+                 "and it is why the two must be read together"),
     0x001aa5d4: ("GATED",
                  "inside GiveMonToPlayer 0x081AA5AC -- THE enforcement "
                  "choke point, the CopyMon that places the mon in the party "
@@ -97,7 +115,13 @@ INVENTORY = {
                  "region (callee 0x08368EF0 (memcpy)); containing routine "
                  "not yet identified. It reaches the party through a known "
                  "copy primitive, so it cannot be introducing a species by "
-                 "an unknown mechanism -- but WHAT it copies is unexamined"),
+                 "an unknown mechanism -- but WHAT it copies is unexamined. "
+                 "⭐ RECONCILED 2026-09-02: NO party-count writer shares "
+                 "this routine, so check_acquisition_paths.py is "
+                 "structurally blind to it. That is not by itself alarming "
+                 "-- a swap or a reorder changes no count either -- but it "
+                 "is exactly the class this second inventory exists to see, "
+                 "and it is why the two must be read together"),
     0x001f1f6c: ("GATED",
                  "inside the script give CORE 0x081F1D64 -- the bypass "
                  "docs/ROUTINE_MAP.md:149 documents as writing "
