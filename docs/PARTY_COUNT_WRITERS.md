@@ -93,6 +93,64 @@ gPlayerPartyCount = CalculatePlayerPartyCount() -- `bl 0x081AA6FC; ldr r3,=count
 the same recount as 0x001BE222 in the sibling routine (the +0x1B0 pair)
 
 
+---
+
+# The other half: mon-sized copies INTO gPlayerParty
+
+`tools/tests/check_party_writes.py` is the second inventory, and it exists
+because of the LAUNDERING HOLE above: a recount is EXEMPT precisely because it
+introduces nothing, and that is exactly what makes a direct write into
+gPlayerParty legitimate afterwards. It pins every call whose destination is a
+gPlayerParty slot and whose size argument is the mon size -- a species can only
+enter a slot as a whole-mon copy, and the size argument is what separates the
+copies from the reads.
+
+⚠️ **Choosing that primitive took three tries, and the failures are the useful
+part.** "Every store through a party-derived pointer" gave 261 candidates.
+"Every function called with a party pointer in r0" gave ~171 callees, because
+`GetMonData(&gPlayerParty[i], ...)` passes the mon in r0 too -- at that
+resolution a read is indistinguishable from a write. Only the size argument
+cuts it to a set a person can actually read.
+
+⚠️ **And the first working version had a blind spot that hid the enforcement
+copy itself.** It treated a pc-relative reload of ANY tracked register as the
+end of the window; CFRU's `GiveMonToPlayer` reloads the register that held
+gPlayerParty long after the slot pointer has been computed into r0, so its own
+copy went unseen -- and the "at least one GATED copy is present" check failed,
+which is how it was noticed. It now drops just that register and keeps going.
+**A checker whose anchor assertion fails is telling you about the checker.**
+
+## 7 inventoried copy site(s)
+
+### `0x080acf5a` (file `0x000acf5a`) -- **UNVERIFIED**
+
+mon-sized copy into a party slot inside the 0x080ACF5A region (callee 0x081A94A0); containing routine not yet identified. It reaches the party through a known copy primitive, so it cannot be introducing a species by an unknown mechanism -- but WHAT it copies is unexamined
+
+### `0x080b9c76` (file `0x000b9c76`) -- **UNVERIFIED**
+
+mon-sized copy into a party slot inside the 0x080B9C76 region (callee 0x081A94A0); containing routine not yet identified. It reaches the party through a known copy primitive, so it cannot be introducing a species by an unknown mechanism -- but WHAT it copies is unexamined
+
+### `0x0818a8e4` (file `0x0018a8e4`) -- **UNVERIFIED**
+
+mon-sized copy into a party slot inside the 0x0818A8E4 region (callee 0x08368EF0 (memcpy)); containing routine not yet identified. It reaches the party through a known copy primitive, so it cannot be introducing a species by an unknown mechanism -- but WHAT it copies is unexamined
+
+### `0x081c32d8` (file `0x001c32d8`) -- **UNVERIFIED**
+
+mon-sized copy into a party slot inside the 0x081C32D8 region (callee 0x08368EF0 (memcpy)); containing routine not yet identified. It reaches the party through a known copy primitive, so it cannot be introducing a species by an unknown mechanism -- but WHAT it copies is unexamined
+
+### `0x081aa5d4` (file `0x001aa5d4`) -- **GATED**
+
+inside GiveMonToPlayer 0x081AA5AC -- THE enforcement choke point, the CopyMon that places the mon in the party slot. Its count writer 0x001aa608 is the GATED entry in check_acquisition_paths.py
+
+### `0x081f1f6c` (file `0x001f1f6c`) -- **GATED**
+
+inside the script give CORE 0x081F1D64 -- the bypass docs/ROUTINE_MAP.md:149 documents as writing gPlayerParty/gPlayerPartyCount directly and never BLing GiveMonToPlayer. Closed by retargeting all 49 callnative operands to the wrapper; verify_artifacts.py check [8] pins them
+
+### `0x08144efa` (file `0x00144efa`) -- **EXEMPT**
+
+the twin of Lazarus 0x001542B6: inside the routine that saves and restores gPlayerPartyCount around a subsystem call (docs/PARTY_COUNT_WRITERS.md entry 0x00144f0e). A party save/restore
+
+
 ## Method, so it can be repeated
 
 1. `arm-none-eabi-objdump -b binary -m armv4t -M force-thumb -D

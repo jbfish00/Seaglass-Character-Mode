@@ -90,6 +90,36 @@ FOOTER = """
 """
 
 
+SECOND = """
+---
+
+# The other half: mon-sized copies INTO gPlayerParty
+
+`tools/tests/check_party_writes.py` is the second inventory, and it exists
+because of the LAUNDERING HOLE above: a recount is EXEMPT precisely because it
+introduces nothing, and that is exactly what makes a direct write into
+gPlayerParty legitimate afterwards. It pins every call whose destination is a
+gPlayerParty slot and whose size argument is the mon size -- a species can only
+enter a slot as a whole-mon copy, and the size argument is what separates the
+copies from the reads.
+
+⚠️ **Choosing that primitive took three tries, and the failures are the useful
+part.** "Every store through a party-derived pointer" gave 261 candidates.
+"Every function called with a party pointer in r0" gave ~171 callees, because
+`GetMonData(&gPlayerParty[i], ...)` passes the mon in r0 too -- at that
+resolution a read is indistinguishable from a write. Only the size argument
+cuts it to a set a person can actually read.
+
+⚠️ **And the first working version had a blind spot that hid the enforcement
+copy itself.** It treated a pc-relative reload of ANY tracked register as the
+end of the window; CFRU's `GiveMonToPlayer` reloads the register that held
+gPlayerParty long after the slot pointer has been computed into r0, so its own
+copy went unseen -- and the "at least one GATED copy is present" check failed,
+which is how it was noticed. It now drops just that register and keeps going.
+**A checker whose anchor assertion fails is telling you about the checker.**
+"""
+
+
 def main():
     rows = sorted(chk.INVENTORY.items(),
                   key=lambda kv: (ORDER.get(kv[1][0], 9), kv[0]))
@@ -99,6 +129,19 @@ def main():
         out.append("### `%#010x` (file `%#010x`) -- **%s**\n"
                    % (0x08000000 + off, off, verdict))
         out.append(why + "\n")
+    try:
+        import check_party_writes as pw
+    except Exception:
+        pw = None
+    if pw is not None:
+        out.append(SECOND)
+        out.append("## %d inventoried copy site(s)\n" % len(pw.INVENTORY))
+        for off, (verdict, why) in sorted(
+                pw.INVENTORY.items(),
+                key=lambda kv: (ORDER.get(kv[1][0], 9), kv[0])):
+            out.append("### `%#010x` (file `%#010x`) -- **%s**\n"
+                       % (0x08000000 + off, off, verdict))
+            out.append(why + "\n")
     out.append(FOOTER)
     path = os.path.join(ROOT, "docs", "PARTY_COUNT_WRITERS.md")
     with open(path, "w") as f:
