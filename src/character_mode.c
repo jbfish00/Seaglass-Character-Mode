@@ -444,6 +444,84 @@ void CM_NativeGiveGated(void *ctx)
 /* --- 5. trade gate (sIngameTrades filled in by the injector via -DTRADE_*) --- */
 #ifdef TRADE_TABLE_ADDR
 #define VAR_0x8004 0x8004
+/* ---- one-shot party sweep at Character Mode activation (2026-09-02) ----
+ *
+ * WHY. Seaglass's selection is a CODE naming screen reached in normal play,
+ * so anything the player already owns when they activate the mode used to stay
+ * in the party forever -- activation set the flag, the character and the
+ * starter var and never reconciled what was already there. Lazarus had the
+ * same gap and a guaranteed way to hit it (its own 9-starter picker); see
+ * docs/PARTY_COUNT_WRITERS.md and game_plans/rowe_parity.md 13.5.
+ *
+ * ORDERING IS LOAD-BEARING. The confirm script calls this IMMEDIATELY AFTER
+ * the character's own starter has been given, never before. Run before the
+ * give, a party holding only an off-roster mon hits the never-empty rule
+ * below, which keeps it and boxes nothing -- a silent no-op.
+ *
+ * ROWE semantics, matching Unbound's CharacterMode_SweepPartyToPC: eggs
+ * exempt, full boxes leave the mon in the party, the party is never emptied,
+ * and the keep decision is made in a SEPARATE PRE-SCAN so it cannot depend on
+ * slot order (the ordering defect ROWE shipped once).
+ */
+void CM_SweepPartyToPCNative(void)
+{
+    int i, j, w;
+    u8 kept = 0;
+    u16 me;
+
+    if (!gateActive())
+        return;
+    me = *GetVarPointer(VAR_CM_CHAR);
+
+    for (i = 0; i < 6; i++) {
+        u8 *mon = gPlayerParty + i * MON_SIZE;
+        u32 species = GetMonData(mon, MON_DATA_SPECIES, 0);
+
+        if (species == 0)
+            continue;
+        if (GetMonData(mon, MON_DATA_IS_EGG, 0) || onRoster(me, species))
+            kept = 1;
+    }
+
+    for (i = 0; i < 6; i++) {
+        u8 *mon = gPlayerParty + i * MON_SIZE;
+        u32 species = GetMonData(mon, MON_DATA_SPECIES, 0);
+
+        if (species == 0)
+            continue;
+        if (GetMonData(mon, MON_DATA_IS_EGG, 0) || onRoster(me, species))
+            continue;
+        if (!kept) {            /* never leave the player with no party */
+            kept = 1;
+            continue;
+        }
+        if (CopyMonToPC(mon) == 1) {   /* 1 = MON_GIVEN_TO_PC; full -> keep */
+            for (j = 0; j < MON_SIZE; j++)
+                mon[j] = 0;
+        }
+    }
+
+    /* Compact: the engine's party helpers assume no holes, and a zeroed slot
+     * reads back as species 0 (its encryption key is zero too). */
+    w = 0;
+    for (i = 0; i < 6; i++) {
+        u8 *src = gPlayerParty + i * MON_SIZE;
+
+        if (GetMonData(src, MON_DATA_SPECIES, 0) == 0)
+            continue;
+        if (w != i) {
+            u8 *dst = gPlayerParty + w * MON_SIZE;
+
+            for (j = 0; j < MON_SIZE; j++)
+                dst[j] = src[j];
+            for (j = 0; j < MON_SIZE; j++)
+                src[j] = 0;
+        }
+        w++;
+    }
+    gPlayerPartyCount = w;
+}
+
 void CM_TradeCheck(void *ctx)
 {
     u16 allowed = 1;

@@ -473,6 +473,7 @@ def main():
     hook_native = syms["CM_NativeGiveGated"]
     hook_wild   = syms["CM_WildMonSpeciesGated"]
     hook_marker = syms["CM_BattleStringGated"] | 1
+    hook_sweep  = syms["CM_SweepPartyToPCNative"] | 1
 
     # --- mugshot renderer: separate compile unit + link address (see
     # CM_MUGSHOT_ADDR). Both entry points are resolved from the linked ELF
@@ -561,6 +562,9 @@ def main():
         e += op_setvar(0x4001, 0x8000)
         e += op_setvar(VAR_CM_STARTER, 0)
         e += op_givenative(0x8000, hook_native)
+        # Sweep AFTER the give, never before: beforehand a party holding only an
+        # off-roster mon hits the never-empty rule and nothing is boxed.
+        e += op_callnative(hook_sweep)
         e += op_releaseall() + op_end()
         # off block
         addrs["off_here"] = len(e)

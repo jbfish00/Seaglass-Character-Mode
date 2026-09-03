@@ -145,6 +145,8 @@ WILDPOOL_STRIDE = json.loads(
 # Build fingerprint exported by src/character_mode.c (check [16]).
 CM_FINGERPRINT_MAGIC = 0x4D435346
 SHIM_ADDR = 0x08ED2200
+SCRIPT_REGION_LO = 0x08EE3800 - 0x08000000   # SCRIPT_ADDR (kept fixed)
+SCRIPT_REGION_HI = SCRIPT_REGION_LO + 0x800
 SHIM_REGION = 0x2000
 
 # 1% legendary wild encounters (check [17]). Derived from the injector and the
@@ -171,7 +173,7 @@ _p = _f = 0
 # recomputed from the data the checks iterate: such a total drifts in lockstep
 # with what it is meant to pin and therefore cannot fail. Bump it in the same
 # commit that adds or removes a check. See tools/tests/cm_tally.py.
-EXPECT_CHECKS = 88
+EXPECT_CHECKS = 93   # +5: the activation party sweep (2026-09-02)
 def ok(cond, msg):
     global _p, _f
     if cond:
@@ -405,6 +407,31 @@ def main():
     # lockall(1) + loadword(6) + callstd 5(2) + compare 0x800D,1(5) = offset 14
     ok(patched[o + 14:o + 20] == bytes([0x06, 0x05]) + struct.pack("<I", ORIG_CLIPBOARD),
        "decline branch -> original clipboard preserved")
+
+    print("[9b] activation party sweep -- present, and AFTER the give")
+    # The give idiom is callnative <CM_NativeGiveGated> + 10 inline arg bytes.
+    # The sweep must be the callnative immediately after those args, and the
+    # block must then end releaseall; end. Decoding it POSITIONALLY is the
+    # point: an edit that moved the sweep before the give -- where a party of
+    # one off-roster mon hits the never-empty rule and nothing is boxed --
+    # fails here rather than becoming a silent no-op.
+    # The wrapper's address is the single target check [8] just derived from
+    # the 49 retargeted sites -- not restated here, so the two cannot disagree.
+    cm_native_give = next(iter(targets)) | 1
+    give_idiom = bytes([0x23]) + struct.pack("<I", cm_native_give) \
+        + struct.pack("<HHHHH", 0x0600, 0x8000, 5, 0, 0)
+    gi = bytes(patched).find(give_idiom, SCRIPT_REGION_LO, SCRIPT_REGION_HI)
+    ok(gi > 0, "confirm script: the starter give idiom is present")
+    if gi > 0:
+        after = gi + len(give_idiom)
+        ok(patched[after] == 0x23, "a callnative follows the give")
+        sweep = struct.unpack_from("<I", patched, after + 1)[0]
+        ok((sweep & 1) == 1 and SHIM_ADDR <= (sweep & ~1) < SHIM_ADDR + 0x2000,
+           f"it points into the shim ({sweep:#x})")
+        ok(sweep != cm_native_give,
+           "and it is NOT the give hook again")
+        ok(patched[after + 5:after + 7] == bytes([0x6B, 0x02]),
+           "then releaseall; end")
 
     print("[10] trade junctions + wrappers")
     tj_ok = True
