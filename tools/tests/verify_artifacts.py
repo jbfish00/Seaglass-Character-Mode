@@ -173,7 +173,16 @@ _p = _f = 0
 # recomputed from the data the checks iterate: such a total drifts in lockstep
 # with what it is meant to pin and therefore cannot fail. Bump it in the same
 # commit that adds or removes a check. See tools/tests/cm_tally.py.
-EXPECT_CHECKS = 93   # +5: the activation party sweep (2026-09-02)
+# The egg-hatch hook's own constants, read from the module the injector uses,
+# so the two cannot drift apart. EGG_TAIL_ADDR is duplicated from the injector
+# on purpose: this file shares no code with it.
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                "..", "character_mode"))
+import egg_hook  # noqa: E402
+
+EGG_TAIL_ADDR = 0x08FA0000
+
+EXPECT_CHECKS = 98   # +5: the egg-hatch sweep (2026-09-03)
 def ok(cond, msg):
     global _p, _f
     if cond:
@@ -275,7 +284,11 @@ def main():
                # trampoline needs no window of its own -- it lives inside the
                # 64-byte scavenge run already covered above.
                (0xF12000, NUM_CHARACTERS * 64),
-               (0x086EAA, 4)]
+               (0x086EAA, 4),
+               # egg-hatch sweep: the 11-byte replayed tail, and the 6-byte
+               # overlay on the hatch script that jumps to it
+               (EGG_TAIL_ADDR & 0x01FFFFFF, 11),
+               (egg_hook.SPLICE_FILE_OFF, len(egg_hook.SPLICE_ORIG))]
     give_sites = [i for i in range(len(orig))
                   if orig[i - 1] == 0x23 and orig[i:i + 4] == struct.pack("<I", GIVE_NATIVE)]
     windows += [(s, 4) for s in give_sites]
@@ -432,6 +445,36 @@ def main():
            "and it is NOT the give hook again")
         ok(patched[after + 5:after + 7] == bytes([0x6B, 0x02]),
            "then releaseall; end")
+
+    print("[9c] egg-hatch sweep -- the hatch-path hole")
+    # ../game_plans/rowe_parity.md §13.16/§13.18. Pinned in BOTH directions:
+    # checking only the patched bytes would pass just as happily if the base
+    # ROM had always held a goto here, which would mean the injector was doing
+    # nothing.
+    _eo = egg_hook.SPLICE_FILE_OFF
+    _n = len(egg_hook.SPLICE_ORIG)
+    ok(bytes(orig[_eo:_eo + _n]) == egg_hook.SPLICE_ORIG,
+       "base ROM still holds the stock hatch tail at the splice site")
+    _spl = bytes(patched[_eo:_eo + _n])
+    ok(_spl[0] == 0x05 and struct.unpack_from("<I", _spl, 1)[0] == EGG_TAIL_ADDR,
+       f"hatch script tail overlaid with `goto <egg tail>` ({_spl.hex()})")
+    _to = EGG_TAIL_ADDR & 0x01FFFFFF
+    _tail = bytes(patched[_to:_to + 11])
+    ok(_tail[0] == 0x25
+       and struct.unpack_from("<H", _tail, 1)[0] == egg_hook.SPECIAL_HATCH
+       and _tail[3] == 0x27
+       and _tail[4] == egg_hook.OPCODE_RELEASEALL
+       and _tail[5] == 0x23
+       and _tail[10] == 0x02,
+       f"egg tail replays hatch/waitstate/releaseall, callnative, end ({_tail.hex()})")
+    # ORDERING IS LOAD-BEARING, exactly as for the activation sweep above: run
+    # before the waitstate the sweep sees an egg, and its own egg exemption
+    # then keeps the off-roster hatchling.
+    ok(struct.unpack_from("<I", _tail, 6)[0] == sweep and _tail.index(b"\x27") < 5,
+       "the egg tail's native IS the activation sweep, after the waitstate")
+    ok(struct.unpack_from("<I", patched, egg_hook.CALLER_POOL_OFF)[0]
+       == egg_hook.SCRIPT_ENTRY,
+       "the field-control hatch caller still points at the hooked script")
 
     print("[10] trade junctions + wrappers")
     tj_ok = True

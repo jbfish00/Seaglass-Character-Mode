@@ -51,7 +51,7 @@ DONOR = os.path.join(ROOT, 'tools/pokeemerald_expansion_donor')
 
 # The repo's own egg-hatch hook, if it has one. Verdicts and this file must
 # agree: a site can only be GATED once something actually gates the hatch.
-HATCH_HOOK = None
+HATCH_HOOK = 'tools/character_mode/egg_hook.py'
 
 ROM_BASE = 0x08000000
 GIVEEGG = 0x7A
@@ -67,27 +67,30 @@ EXPECT_CHECKS = 5
 #   EXEMPT   deliberately not gated, with a reason
 #   UNGATED  a real hole: the egg hatches into whatever it holds, unchecked
 INVENTORY = {
-    0x00280ea3: (360, 'UNGATED',
+    0x00280ea3: (360, 'GATED',
      'the hot-spring EGG ("Will you take this EGG to hatch?"), the '
      'stock Emerald Lavaridge script. Wynaut is off-roster for 111 '
      'of 114 offered characters (on-roster only for Sabrina, Jessie '
-     'and Archer). UNGATED.'),
-    0x0028b603: (1345, 'UNGATED',
+     'and Archer). GATED by tools/character_mode/egg_hook.py.'),
+    0x0028b603: (1345, 'GATED',
      'the PALDEAN EGG handed over by the Team Aqua grunt ("I can\'t '
      'just leave this EGG all vulnerable here. Could you take it?"). '
      'Species 1345 is off-roster for ALL 114 offered characters. '
-     'UNGATED.'),
-    0x002aa568: (32781, 'UNGATED',
+     'GATED by tools/character_mode/egg_hook.py.'),
+    0x002aa568: (32781, 'GATED',
      'the Alolan Egg vendor -- a SAILOR who sells eggs for PINBALL '
      'POINTS, `random 9` over 9 Alolan species (958-973), '
      'repeatable. Every one of the 9 is off-roster for ALL 114 '
-     'offered characters. UNGATED.'),
+     'offered characters. GATED by tools/character_mode/egg_hook.py.'),
 }
 
-# 🔴 EVERY SITE HERE IS UNGATED. That is the finding, not an oversight in this
-# file: this repo has no egg-hatch hook, so each of these hatches into whatever
-# it holds and the party keeps it. Unbound closed the identical hole with
-# tools/character_mode/egg_hook.py. game_plans/rowe_parity.md §13.16/§13.18.
+# ✅ EVERY SITE HERE IS GATED, as of 2026-09-03, by
+# tools/character_mode/egg_hook.py: the hatch script's tail is overlaid with a
+# goto into a replayed tail that ends by calling the activation party sweep,
+# AFTER the hatch's waitstate, so the sweep sees the hatched Pokemon rather
+# than the egg. Five positive checks in verify_artifacts.py pin the overlay,
+# the tail's shape, its ordering and its native target; negative-tested 6/6 by
+# tools/tests/egg_hook_negative_test.py. game_plans/rowe_parity.md §13.16/§13.18.
 
 # ---------------------------------------------------------------- script grammar
 

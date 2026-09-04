@@ -86,6 +86,14 @@ for i = 1, #plan do
 end
 local commitFrame = START0 + (#plan - 1) * STEP   -- last step (commit A)
 
+-- First box slot in gPokemonStorage: `u8 currentBox` then boxes[14][30] of
+-- 80-byte BoxPokemon, so slot 1 of box 1 starts 4 bytes in (the struct is
+-- 4-byte aligned). MEASURED, not assumed: at this savestate the PC is empty
+-- and after activation this word holds the personality that was in party slot
+-- 0. ⚠️ Read gPokemonStoragePtr fresh each time -- it MOVES between the two
+-- samples (0x0200FF88 -> 0x0200FFD0 in the measurement).
+local PC_SLOT1 = 4
+
 local before = {}
 H.onFrame(function(f)
     if f == 8 then
@@ -95,8 +103,15 @@ H.onFrame(function(f)
         end
         before.party = emu:read8(H.gPlayerPartyCount)
         before.flag = H.getFlag(FLAG_CM)
-        H.log(("before: party=%d flag=%d char=%d"):format(
-            before.party, before.flag, H.getVar(VAR_CHAR)))
+        -- Slot 0's personality is the identity of whatever the player already
+        -- owned. The activation party sweep boxes it and the signature give
+        -- replaces it, so this value is what makes the swap observable --
+        -- see the activate branch below.
+        before.slot0 = H.rd32(H.gPlayerParty)
+        before.pc1 = H.rd32(H.rd32(H.gPokemonStoragePtr) + PC_SLOT1)
+        H.log(("before: party=%d flag=%d char=%d slot0=%08x pc1=%08x"):format(
+            before.party, before.flag, H.getVar(VAR_CHAR), before.slot0,
+            before.pc1))
     end
     if f == commitFrame - 20 then emu:screenshot("tools/savestates/ui_typed.png") end
 end)
@@ -145,7 +160,25 @@ H.onFrame(function(f)
         else
             H.assertEq("CM flag set", flag, 1)
             H.assertEq("character id", char, expectChar)
-            H.assertEq("starter added to party", party, before.party + 1)
+            -- ⚠️ 2026-09-04: this used to assert `party == before.party + 1`
+            -- and had been RED since the activation party sweep shipped
+            -- (fe30a37, 2026-09-02), which did not update this file. The
+            -- suite was reported green the whole time because nothing re-ran
+            -- it -- rowe_parity.md §11's "a checker is evidence only on the
+            -- runs where it executes", in the live layers this time.
+            --
+            -- The give adds the signature and the sweep boxes the off-roster
+            -- mon the player already had, so the COUNT is unchanged. Asserting
+            -- only that would be weak (it also holds if neither happened), so
+            -- assert the swap itself: slot 0 is a different Pokemon now, and
+            -- the one that was there is the one now sitting in the PC.
+            H.assertEq("party count unchanged: give +1, sweep -1",
+                       party, before.party)
+            H.assertTrue("party slot 0 is a different Pokemon now",
+                         H.rd32(H.gPlayerParty) ~= before.slot0)
+            H.assertEq("the boxed one is the Pokemon that was in slot 0",
+                       H.rd32(H.rd32(H.gPokemonStoragePtr) + PC_SLOT1),
+                       before.slot0)
             H.assertEq("starter var cleared", starter, 0)
             -- Report the sampling separately from the result: a window that
             -- never ran would otherwise read as "0 sprites" and pass as if the

@@ -42,6 +42,7 @@ import hashlib
 import json
 import re
 import struct
+import sys
 import subprocess
 import unicodedata
 from pathlib import Path
@@ -170,6 +171,13 @@ MARKER_STRIDE    = 64
 BL_SITE_CATCH = 0x0A6A46
 BL_SITE_GIFT  = 0x1F18DE
 GIVEMON_ADDR  = 0x081AA5AC
+
+# --- egg-hatch sweep (../game_plans/rowe_parity.md §13.16/§13.18) ---
+# The injected tail for the hatch script, 11 bytes, in a verified free run
+# (0xFF in both the base ROM and every build). Script `goto` operands are
+# absolute pointers, so there is no BL-reach constraint on where this lives.
+# tools/character_mode/egg_hook.py carries the RE and the byte grammar.
+EGG_TAIL_ADDR = 0x8fa0000
 
 GIVE_NATIVE   = 0x081F2175         # callnative give fn (49 inline script ptrs)
 GIVE_NATIVE_COUNT = 49
@@ -612,6 +620,31 @@ def main():
     splice(WILDPOOL_ADDR, wildpool, "wildpool")
     splice(LEGENDARY_ADDR, legendaries, "legendaries")
     splice(CM_MUGSHOT_ADDR, mugshot, "mugshot renderer")
+
+    # --- egg-hatch sweep ---
+    # The one enforcement hole reachable in ordinary play: eggs are exempt
+    # everywhere by design so an egg event cannot block progress, and nothing
+    # then looked at what the egg HATCHED INTO. This overlays the hatch
+    # script's tail with a goto into a replayed tail that ends by calling the
+    # activation sweep -- after the hatch's waitstate, so it sees the finished
+    # Pokemon rather than the egg. docs/GIFT_EGGS.md lists the gift eggs this
+    # covers; tools/character_mode/egg_hook.py has the RE.
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "character_mode"))
+    import egg_hook
+    egg_entry = struct.unpack_from("<I", data, egg_hook.CALLER_POOL_OFF)[0]
+    assert egg_entry == egg_hook.SCRIPT_ENTRY, (
+        f"egg-hatch script pointer is {egg_entry:#x}, expected "
+        f"{egg_hook.SCRIPT_ENTRY:#x} -- the hatch caller has moved")
+    egg_tail, egg_patches = egg_hook.build(EGG_TAIL_ADDR, hook_sweep)
+    splice(EGG_TAIL_ADDR, egg_tail, "egg-hatch tail")
+    for _eoff, _eorig, _erepl in egg_patches:
+        _eseg = bytes(data[_eoff:_eoff + len(_eorig)])
+        assert _eseg == _eorig, (
+            f"egg splice site {_eoff + 0x08000000:#x} holds {_eseg.hex()}, "
+            f"expected {_eorig.hex()} -- wrong ROM, or already patched")
+        data[_eoff:_eoff + len(_erepl)] = _erepl
+    print(f"egg-hatch sweep: tail {len(egg_tail)} B @ {EGG_TAIL_ADDR:#x}, "
+          f"splice @ {egg_hook.SPLICE_ROM_ADDR:#x} -> callnative {hook_sweep:#x}")
 
     # --- Phase 3 character sprites (2026-07-25) ---
     # Additive: this never touches the engine's own trainer-pic table, so

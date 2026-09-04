@@ -11,6 +11,20 @@ All offsets below are **file offsets** into `rom/seaglass v3.0.gba` (pinned to `
 
 Text was located with `tools/search_gametext.py` (Gen3-charmap string search, reusing ROWE's `charmap.txt`) and read with `tools/decode_gametext.py`. The charmap was sanity-checked against a known vanilla species name (`Bulbasaur`, title case) before trusting any hit. Pointer references found with `tools/find_pointer_refs.py` (raw 4-byte-LE pointer scan — GBA code/data reference strings via plain pointers in literal pools and data tables, so this works without needing disassembly).
 
+### Egg-hatch sweep (2026-09-04) — the "RR/Lazarus parity" exemption, revisited
+
+The row below exempting the egg-hatch give cites *"RR/Lazarus parity"*. That was
+parity with a call **Unbound later reversed**, and nothing re-examined the games
+the justification pointed at (`game_plans/rowe_parity.md` §13.16). The hatch is
+now hooked here too: the field-control step handler runs the script at
+`0x0832EEEF` (pointer in the caller's literal pool at `0x08123DFC`), and its
+tail (`0x0832EEF8`: `special EggHatch(0xC5); waitstate; releaseall; end`) is
+overlaid with `goto 0x08FA0000`, an 11-byte replayed tail ending
+`callnative CM_SweepPartyToPCNative`. Checked before hooking: the entry has
+exactly one referent and the six overlaid bytes have zero, via an UNALIGNED u32
+scan. ⚠️ The donor's `day_care.inc` shows this script WITHOUT the waitstate; the
+ROM has it. `docs/GIFT_EGGS.md`, `tools/character_mode/egg_hook.py`.
+
 ## Ghidra setup (2026-07-12)
 
 Reused Unbound's already-installed Ghidra 12.0.2 + `pudii/gba-ghidra-loader` (invoked directly from `Unbound-Character-Mode/tools/ghidra/support/analyzeHeadless` rather than re-downloading/copying the ~847 MB install — Ghidra's headless analyzer takes project/file paths as arguments and doesn't care where its own install lives). Imported with `-noanalysis` (fast — full auto-analysis on a similarly-sized ROM timed out for Unbound without reaching the regions of interest); analysis is entirely on-demand via `tools/ghidra_scripts/InspectRegions.java` (force-disassembles a window around a known address in Thumb mode and identifies/creates the containing function) and `DecompileFunc.java` (runs the decompiler on a function). Ghidra project lives at `ghidra_project/SeaglassCM.gpr` (gitignored).

@@ -15,7 +15,7 @@ and look correct.
                                  not have (a stale inventory)
   4. an operand CHANGED       -- the recorded species no longer matches what
                                  the script gives
-  5. a verdict tampered       -- one site upgraded to GATED while this repo ships no hatch hook
+  5. a verdict tampered       -- the hatch hook path cleared while every verdict still claims GATED
   6. the anchor test broken   -- the decoder now reaches nothing; an empty
                                  result satisfies checks 2, 3 and 4, and only
                                  the anti-vacuity check catches it
@@ -95,7 +95,7 @@ def main():
          1, "still gives what it is recorded as giving")
 
     # 5. a verdict that lies about this repo's enforcement
-    case("5 a verdict tampered -- one site upgraded to GATED while this repo ships no hatch hook", src.replace("'UNGATED'", "'GATED'", 1),
+    case("5 a verdict tampered -- the hatch hook path cleared while every verdict still claims GATED", src.replace("HATCH_HOOK = 'tools/character_mode/egg_hook.py'", "HATCH_HOOK = None", 1),
          1, "GATED verdicts exist exactly when this repo hooks the egg hatch")
 
     # 6. break the anchor test so the decode reaches nothing

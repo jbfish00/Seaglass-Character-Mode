@@ -1,8 +1,25 @@
 # GIFT EGGS — Emerald Seaglass v3.0
 
-**3 `giveegg` sites, all reachable from dialogue, all UNGATED.** Measured
-2026-09-03. Pinned by `tools/tests/check_gift_eggs.py` (5 checks,
-negative-tested 7/7).
+**3 `giveegg` sites, all reachable from dialogue, and as of 2026-09-04 all
+GATED.** Measured 2026-09-03, closed the next day. Pinned by
+`tools/tests/check_gift_eggs.py` (5 checks, negative-tested 7/7); the hook
+itself is pinned by five checks in `verify_artifacts.py` (98), negative-tested
+6/6 by `tools/tests/egg_hook_negative_test.py`.
+
+✅ **THE HOOK IS IN** (`tools/character_mode/egg_hook.py`). The hatch script's
+tail at `0x0832EEF8` is overlaid with a `goto` into an 11-byte replayed tail at `0x08FA0000`
+that ends `callnative CM_SweepPartyToPCNative`, **after** the hatch's
+waitstate — so the sweep sees the hatched Pokemon, not the egg, and the egg
+exemption inside the sweep no longer applies to it. Build `0eb63a8a`.
+
+⚠️⚠️ **THE DONOR SOURCE IS WRONG ABOUT THIS SCRIPT.**
+`tools/pokeemerald_expansion_donor/data/scripts/day_care.inc` has
+`EventScript_EggHatch` as `lockall; msgbox; special EggHatch; releaseall; end`
+— **with no waitstate**. On that shape the sweep would run BEFORE the hatch
+scene, see an egg, and be skipped by its own egg exemption: a silent no-op that
+would still pass a "the callnative is present" check. The ROM was disassembled
+instead of trusted, and it HAS the waitstate. **The donor tree is a guess at
+the fork point, not this binary.**
 
 ⚠️ **This repo's `docs/ROUTINE_MAP.md:215` exempts the egg-hatch give with the
 reason "RR/Lazarus parity".** That is parity with a call **Unbound later
@@ -70,9 +87,9 @@ did not.
   Emerald hot-spring scripts are marked as inherited and their map placement is
   **unverified**.
 
-## The fix, when it is done
+## How the fix was done
 
-Port `Unbound-Character-Mode/tools/character_mode/egg_hook.py`. Unbound's own
+Ported from `Unbound-Character-Mode/tools/character_mode/egg_hook.py`. Unbound's own
 summary calls the hole *"the one enforcement hole reachable in ordinary
 play"*. Its shape: the overworld step handler calls `ShouldEggHatch` and on a
 true result runs a hatch script whose tail is `special <hatch>; waitstate;
@@ -90,6 +107,14 @@ things Unbound checked rather than assumed, and this port must too:
 2. **Enough displaced bytes are available** for a 5-byte `goto`, with the
    displaced commands replayed rather than shortened.
 
-When it lands, flip these verdicts to GATED **and** set `HATCH_HOOK` in
-`tools/tests/check_gift_eggs.py`. The checker's fifth check fails if only one
-of those two happens.
+Both happened together, as the checker requires: the verdicts are GATED **and**
+`HATCH_HOOK` is set in `tools/tests/check_gift_eggs.py`. Its fifth check fails
+if only one of those two is ever true.
+
+⚠️ **Still not covered, and worth saying plainly:** the sweep boxes an
+off-roster hatchling, it does not prevent the egg. That is the deliberate
+design — an egg event must never block progress.
+
+⬜ **Not yet done: a live egg-hatch test.** Every assertion here is static plus
+the existing live layers; nobody has walked this ROM through a hatch in an
+emulator.

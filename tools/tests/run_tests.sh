@@ -57,14 +57,14 @@ grep -q "HARNESS RESULT: PASS" /tmp/sg_gate_off.log && echo "  PASS catch gate O
 
 echo
 echo "=== Layer 4c: real-UI activation e2e (type RED at the CODE screen) ==="
-timeout 120 env CM_EXPECT_CHECKS=8 CM_CODE=RED CM_EXPECT_CHAR=1 "$MGBA" --script tools/mgba_scripts/cm_ui_activate.lua \
+timeout 120 env CM_EXPECT_CHECKS=10 CM_CODE=RED CM_EXPECT_CHAR=1 "$MGBA" --script tools/mgba_scripts/cm_ui_activate.lua \
     -t tools/savestates/naming_open.ss "$ROM" > /tmp/sg_ui_red.log 2>&1 || true
 grep -q "HARNESS RESULT: PASS" /tmp/sg_ui_red.log && echo "  PASS activation (RED -> char 1 + starter)" \
     || { echo "  FAIL activation RED (see /tmp/sg_ui_red.log)"; exit 1; }
 
 echo
 echo "=== Layer 4d: activation discrimination (MISTY -> char 10) ==="
-timeout 120 env CM_EXPECT_CHECKS=8 CM_CODE=MISTY CM_EXPECT_CHAR=10 "$MGBA" --script tools/mgba_scripts/cm_ui_activate.lua \
+timeout 120 env CM_EXPECT_CHECKS=10 CM_CODE=MISTY CM_EXPECT_CHAR=10 "$MGBA" --script tools/mgba_scripts/cm_ui_activate.lua \
     -t tools/savestates/naming_open.ss "$ROM" > /tmp/sg_ui_misty.log 2>&1 || true
 grep -q "HARNESS RESULT: PASS" /tmp/sg_ui_misty.log && echo "  PASS activation (MISTY -> char 10 + starter)" \
     || { echo "  FAIL activation MISTY (see /tmp/sg_ui_misty.log)"; exit 1; }
