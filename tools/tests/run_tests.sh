@@ -121,6 +121,58 @@ trade_case MISTY 1 10 1 2  # Horsea ON  Misty's roster -> allow (discrimination)
 trade_case CTRL  0 1  1 2  # CM off                    -> allow (control)
 
 echo
+# The LIVE egg-hatch e2e (../game_plans/rowe_parity.md §13.21 item 1). The hatch
+# hook shipped 2026-09-04 verified statically (five checks in verify_artifacts,
+# negative-tested 6/6) and by every pre-existing live layer -- but until this
+# layer no hatch had ever been WALKED in an emulator here, so "the hatch calls
+# the sweep" rested entirely on reading bytes.
+#
+# tools/tests/build_egg_testrom.py repoints the mart clipboard at
+#   giveegg 116 ; setvar 0x8004,1 ; goto EventScript_EggHatch
+# and everything from the goto onward is SHIPPED bytes. The egg is built by the
+# ROM's own giveegg rather than synthesised from Lua, precisely because this
+# repo has already been burned trusting the donor tree about this very script.
+#
+# Three positive runs plus a negative control, and the control is the point:
+# with the splice reverted the same run must FAIL, or the layer is only ever
+# testing that the sweep works when something calls it.
+echo "=== Layer 4h: live egg hatch (giveegg 116 -> real hatch -> shipped sweep) ==="
+python3 tools/tests/build_egg_testrom.py 116 1 > /tmp/sg_egg_build.log 2>&1 \
+    || { echo "  FAIL building egg test ROM (see /tmp/sg_egg_build.log)"; exit 1; }
+python3 tools/tests/build_egg_testrom.py 116 1 --no-hook >> /tmp/sg_egg_build.log 2>&1 \
+    || { echo "  FAIL building egg negative-control ROM (see /tmp/sg_egg_build.log)"; exit 1; }
+# CM_SweepPartyToPCNative moves on every shim rebuild; a stale literal here would
+# report "the tail never reached the sweep" on a ROM where it plainly did.
+CM_SWEEP_ADDR=$(arm-none-eabi-nm build/cm.elf \
+    | awk '/ T CM_SweepPartyToPCNative$/{printf "0x%s\n", toupper($1)}')
+[ -n "$CM_SWEEP_ADDR" ] || { echo "  FAIL locating CM_SweepPartyToPCNative in build/cm.elf"; exit 1; }
+export CM_SWEEP_ADDR
+echo "  (sweep @ $CM_SWEEP_ADDR)"
+egg_case() {  # name  CM_ON  CM_CHAR  EXPECT  ROM
+    log=/tmp/sg_egg_$1.log
+    timeout 260 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=5 CM_ON=$2 CM_CHAR=$3 \
+        EXPECT=$4 "$MGBA" --script tools/mgba_scripts/cm_egg_hatch_test.lua \
+        -t tools/savestates/mart_inside.ss "$5" > "$log" 2>&1 || true
+    grep -q "HARNESS RESULT: PASS" "$log" && echo "  PASS egg hatch $1" \
+        || { echo "  FAIL egg hatch $1 (see $log)"; grep -a "HARNESS.*FAIL" "$log"; exit 1; }
+}
+EGGROM=build/seaglass_cm_eggtest.gba
+egg_case RED   1 1  box   "$EGGROM"   # Horsea OFF Red's roster    -> boxed
+egg_case MISTY 1 10 party "$EGGROM"   # Horsea ON  Misty's roster  -> kept
+egg_case CTRL  0 1  party "$EGGROM"   # CM off                     -> kept
+# ⭐ The negative control. No CM_EXPECT_CHECKS: the run must die on the missing
+# sweep, not on a tally mismatch, or a future harness change could keep this
+# "failing" for the wrong reason and the layer would stop discriminating.
+timeout 260 env MGBA_HEADLESS_DEBUGGER=1 CM_ON=1 CM_CHAR=1 EXPECT=box "$MGBA" \
+    --script tools/mgba_scripts/cm_egg_hatch_test.lua \
+    -t tools/savestates/mart_inside.ss build/seaglass_cm_eggtest_nohook.gba \
+    > /tmp/sg_egg_nohook.log 2>&1 || true
+grep -q "HARNESS RESULT: FAIL" /tmp/sg_egg_nohook.log \
+    && grep -q "reached the sweep (timeout)" /tmp/sg_egg_nohook.log \
+    && echo "  PASS egg hatch NEGATIVE CONTROL (hook absent -> layer fails)" \
+    || { echo "  FAIL negative control did not fail, or failed for another reason (see /tmp/sg_egg_nohook.log)"; exit 1; }
+
+echo
 echo "=== Layer 5a: wild-encounter override inert with CM off ==="
 timeout 60 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=3 CM_ON=0 "$MGBA" --script tools/mgba_scripts/cm_wild_test.lua \
     -t tools/savestates/at_8_8.ss "$ROM" > /tmp/sg_wild_off.log 2>&1 || true
@@ -234,5 +286,5 @@ grep -q "HARNESS RESULT: PASS" /tmp/sg_wild_choke.log && echo "  PASS choke poin
     || { echo "  FAIL choke-point proof (see /tmp/sg_wild_choke.log)"; grep -a "HARNESS" /tmp/sg_wild_choke.log; exit 1; }
 
 echo
-echo "ALL AUTOMATED LAYERS GREEN (incl. real-UI activation + in-situ trade e2e + wild override)."
+echo "ALL AUTOMATED LAYERS GREEN (incl. real-UI activation + in-situ trade e2e + wild override + live egg hatch)."
 echo "Remaining human-in-the-loop verify: full playthrough (docs/TESTING.md)."

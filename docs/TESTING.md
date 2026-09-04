@@ -193,7 +193,39 @@ checks ([9c]) pinning the hatch-script overlay at `0x0832EEF8`, the replayed
 tail at `0x08FA0000`, its ORDERING (the sweep after the waitstate) and that its
 native is the same one the activation handler calls;
 `egg_hook_negative_test.py` breaks a COPY of the built ROM in five directions
-with two controls. 🔴 **There is still no LIVE egg-hatch test.**
+with two controls.
+
+✅ **New, 2026-09-04 (later) — THE LIVE EGG-HATCH LAYER EXISTS** (layer 4h;
+`../game_plans/rowe_parity.md` §13.21 item 1, the last open item on the hatch
+hook). `tools/tests/build_egg_testrom.py` repoints the mart clipboard at
+`giveegg 116 ; setvar 0x8004,1 ; goto EventScript_EggHatch`, so everything from
+that `goto` onward is **shipped bytes**: the splice, the replayed
+`special EggHatch`/`waitstate`/`releaseall`, and the `callnative` into the
+sweep. `cm_egg_hatch_test.lua` walks to the clipboard, taps B through the hatch
+scene (**B, not A** — A opens the nickname naming screen and the run wedges),
+and asserts the **swap**: the egg's own personality is in the PC, or still in
+the party.
+
+⭐ **The egg is built by the ROM's own `giveegg`, never synthesised from Lua.**
+Writing an egg into `gPlayerParty` by hand would mean reproducing this engine's
+substruct order, XOR key and checksum out of the donor tree — and the donor is
+**wrong about this exact script** (its `EventScript_EggHatch` has no
+`waitstate`). `giveegg` makes the egg under test the same object a real gift egg
+produces, by construction.
+
+⚠️ **A COUNT IS THE WRONG ASSERTION HERE, and the first version of this layer
+got it wrong.** On the MISTY run the sweep fires and boxes a mon — the
+pre-existing **starter**, off *her* roster — while keeping the Horsea. So the
+party count is 1 in both the enforced and the discriminating run and only
+*which personality moved* separates them. That also makes MISTY a stronger
+control than "mode off": it proves the decision is keyed on the active
+character, not on which mon arrived last.
+
+⭐ **The negative control is the layer's whole value.** `build_egg_testrom.py
+--no-hook` reverts the splice in the test ROM only; the same run must then
+**FAIL**, and the runner greps for the specific failure ("reached the sweep
+(timeout)") rather than merely a non-zero exit — otherwise the layer only ever
+proves the sweep works *when something calls it*, which is not the claim.
 
 ## Test matrix (2026-07-17 — full feature injected; counts superseded above)
 
@@ -207,6 +239,7 @@ Run the automated layers: `sh tools/tests/run_tests.sh`.
 | **1 — GDB shim unit tests** | Not built for Seaglass. Would exercise the shim's branch table (flag off / empty party / on-roster / off-roster→PC / egg exemption / per-char bitmap) in isolation à la Lazarus's `shim_unit_test.py`. The static on-bitmap invariants + live catch gate + the 4c–4f e2e now cover this seam's main paths; optional hardening only. | Not built (optional) |
 | **4c–4f — real-UI activation e2e** (`cm_ui_activate.lua`) | **DONE (2026-07-17 later).** From `naming_open.ss` (CODE naming screen open at the mart clipboard), types a code via 40-frame-spaced cursor taps, commits (START→A), dismisses the dialogue, then **asserts** on flag/char/party/starter-var. Four suite layers: **4c** RED → char 1, and the give/sweep **swap** (see above; this row's original "starter to party" wording is superseded); **4d** MISTY → char 10 (discrimination); **4e** ZZZ → rejected, nothing set; **4f** CMDBGOFF with CM preset → flag+char cleared, starter var = 0xFFFF off-marker. | **GREEN (all 4)** |
 | **4g — in-situ trade gate** (`cm_trade_test.lua` on the test-only ROM) | **DONE (2026-07-17 latest).** From `mart_inside.ss` we navigate to the clipboard and trigger a test-ROM entry script (`lock; setvar 0x8008,idx; goto junction[idx]`) that lands on the **shipped** junction overlay → the shipped per-trade wrapper. Breakpoints CM_TradeCheck's store (`0x08ED25BC`) and reads the decision from r4. Three cases on idx2 (SEASOR, receives Horsea 116): **RED** (off-roster) → 0 refuse + refusal msg renders + party unchanged; **MISTY** (on-roster) → 1 allow (per-character discrimination); **CM off** → 1 allow (control). | **GREEN (all 3)** |
+| **4h — live egg hatch** (`cm_egg_hatch_test.lua` on the egg test-only ROM) | **DONE (2026-09-04).** From `mart_inside.ss`, the clipboard runs `giveegg 116; setvar 0x8004,1; goto EventScript_EggHatch`; everything after the `goto` is shipped. Breakpoints `CM_SweepPartyToPCNative` (address derived from `build/cm.elf`, never hardcoded) to prove the spliced tail was reached, then asserts the egg's personality moved (or did not). Four cases: **RED** (Horsea off-roster) → personality in the PC and gone from the party; **MISTY** (on-roster) → still in the party, not in the PC — while the sweep boxes her off-roster starter instead; **CM off** → kept (control); and a **negative control** on a `--no-hook` ROM that must FAIL on the missing sweep. | **GREEN (all 4)** |
 | **5a/b — wild-encounter override** (`cm_wild_test.lua`, `cm_wild_stage_test.lua`, `tools/tests/verify_wild_override.py`) | **DONE (task #5, wild-mon override).** From `at_8_8.ss`, walks into Route 101 grass; two breakpoints on the wild trampoline (`0x08470208` entry, `0x08470218` post-call) observe the rolled species/level going in and the (possibly overridden) species coming out. **5a**: CM off → trampoline fires (proving the hook is live) but never overrides (inert requirement). **5b** (`verify_wild_override.py`): forces the rolled level to 45 via `emu:writeRegister` and retries across `START_DELAY`s until the 10% gate fires → asserts the resulting species is a real, non-legendary member of the active character's pool with no closer-fitting stage available; separately samples 20 unforced low-level (2–3) rolls, asserting every override observed is a valid pool member and the empirical rate is in a plausible band for p=0.10. Comprehensive **offline** legendary-exclusion + rate-math checks (not emulator-dependent) also passed: `wildpool_manifest.json`'s 4889 entries across all 170 characters contain zero legendary species; an exhaustive sweep of the `wildSeed()` formula over ~346k (species,level,vcount,keys) combinations landed at exactly 10.00%. | **GREEN** |
 | **5c — wild choke-point proof** (`prove_wild_chokepoint.lua`) | **DONE (2026-07-17 latest++).** On the **original unpatched ROM**, walks into a reachable Route 101 land encounter and asserts (across 5 START_DELAY variants offline, 1 in-suite): (1) the BL at `0x0822BF36` genuinely executes on the land path (breakpoint fires), and (2) every `CreateMonWithIVs`-for-the-wild-mon call returns to exactly one address `0x0822BF3B` (the BL's own return) — i.e. no second wild-construction path exists on the reachable route. This upgrades the surf/rock/fishing coverage argument from "static BL-scan says one caller" to "the *same* BL is empirically the sole land-path caller, and the ROM-wide scan finds no other." | **GREEN** |
 
