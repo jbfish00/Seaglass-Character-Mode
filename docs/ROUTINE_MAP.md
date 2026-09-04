@@ -226,7 +226,7 @@ enforcement audit surface (BL-scan; mirrors Lazarus's 3 exactly):
 | Caller | Address | Role | Character-Mode action |
 |---|---|---|---|
 | **battle/catch** | **`0x080A6A46`** | `mon = r5 + slot*100; r0=mon; bl GiveMonToPlayer; cmp r0,#0; beq …` (return 0=party, else PC) | **PRIMARY HOOK** — gate here: if caught species ∉ active character's roster, redirect to PC / block |
-| daycare/egg-hatch | `0x08188514` | egg-hatch give (field 22/38 reads) | exempt (grandfather/egg semantics, RR/Lazarus parity) |
+| daycare/egg-hatch | `0x08188514` | egg-hatch give (field 22/38 reads) | **still exempt at the GIVE** (an egg event must never block progress) — ⚠️ but the old reason *"RR/Lazarus parity"* is WITHDRAWN: it was parity with a call Unbound later reversed. **The HATCH is gated as of 2026-09-04** via `0x0832EEF8` → `0x08FA0000`; see the section at the top of this file |
 | script-gift | `0x081F18DE` | ScriptGiveMon (sets field 52=IS_EGG before give) | gate in-game gift Pokémon |
 
 This closes the highest-value Phase-1 unknown (catch enforcement) and gives the

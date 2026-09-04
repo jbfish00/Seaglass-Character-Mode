@@ -159,7 +159,43 @@ string) rather than looping `emu:read8`. Scanning 256 KB of EWRAM one byte at a
 time crosses the C/Lua marshalling boundary ~200k times and stalls the emulator
 so hard the frame callback never returns.
 
-## Test matrix (2026-07-17 — full feature injected)
+## ⭐ CURRENT COUNTS (2026-09-04) — the per-layer numbers in the matrix are historical
+
+```
+bash    tools/tests/run_tests.sh                    # ALL AUTOMATED LAYERS GREEN
+                                                    #   20 layers, 119 checks
+python3 tools/tests/verify_artifacts.py             # 98 checks (was 24 in the matrix)
+bash    tools/tests/checker_guard_test.sh           # 8/8
+python3 tools/tests/check_gift_eggs.py              # + _negative_test.py 7/7
+python3 tools/tests/egg_hook_negative_test.py       # 6/6
+python3 tools/tests/check_acquisition_paths.py      # + _negative_test.py 7/7
+python3 tools/tests/check_party_writes.py           # + _negative_test.py 6/6
+python3 tools/tests/check_repo_selfcontained.py     # + _negative_test.py 6/6
+python3 tools/character_mode/verify_docs.py         # ALL PASS
+```
+
+⚠️⚠️ **RUN `run_tests.sh`, NOT JUST THE STATIC CHECKERS.** On 2026-09-04
+**layer 4c was found RED**, broken two days earlier by the activation party
+sweep (`fe30a37`) behind a fully green static suite — the row below still
+describes the pre-sweep behaviour ("starter to party"). Nobody had re-run it.
+**After any change to what activation does to the party, the live suite is not
+optional.** `rowe_parity.md` §13.20.
+
+⭐ **What layer 4c asserts now**, and it is stronger than what it replaced: the
+give adds the signature and the sweep boxes the off-roster mon the player
+already had, so the **count is unchanged** — asserting only that would also hold
+if neither happened, so the layer asserts the **swap**: slot 0 holds a different
+Pokemon, and the one that was there is **the exact Pokemon now in the PC**.
+(Measured: personality `5c1c126b` moved from party slot 0 to the first box slot.)
+
+✅ **New, 2026-09-04 — the egg-hatch sweep.** `verify_artifacts.py` gained five
+checks ([9c]) pinning the hatch-script overlay at `0x0832EEF8`, the replayed
+tail at `0x08FA0000`, its ORDERING (the sweep after the waitstate) and that its
+native is the same one the activation handler calls;
+`egg_hook_negative_test.py` breaks a COPY of the built ROM in five directions
+with two controls. 🔴 **There is still no LIVE egg-hatch test.**
+
+## Test matrix (2026-07-17 — full feature injected; counts superseded above)
 
 Run the automated layers: `sh tools/tests/run_tests.sh`.
 
@@ -169,7 +205,7 @@ Run the automated layers: `sh tools/tests/run_tests.sh`.
 | **2 — boot smoke** (`boot_test.lua`) | Patched ROM boots and runs. | **GREEN** |
 | **4a/b — live catch gate** (`cm_catch_test.lua`) | Same wild Zigzagoon, toggling only the CM flag: CM on + char 1 (Red, off-roster) → blocked→PC (party stays 1); CM off → caught to party (control). Per-character discrimination previously verified (char 39 Brendan allows Zigzagoon). | **GREEN** |
 | **1 — GDB shim unit tests** | Not built for Seaglass. Would exercise the shim's branch table (flag off / empty party / on-roster / off-roster→PC / egg exemption / per-char bitmap) in isolation à la Lazarus's `shim_unit_test.py`. The static on-bitmap invariants + live catch gate + the 4c–4f e2e now cover this seam's main paths; optional hardening only. | Not built (optional) |
-| **4c–4f — real-UI activation e2e** (`cm_ui_activate.lua`) | **DONE (2026-07-17 later).** From `naming_open.ss` (CODE naming screen open at the mart clipboard), types a code via 40-frame-spaced cursor taps, commits (START→A), dismisses the dialogue, then **asserts** on flag/char/party/starter-var. Four suite layers: **4c** RED → char 1 + starter to party; **4d** MISTY → char 10 (discrimination); **4e** ZZZ → rejected, nothing set; **4f** CMDBGOFF with CM preset → flag+char cleared, starter var = 0xFFFF off-marker. | **GREEN (all 4)** |
+| **4c–4f — real-UI activation e2e** (`cm_ui_activate.lua`) | **DONE (2026-07-17 later).** From `naming_open.ss` (CODE naming screen open at the mart clipboard), types a code via 40-frame-spaced cursor taps, commits (START→A), dismisses the dialogue, then **asserts** on flag/char/party/starter-var. Four suite layers: **4c** RED → char 1, and the give/sweep **swap** (see above; this row's original "starter to party" wording is superseded); **4d** MISTY → char 10 (discrimination); **4e** ZZZ → rejected, nothing set; **4f** CMDBGOFF with CM preset → flag+char cleared, starter var = 0xFFFF off-marker. | **GREEN (all 4)** |
 | **4g — in-situ trade gate** (`cm_trade_test.lua` on the test-only ROM) | **DONE (2026-07-17 latest).** From `mart_inside.ss` we navigate to the clipboard and trigger a test-ROM entry script (`lock; setvar 0x8008,idx; goto junction[idx]`) that lands on the **shipped** junction overlay → the shipped per-trade wrapper. Breakpoints CM_TradeCheck's store (`0x08ED25BC`) and reads the decision from r4. Three cases on idx2 (SEASOR, receives Horsea 116): **RED** (off-roster) → 0 refuse + refusal msg renders + party unchanged; **MISTY** (on-roster) → 1 allow (per-character discrimination); **CM off** → 1 allow (control). | **GREEN (all 3)** |
 | **5a/b — wild-encounter override** (`cm_wild_test.lua`, `cm_wild_stage_test.lua`, `tools/tests/verify_wild_override.py`) | **DONE (task #5, wild-mon override).** From `at_8_8.ss`, walks into Route 101 grass; two breakpoints on the wild trampoline (`0x08470208` entry, `0x08470218` post-call) observe the rolled species/level going in and the (possibly overridden) species coming out. **5a**: CM off → trampoline fires (proving the hook is live) but never overrides (inert requirement). **5b** (`verify_wild_override.py`): forces the rolled level to 45 via `emu:writeRegister` and retries across `START_DELAY`s until the 10% gate fires → asserts the resulting species is a real, non-legendary member of the active character's pool with no closer-fitting stage available; separately samples 20 unforced low-level (2–3) rolls, asserting every override observed is a valid pool member and the empirical rate is in a plausible band for p=0.10. Comprehensive **offline** legendary-exclusion + rate-math checks (not emulator-dependent) also passed: `wildpool_manifest.json`'s 4889 entries across all 170 characters contain zero legendary species; an exhaustive sweep of the `wildSeed()` formula over ~346k (species,level,vcount,keys) combinations landed at exactly 10.00%. | **GREEN** |
 | **5c — wild choke-point proof** (`prove_wild_chokepoint.lua`) | **DONE (2026-07-17 latest++).** On the **original unpatched ROM**, walks into a reachable Route 101 land encounter and asserts (across 5 START_DELAY variants offline, 1 in-suite): (1) the BL at `0x0822BF36` genuinely executes on the land path (breakpoint fires), and (2) every `CreateMonWithIVs`-for-the-wild-mon call returns to exactly one address `0x0822BF3B` (the BL's own return) — i.e. no second wild-construction path exists on the reachable route. This upgrades the surf/rock/fishing coverage argument from "static BL-scan says one caller" to "the *same* BL is empirically the sole land-path caller, and the ROM-wide scan finds no other." | **GREEN** |
