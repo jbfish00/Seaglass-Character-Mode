@@ -16,7 +16,16 @@ and look correct.
      EXPECT_CALLEES               unexamined primitive must fail check 3
   5. every GATED downgraded    -- an inventory with no enforcement copy at all
                                   still satisfies 2, 3 and 4; check 4 catches it
-  6. control again
+  6. an EXEMPT row promoted    -- a KNOWN hole appearing that nobody decided
+     to UNGATED                   to accept must not pass silently
+  7. EXPECT_UNGATED changed    -- and neither must a known hole being quietly
+                                  downgraded, or the pin drifting off it
+  8. control again
+
+⭐ 6 and 7 exist because UNGATED arrived on 2026-09-04 with the PC-withdraw
+finding, and a verdict nothing can fail on is decoration. They are deliberately
+a PAIR: 6 catches a new hole appearing, 7 catches an existing one being written
+out of the file.
 
 Every tamper must both CHANGE something and PARSE: a SyntaxError also exits 1
 and would read exactly like the checker catching the tamper. This workspace has
@@ -99,6 +108,20 @@ def main():
 
         case("an inventory with no GATED copy fails", 1,
              src.replace('("GATED",', '("UNVERIFIED",'))
+
+        # Promote the FIRST EXEMPT row: the inventory now claims a hole the
+        # pinned set does not list.
+        case("an EXEMPT row promoted to UNGATED fails", 1,
+             src.replace('("EXEMPT",', '("UNGATED",', 1))
+
+        mu = re.search(r"EXPECT_UNGATED = frozenset\((?:\{[^}]*\})?\)", src)
+        if not mu:
+            print("  FAIL  could not find EXPECT_UNGATED to tamper")
+            fails.append("tamper 7")
+        else:
+            case("a drifted EXPECT_UNGATED pin fails", 1,
+                 src[:mu.start()] + "EXPECT_UNGATED = frozenset({0x00000001})"
+                 + src[mu.end():])
 
         case("control: the real inventory still passes", 0)
     finally:

@@ -165,6 +165,19 @@ def main():
             out.append("### `%#010x` (file `%#010x`) -- **%s**\n"
                        % (0x08000000 + off, off, verdict))
             out.append(why + "\n")
+        removed = getattr(pw, "REMOVED_BY_PRIMITIVE_FIX", {})
+        if removed:
+            out.append("## %d site(s) removed as NOT-A-COPY (2026-09-04)\n"
+                       % len(removed))
+            out.append(
+                "The primitive fix of 2026-09-04 stopped reporting these. They "
+                "are listed so the site-count change is **explained rather than "
+                "silently absorbed** -- an inventory that quietly shrinks looks "
+                "exactly like one that is finally clean.\n")
+            for off, why in sorted(removed.items()):
+                out.append("### `%#010x` (file `%#010x`) -- **NOT-A-COPY**\n"
+                           % (0x08000000 + off, off))
+                out.append(why + "\n")
     out.append(FOOTER)
     path = os.path.join(ROOT, "docs", "PARTY_COUNT_WRITERS.md")
     with open(path, "w") as f:

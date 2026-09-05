@@ -143,23 +143,7 @@ has two halves: **a routine that writes a mon into the party without touching
 the count is invisible to the count inventory**, whether it is benign or not.
 Read the two together; neither is sufficient alone.
 
-## 7 inventoried copy site(s)
-
-### `0x080acf5a` (file `0x000acf5a`) -- **UNVERIFIED**
-
-mon-sized copy into a party slot inside the 0x080ACF5A region (callee 0x081A94A0); containing routine not yet identified. It reaches the party through a known copy primitive, so it cannot be introducing a species by an unknown mechanism -- but WHAT it copies is unexamined. ⭐ RECONCILED 2026-09-02: NO party-count writer shares this routine, so check_acquisition_paths.py is structurally blind to it. That is not by itself alarming -- a swap or a reorder changes no count either -- but it is exactly the class this second inventory exists to see, and it is why the two must be read together
-
-### `0x080b9c76` (file `0x000b9c76`) -- **UNVERIFIED**
-
-mon-sized copy into a party slot inside the 0x080B9C76 region (callee 0x081A94A0); containing routine not yet identified. It reaches the party through a known copy primitive, so it cannot be introducing a species by an unknown mechanism -- but WHAT it copies is unexamined. ⭐ RECONCILED 2026-09-02: NO party-count writer shares this routine, so check_acquisition_paths.py is structurally blind to it. That is not by itself alarming -- a swap or a reorder changes no count either -- but it is exactly the class this second inventory exists to see, and it is why the two must be read together
-
-### `0x0818a8e4` (file `0x0018a8e4`) -- **UNVERIFIED**
-
-mon-sized copy into a party slot inside the 0x0818A8E4 region (callee 0x08368EF0 (memcpy)); containing routine not yet identified. It reaches the party through a known copy primitive, so it cannot be introducing a species by an unknown mechanism -- but WHAT it copies is unexamined. ⭐ RECONCILED 2026-09-02: NO party-count writer shares this routine, so check_acquisition_paths.py is structurally blind to it. That is not by itself alarming -- a swap or a reorder changes no count either -- but it is exactly the class this second inventory exists to see, and it is why the two must be read together
-
-### `0x081c32d8` (file `0x001c32d8`) -- **UNVERIFIED**
-
-mon-sized copy into a party slot inside the 0x081C32D8 region (callee 0x08368EF0 (memcpy)); containing routine not yet identified. It reaches the party through a known copy primitive, so it cannot be introducing a species by an unknown mechanism -- but WHAT it copies is unexamined. ⭐ RECONCILED 2026-09-02: NO party-count writer shares this routine, so check_acquisition_paths.py is structurally blind to it. That is not by itself alarming -- a swap or a reorder changes no count either -- but it is exactly the class this second inventory exists to see, and it is why the two must be read together
+## 5 inventoried copy site(s)
 
 ### `0x081aa5d4` (file `0x001aa5d4`) -- **GATED**
 
@@ -172,6 +156,26 @@ inside the script give CORE 0x081F1D64 -- the bypass docs/ROUTINE_MAP.md:149 doc
 ### `0x08144efa` (file `0x00144efa`) -- **EXEMPT**
 
 the twin of Lazarus 0x001542B6: inside the routine that saves and restores gPlayerPartyCount around a subsystem call (docs/PARTY_COUNT_WRITERS.md entry 0x00144f0e). A party save/restore
+
+### `0x0818a8e4` (file `0x0018a8e4`) -- **EXEMPT**
+
+PARTY REORDER (the party-menu 'switch order' apply step). 0x0818A8CC allocates 600 bytes, memcpy's the whole party into it, then walks a 6-entry NIBBLE order array at 0x02019648 and memcpy's each saved mon back into gPlayerParty[order[i]], and finally frees the buffer. A permutation: every mon written was in the party a moment earlier
+
+### `0x081c32d8` (file `0x001c32d8`) -- **EXEMPT**
+
+CompactPartySlots. 0x081C32C4 walks the 6 slots calling GetMonData(mon, 18 /* species */); on a non-empty slot it memcpy's that mon down to the first free index when the two differ, fixes up the stored cursor index when it points at the mon that moved, and zeroes the tail. Closes holes in the array; introduces nothing
+
+## 2 site(s) removed as NOT-A-COPY (2026-09-04)
+
+The primitive fix of 2026-09-04 stopped reporting these. They are listed so the site-count change is **explained rather than silently absorbed** -- an inventory that quietly shrinks looks exactly like one that is finally clean.
+
+### `0x080acf5a` (file `0x000acf5a`) -- **NOT-A-COPY**
+
+GetMonData(&gPlayerParty[i], 102, NULL) at 0x080ACF5A -- a READ. r2 still held 100 from the `movs r2,#100 ; muls r2,r1` party-slot stride multiply, and the old rule took any call with r2 == the mon size for a copy. The result is used as a u16 index two instructions later. Its Lazarus twin is 0x080ADD76
+
+### `0x080b9c76` (file `0x000b9c76`) -- **NOT-A-COPY**
+
+GetMonData(&gPlayerParty[i], 18, NULL) at 0x080B9C76 -- the same shape, same stale stride constant
 
 
 ## Method, so it can be repeated
