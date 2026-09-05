@@ -397,10 +397,12 @@ def main():
              sorted("%#010x" % (0x08000000 + o) for o in ungated)))
 
     unver = sorted(o for o in INVENTORY if INVENTORY[o][0] == "UNVERIFIED")
-    print("\n  verdicts: %d GATED, %d EXEMPT, %d UNGATED, %d UNVERIFIED"
+    print("\n  verdicts: %d GATED, %d EXEMPT, %d UNGATED, %d NOT-A-COPY, "
+          "%d UNVERIFIED"
           % (sum(1 for v in INVENTORY.values() if v[0] == "GATED"),
              sum(1 for v in INVENTORY.values() if v[0] == "EXEMPT"),
              sum(1 for v in INVENTORY.values() if v[0] == "UNGATED"),
+             sum(1 for v in INVENTORY.values() if v[0] == "NOT-A-COPY"),
              len(unver)))
     for o in sorted(o for o in INVENTORY if INVENTORY[o][0] == "UNGATED"):
         print("  \U0001f534 UNGATED %#010x -- a KNOWN hole, not a clean site"
