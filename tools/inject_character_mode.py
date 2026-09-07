@@ -179,6 +179,13 @@ GIVEMON_ADDR  = 0x081AA5AC
 # tools/character_mode/egg_hook.py carries the RE and the byte grammar.
 EGG_TAIL_ADDR = 0x8fa0000
 
+# --- PC-exit sweep (../game_plans/rowe_parity.md §13.24/§13.26c) ---
+# Two 14-byte replayed tails, 0x20 apart, one per PC access script (they differ
+# only in where their goto rejoins). Same verified free run as the egg tail --
+# splice()'s 0xFF precondition is what actually proves it clear.
+# tools/character_mode/pc_hook.py has the RE.
+PC_TAIL_ADDR = 0x8fa1000
+
 GIVE_NATIVE   = 0x081F2175         # callnative give fn (49 inline script ptrs)
 GIVE_NATIVE_COUNT = 49
 
@@ -645,6 +652,36 @@ def main():
         data[_eoff:_eoff + len(_erepl)] = _erepl
     print(f"egg-hatch sweep: tail {len(egg_tail)} B @ {EGG_TAIL_ADDR:#x}, "
           f"splice @ {egg_hook.SPLICE_ROM_ADDR:#x} -> callnative {hook_sweep:#x}")
+
+    # --- PC-exit sweep ---
+    # Enforcement routes off-roster mons INTO the PC and, until 2026-09-07,
+    # nothing re-enforced the roster afterwards -- so a mon the catch gate had
+    # just boxed could be withdrawn straight back and kept, no exploit required
+    # (rowe_parity.md §13.24). The PC is opened from a SCRIPT whose special
+    # carries a waitstate, exactly like the egg hatch, so this is the same
+    # splice pointed at a different tail: the sweep runs AFTER the waitstate,
+    # once the storage UI has closed and the party is whatever the player left.
+    # ⚠️ ROWE's Cb2_ExitPSS semantics -- UNDO ON EXIT, not prevention -- and it
+    # deliberately does NOT reproduce ROWE's IsRemovingLastAllowedPartyMon.
+    # See pc_hook.py's docstring.
+    import pc_hook
+    for _sr, _sf, _so, _txtoff in pc_hook.SITES:
+        _t = struct.unpack_from("<I", data, _txtoff)[0]
+        assert _t == pc_hook.PC_TEXT_PTR, (
+            f"PC script @{_sr:#x} shows message {_t:#x}, expected "
+            f"{pc_hook.PC_TEXT_PTR:#x} -- the PC access script has moved")
+    pc_blobs, pc_patches = pc_hook.build(PC_TAIL_ADDR, hook_sweep)
+    for _addr, _blob in pc_blobs:
+        splice(_addr, _blob, "PC-exit tail")
+    for _poff, _porig, _prepl in pc_patches:
+        _pseg = bytes(data[_poff:_poff + len(_porig)])
+        assert _pseg == _porig, (
+            f"PC splice site {_poff + 0x08000000:#x} holds {_pseg.hex()}, "
+            f"expected {_porig.hex()} -- wrong ROM, or already patched")
+        data[_poff:_poff + len(_prepl)] = _prepl
+    print(f"PC-exit sweep: {len(pc_blobs)} tails @ {PC_TAIL_ADDR:#x}, "
+          f"splices @ {', '.join(f'{s[0]:#x}' for s in pc_hook.SITES)} "
+          f"-> callnative {hook_sweep:#x}")
 
     # --- Phase 3 character sprites (2026-07-25) ---
     # Additive: this never touches the engine's own trainer-pic table, so

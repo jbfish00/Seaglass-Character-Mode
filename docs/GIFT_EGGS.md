@@ -3,14 +3,14 @@
 **3 `giveegg` sites, all reachable from dialogue, and as of 2026-09-04 all
 GATED.** Measured 2026-09-03, closed the next day. Pinned by
 `tools/tests/check_gift_eggs.py` (5 checks, negative-tested 7/7); the hook
-itself is pinned by five checks in `verify_artifacts.py` (98), negative-tested
+itself is pinned by five checks in `verify_artifacts.py` (now 108), negative-tested
 6/6 by `tools/tests/egg_hook_negative_test.py`.
 
 ✅ **THE HOOK IS IN** (`tools/character_mode/egg_hook.py`). The hatch script's
 tail at `0x0832EEF8` is overlaid with a `goto` into an 11-byte replayed tail at `0x08FA0000`
 that ends `callnative CM_SweepPartyToPCNative`, **after** the hatch's
 waitstate — so the sweep sees the hatched Pokemon, not the egg, and the egg
-exemption inside the sweep no longer applies to it. Build `0eb63a8a`.
+exemption inside the sweep no longer applies to it. Build `b41910d3`.
 
 ⚠️⚠️ **THE DONOR SOURCE IS WRONG ABOUT THIS SCRIPT.**
 `tools/pokeemerald_expansion_donor/data/scripts/day_care.inc` has

@@ -179,10 +179,13 @@ _p = _f = 0
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                 "..", "character_mode"))
 import egg_hook  # noqa: E402
+import pc_hook  # noqa: E402
 
 EGG_TAIL_ADDR = 0x08FA0000
+PC_TAIL_ADDR = 0x08FA1000
+PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 98   # +5: the egg-hatch sweep (2026-09-03)
+EXPECT_CHECKS = 108  # +10: the PC-exit sweep, 5 checks x 2 sites (2026-09-07)
 def ok(cond, msg):
     global _p, _f
     if cond:
@@ -288,7 +291,13 @@ def main():
                # egg-hatch sweep: the 11-byte replayed tail, and the 6-byte
                # overlay on the hatch script that jumps to it
                (EGG_TAIL_ADDR & 0x01FFFFFF, 11),
-               (egg_hook.SPLICE_FILE_OFF, len(egg_hook.SPLICE_ORIG))]
+               (egg_hook.SPLICE_FILE_OFF, len(egg_hook.SPLICE_ORIG)),
+               # PC-exit sweep: two 14-byte replayed tails and two 9-byte
+               # overlays, one per PC access script.
+               (PC_TAIL_ADDR & 0x01FFFFFF,
+                PC_TAIL_SPACING + pc_hook.TAIL_LEN),
+               (pc_hook.SITES[0][1], len(pc_hook.SITES[0][2])),
+               (pc_hook.SITES[1][1], len(pc_hook.SITES[1][2]))]
     give_sites = [i for i in range(len(orig))
                   if orig[i - 1] == 0x23 and orig[i:i + 4] == struct.pack("<I", GIVE_NATIVE)]
     windows += [(s, 4) for s in give_sites]
@@ -475,6 +484,49 @@ def main():
     ok(struct.unpack_from("<I", patched, egg_hook.CALLER_POOL_OFF)[0]
        == egg_hook.SCRIPT_ENTRY,
        "the field-control hatch caller still points at the hooked script")
+
+    print("[9d] PC-exit sweep -- the withdraw-path hole")
+    # ../game_plans/rowe_parity.md §13.24/§13.26c. Same shape as the egg hook,
+    # pinned the same way, in BOTH directions, and for BOTH PC access scripts --
+    # checking only one would leave the other free to be unhooked or to point at
+    # the wrong tail.
+    for _i, (_pr, _pf, _porig, _ptxt) in enumerate(pc_hook.SITES):
+        _pn = len(_porig)
+        ok(bytes(orig[_pf:_pf + _pn]) == _porig,
+           f"[PC{_i}] base ROM still holds the stock PC script tail "
+           f"({bytes(orig[_pf:_pf + _pn]).hex()})")
+        _pspl = bytes(patched[_pf:_pf + _pn])
+        _want_tail = PC_TAIL_ADDR + _i * PC_TAIL_SPACING
+        ok(_pspl[0] == 0x05
+           and struct.unpack_from("<I", _pspl, 1)[0] == _want_tail,
+           f"[PC{_i}] PC script tail overlaid with `goto <PC tail>` "
+           f"({_pspl.hex()})")
+        _pto = _want_tail & 0x01FFFFFF
+        _pt = bytes(patched[_pto:_pto + pc_hook.TAIL_LEN])
+        # ORDERING IS LOAD-BEARING: the sweep must run AFTER the waitstate.
+        # Before it the storage UI has not opened, so the sweep would see the
+        # party the player walked IN with -- a silent no-op that still passes
+        # any "the callnative is present" check.
+        # ⭐ And the goto must rejoin THIS site's own caller: a tail that
+        # rejoined the other one would look perfectly well-formed and would
+        # send the player to the wrong PC menu on exit.
+        ok(_pt[0] == 0x25
+           and struct.unpack_from("<H", _pt, 1)[0] == pc_hook.SPECIAL_PC
+           and _pt[3] == 0x27                                 # waitstate
+           and _pt[4] == pc_hook.OPCODE_CALLNATIVE
+           and _pt[9] == 0x05                                 # goto
+           and struct.unpack_from("<I", _pt, 10)[0]
+               == struct.unpack_from("<I", _porig, 5)[0],
+           f"[PC{_i}] PC tail replays special/waitstate, then callnative, then "
+           f"a goto back into its OWN caller ({_pt.hex()})")
+        ok(struct.unpack_from("<I", _pt, 5)[0] == sweep
+           and _pt.index(b"\x27") < 4,
+           f"[PC{_i}] the PC tail's native IS the activation sweep, and runs "
+           f"after the PC's waitstate "
+           f"(tail {struct.unpack_from('<I', _pt, 5)[0]:#x}, sweep {sweep:#x})")
+        ok(struct.unpack_from("<I", patched, _ptxt)[0] == pc_hook.PC_TEXT_PTR,
+           f"[PC{_i}] the hooked script is still the PC access script "
+           f"({struct.unpack_from('<I', patched, _ptxt)[0]:#x})")
 
     print("[10] trade junctions + wrappers")
     tj_ok = True

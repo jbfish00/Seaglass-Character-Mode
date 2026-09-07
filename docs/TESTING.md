@@ -159,19 +159,26 @@ string) rather than looping `emu:read8`. Scanning 256 KB of EWRAM one byte at a
 time crosses the C/Lua marshalling boundary ~200k times and stalls the emulator
 so hard the frame callback never returns.
 
-## ⭐ CURRENT COUNTS (2026-09-04) — the per-layer numbers in the matrix are historical
+## ⭐ CURRENT COUNTS (2026-09-07) — the per-layer numbers in the matrix are historical
+
+⚠️ **Two figures in the previous version of this block were stale and one was
+simply wrong.** `run_tests.sh` defines **21** `=== Layer` sections, not 20 or
+the 24 that `../../game_plans/rowe_parity.md` recorded; none is skipped. Counted,
+not remembered — the runner is the authority.
 
 ```
 bash    tools/tests/run_tests.sh                    # ALL AUTOMATED LAYERS GREEN
-                                                    #   20 layers, 119 checks
-python3 tools/tests/verify_artifacts.py             # 98 checks (was 24 in the matrix)
+                                                    #   21 layers, 133 checks
+                                                    #   (108 of them Layer 3's)
+python3 tools/tests/verify_artifacts.py             # 108 checks (was 24 in the matrix)
 bash    tools/tests/checker_guard_test.sh           # 8/8
 python3 tools/tests/check_gift_eggs.py              # + _negative_test.py 7/7
 python3 tools/tests/egg_hook_negative_test.py       # 6/6
+python3 tools/tests/pc_hook_negative_test.py        # 7/7
 python3 tools/tests/check_acquisition_paths.py      # + _negative_test.py 7/7
-python3 tools/tests/check_party_writes.py           # + _negative_test.py 6/6
+python3 tools/tests/check_party_writes.py           # + _negative_test.py 8/8
 python3 tools/tests/check_repo_selfcontained.py     # + _negative_test.py 6/6
-python3 tools/character_mode/verify_docs.py         # ALL PASS
+python3 tools/character_mode/verify_docs.py         # ALL PASS (1792 doc rows)
 ```
 
 ⚠️⚠️ **RUN `run_tests.sh`, NOT JUST THE STATIC CHECKERS.** On 2026-09-04
@@ -187,6 +194,21 @@ already had, so the **count is unchanged** — asserting only that would also ho
 if neither happened, so the layer asserts the **swap**: slot 0 holds a different
 Pokemon, and the one that was there is **the exact Pokemon now in the PC**.
 (Measured: personality `5c1c126b` moved from party slot 0 to the first box slot.)
+
+✅ **New, 2026-09-07 — the PC-exit sweep ([9d]).** Ten checks, five per PC
+access script, pinning both overlays (`0x0830E1E1`, `0x0830E22B`), both replayed
+tails (`0x08FA1000`, `0x08FA1020`), their ORDERING (the sweep AFTER the
+waitstate — run before it and the sweep sees the party the player walked IN
+with, a silent no-op that still passes any "the callnative is present" test),
+that each tail's native is the same one the activation handler calls, and that
+each tail's `goto` rejoins **its own** caller. `pc_hook_negative_test.py` breaks
+a COPY of the built ROM six ways with two controls, **7/7**.
+⭐ **The case the egg version could not have: the CROSS-WIRE** — site 0's tail
+pointed at site 1's return address. The tail stays perfectly well-formed and
+every check except the rejoin passes, while the player would be sent to the
+wrong PC menu on exit. **Any multi-site splice needs this tamper.**
+🔴 **Static-only: there is no live layer for this hook yet** (the egg hook has
+layer 4h). `../../game_plans/rowe_parity.md` §13.29 item 4.
 
 ✅ **New, 2026-09-04 — the egg-hatch sweep.** `verify_artifacts.py` gained five
 checks ([9c]) pinning the hatch-script overlay at `0x0832EEF8`, the replayed
