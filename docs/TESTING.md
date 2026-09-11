@@ -161,14 +161,13 @@ so hard the frame callback never returns.
 
 ## ⭐ CURRENT COUNTS (2026-09-07) — the per-layer numbers in the matrix are historical
 
-⚠️ **Two figures in the previous version of this block were stale and one was
-simply wrong.** `run_tests.sh` defines **21** `=== Layer` sections, not 20 or
-the 24 that `../../game_plans/rowe_parity.md` recorded; none is skipped. Counted,
-not remembered — the runner is the authority.
+⚠️ **Count these, never remember them.** `run_tests.sh` defines **22** `=== Layer`
+sections as of 2026-09-10 (21 before layer 4i), none skipped — not the 20 this
+block used to claim nor the 24 `../../game_plans/rowe_parity.md` carried.
 
 ```
 bash    tools/tests/run_tests.sh                    # ALL AUTOMATED LAYERS GREEN
-                                                    #   21 layers, 133 checks
+                                                    #   22 layers, 137 checks
                                                     #   (108 of them Layer 3's)
 python3 tools/tests/verify_artifacts.py             # 108 checks (was 24 in the matrix)
 bash    tools/tests/checker_guard_test.sh           # 8/8
@@ -194,6 +193,38 @@ already had, so the **count is unchanged** — asserting only that would also ho
 if neither happened, so the layer asserts the **swap**: slot 0 holds a different
 Pokemon, and the one that was there is **the exact Pokemon now in the PC**.
 (Measured: personality `5c1c126b` moved from party slot 0 to the first box slot.)
+
+✅✅ **New, 2026-09-10 — THE LIVE PC-EXIT LAYER (4i), the first in ANY port.**
+`../../game_plans/rowe_parity.md` §13.31 item 2. The PC-exit hook shipped in all
+four games on static evidence alone; this opens the real storage system in a
+real emulator, closes it, and watches the shipped sweep run.
+`tools/tests/build_pc_testrom.py` repoints the mart clipboard at
+`giveegg 116 ; goto 0x0830E1E1`, so every byte after the `goto` is shipped.
+Four runs: **MISTY** (Torchic off her roster → the starter's personality ends up
+in the PC), **BRENDAN** (Torchic on his → kept), **CM off** (control), and a
+`--no-hook` **negative control that must FAIL**.
+
+⚠️⚠️ **THE EGG IS LOAD-BEARING, AND WITHOUT IT THE LAYER PROVES NOTHING.** The
+savestate party holds exactly one mon and `CM_SweepPartyToPCNative` never empties
+the party, so with a one-mon party the starter survives for EVERY character and
+all four runs are identical. The egg is exempt AND sets `kept`, which puts the
+starter's fate back on the roster. Same shape as Radical Red's egg layer needing
+a second, unhatched egg as an anchor.
+
+⚠️⚠️ **AND THE CONTROL CHARACTER WAS INFERRED WRONG FIRST.** Layer 4h's RED run
+keeps the starter and its MISTY run boxes it, so RED looked like "Torchic is on
+Red's roster". It is not: **Torchic is off BOTH**, and 4h's difference is the
+never-empty rule, not a roster decision. Measured against the shipped bitmaps,
+exactly **8** characters allow Torchic and **BRENDAN (39)** is the offered one.
+**A behaviour difference is not evidence of the mechanism you assume produced it.**
+
+⭐ **It also asserts the UI was really on screen**, not just that the script ran
+through: a no-op `special` would release its `waitstate` within a frame or two
+and the sweep would still fire — green, while never involving a PC. Measured:
+the box view is up for **150 frames**, and a probe run that never presses B
+leaves it open indefinitely. The layer requires ≥60 and saves a screenshot of
+the open box as durable evidence. ⚠️ Tap **B**, never A: A dives into a box and
+the run wedges with no route out.
 
 ✅ **New, 2026-09-07 — the PC-exit sweep ([9d]).** Ten checks, five per PC
 access script, pinning both overlays (`0x0830E1E1`, `0x0830E22B`), both replayed

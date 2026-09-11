@@ -173,6 +173,55 @@ grep -q "HARNESS RESULT: FAIL" /tmp/sg_egg_nohook.log \
     || { echo "  FAIL negative control did not fail, or failed for another reason (see /tmp/sg_egg_nohook.log)"; exit 1; }
 
 echo
+# The LIVE PC-exit e2e (../game_plans/rowe_parity.md §13.31 item 2). The PC-exit
+# hook shipped in four games on STATIC evidence alone -- no port had ever closed
+# a PC in an emulator and watched the sweep run. §13.20 is why that matters:
+# four live layers in three repos were found dead behind a green static suite.
+#
+# tools/tests/build_pc_testrom.py repoints the mart clipboard at
+#   giveegg 116 ; goto 0x0830E1E1
+# and everything from the goto onward is SHIPPED bytes: the overlay, the
+# replayed special 0x3F + waitstate that opens the storage system, and the
+# callnative into the sweep that runs when it closes.
+#
+# ⚠️ THE EGG IS LOAD-BEARING. The savestate party holds ONE mon and the sweep
+# never empties the party, so without a second party member the starter survives
+# for EVERY character and all four runs are identical. The egg is exempt AND
+# counts as a keeper, which is what puts the starter's fate back on the roster.
+#
+# ⚠️ AND THE CHARACTERS WERE MEASURED, NOT INFERRED FROM LAYER 4h. The starter
+# (Torchic) is off BOTH Red's and Misty's rosters -- 4h's "RED keeps it" is the
+# never-empty rule, not a roster decision. Exactly 8 characters allow Torchic
+# here; BRENDAN (39) is the offered one used as the discriminating control.
+echo "=== Layer 4i: live PC exit (open the real PC -> close it -> shipped sweep) ==="
+python3 tools/tests/build_pc_testrom.py 116 > /tmp/sg_pc_build.log 2>&1 \
+    || { echo "  FAIL building PC test ROM (see /tmp/sg_pc_build.log)"; exit 1; }
+python3 tools/tests/build_pc_testrom.py 116 --no-hook >> /tmp/sg_pc_build.log 2>&1 \
+    || { echo "  FAIL building PC negative-control ROM (see /tmp/sg_pc_build.log)"; exit 1; }
+pc_case() {  # name  CM_ON  CM_CHAR  EXPECT
+    log=/tmp/sg_pc_$1.log
+    timeout 300 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=6 CM_ON=$2 CM_CHAR=$3 \
+        EXPECT=$4 "$MGBA" --script tools/mgba_scripts/cm_pc_exit_test.lua \
+        -t tools/savestates/mart_inside.ss build/seaglass_cm_pctest.gba > "$log" 2>&1 || true
+    grep -q "HARNESS RESULT: PASS" "$log" && echo "  PASS PC exit $1" \
+        || { echo "  FAIL PC exit $1 (see $log)"; grep -a "HARNESS.*FAIL" "$log"; exit 1; }
+}
+pc_case MISTY   1 10 box     # Torchic OFF Misty's roster   -> boxed on PC exit
+pc_case BRENDAN 1 39 party   # Torchic ON  Brendan's roster -> kept (discrimination)
+pc_case CTRL    0 1  party   # CM off                       -> kept (control)
+# ⭐ The negative control. No CM_EXPECT_CHECKS: the run must die on the missing
+# sweep, not on a tally mismatch, or a future harness change could keep this
+# "failing" for the wrong reason and the layer would stop discriminating.
+timeout 400 env MGBA_HEADLESS_DEBUGGER=1 CM_ON=1 CM_CHAR=10 EXPECT=box "$MGBA" \
+    --script tools/mgba_scripts/cm_pc_exit_test.lua \
+    -t tools/savestates/mart_inside.ss build/seaglass_cm_pctest_nohook.gba \
+    > /tmp/sg_pc_nohook.log 2>&1 || true
+grep -q "HARNESS RESULT: FAIL" /tmp/sg_pc_nohook.log \
+    && grep -q "reached the shipped sweep (timeout)" /tmp/sg_pc_nohook.log \
+    && echo "  PASS PC exit NEGATIVE CONTROL (hook absent -> layer fails)" \
+    || { echo "  FAIL negative control did not fail, or failed for another reason (see /tmp/sg_pc_nohook.log)"; exit 1; }
+
+echo
 echo "=== Layer 5a: wild-encounter override inert with CM off ==="
 timeout 60 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=3 CM_ON=0 "$MGBA" --script tools/mgba_scripts/cm_wild_test.lua \
     -t tools/savestates/at_8_8.ss "$ROM" > /tmp/sg_wild_off.log 2>&1 || true
@@ -286,5 +335,5 @@ grep -q "HARNESS RESULT: PASS" /tmp/sg_wild_choke.log && echo "  PASS choke poin
     || { echo "  FAIL choke-point proof (see /tmp/sg_wild_choke.log)"; grep -a "HARNESS" /tmp/sg_wild_choke.log; exit 1; }
 
 echo
-echo "ALL AUTOMATED LAYERS GREEN (incl. real-UI activation + in-situ trade e2e + wild override + live egg hatch)."
+echo "ALL AUTOMATED LAYERS GREEN (incl. real-UI activation + in-situ trade e2e + wild override + live egg hatch + live PC exit)."
 echo "Remaining human-in-the-loop verify: full playthrough (docs/TESTING.md)."
