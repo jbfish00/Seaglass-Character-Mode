@@ -66,9 +66,13 @@ WAITSTATE = 0x27
 ITEM_TABLE = (0x0867e77c, 84)
 SPECIES_TABLE = (0x088f07ac, 208)
 # (id, name) pairs read out of those two tables when this file was written.
+# ⚠️ At least one probe is deliberately FAR from the base: a wrong STRIDE is
+# invisible at id 1 and shows up only at a high index. That is not
+# hypothetical -- an early version of this work carried a sibling's stride for
+# Seaglass, read ids 1-4 correctly, and decoded item 51 as mojibake.
 # Species id 386 is pinned in the FireRed pair on purpose: it is Volbeat, not
 # the national-dex 386, which is the trap `CHARACTER_ROSTER_PLAN.md` records.
-ITEM_PROBES = ((1, 'Pokひ Ball'),)
+ITEM_PROBES = ((1, 'Pokひ Ball'), (51, 'Elixir'))
 SPECIES_PROBES = ((386, 'Deoxys'), (1, 'Bulbasaur'))
 
 # Every ChoosePartyMon call site in the ROM. A site being here is not a claim
@@ -101,16 +105,62 @@ SITES = (
 #                       is NOT established here -- so this verdict bounds the
 #                       cost, it does not prove it is zero
 GATES = {
+ 0x0829cfc7: (
+  'in-game trade (BAGON)',
+  (),
+  (),
+  'NOT_A_GATE',
+  'no give-item in its window'),
+ 0x082a2e52: (
+  'Name Rater -- compares SPECIES_EGG (1524)',
+  (),
+  (),
+  'NOT_A_GATE',
+  'no give-item in its window'),
+ 0x082b01c1: (
+  'in-game trade (VOLBEAT/PLUSLE)',
+  (),
+  (),
+  'NOT_A_GATE',
+  'no give-item in its window'),
+ 0x082c23a8: (
+  'big SEEDOT judge -- Elixir',
+  (),
+  ((0x082c2408, 51, 1),),
+  'UNIQUE',
+  'rewards seen in the window between this site and the next call site:'
+  ' Elixir x1'),
+ 0x082c2439: (
+  'big LOTAD judge -- Elixir',
+  (),
+  ((0x082c2499, 51, 1),),
+  'UNIQUE',
+  'rewards seen in the window between this site and the next call site:'
+  ' Elixir x1'),
+ 0x082fa9e3: (
+  'IV judge -- its compares are IV TOTALS (120/150/151)',
+  (),
+  (),
+  'NOT_A_GATE',
+  'no give-item in its window'),
+ 0x0830082c: (
+  'the egg kid -- compares SPECIES_EGG (1524)',
+  (),
+  (),
+  'NOT_A_GATE',
+  'no give-item in its window'),
+ 0x08301270: (
+  'in-game trade (SKITTY)',
+  (),
+  (),
+  'NOT_A_GATE',
+  'no give-item in its window'),
  0x0836642b: (
-  'DEOXYS magic trick -- "Please select a DEOXYS."; native test,'
-  ' special 0x224',
+  'the DEOXYS magic trick (native test, special 0x224)',
   (),
   (),
   'SPECIES_LOCKED',
-  'a Deoxys form change, no item. rowe_parity.md §13.28 recorded this'
-  ' game as having ZERO species gates; it has one. The verdict it'
-  ' supported is unchanged -- the reward is inert without a Deoxys --'
-  ' but the count was wrong.'),
+  'no give-item in its window'),
 }
 
 EXPECT_CHECKS = 7
