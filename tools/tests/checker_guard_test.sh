@@ -65,6 +65,8 @@ layer "verify_artifacts: control"      tools/tests/verify_artifacts.py ""      0
 layer "verify_artifacts: drift fails"  tools/tests/verify_artifacts.py 99999   1
 layer "check_gift_eggs: control"        tools/tests/check_gift_eggs.py  ""      0
 layer "check_gift_eggs: drift fails"    tools/tests/check_gift_eggs.py  99999   1
+layer "check_species_gates: control"     tools/tests/check_species_gates.py ""    0
+layer "check_species_gates: drift fails" tools/tests/check_species_gates.py 99999 1
 
 [ $fail -eq 0 ] && echo "checker guard test: $pass/$pass PASS" \
                 || echo "checker guard test: FAILURES"
