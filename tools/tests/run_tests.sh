@@ -198,9 +198,24 @@ python3 tools/tests/build_pc_testrom.py 116 > /tmp/sg_pc_build.log 2>&1 \
     || { echo "  FAIL building PC test ROM (see /tmp/sg_pc_build.log)"; exit 1; }
 python3 tools/tests/build_pc_testrom.py 116 --no-hook >> /tmp/sg_pc_build.log 2>&1 \
     || { echo "  FAIL building PC negative-control ROM (see /tmp/sg_pc_build.log)"; exit 1; }
+# ⭐ The storage system's OWN handler, gSpecials[0x3F], read out of the built
+# test ROM. Breakpointing it is what turns "the script ran" into "the PC
+# opened" -- a no-op special would release its waitstate at once and the sweep
+# would still fire, green, with no PC ever involved. pc_hook.specials_table()
+# verifies the table address against the literal ScrCmd_special loads, so a
+# wrong table fails here instead of yielding a breakpoint that never fires.
+CM_PSS_ADDR=$(python3 -c "
+import sys
+sys.path.insert(0, 'tools/character_mode')
+import pc_hook
+print('0x%08X' % pc_hook.special_handler(
+    open('build/seaglass_cm_pctest.gba','rb').read()))")
+[ -n "$CM_PSS_ADDR" ] || { echo "  FAIL deriving the storage special handler"; exit 1; }
+export CM_PSS_ADDR
+echo "  (storage special @ $CM_PSS_ADDR)"
 pc_case() {  # name  CM_ON  CM_CHAR  EXPECT
     log=/tmp/sg_pc_$1.log
-    timeout 300 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=6 CM_ON=$2 CM_CHAR=$3 \
+    timeout 300 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=7 CM_ON=$2 CM_CHAR=$3 \
         EXPECT=$4 "$MGBA" --script tools/mgba_scripts/cm_pc_exit_test.lua \
         -t tools/savestates/mart_inside.ss build/seaglass_cm_pctest.gba > "$log" 2>&1 || true
     grep -q "HARNESS RESULT: PASS" "$log" && echo "  PASS PC exit $1" \

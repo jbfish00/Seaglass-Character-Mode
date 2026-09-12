@@ -32,10 +32,27 @@
 -- RED run proves the sweep made a per-species decision keyed on the ACTIVE
 -- CHARACTER rather than boxing whatever it found.
 --
+-- ⭐⭐ AND IT BREAKPOINTS THE STORAGE SYSTEM'S OWN HANDLER, gSpecials[0x3F],
+-- passed in by the runner (read out of the BUILT ROM's table via
+-- tools/character_mode/pc_hook.py, which in turn verifies the table address
+-- against the literal ScrCmd_special loads -- never hardcoded here, and never
+-- copied from a sibling: Lazarus's table is at 0x0828CBF4 and this one is at
+-- 0x0826DD68). Retrofitted 2026-09-11 (rowe_parity.md §13.40 item 4) to match
+-- the other two Lua ports; the previous version inferred "the PC opened" from
+-- how long the script stayed blocked after the interaction, which is sound but
+-- indirect -- it measures the WAIT, not the storage system.
+--
+-- ⭐ The B-mash PAUSES while the PC is open, so the open window is something
+-- this layer controls rather than an accident of the mash cadence. Left
+-- running, the mash backs out of the menu in the same frame it appears
+-- (measured 29 frames in the sibling ports).
+--
 -- Env:
 --   CM_ON        1/0        -- Character Mode active for this run
 --   CM_CHAR      int        -- active character id when CM_ON
 --   EXPECT       box|party  -- where the STARTER must end up
+--   CM_PSS_ADDR  0x...     -- gSpecials[0x3F], the storage system's handler,
+--                             derived from the built ROM by the runner
 --   CM_SWEEP_ADDR 0x...     -- CM_SweepPartyToPCNative, derived from build/cm.elf
 --                              by the runner (never hardcoded: it moves on every
 --                              shim rebuild, and a stale breakpoint here would
@@ -49,6 +66,9 @@ local CM_ON   = (os.getenv("CM_ON") == "1")
 local CM_CHAR = tonumber(os.getenv("CM_CHAR") or "1")
 local EXPECT  = os.getenv("EXPECT") or "box"
 local SWEEP   = tonumber(os.getenv("CM_SWEEP_ADDR") or "0")
+local PSS     = tonumber(os.getenv("CM_PSS_ADDR") or "0")
+-- The PC is opened, HELD open, then closed.
+local HOLD_OPEN = 90
 
 local FLAG_CHARACTER_MODE = 0x2B0
 local VAR_CM_CHAR         = 0x40E4
@@ -120,15 +140,35 @@ if SWEEP ~= 0 then
     end)
 end
 
+-- ⭐ The storage system's own handler. This is what turns "the script ran" into
+-- "the PC opened": if `special 0x3F` did nothing, its waitstate would release
+-- at once, the sweep would still fire, and the hook would look perfectly green
+-- while never having involved a PC at all.
+local pssAt = nil
+if PSS ~= 0 then
+    H.breakpoint("pss", PSS, function(fr)
+        if pssAt == nil then
+            pssAt = fr
+            H.log(("storage system special entered f=%d"):format(fr))
+        end
+    end)
+end
+
 -- Navigate to the clipboard: LEFT till x stalls, UP till y stalls, an A-up
 -- probe, then face LEFT + A. Verbatim from cm_trade_test.lua's proven route.
 local phase, lastx, lasty, stall, nextAt = "left", -1, -1, 0, 30
 local interactAt, shotOpen = nil, false
 -- A no-op special releases its waitstate almost immediately; the real storage
 -- system takes a fade-out, a load and a fade-in. 60 frames is comfortably above
--- the former and comfortably below the ~150 measured here.
+-- the former and comfortably below the ~257 measured here from the handler.
 local MIN_UI_FRAMES = 60
 H.onFrame(function(f)
+    -- ⚠️ STOP NAVIGATING THE MOMENT THE PC IS OPEN. The `Aup` probe's A press
+    -- is what actually opens the clipboard script here -- measured: the storage
+    -- handler enters at f=245 while the later `talk` press lands at f=352 --
+    -- so without this the remaining A presses are delivered INSIDE the storage
+    -- UI, where A dives into a box.
+    if pssAt then phase = "done"; return end
     if phase == "done" or f < nextAt then return end
     local x, y = pos()
     if phase == "left" then
@@ -144,7 +184,8 @@ H.onFrame(function(f)
     elseif phase == "faceL" then
         H.press(K.LEFT, 8); phase = "talk"; nextAt = f + 30
     elseif phase == "talk" then
-        H.log(("interact at (%d,%d) f=%d"):format(x, y, f)); H.press(K.A, 6)
+        -- NOT necessarily the press that opens the PC; see the note above.
+        H.log(("nav finished, A at (%d,%d) f=%d"):format(x, y, f)); H.press(K.A, 6)
         interactAt = f
         phase = "done"; nextAt = f + 30
     end
@@ -158,7 +199,7 @@ end)
 -- indefinitely, so the sweep is genuinely gated on the UI CLOSING. The
 -- screenshot is durable human-checkable evidence of the same thing.
 H.onFrame(function(f)
-    if interactAt and f == interactAt + 80 and not shotOpen then
+    if pssAt and f == pssAt + 45 and not shotOpen then
         shotOpen = true
         emu:screenshot("tools/savestates/pcexit_" ..
             (CM_ON and ("on_c" .. CM_CHAR) or "off") .. "_" .. EXPECT ..
@@ -173,7 +214,10 @@ end)
 -- ignores a held button.
 local mashAt = nil
 H.onFrame(function(f)
-    if phase ~= "done" then return end
+    if phase ~= "done" and not pssAt then return end
+    -- ⭐ Hold the PC open for HOLD_OPEN frames after its handler runs, so the
+    -- window this layer asserts on is deliberate.
+    if pssAt and f < pssAt + HOLD_OPEN then emu:clearKey(K.B); return end
     if mashAt == nil then mashAt = f + 60 end
     if f >= mashAt then H.press(K.B, 4); mashAt = f + 22 end
 end)
@@ -195,12 +239,15 @@ H.onFrame(function(f)
         H.assertTrue("the egg anchor was added before the PC opened",
                      sweptParty ~= nil and sweptParty == before.party + 1)
         H.assertTrue("closing the PC reached the shipped sweep", swept ~= nil)
-        H.log(("storage UI was up for %s frames"):format(
-            tostring(swept and interactAt and (swept - interactAt))))
-        H.assertTrue("...and the storage UI was really on screen in between "
+        H.log(("storage special f=%s, sweep f=%s -- UI up for %s frames"):format(
+            tostring(pssAt), tostring(swept),
+            tostring(swept and pssAt and (swept - pssAt))))
+        H.assertTrue("the storage system special really ran, BEFORE the sweep",
+                     pssAt ~= nil and swept ~= nil and pssAt < swept)
+        H.assertTrue("...and the PC stayed open long enough to be real "
                      .. "(not a no-op special)",
-                     swept ~= nil and interactAt ~= nil
-                     and (swept - interactAt) >= MIN_UI_FRAMES)
+                     swept ~= nil and pssAt ~= nil
+                     and (swept - pssAt) >= MIN_UI_FRAMES)
         if EXPECT == "box" then
             H.assertTrue("the off-roster starter's personality is in the PC",
                          box ~= nil)
@@ -213,7 +260,8 @@ H.onFrame(function(f)
         H.finish()
     end
     if f == 4000 and endAt == nil then
-        H.log("timeout: phase=" .. phase .. " swept=" .. tostring(swept))
+        H.log("timeout: phase=" .. phase .. " swept=" .. tostring(swept)
+              .. " pssAt=" .. tostring(pssAt))
         H.assertTrue("closing the PC reached the shipped sweep (timeout)", false)
         H.finish()
     end

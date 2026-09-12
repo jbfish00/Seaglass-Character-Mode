@@ -82,6 +82,36 @@ import struct
 SPECIAL_PC = 0x003F
 OPCODE_CALLNATIVE = 0x23
 
+# gSpecials, so a test can breakpoint the storage system's OWN handler
+# (gSpecials[SPECIAL_PC]) instead of inferring from timing that the PC opened.
+#
+# ⭐ NOT a hardcoded guess, and not copied from Lazarus (whose table is at
+# 0x0828CBF4 -- these two ROMs agree on nothing but the special id). It is the
+# literal `ScrCmd_special` loads, at 0x081EC89C in this ROM, and
+# `specials_table()` below reads that literal back and refuses to return a
+# table address the ROM does not itself use.
+SPECIALS_TABLE_ADDR = 0x0826DD68
+SPECIALS_TABLE_LITERAL = 0x081EC89C
+ROM_BASE = 0x08000000
+
+
+def specials_table(data):
+    """SPECIALS_TABLE_ADDR, verified against the literal ScrCmd_special loads."""
+    got = struct.unpack_from('<I', data,
+                             SPECIALS_TABLE_LITERAL - ROM_BASE)[0]
+    if got != SPECIALS_TABLE_ADDR:
+        raise SystemExit(
+            "gSpecials is at %#010x in this ROM, not the recorded %#010x "
+            "(literal read from %#010x)"
+            % (got, SPECIALS_TABLE_ADDR, SPECIALS_TABLE_LITERAL))
+    return got
+
+
+def special_handler(data, special_id=SPECIAL_PC):
+    """Entry address of gSpecials[special_id], Thumb bit cleared."""
+    off = specials_table(data) - ROM_BASE + special_id * 4
+    return struct.unpack_from('<I', data, off)[0] & ~1
+
 # The message both PC access scripts show, and the file offset of each script's
 # pointer to it. Asserted by the injector, so a moved script fails loudly
 # instead of being spliced at the wrong address.

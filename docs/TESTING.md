@@ -218,11 +218,38 @@ never-empty rule, not a roster decision. Measured against the shipped bitmaps,
 exactly **8** characters allow Torchic and **BRENDAN (39)** is the offered one.
 **A behaviour difference is not evidence of the mechanism you assume produced it.**
 
+✅ **RETROFITTED 2026-09-11 — it now breakpoints the storage system's OWN
+handler** (`gSpecials[0x3F]` = `0x081BB3E0`), the way Radical Red's and
+Lazarus's PC layers already did. `rowe_parity.md` §13.40 item 4. The address is
+read out of the **built test ROM** by `pc_hook.special_handler()`, which first
+verifies `gSpecials` is where this repo records it by reading back the literal
+`ScrCmd_special` loads at `0x081EC89C` — so a wrong table address fails in the
+runner instead of producing a breakpoint that silently never fires. ⚠️ **Never
+copy this from Lazarus: its table is at `0x0828CBF4`.** Per-run assertions went
+**6 → 7** (`CM_EXPECT_CHECKS=7`); the suite's own totals are unchanged at 22
+layers / 137 checks.
+
+⭐⭐ **AND THE RETROFIT IMMEDIATELY FOUND THAT THE OLD PROXY WAS TIMED FROM THE
+WRONG EVENT.** The previous version measured the open window as
+`sweep − interactAt`, where `interactAt` is the navigation's final A press. The
+handler breakpoint shows the PC actually opens at **f=245**, during the route's
+earlier `Aup` probe, while that final press lands at **f=352** — *inside the
+storage UI*, where A dives into a box. The old assertion passed anyway
+(502 − 352 = 150 ≥ 60) because the sweep happened to be far enough away, so it
+was a check that could not distinguish "the PC was open for 150 frames" from
+"the PC opened 107 frames before I started counting". The layer now stops
+navigating the instant the handler fires, and the window is **245 → 397 = 152
+frames**, deterministic (hold 90 + the mash's 60-frame offset).
+
+⭐ **The negative control got stronger for free.** On the `--no-hook` ROM the
+handler still fires (`pssAt=245`) and only the sweep is missing, so the run
+fails on *"closing the PC reached the shipped sweep (timeout)"* — proving the
+absence of the **sweep**, not a failure to reach a PC.
+
 ⭐ **It also asserts the UI was really on screen**, not just that the script ran
 through: a no-op `special` would release its `waitstate` within a frame or two
-and the sweep would still fire — green, while never involving a PC. Measured:
-the box view is up for **150 frames**, and a probe run that never presses B
-leaves it open indefinitely. The layer requires ≥60 and saves a screenshot of
+and the sweep would still fire — green, while never involving a PC. The layer
+requires ≥60 frames between the handler and the sweep, and saves a screenshot of
 the open box as durable evidence. ⚠️ Tap **B**, never A: A dives into a box and
 the run wedges with no route out.
 
