@@ -22,7 +22,9 @@ every negative case and look correct.
   8. the scanner blinded      -- the special id is wrong, so the scan reaches
                                  nothing; an empty result satisfies check 2 and
                                  only the anti-vacuity check catches it
-  9. control again
+  9. a TRADE species CHANGED -- the pinned trade table moved or changed
+ 10. a GIFT species CHANGED  -- the gift that opens a gate is not that gift
+ 11. control again
 
 A case marked n/a is one this port cannot have (Seaglass's only gate is tested
 in native code and gives no item, so it has no species operand and no reward
@@ -135,7 +137,28 @@ def main():
          src.replace("WAITSTATE = 0x27", "WAITSTATE = 0x2F", 1),
          1, "the scan reached at least one call site")
 
-    case("9 control again", src, 0)
+    m = re.search(r"TRADES = \((\d+), (\d+), (\d+), \(\((\d+), (\d+)\)", src)
+    if m:
+        bent = src.replace(m.group(0),
+                           "TRADES = (%s, %s, %s, ((%s, %d)"
+                           % (m.group(1), m.group(2), m.group(3), m.group(4),
+                              int(m.group(5)) + 1), 1)
+        case("9 a recorded TRADE species CHANGED", bent,
+             1, "still gives the species recorded here")
+    else:
+        skip("9 a recorded TRADE species CHANGED", "no trade is pinned here")
+
+    m = re.search(r"GIFTS = \(\((0x[0-9A-Fa-f]+), (\d+), (\d+)\)", src)
+    if m:
+        bent = src.replace(m.group(0), "GIFTS = ((%s, %d, %s)"
+                           % (m.group(1), int(m.group(2)) + 1, m.group(3)), 1)
+        case("10 a recorded GIFT species CHANGED", bent,
+             1, "is still that gift")
+    else:
+        skip("10 a recorded GIFT species CHANGED",
+             "no gift Pokemon opens a gate in this port")
+
+    case("11 control again", src, 0)
 
     for p in tmps:
         try:
