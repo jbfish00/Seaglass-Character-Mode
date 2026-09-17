@@ -37,8 +37,17 @@ from cm_tally import assert_tally          # noqa: E402
 NEEDLE = "Pokemon Rowe Alteration"
 CHARMAP_MD5 = "b31d142ca98103d64d707f9894fa42e3"
 
+# ⭐ ADDED 2026-09-16. NEEDLE alone was too narrow: it pins the ROWE tree and is
+# blind to a dependency on a SIBLING HACK REPO. That hole let Lazarus ship a
+# patch tool importing lz77 through ../../Unbound-Character-Mode/tools -- a
+# cross-repo import arriving silently past a checker written to prevent exactly
+# that. Lesson #1: the checker scanned for ONE path rather than for THE THING
+# (a dependency outside this repo). Ported here from Lazarus.
+SIBLING_RE = re.compile(r"(?:RadicalRed|Unbound|Prism|Platinum|Lazarus)"
+                        r"-Character-Mode")
+
 # How many checks this layer must run. A deliberate LITERAL -- see cm_tally.py.
-EXPECT_CHECKS = 5
+EXPECT_CHECKS = 7
 
 # Third-party / vendored trees we did not write and do not police.
 SKIP_DIRS = {
@@ -52,8 +61,44 @@ SKIP_DIRS = {
 ALLOWED = {'tools/tests/check_repo_selfcontained_negative_test.py': "THIS CHECKER'S OWN NEGATIVE TEST. It must name the forbidden path in order to reintroduce it on purpose in a throwaway tree. Inventoried rather than skipped, so deleting the negative test is itself a failing check.", 'tools/character_mode/sprite_coverage_survey.py': "cross-repo DONOR tool: reads ROWE's sprite_report.txt. Survey only, never on the build or verify path."}
 
 
+# path -> why this SIBLING-REPO reference is allowed to survive.
+# ⭐ NOTE: this repo OWNS the shared mgba-headless build that Lazarus's and
+# Radical Red's live suites borrow, so it has no emulator dependency of its own.
+ALLOWED_SIBLING = {
+    "tools/character_mode/port_sibling_sources.py":
+        "cross-repo DONOR tool by design: imports Radical Red's "
+        "roster_sources.json. Never on the build or verify path.",
+    "tools/character_mode/port_sibling_additions.py":
+        "cross-repo DONOR tool by design: imports Radical Red's "
+        "roster_additions.json. Never on the build or verify path.",
+    "tools/character_mode/sprite_coverage_survey.py":
+        "COMMENT only -- names Radical Red's SPRITE_COVERAGE.md as the output "
+        "format it mirrors. No path is opened.",
+    "tools/character_mode/map_species.py":
+        "COMMENT only -- attribution prose about Unbound's version. No path is "
+        "opened.",
+    "tools/character_mode/emit_characters.py":
+        "COMMENT only -- attribution prose ('adapted from Unbound's'). No path "
+        "is opened.",
+    "tools/tests/check_repo_selfcontained_negative_test.py":
+        "THIS CHECKER'S OWN NEGATIVE TEST. It must name a sibling repo in order "
+        "to reintroduce the dependency on purpose in a throwaway tree. "
+        "Inventoried rather than skipped, so deleting the negative test is "
+        "itself a failing check.",
+}
+
+
 def scan():
     """{relpath: [line numbers]} for every file under tools/ naming ROWE."""
+    return _scan(lambda ln: NEEDLE in ln)
+
+
+def scan_siblings():
+    """{relpath: [line numbers]} for every file under tools/ naming a SIBLING repo."""
+    return _scan(lambda ln: SIBLING_RE.search(ln) is not None)
+
+
+def _scan(match):
     hits = {}
     base = os.path.join(ROOT, "tools")
     for dirpath, dirnames, filenames in os.walk(base):
@@ -73,7 +118,7 @@ def scan():
                     lines = f.read().splitlines()
             except OSError:
                 continue
-            found = [i + 1 for i, ln in enumerate(lines) if NEEDLE in ln]
+            found = [i + 1 for i, ln in enumerate(lines) if match(ln)]
             if found:
                 hits[rel] = found
     return hits
@@ -169,6 +214,29 @@ if not res:
         "are then vacuously true. Either the text tooling was removed, or this "
         "checker is looking in the wrong place.")
 
+# [6] every reference to a SIBLING hack repo is inventoried with a reason.
+ran += 1
+sib = scan_siblings()
+sib_uninv = sorted(set(sib) - set(ALLOWED_SIBLING))
+if sib_uninv:
+    failures.append(
+        "NEW reference(s) to a SIBLING hack repo, with no stated reason:\n" +
+        "\n".join("    %s (line %s)" % (p_, ",".join(map(str, sib[p_])))
+                  for p_ in sib_uninv) +
+        "\n  A sibling repo is not this repo. If it is a donor tool or a "
+        "shared tool binary, add it to ALLOWED_SIBLING with a reason. If it is "
+        "a code import, VENDOR the module into this repo's own tools/ and "
+        "resolve it from the importing file's location -- a fresh clone of "
+        "this repo alone must still build and verify.")
+
+# [7] the other direction: the sibling inventory cannot rot into fiction.
+ran += 1
+sib_stale = sorted(set(ALLOWED_SIBLING) - set(sib))
+if sib_stale:
+    failures.append(
+        "inventoried sibling reference(s) no longer present -- delete them "
+        "from ALLOWED_SIBLING:\n" + "\n".join("    %s" % p_ for p_ in sib_stale))
+
 print("%s -- self-contained check" % os.path.basename(ROOT))
 print("  %d file(s) still name the ROWE tree, %d inventoried"
       % (len(hits), len(ALLOWED)))
@@ -177,6 +245,13 @@ for p in sorted(ALLOWED):
     print("    [%s] %s" % (mark, p))
     print("           %s" % ALLOWED[p])
 print("  %d file(s) resolve tools/charmap.txt" % len(res))
+print("  %d file(s) name a sibling hack repo, %d inventoried"
+      % (len(sib), len(ALLOWED_SIBLING)))
+_real = sorted(p_ for p_ in sib if p_ in ALLOWED_SIBLING
+               and not ALLOWED_SIBLING[p_].startswith("COMMENT"))
+print("    of which %d are REAL dependencies (not comments):" % len(_real))
+for p_ in _real:
+    print("      %s" % p_)
 print()
 
 rc = 0
@@ -189,6 +264,8 @@ if not failures:
     print("  [PASS] tools/charmap.txt present, md5 %s" % CHARMAP_MD5)
     print("  [PASS] all %d resolver(s) land on this repo's own copy" % len(res))
     print("  [PASS] the inventory is not vacuous -- consumers exist")
+    print("  [PASS] no un-inventoried reference to a sibling hack repo")
+    print("  [PASS] every inventoried sibling reference is still present")
 
 rc |= assert_tally(ran, EXPECT_CHECKS, "check_repo_selfcontained")
 print()

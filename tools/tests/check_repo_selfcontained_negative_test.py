@@ -68,11 +68,25 @@ def build(tmp):
     with open(os.path.join(repo, "tools", "donor_tool.py"), "w") as f:
         f.write('ROWE = "/home/jbfish00/Documents/%s/x.json"\n' % NEEDLE)
 
+    # A synthetic SIBLING-repo reference, so the sibling inventory is not
+    # vacuous in the fake tree the way the ROWE one is not.
+    with open(os.path.join(repo, "tools", "sibling_donor.py"), "w") as f:
+        f.write('SRC = "../RadicalRed-Character-Mode/tools/x.json"\n')
+
     src = open(CHECKER, encoding="utf-8").read()
     start = src.index("ALLOWED = {")
     end = src.index("\n\n\ndef scan()", start)
+    # ⚠️ This splice DELETES everything between the two markers, so every
+    # module-level name defined there must be re-supplied here. ALLOWED_SIBLING
+    # lives in that region: when it was added in Lazarus and this line was not
+    # updated, the checker died with NameError in the fake tree -- and because a
+    # crash also exits non-zero, FIVE tamper cases still reported PASS. Only the
+    # CONTROL caught it. A tamper case that cannot tell a crash from a detection
+    # is not evidence.
     src = (src[:start]
-           + 'ALLOWED = {"tools/donor_tool.py": "synthetic donor tool"}'
+           + 'ALLOWED = {"tools/donor_tool.py": "synthetic donor tool"}\n'
+           + 'ALLOWED_SIBLING = {"tools/sibling_donor.py": '
+             '"synthetic cross-repo donor tool"}'
            + src[end:])
     with open(os.path.join(repo, "tools", "tests",
                            "check_repo_selfcontained.py"), "w") as f:
@@ -142,9 +156,34 @@ def t_resolver_escapes(repo):
     return after != before
 
 
+def t_new_sibling_ref(repo):
+    """A NEW file imports out of a sibling hack repo -- the exact shape that
+    reached Lazarus's remove_pride_flags.py past checks [1]-[5], which only ever
+    looked for the ROWE path."""
+    p = os.path.join(repo, "tools", "new_tool.py")
+    with open(p, "w") as f:
+        f.write('import sys, os\n'
+                'sys.path.insert(0, os.path.join(os.path.dirname(__file__),\n'
+                '    "..", "..", "Lazarus-Character-Mode", "tools"))\n'
+                'from lz77 import decompress\n')
+    return os.path.exists(p) and "Lazarus-Character-Mode" in open(p).read()
+
+
+def t_stale_sibling_inventory(repo):
+    """An inventoried SIBLING reference disappears -- the other direction, so
+    the sibling inventory cannot rot into fiction."""
+    p = os.path.join(repo, "tools", "sibling_donor.py")
+    had = "RadicalRed-Character-Mode" in open(p).read()
+    os.remove(p)
+    return had and not os.path.exists(p)
+
+
 TAMPERS = [
     ("a new hardcoded ROWE path in a load-bearing script", t_new_hardcode),
     ("an inventoried donor reference that no longer exists", t_stale_inventory),
+    ("a NEW import out of a sibling hack repo", t_new_sibling_ref),
+    ("an inventoried sibling reference that no longer exists",
+     t_stale_sibling_inventory),
     ("the vendored charmap replaced with a different one", t_wrong_charmap),
     ("the vendored charmap deleted outright", t_missing_charmap),
     ("the resolver's repo-root bound removed, so it escapes", t_resolver_escapes),
