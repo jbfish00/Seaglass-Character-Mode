@@ -36,14 +36,38 @@ import os
 import re
 import subprocess
 import sys
+import os as _os
+sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+from cm_tally import assert_cases
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REAL = os.path.join(HERE, "check_party_writes.py")
 
 
+def _child_env():
+    """Environment for a spawned checker, with the tally overrides STRIPPED.
+
+    ⚠️ MEASURED 2026-09-17: subprocess inherits the environment, so running a
+    negative test with CM_EXPECT_CHECKS set (as checker_guard_test.sh does to
+    checkers) pinned the CHILD to that number too -- and the negative test's
+    own CONTROL case, which must see the checker pass on its real literal,
+    failed for a reason that had nothing to do with the tamper. A control that
+    can be broken by an inherited variable is not a control.
+    """
+    env = dict(os.environ)
+    env.pop("CM_EXPECT_CHECKS", None)
+    env.pop("CM_EXPECT_CASES", None)
+    return env
+
+
 def run(path):
     return subprocess.run([sys.executable, path], capture_output=True,
-                          text=True).returncode
+                          text=True, env=_child_env()).returncode
+
+
+# How many tamper cases this negative test must run. A deliberate
+# LITERAL -- see cm_tally.assert_cases.
+EXPECT_CASES = 8
 
 
 def main():
@@ -135,6 +159,8 @@ def main():
         print("\nFAILURES: " + ", ".join(fails))
         return 1
     print("\nparty-write inventory negative test: %d/%d PASS" % (passes, passes))
+    if assert_cases(passes + len(fails), EXPECT_CASES, 'check_party_writes'):
+        return 1
     return 0
 
 

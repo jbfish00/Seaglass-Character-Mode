@@ -45,6 +45,27 @@ layer() { # <label> <script> <CM_EXPECT_CHECKS or ""> <want-exit>
     else printf '  FAIL  %-46s got %s want %s\n' "$label" "$got" "$want"; fail=1; fi
 }
 
+# ⭐ ADDED 2026-09-17. The negative tests guard the checkers; until today
+# NOTHING guarded the negative tests. Measured: deleting 3 of 7 tamper cases
+# from check_repo_selfcontained_negative_test.py took it from "8/8 ALL PASS" to
+# "5/5 ALL PASS", exit 0 -- every one of these files prints a tally computed
+# from what it actually ran, so it agrees with itself by construction.
+# cm_tally.assert_cases + an EXPECT_CASES literal closed it; this breaks that
+# guard on purpose. Note the SEPARATE variable: these files spawn the checkers
+# as subprocesses and CM_EXPECT_CHECKS would be inherited by the child.
+negcase() { # <label> <script> <CM_EXPECT_CASES or ""> <want-exit>
+    local label=$1 script=$2 expect=$3 want=$4 got
+    [ -f "$script" ] || { printf '  skip  %-46s (absent)\n' "$label"; return; }
+    if [ -n "$expect" ]; then
+        CM_EXPECT_CASES="$expect" timeout 1800 python3 "$script" >/dev/null 2>&1
+    else
+        timeout 1800 python3 "$script" >/dev/null 2>&1
+    fi
+    got=$?
+    if [ "$got" = "$want" ]; then printf '  ok    %-46s exit=%s\n' "$label" "$got"; pass=$((pass+1))
+    else printf '  FAIL  %-46s got %s want %s\n' "$label" "$got" "$want"; fail=1; fi
+}
+
 echo "checker guard negative test"
 echo "-- the guard function itself --"
 unit "zero checks is never a pass"        0  0   1
@@ -67,6 +88,12 @@ layer "check_gift_eggs: control"        tools/tests/check_gift_eggs.py  ""      
 layer "check_gift_eggs: drift fails"    tools/tests/check_gift_eggs.py  99999   1
 layer "check_species_gates: control"     tools/tests/check_species_gates.py ""    0
 layer "check_species_gates: drift fails" tools/tests/check_species_gates.py 99999 1
+
+echo "-- the NEGATIVE TESTS' own case guard --"
+negcase "species-gates negtest: control"      tools/tests/check_species_gates_negative_test.py     ""    0
+negcase "species-gates negtest: drift fails"  tools/tests/check_species_gates_negative_test.py     99999 1
+negcase "selfcontained negtest: control"      tools/tests/check_repo_selfcontained_negative_test.py ""    0
+negcase "selfcontained negtest: drift fails"  tools/tests/check_repo_selfcontained_negative_test.py 99999 1
 
 [ $fail -eq 0 ] && echo "checker guard test: $pass/$pass PASS" \
                 || echo "checker guard test: FAILURES"

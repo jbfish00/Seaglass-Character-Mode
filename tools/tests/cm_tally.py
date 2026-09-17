@@ -45,3 +45,37 @@ def assert_tally(ran, expect_default, label):
               % (label, ran, expect))
         return 1
     return 0
+
+
+def assert_cases(ran, expect_default, label):
+    """The same guard, for a NEGATIVE TEST's own case list. 0 if sound, else 1.
+
+    ⭐ WHY A SECOND FUNCTION. The negative tests guard the checkers, and until
+    2026-09-17 NOTHING guarded the negative tests -- 28 of them across the four
+    repos, none with an expected-case count. Measured in Radical Red: deleting
+    3 of 7 tamper cases from check_repo_selfcontained_negative_test.py took it
+    from "8/8 ALL PASS" to "5/5 ALL PASS", exit 0. Every one of these files
+    prints a tally it computes from what it actually ran -- several literally as
+    `"%d/%d" % (passes, passes)` -- so the tally agrees with itself by
+    construction and can never report a shrunken case list. That is §13.36's
+    defect ("the tally was not wrong; it was measuring eight of nine and saying
+    so") and §1's anti-vacuity hole, one level up: the thing that proves the
+    checker can fail could itself quietly stop proving it.
+
+    ⚠️ It reads CM_EXPECT_CASES, deliberately NOT CM_EXPECT_CHECKS. These files
+    invoke the checkers as SUBPROCESSES and the environment is inherited, so
+    reusing the checkers' variable would pin the parent and the child to the
+    same number and break every run under the guard test.
+    """
+    expect = int(os.environ.get("CM_EXPECT_CASES", expect_default))
+    if ran == 0:
+        print("%s: NO CASES RAN -- a negative test that tampers with nothing "
+              "proves nothing about the checker it is meant to guard." % label)
+        return 1
+    if ran != expect:
+        print("%s: ran %d cases, expected %d. Either a tamper case stopped "
+              "running (so the checker is no longer proven to catch it) or a "
+              "case was added and the EXPECT_CASES literal was not bumped."
+              % (label, ran, expect))
+        return 1
+    return 0

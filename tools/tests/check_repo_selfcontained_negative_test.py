@@ -23,6 +23,9 @@ import subprocess
 import sys
 import tempfile
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from cm_tally import assert_cases  # noqa: E402
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 CHECKER = os.path.join(HERE, "check_repo_selfcontained.py")
@@ -51,6 +54,22 @@ RESOLVER = "\n".join([
 ])
 
 BOUND = '        if (parent / ".git").exists():\n            break\n'
+
+
+def _child_env():
+    """Environment for a spawned checker, with the tally overrides STRIPPED.
+
+    ⚠️ MEASURED 2026-09-17: subprocess inherits the environment, so running a
+    negative test with CM_EXPECT_CHECKS set (as checker_guard_test.sh does to
+    checkers) pinned the CHILD to that number too -- and the negative test's
+    own CONTROL case, which must see the checker pass on its real literal,
+    failed for a reason that had nothing to do with the tamper. A control that
+    can be broken by an inherited variable is not a control.
+    """
+    env = dict(os.environ)
+    env.pop("CM_EXPECT_CHECKS", None)
+    env.pop("CM_EXPECT_CASES", None)
+    return env
 
 
 def build(tmp):
@@ -98,7 +117,7 @@ def run(repo):
     r = subprocess.run(
         [sys.executable,
          os.path.join(repo, "tools", "tests", "check_repo_selfcontained.py")],
-        capture_output=True, text=True)
+        capture_output=True, text=True, env=_child_env())
     return r.returncode, r.stdout + r.stderr
 
 
@@ -178,6 +197,9 @@ def t_stale_sibling_inventory(repo):
     return had and not os.path.exists(p)
 
 
+# How many tamper cases this negative test must run. A deliberate LITERAL.
+EXPECT_CASES = 8
+
 TAMPERS = [
     ("a new hardcoded ROWE path in a load-bearing script", t_new_hardcode),
     ("an inventoried donor reference that no longer exists", t_stale_inventory),
@@ -223,5 +245,11 @@ for desc, mutate in TAMPERS:
 
 n_ok = sum(1 for r in results if r)
 print("\n%d/%d" % (n_ok, len(results)))
-print("ALL PASS" if n_ok == len(results) else "FAILED")
-sys.exit(0 if n_ok == len(results) else 1)
+# ⚠️ `n_ok == len(results)` is a tally that AGREES WITH ITSELF: both sides come
+# from what actually ran, so deleting tamper cases turns "8/8 ALL PASS" into
+# "5/5 ALL PASS" with exit 0. Measured in Radical Red 2026-09-17. The literal
+# is what makes a shrunken case list a failure.
+rc = 0 if n_ok == len(results) else 1
+rc |= assert_cases(len(results), EXPECT_CASES, "check_repo_selfcontained")
+print("ALL PASS" if rc == 0 else "FAILED")
+sys.exit(rc)

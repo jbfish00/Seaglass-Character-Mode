@@ -34,6 +34,9 @@ import os
 import struct
 import subprocess
 import sys
+import os as _os
+sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+from cm_tally import assert_cases
 import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -60,6 +63,22 @@ CHECKS = {
 }
 
 
+def _child_env():
+    """Environment for a spawned checker, with the tally overrides STRIPPED.
+
+    ⚠️ MEASURED 2026-09-17: subprocess inherits the environment, so running a
+    negative test with CM_EXPECT_CHECKS set (as checker_guard_test.sh does to
+    checkers) pinned the CHILD to that number too -- and the negative test's
+    own CONTROL case, which must see the checker pass on its real literal,
+    failed for a reason that had nothing to do with the tamper. A control that
+    can be broken by an inherited variable is not a control.
+    """
+    env = dict(os.environ)
+    env.pop("CM_EXPECT_CHECKS", None)
+    env.pop("CM_EXPECT_CASES", None)
+    return env
+
+
 def run(rom_path):
     """Run verify_artifacts against `rom_path`; return (rc, stdout)."""
     src = open(VERIFY, encoding="utf-8").read()
@@ -73,7 +92,7 @@ def run(rom_path):
     open(path, "w", encoding="utf-8").write(src)
     try:
         p = subprocess.run([sys.executable, path], capture_output=True,
-                           text=True, cwd=ROOT)
+                           text=True, cwd=ROOT, env=_child_env())
     finally:
         try:
             os.remove(path)
@@ -102,6 +121,11 @@ def failed(out, key):
 
 def passed(out, key):
     return _hit(out, key, "PASS")
+
+
+# How many tamper cases this negative test must run. A deliberate
+# LITERAL -- see cm_tally.assert_cases.
+EXPECT_CASES = 7
 
 
 def main():
@@ -182,6 +206,8 @@ def main():
         print("MISSED: " + "; ".join(fails))
         return 1
     print("ALL PASS")
+    if assert_cases(passes + len(fails), EXPECT_CASES, 'pc_hook'):
+        return 1
     return 0
 
 
