@@ -185,7 +185,10 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 108  # +10: the PC-exit sweep, 5 checks x 2 sites (2026-09-07)
+EXPECT_CHECKS = 109  # +10: the PC-exit sweep, 5 checks x 2 sites (2026-09-07);
+                     # +1: the COMPILED Battle Pyramid guard literal (2026-09-19)
+
+
 def ok(cond, msg):
     global _p, _f
     if cond:
@@ -861,6 +864,22 @@ def main():
     _g, _s = _src.find("if (InBattlePyramid())"), _src.find("wildSeed(species, level)")
     ok(_g != -1 and _s != -1 and _g < _s,
        "the guard precedes the seed draw, so nothing is consumed in the pyramid")
+    # ⭐⭐ 2026-09-19 -- THE TWO CHECKS ABOVE ARE SUBSTRING TESTS STANDING IN FOR
+    # AN EXPRESSION, which is Platinum's lesson #2 (../game_plans/rowe_parity.md,
+    # workspace CLAUDE.md): they cannot tell a LIVE guard from one that is
+    # commented out, has an empty body, or whose `return` was deleted -- every
+    # one of those still contains the string and still precedes the seed draw.
+    # This reads what the COMPILER baked in instead. The shim sits ~13 MB from
+    # the predicate, far outside Thumb BL range, so it must reach it through a
+    # literal; that literal is the only occurrence of the Thumb address in the
+    # entire ROM, so its presence in the shim blob is an exact discriminator.
+    _INBP_LIT = struct.pack("<I", _INBP | 1)
+    _bp_blob = bytes(patched[SHIM_ADDR & 0x01FFFFFF:
+                             (SHIM_ADDR & 0x01FFFFFF) + SHIM_REGION])
+    ok(_bp_blob.count(_INBP_LIT) == 1,
+       "the COMPILED shim carries InBattlePyramid's address as a literal "
+       f"({_bp_blob.count(_INBP_LIT)} in the blob) -- a source-text check "
+       "passes on a guard that is commented out; this one does not")
 
     # [18] Encounter marker.
     print("\n[18] encounter marker")

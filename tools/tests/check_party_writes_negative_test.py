@@ -67,7 +67,7 @@ def run(path):
 
 # How many tamper cases this negative test must run. A deliberate
 # LITERAL -- see cm_tally.assert_cases.
-EXPECT_CASES = 8
+EXPECT_CASES = 10
 
 
 def main():
@@ -146,6 +146,27 @@ def main():
             case("a drifted EXPECT_UNGATED pin fails", 1,
                  src[:mu.start()] + "EXPECT_UNGATED = frozenset({0x00000001})"
                  + src[mu.end():])
+
+        # --- 2026-09-19: the two faults that hid the in-game trade. Each
+        # tamper restores ONE of them; the trade site then vanishes from the
+        # scan and check 2 ("every inventoried writer is still present") fires.
+        # Without these, the high-register decode and the widened window are
+        # capability nobody proved can fail.
+        if "0x4400 <= v <= 0x46FF" not in src:
+            print("  FAIL  the high-register (Thumb format 5) block is gone")
+            fails.append("tamper 8")
+        else:
+            case("dropping the high-register decode fails", 1,
+                 src.replace("if 0x4400 <= v <= 0x46FF:",
+                             "if False and 0x4400 <= v <= 0x46FF:", 1))
+
+        mw = re.search(r"^WINDOW = (\d+)$", src, re.M)
+        if not mw:
+            print("  FAIL  could not find WINDOW to narrow")
+            fails.append("tamper 9")
+        else:
+            case("narrowing the scan window back to 48 fails", 1,
+                 src[:mw.start(1)] + "48" + src[mw.end(1):])
 
         case("control: the real inventory still passes", 0)
     finally:

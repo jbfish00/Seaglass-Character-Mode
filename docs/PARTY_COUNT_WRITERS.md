@@ -143,7 +143,11 @@ has two halves: **a routine that writes a mon into the party without touching
 the count is invisible to the count inventory**, whether it is benign or not.
 Read the two together; neither is sufficient alone.
 
-## 5 inventoried copy site(s)
+## 8 inventoried copy site(s)
+
+### `0x081df426` (file `0x001df426`) -- **UNVERIFIED**
+
+RESTORES BOTH PARTIES from a caller-supplied 1200-byte buffer: 6 x CopyMon(gPlayerParty + i*100, buf + i*100, 100) interleaved with the same into gEnemyParty from buf + 600, after two zeroing calls (0x081A6E90 / 0x081A6EB0). Same SHAPE as the EXEMPT restore 0x0015efd4 in check_acquisition_paths.py, but the subsystem is NOT identified: single-caller chain 0x081DF414 <- 0x081DF46C <- 0x081DF6A8 <- 0x081DF680 <- 0x081408CA, terminating at 0x08140874, which has no BL callers and is reached only as a pointer from two callback tables (0x0814096C, 0x08140D6C). ⚠️ 'restores a party from a buffer' is only harmless if the buffer always holds the PLAYER'S OWN party -- a rental or borrowed team loaded through the same routine would introduce species. GO LOOK; this is not a clean bill of health
 
 ### `0x081aa5d4` (file `0x001aa5d4`) -- **GATED**
 
@@ -153,9 +157,17 @@ inside GiveMonToPlayer 0x081AA5AC -- THE enforcement choke point, the CopyMon th
 
 inside the script give CORE 0x081F1D64 -- the bypass docs/ROUTINE_MAP.md:149 documents as writing gPlayerParty/gPlayerPartyCount directly and never BLing GiveMonToPlayer. Closed by retargeting all 49 callnative operands to the wrapper; verify_artifacts.py check [8] pins them
 
+### `0x08208786` (file `0x00208786`) -- **GATED**
+
+THE IN-GAME TRADE, and the site this whole fix exists for. CopyMon(&gPlayerParty[slot], &gEnemyParty[0], 100) at 0x0820880E -- measured live 2026-09-19 with a WRITE_CHANGE watchpoint on the slot PID (pc=0x08368F28 inside CopyMon, lr=0x08208813, r0=gPlayerParty, r1=gEnemyParty, r2=100), party count 1 -> 1. ⭐ GATED at the SCRIPT level, not here: CM_TradeCheck runs in the per-trade wrapper before special 0x100/0x101 and refuses an off-roster received species, so this copy never executes for a mon the roster forbids (docs/ROUTINE_MAP.md's in-game trades section; live layer 4g). Nothing gates the copy ITSELF
+
 ### `0x08144efa` (file `0x00144efa`) -- **EXEMPT**
 
 the twin of Lazarus 0x001542B6: inside the routine that saves and restores gPlayerPartyCount around a subsystem call (docs/PARTY_COUNT_WRITERS.md entry 0x00144f0e). A party save/restore
+
+### `0x0818a860` (file `0x0018a860`) -- **EXEMPT**
+
+the OTHER arm of the party reorder, sibling of 0x0018a8e4 and a separate function (they are split by the literal pool at 0x0818A8C4). memcpy(buffer, gPlayerParty, 600) at 0x0818A868, then a 6-entry NIBBLE order array drives CopyMon(gPlayerParty + order[i]*100, buffer + i*100, 100) and the buffer is Free'd at 0x0818A8A4. A permutation: every mon written was in the party a moment earlier
 
 ### `0x0818a8e4` (file `0x0018a8e4`) -- **EXEMPT**
 

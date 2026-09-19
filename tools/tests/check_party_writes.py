@@ -52,6 +52,33 @@ that fixes it, because each is the same lesson in a new costume:
      veneer_reg(); with the register resolved the callee set collapses to the
      real functions (CopyMon, memcpy).
 
+⭐⭐ AND IT WAS WRONG IN TWO MORE WAYS, BOTH FOUND 2026-09-19, BOTH HIDING THE
+SAME SITE: THE IN-GAME TRADE. Platinum's lesson #1 says a trade is the shape
+that defeats an acquisition inventory -- it fills the slot its partner vacated,
+so gPlayerPartyCount never moves. That is true here (measured: 1 -> 1), which
+is exactly what this file exists to catch, and it did not catch it:
+
+  A. THE POINTER LIVES IN A HIGH REGISTER. Every register rule below decoded
+     only the 3-bit Thumb forms, i.e. r0-r7. The trade does
+     `ldr r2,=gPlayerParty` @0x08208786 and `mov sl,r2` on the VERY NEXT
+     instruction, indexes with `add sl,r3`, and calls
+     CopyMon(&gPlayerParty[slot], &gEnemyParty[0], 100) at 0x0820880E. The
+     pointer left `tracked` two instructions after the load. Thumb format 5
+     (0x4400-0x46FF) is decoded now, and a call no longer clears r4-r11 --
+     they are callee-saved, so a pointer parked there SURVIVES the call.
+  B. THE WINDOW WAS TOO SHORT. 48 instructions ended 19 instructions before
+     that BL. Both faults had to be present for the site to hide; fixing
+     either alone still misses it. ✅ Swept 48/64/80/96/112/128/160/200: the
+     site appears at 80 and the result set is IDENTICAL from 80 to 200, so
+     the window was widened to 96 with measured headroom and no
+     false-positive growth.
+
+⭐ How it was found: NOT by reading the scanner. cm_trade_test.lua deliberately
+stops the instant CM_TradeCheck decides, so the allow path's party write had
+never been observed here. tools/mgba_scripts/trade_party_write_trace.lua drives
+an ALLOWED trade to completion and puts a WRITE_CHANGE watchpoint on the slot;
+the writer reported itself in one run. *Photograph the running game.*
+
 ⚠️ WHAT THIS DOES AND DOES NOT PROVE. It proves the set of mon-sized
 copies into the party has not changed, and that they all go through known copy
 primitives. It does NOT prove each one is harmless -- that is what the verdicts
@@ -141,9 +168,47 @@ INVENTORY = {
                  "GiveMonToPlayer. Closed by retargeting all 49 callnative "
                  "operands to the wrapper; verify_artifacts.py check [8] "
                  "pins them"),
+
+    # --- found 2026-09-19 by the high-register fix + WINDOW 48 -> 96 ---
+    0x0018a860: ("EXEMPT",
+                 "the OTHER arm of the party reorder, sibling of 0x0018a8e4 "
+                 "and a separate function (they are split by the literal pool "
+                 "at 0x0818A8C4). memcpy(buffer, gPlayerParty, 600) at "
+                 "0x0818A868, then a 6-entry NIBBLE order array drives "
+                 "CopyMon(gPlayerParty + order[i]*100, buffer + i*100, 100) "
+                 "and the buffer is Free'd at 0x0818A8A4. A permutation: every "
+                 "mon written was in the party a moment earlier"),
+    0x001df426: ("UNVERIFIED",
+                 "RESTORES BOTH PARTIES from a caller-supplied 1200-byte "
+                 "buffer: 6 x CopyMon(gPlayerParty + i*100, buf + i*100, 100) "
+                 "interleaved with the same into gEnemyParty from buf + 600, "
+                 "after two zeroing calls (0x081A6E90 / 0x081A6EB0). Same "
+                 "SHAPE as the EXEMPT restore 0x0015efd4 in "
+                 "check_acquisition_paths.py, but the subsystem is NOT "
+                 "identified: single-caller chain 0x081DF414 <- 0x081DF46C <- "
+                 "0x081DF6A8 <- 0x081DF680 <- 0x081408CA, terminating at "
+                 "0x08140874, which has no BL callers and is reached only as a "
+                 "pointer from two callback tables (0x0814096C, 0x08140D6C). "
+                 "⚠️ 'restores a party from a buffer' is only harmless if the "
+                 "buffer always holds the PLAYER'S OWN party -- a rental or "
+                 "borrowed team loaded through the same routine would "
+                 "introduce species. GO LOOK; this is not a clean bill of "
+                 "health"),
+    0x00208786: ("GATED",
+                 "THE IN-GAME TRADE, and the site this whole fix exists for. "
+                 "CopyMon(&gPlayerParty[slot], &gEnemyParty[0], 100) at "
+                 "0x0820880E -- measured live 2026-09-19 with a WRITE_CHANGE "
+                 "watchpoint on the slot PID (pc=0x08368F28 inside CopyMon, "
+                 "lr=0x08208813, r0=gPlayerParty, r1=gEnemyParty, r2=100), "
+                 "party count 1 -> 1. ⭐ GATED at the SCRIPT level, not here: "
+                 "CM_TradeCheck runs in the per-trade wrapper before "
+                 "special 0x100/0x101 and refuses an off-roster received "
+                 "species, so this copy never executes for a mon the roster "
+                 "forbids (docs/ROUTINE_MAP.md's in-game trades section; live "
+                 "layer 4g). Nothing gates the copy ITSELF"),
 }
 
-WINDOW = 48
+WINDOW = 96
 BACK = 1024
 PRE = 32
 
@@ -292,6 +357,34 @@ def copies(b):
                     continue                              # adds rX,#imm
                 if (v & 0xFFC0) == 0x1C00 and ((v >> 3) & 7) in tracked:
                     tracked.add(v & 7); continue          # movs rD,rS
+                # ⭐⭐ THUMB FORMAT 5 -- HIGH REGISTERS. Everything above decodes
+                # only the 3-bit forms, i.e. r0-r7. A compiler is free to park a
+                # pointer in r8-r12, and this one does: Seaglass's in-game trade
+                # loads gPlayerParty into r2 and moves it to sl on the VERY NEXT
+                # instruction (`ldr r2,=gPlayerParty` @0x08208786 ; `mov sl,r2`
+                # @0x08208788), indexes it with `add sl,r3`, and calls
+                # CopyMon(&gPlayerParty[slot], &gEnemyParty[0], 100) 136 bytes
+                # later. Without this block the pointer leaves `tracked` two
+                # instructions after the load and the copy is invisible --
+                # measured live 2026-09-19 with a write watchpoint on the slot.
+                #   0100 01 op H1 H2 Rs Rd   op: 00 ADD, 01 CMP, 10 MOV
+                if 0x4400 <= v <= 0x46FF:
+                    op = (v >> 8) & 3
+                    rd = (v & 7) | ((v >> 4) & 8)
+                    rs = ((v >> 3) & 7) | ((v >> 3) & 8)
+                    if op != 1:                           # CMP writes nothing
+                        if op == 2:                       # MOV rD,rS
+                            tracked.add(rd) if rs in tracked else tracked.discard(rd)
+                            sized.add(rd) if rs in sized else sized.discard(rd)
+                            if rd == 2:
+                                r2_is_mon = 2 in sized
+                            if rd == 1:
+                                r1_is_imm = False
+                        else:                             # ADD rD,rS
+                            if rs in tracked or rd in tracked:
+                                tracked.add(rd)
+                            sized.discard(rd)
+                        continue
                 t = bl_target(b, k)
                 if t is not None:
                     if r2_is_mon and 0 in tracked and not r1_is_imm:
@@ -307,8 +400,11 @@ def copies(b):
                     # the window reads as a mon copy.
                     r2_is_mon = False
                     r1_is_imm = False
-                    sized -= {0, 1, 2, 3}
-                    tracked -= {0, 1, 2, 3}
+                    # r4-r11 are callee-saved under AAPCS, so a tracked
+                    # pointer parked in a high register SURVIVES the call --
+                    # only r0-r3 and r12 (ip) are clobbered.
+                    sized -= {0, 1, 2, 3, 12}
+                    tracked -= {0, 1, 2, 3, 12}
                     for r in (0, 1, 2, 3):
                         lit.pop(r, None)
                     continue
