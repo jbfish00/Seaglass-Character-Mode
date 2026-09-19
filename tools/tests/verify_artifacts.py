@@ -114,6 +114,10 @@ BL_EGG   = 0x188514              # egg-hatch caller (exempt, stays original)
 TRAMPOLINE_ADDR = 0x08470200
 GIVE_NATIVE = 0x081F2175
 BG_EVENT_PTR_OFF = 0x123ACC
+# Second activation point (2026-09-19): the bedroom cheat device, map 1.1 BG
+# event 3 at tile (3,1). See inject_character_mode.BEDROOM_BG_PTR_OFF.
+BEDROOM_BG_PTR_OFF = 0xA89A98
+ORIG_CHEAT_DEVICE  = 0x0830FBC9
 ORIG_CLIPBOARD = 0x08311CCB
 TRADE_JUNCTIONS = (0x29CFF5, 0x2AF873, 0x2B01EF, 0x30129E)
 TRADE_JUNCTION_BYTES = bytes([0x19,0x04,0x80,0x08,0x80, 0x19,0x05,0x80,0x0A,0x80,
@@ -185,7 +189,7 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 109  # +10: the PC-exit sweep, 5 checks x 2 sites (2026-09-07);
+EXPECT_CHECKS = 116  # +10: the PC-exit sweep, 5 checks x 2 sites (2026-09-07);
                      # +1: the COMPILED Battle Pyramid guard literal (2026-09-19)
 
 
@@ -274,6 +278,7 @@ def main():
 
     print("[3] diff containment")
     windows = [(BL_CATCH, 4), (BL_GIFT, 4), (BG_EVENT_PTR_OFF, 4),
+               (BEDROOM_BG_PTR_OFF, 4),
                (TRAMPOLINE_ADDR & 0x01FFFFFF, 8),
                (WILD_BL_SITE, 4), (WILD_TRAMPOLINE_ADDR & 0x01FFFFFF, 64 - 8),
                (0xED2200, 0x2000), (BITMAPS_ADDR & 0x01FFFFFF, NUM_CHARACTERS * BITMAP_STRIDE),
@@ -432,6 +437,28 @@ def main():
     # lockall(1) + loadword(6) + callstd 5(2) + compare 0x800D,1(5) = offset 14
     ok(patched[o + 14:o + 20] == bytes([0x06, 0x05]) + struct.pack("<I", ORIG_CLIPBOARD),
        "decline branch -> original clipboard preserved")
+
+    # [9a] the SECOND activation point: the bedroom cheat device. Same three
+    # properties, because a second entry that silently stopped working -- or
+    # that swallowed the object's own script -- would be invisible otherwise.
+    ok(struct.unpack_from("<I", orig, BEDROOM_BG_PTR_OFF)[0] == ORIG_CHEAT_DEVICE,
+       "bedroom BG ptr originally -> stock cheat-device script")
+    bed = struct.unpack_from("<I", patched, BEDROOM_BG_PTR_OFF)[0]
+    ok(0x08EE3800 <= bed < 0x08EE3B00,
+       f"bedroom BG ptr repointed into the entry-script block ({bed:#x})")
+    bo = bed & 0x01FFFFFF
+    ok(patched[bo] == 0x69, "bedroom stub starts lockall")
+    ok(patched[bo + 14:bo + 20]
+       == bytes([0x06, 0x05]) + struct.pack("<I", ORIG_CHEAT_DEVICE),
+       "bedroom decline branch -> stock cheat device preserved")
+    # ...and its accept path must jump INTO the clipboard entry's accepted
+    # path, so the two share one implementation rather than drifting apart.
+    ok(patched[bo + 20] == 0x05, "bedroom stub then gotos")
+    _acc = struct.unpack_from("<I", patched, bo + 21)[0]
+    ok(0x08EE3800 < _acc < bed,
+       f"bedroom accept -> inside the clipboard entry's accepted path ({_acc:#x})")
+    ok(patched[_acc & 0x01FFFFFF] == 0x23,
+       "and that target is the CM_OpenCodeEntry callnative")
 
     print("[9b] activation party sweep -- present, and AFTER the give")
     # The give idiom is callnative <CM_NativeGiveGated> + 10 inline arg bytes.

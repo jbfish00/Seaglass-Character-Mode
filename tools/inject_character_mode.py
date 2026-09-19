@@ -213,6 +213,19 @@ _LEG_MANIFEST = json.loads(
 LEGENDARY_COUNT = _LEG_MANIFEST["count"]
 
 BG_EVENT_PTR_OFF = 0x123ACC        # only ref to the clipboard script
+
+# ⭐ SECOND ACTIVATION POINT (2026-09-19, user request): the CHEAT DEVICE in the
+# player's bedroom, map 1.1 (Littleroot, player's house 2F), BG event 3 at
+# tile (3,1). Measured from the live map: the bedroom's four interactables are
+# the PC (0,1), the LEVEL CAPS settings sign (1,1), the wall clock (5,1) and
+# this cheat device (3,1) -- there is NO notebook object here, though the
+# vanilla notebook TEXT survives at 0x0829171F on an unreachable branch of the
+# PC script. The cheat device is the bedroom's own code terminal ("turned on
+# the CHEAT DEVICE! ... Would you like to enter a code?"), i.e. the exact
+# analogue of Radical Red's bedroom game console, so Character Mode rides it
+# the same way it rides the Oldale mart clipboard.
+BEDROOM_BG_PTR_OFF = 0xA89A98      # map 1.1 BG event 3 -> script pointer
+ORIG_CHEAT_DEVICE  = 0x0830FBC9    # the stock cheat-device script
 ORIG_CLIPBOARD   = 0x08311CCB
 
 # In-game trades (docs/ROUTINE_MAP.md): sIngameTrades 0x08A3DB30, stride 60,
@@ -552,6 +565,10 @@ def main():
         e += op_msgbox_yesno(addrs["t_prompt"])
         e += op_compare(0x800D, 1)
         e += op_goto_if(5, ORIG_CLIPBOARD)        # != yes -> original flow
+        # Everything from here on is the ACCEPTED path. The bedroom stub below
+        # jumps straight to it, so the two entry points share one code path and
+        # one set of strings -- a second copy would be a second thing to drift.
+        addrs["accept_here"] = len(e)
         e += op_callnative(hook_open)
         e += op_waitstate()
         e += op_callnative(hook_match)
@@ -590,12 +607,22 @@ def main():
         addrs["t_on_here"]     = len(e); e += txt["t_on"]
         addrs["t_off_here"]    = len(e); e += txt["t_off"]
         addrs["t_invalid_here"]= len(e); e += txt["t_invalid"]
+        # ---- bedroom cheat-device stub (second activation point) ----
+        # Same question, same texts, same accepted path; only the DECLINED
+        # target differs, because "No" must fall through to that object's own
+        # stock script rather than the clipboard's.
+        addrs["bedroom_here"] = len(e)
+        e += op_lockall()
+        e += op_msgbox_yesno(addrs["t_prompt"])
+        e += op_compare(0x800D, 1)
+        e += op_goto_if(5, ORIG_CHEAT_DEVICE)     # != yes -> stock cheat device
+        e += op_goto(addrs["accept"])
         return e
 
     base = SCRIPT_ADDR
     # pass 1: placeholder addrs -> measure block offsets
     ph = dict(t_prompt=base, t_on=base, t_off=base, t_invalid=base,
-              tail=base, give=base, off=base)
+              tail=base, give=base, off=base, accept=base)
     tmp = emit(ph)
     A = base
     addrs = dict(
@@ -606,10 +633,19 @@ def main():
         t_on     = A + ph["t_on_here"],
         t_off    = A + ph["t_off_here"],
         t_invalid= A + ph["t_invalid_here"],
+        accept   = A + ph["accept_here"],
     )
     script = emit(addrs)
     assert len(script) == len(tmp)
-    print(f"scripts: {len(script)} bytes @ {SCRIPT_ADDR:#x}")
+    BEDROOM_ENTRY = A + addrs["bedroom_here"]
+    # The blob must stay inside its own region: the trade wrappers start at
+    # TRADE_SCRIPT_ADDR and splice() would only notice a collision by accident.
+    assert SCRIPT_ADDR + len(script) <= TRADE_SCRIPT_ADDR, (
+        f"entry scripts ({len(script)} B) overrun into the trade wrappers "
+        f"at {TRADE_SCRIPT_ADDR:#x}")
+    print(f"scripts: {len(script)} bytes @ {SCRIPT_ADDR:#x} "
+          f"(bedroom entry @ {BEDROOM_ENTRY:#x}, "
+          f"{TRADE_SCRIPT_ADDR - (SCRIPT_ADDR + len(script))} B headroom)")
 
     # --- splice payloads ---
     def splice(rom_addr, payload, label):
@@ -781,6 +817,15 @@ def main():
     cur = struct.unpack_from("<I", data, BG_EVENT_PTR_OFF)[0]
     assert cur == ORIG_CLIPBOARD, f"BG ptr: {cur:#x} != {ORIG_CLIPBOARD:#x}"
     struct.pack_into("<I", data, BG_EVENT_PTR_OFF, SCRIPT_ADDR)
+
+    # second activation point: the bedroom cheat device
+    cur = struct.unpack_from("<I", data, BEDROOM_BG_PTR_OFF)[0]
+    assert cur == ORIG_CHEAT_DEVICE, (
+        f"bedroom BG ptr: {cur:#x} != {ORIG_CHEAT_DEVICE:#x} -- the bedroom "
+        f"map's BG event table has moved; re-derive BEDROOM_BG_PTR_OFF")
+    struct.pack_into("<I", data, BEDROOM_BG_PTR_OFF, BEDROOM_ENTRY)
+    print(f"bedroom cheat device -> CM entry {BEDROOM_ENTRY:#x} "
+          f"(was {ORIG_CHEAT_DEVICE:#x})")
 
     pat = struct.pack("<I", GIVE_NATIVE)
     sites = []

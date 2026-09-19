@@ -14,6 +14,21 @@ legally-obtained Seaglass v3.0 ROM.
 
 > **Character Mode is opt-in. Nothing in the game changes until you do this.**
 
+**There are two places you can do it. The bedroom one is available immediately.**
+
+### A. The CHEAT DEVICE in your bedroom ← easiest
+
+1. In your **bedroom** (upstairs in your own house, where you start), walk to
+   the **cheat device on the desk** — third object along the top wall, between
+   the settings notice and the wall clock.
+2. **Stand below it facing UP and press A.** You will be asked
+   **"Enter a Character Mode code?"**
+   - **No** → the stock cheat device ("turned on the CHEAT DEVICE!"), unchanged.
+   - **Yes** → the Character Mode keyboard.
+3. **Type your character's code** and confirm.
+
+### B. The clipboard in the Oldale Town Mart
+
 1. Go to the **Oldale Town Mart** (the first Poké Mart in the game) and walk to
    the **clipboard on the left-hand wall** — Nemo622's built-in GIFT CODE
    terminal. ⚠️ **This one clipboard only** — no other mart, shop or Pokémon
@@ -24,6 +39,9 @@ legally-obtained Seaglass v3.0 ROM.
      unchanged. Typing a character name there does nothing.
    - **Yes** → the Character Mode keyboard.
 3. **Type your character's code** and confirm.
+
+Both routes run the same code and accept the same codes — use whichever is
+closer.
 
 ⚠️ **The keyboard is headed "Enter Gift Code:"** — it looks identical to the
 game's own gift-code screen. That is the right screen; the heading is reused.
