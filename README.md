@@ -10,6 +10,28 @@ to your PC instead of your party.
 This is a fan project distributed **only as a patch**. You must supply your own
 legally-obtained Seaglass v3.0 ROM.
 
+## ▶️ How to turn Character Mode on
+
+> **Character Mode is opt-in. Nothing in the game changes until you do this.**
+
+1. Go to the **clipboard inside the Poké Mart** — Nemo622's built-in GIFT CODE
+   terminal, the same one the game's own codes use.
+2. Interact with it. You will be asked **"Enter a Character Mode code?"**
+   - **No** → the game's original gift-code screen, unchanged.
+   - **Yes** → a code-entry keyboard.
+3. **Type your character's code** and confirm.
+
+**Your code** is the character's name with spaces and punctuation removed —
+`Cynthia`, `LtSurge`, `Red`. Case does not matter.
+📋 **Full list: [Character codes](#character-codes)** (114 selectable).
+
+**You will know it worked:** a confirmation message naming your character —
+with their portrait beside it — and their signature starter.
+
+**To turn it back off:** enter the code **`CMDBGOFF`** at the same clipboard.
+
+---
+
 ## Installing
 
 1. Get a Seaglass v3.0 ROM (the file this patch was built against — see below).
@@ -29,22 +51,9 @@ will fail or corrupt.
 > Character Mode active you'll find it reads as off: just re-enter your
 > character's code once at the mart clipboard and it stays on for good.
 
-## Turning Character Mode on
+## What happens after you activate
 
-Character Mode is **opt-in** — a normal playthrough is untouched until you
-activate it. To activate:
-
-1. Find the **cheat clipboard** (Nemo622's built-in GIFT CODE terminal — the
-   same one the game's own codes use).
-2. Interact with it. You'll now be asked **"Enter a Character Mode code?"**
-   - Choose **No** to use the game's original gift-code screen as normal.
-   - Choose **Yes** to open a code-entry keyboard.
-3. Type a **character code** from the tables below (case doesn't matter) and
-   confirm.
-4. You'll get a confirmation message and that character's **signature starter**.
-   From then on, only that character's roster can enter your party.
-
-To switch off, enter the code **`CMDBGOFF`**.
+Only your character's roster can enter your party.
 
 ### How enforcement works
 - **Catching** an off-roster Pokemon: it goes straight to your PC, not your
