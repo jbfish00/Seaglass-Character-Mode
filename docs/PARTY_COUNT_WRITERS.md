@@ -143,7 +143,11 @@ has two halves: **a routine that writes a mon into the party without touching
 the count is invisible to the count inventory**, whether it is benign or not.
 Read the two together; neither is sufficient alone.
 
-## 8 inventoried copy site(s)
+## 10 inventoried copy site(s)
+
+### `0x0808040a` (file `0x0008040a`) -- **UNVERIFIED**
+
+LINK MULTI-BATTLE PARTY ASSEMBLY, and the reason the size rule below accepts k*MON_SIZE. `movs r2,#200 ; mov r1,r9 ; ldr r0,=gPlayerParty ; bl CopyMon` at 0x08080406 writes gPlayerParty[0..1] from a link receive buffer, and the sibling arm at 0x0808041C writes gPlayerParty[2] (pool 0x0808052C = 0x02019CE8 = party + 200); the enemy pools 0x02019E78/0x02019F40 sit beside them. Reached through the jump table at 0x08080324 from the state machine entered at 0x08080004. ⚠️ THIS IS THE SHAPE PLATINUM'S LESSON #1 FOUND AS A REAL UNGATED PATH (the link trade and the GTS): mons arriving into party slots from ANOTHER CONSOLE. The save/restore pair at 0x081DF714 / 0x081DF744 plausibly brackets it and puts the player's own party back, but THAT IS NOT PROVEN HERE. GO LOOK
 
 ### `0x081df426` (file `0x001df426`) -- **UNVERIFIED**
 
@@ -176,6 +180,10 @@ PARTY REORDER (the party-menu 'switch order' apply step). 0x0818A8CC allocates 6
 ### `0x081c32d8` (file `0x001c32d8`) -- **EXEMPT**
 
 CompactPartySlots. 0x081C32C4 walks the 6 slots calling GetMonData(mon, 18 /* species */); on a non-empty slot it memcpy's that mon down to the first free index when the two differ, fixes up the stored cursor index when it points at the mon that moved, and zeroes the tail. Closes holes in the array; introduces nothing
+
+### `0x081df74e` (file `0x001df74e`) -- **EXEMPT**
+
+the RESTORE half of a party save/restore pair over FIXED EWRAM buffers: 0x081DF714 memcpy's gPlayerParty (600 B) to 0x0201ACD8 and gEnemyParty to 0x0201AF30; 0x081DF744 copies both straight back (pools 0x081DF764 = 0x0201ACD8 -> 0x081DF768 = gPlayerParty). Restores the player's OWN party from a buffer this same module filled from that same party. ⭐ Invisible until size_seed learned k*MON_SIZE -- it is one 600-byte memcpy, not six 100-byte ones
 
 ## 2 site(s) removed as NOT-A-COPY (2026-09-04)
 

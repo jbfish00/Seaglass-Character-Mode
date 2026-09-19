@@ -79,6 +79,20 @@ never been observed here. tools/mgba_scripts/trade_party_write_trace.lua drives
 an ALLOWED trade to completion and puts a WRITE_CHANGE watchpoint on the slot;
 the writer reported itself in one run. *Photograph the running game.*
 
+⭐⭐ AND A THIRD FAULT IN THE SIZE PRIMITIVE, found the same day by chasing the
+UNVERIFIED verdict on 0x001df426: THE COPY NEED NOT BE ONE MON. The scan
+accepted r2 == MON_SIZE and nothing else, so a WHOLE-PARTY memcpy (600 B) and a
+TWO-MON memcpy (200 B) into gPlayerParty were both invisible -- the party
+save/restore pair at 0x081DF714/0x081DF744, and the link multi-battle party
+assembly at 0x08080406. size_seed now accepts k*MON_SIZE and decodes the
+`movs rD,#150 ; lsls rD,rD,#2` idiom that builds 600.
+
+⚠️ **It seeds r2 ONLY for k >= 2, and that restriction is load-bearing.** The
+docstring above records that seeding r2 at all turned 1 new site into 20, every
+one a leftover of the party-slot stride multiply `movs r2,#100 ; muls r0,r2` --
+which leaves exactly MON_SIZE. A bulk size CANNOT be that leftover, so k >= 2 is
+safe by construction. ✅ Measured: 8 sites -> 10, and both new ones are real.
+
 ⚠️ WHAT THIS DOES AND DOES NOT PROVE. It proves the set of mon-sized
 copies into the party has not changed, and that they all go through known copy
 primitives. It does NOT prove each one is harmless -- that is what the verdicts
@@ -194,6 +208,30 @@ INVENTORY = {
                  "borrowed team loaded through the same routine would "
                  "introduce species. GO LOOK; this is not a clean bill of "
                  "health"),
+    0x0008040a: ("UNVERIFIED",
+                 "LINK MULTI-BATTLE PARTY ASSEMBLY, and the reason the size "
+                 "rule below accepts k*MON_SIZE. `movs r2,#200 ; mov r1,r9 ; "
+                 "ldr r0,=gPlayerParty ; bl CopyMon` at 0x08080406 writes "
+                 "gPlayerParty[0..1] from a link receive buffer, and the "
+                 "sibling arm at 0x0808041C writes gPlayerParty[2] "
+                 "(pool 0x0808052C = 0x02019CE8 = party + 200); the enemy "
+                 "pools 0x02019E78/0x02019F40 sit beside them. Reached through "
+                 "the jump table at 0x08080324 from the state machine entered "
+                 "at 0x08080004. ⚠️ THIS IS THE SHAPE PLATINUM'S LESSON #1 "
+                 "FOUND AS A REAL UNGATED PATH (the link trade and the GTS): "
+                 "mons arriving into party slots from ANOTHER CONSOLE. The "
+                 "save/restore pair at 0x081DF714 / 0x081DF744 plausibly "
+                 "brackets it and puts the player's own party back, but THAT "
+                 "IS NOT PROVEN HERE. GO LOOK"),
+    0x001df74e: ("EXEMPT",
+                 "the RESTORE half of a party save/restore pair over FIXED "
+                 "EWRAM buffers: 0x081DF714 memcpy's gPlayerParty (600 B) to "
+                 "0x0201ACD8 and gEnemyParty to 0x0201AF30; 0x081DF744 copies "
+                 "both straight back (pools 0x081DF764 = 0x0201ACD8 -> "
+                 "0x081DF768 = gPlayerParty). Restores the player's OWN party "
+                 "from a buffer this same module filled from that same party. "
+                 "⭐ Invisible until size_seed learned k*MON_SIZE -- it is one "
+                 "600-byte memcpy, not six 100-byte ones"),
     0x00208786: ("GATED",
                  "THE IN-GAME TRADE, and the site this whole fix exists for. "
                  "CopyMon(&gPlayerParty[slot], &gEnemyParty[0], 100) at "
@@ -276,12 +314,31 @@ def size_seed(b, i):
     hand were all leftovers of that multiply.
     """
     s = set()
+    imm = {}
+    bulk = [False]
     for k in range(max(0, i - PRE * 2), i, 2):
         v = u16(b, k)
         if (v & 0xF800) == 0x2000:                       # movs rD,#imm
             d, imm8 = (v >> 8) & 7, v & 0xFF
+            imm[d] = imm8
+            if d == 2 and imm8 % MON_SIZE == 0 and 2 <= imm8 // MON_SIZE <= 6:
+                bulk[0] = True
+            elif d == 2:
+                bulk[0] = False
             if d >= 4:
                 s.add(d) if imm8 == MON_SIZE else s.discard(d)
+        elif (v & 0xF800) == 0x0000 and ((v >> 6) & 0x1F):   # lsls rD,rS,#n
+            d, sr, sh = v & 7, (v >> 3) & 7, (v >> 6) & 0x1F
+            val = imm.get(sr, 0) << sh
+            imm[d] = val
+            if d >= 4:
+                s.add(d) if val == MON_SIZE else s.discard(d)
+        elif (v & 0xFFC0) == 0x0000 and v != 0:
+            d, sr = v & 7, (v >> 3) & 7
+            if d == 2:
+                _val = imm.get(sr)
+                bulk[0] = (_val is not None and _val % MON_SIZE == 0
+                           and 2 <= _val // MON_SIZE <= 6)
         elif (v & 0xFFC0) == 0x0000 and v != 0:          # movs rD,rS (lsls #0)
             d, sr = v & 7, (v >> 3) & 7
             if d >= 4:
@@ -292,7 +349,7 @@ def size_seed(b, i):
               or (v & 0xF800) == 0xF000 or (v & 0xFF00) == 0x4700
               or (v & 0xFF00) == 0xBD00):
             s.clear()          # control can arrive here from anywhere else
-    return s
+    return s, bulk[0]
 
 
 def copies(b):
@@ -315,7 +372,9 @@ def copies(b):
             if (((i + 4) & ~3) + imm * 4) != pool:
                 continue
             tracked, r2_is_mon = {rX}, False
-            sized = size_seed(b, i)
+            sized, _bulk = size_seed(b, i)
+            if _bulk:
+                r2_is_mon = True
             r1_is_imm = False
             lit = {}                              # rN -> last pc-relative value
             for k in range(i + 2, min(i + 2 + WINDOW * 2, len(b) - 3), 2):

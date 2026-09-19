@@ -67,7 +67,7 @@ def run(path):
 
 # How many tamper cases this negative test must run. A deliberate
 # LITERAL -- see cm_tally.assert_cases.
-EXPECT_CASES = 10
+EXPECT_CASES = 11
 
 
 def main():
@@ -167,6 +167,16 @@ def main():
         else:
             case("narrowing the scan window back to 48 fails", 1,
                  src[:mw.start(1)] + "48" + src[mw.end(1):])
+
+        # The third fault: a copy need not be ONE mon. Disabling the bulk
+        # (k*MON_SIZE) seed hides the 600 B party restore and the 200 B link
+        # multi-battle assembly.
+        if "if _bulk:" not in src:
+            print("  FAIL  the bulk-size seed is gone")
+            fails.append("tamper 10")
+        else:
+            case("dropping the bulk (k*MON_SIZE) size seed fails", 1,
+                 src.replace("if _bulk:", "if False and _bulk:", 1))
 
         case("control: the real inventory still passes", 0)
     finally:
