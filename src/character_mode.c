@@ -479,6 +479,32 @@ void CM_SweepPartyToPCNative(void)
 
         if (species == 0)
             continue;
+        /* ⭐ DELIBERATE, and MEASURED -- an EGG satisfies this rule, so the
+         * sweep can leave the player holding NOTHING BUT AN EGG.
+         *
+         * Reachable in ordinary play: party [signature, off-roster, egg] ->
+         * deposit the signature (the engine allows it, the off-roster mon is
+         * still able) -> exit the PC -> this sweep boxes the off-roster mon ->
+         * party [egg]. Gen 3's own storage refuses to deposit your last
+         * battle-capable mon, but that check happens at DEPOSIT time and this
+         * runs afterwards, calling the PC routine directly -- so it can produce
+         * a party state the engine itself forbids.
+         *
+         * ⭐ WHAT ACTUALLY HAPPENS WAS MEASURED, live, 2026-09-18 (see
+         * ../docs/EGG_ONLY_PARTY.md and rowe_parity.md §13.48): the engine
+         * sends the egg out and the battle is FULLY PLAYABLE -- "Go! Egg!",
+         * "Egg Lv1 HP 11/11", Run gives "Got away safely!", Fight offers a real
+         * move. No crash, no hang, no softlock, always escapable. The only real
+         * cost is a SPOILER: the battle exposes the unhatched egg's gender,
+         * level, HP and move list, and the move identifies the species.
+         *
+         * 🔴 THE USER DECIDED (2026-09-18): DOCUMENT THE CORNER AND LEAVE IT.
+         * Do NOT "fix" this by requiring a non-egg kept mon. That is not a bug
+         * fix, it is a TRADE-OFF: the sweep would then keep an OFF-ROSTER mon
+         * in the party rather than create an egg-only party, i.e. enforcement
+         * would deliberately lose in this corner to prevent a cosmetic spoiler
+         * the player has to construct on purpose. That trade was considered and
+         * rejected. Present in all five games including ROWE, the reference. */
         if (GetMonData(mon, MON_DATA_IS_EGG, 0) || onRoster(me, species))
             kept = 1;
     }
