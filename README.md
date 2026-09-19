@@ -14,12 +14,19 @@ legally-obtained Seaglass v3.0 ROM.
 
 > **Character Mode is opt-in. Nothing in the game changes until you do this.**
 
-1. Go to the **clipboard inside the Poké Mart** — Nemo622's built-in GIFT CODE
-   terminal, the same one the game's own codes use.
-2. Interact with it. You will be asked **"Enter a Character Mode code?"**
-   - **No** → the game's original gift-code screen, unchanged.
-   - **Yes** → a code-entry keyboard.
+1. Go to the **Oldale Town Mart** (the first Poké Mart in the game) and walk to
+   the **clipboard on the left-hand wall** — Nemo622's built-in GIFT CODE
+   terminal. ⚠️ **This one clipboard only** — no other mart, shop or Pokémon
+   Center has it.
+2. **Stand next to it facing LEFT and press A.** You will be asked
+   **"Enter a Character Mode code?"**
+   - **No** → the game's original gift-code screen (an Easy Chat word picker),
+     unchanged. Typing a character name there does nothing.
+   - **Yes** → the Character Mode keyboard.
 3. **Type your character's code** and confirm.
+
+⚠️ **The keyboard is headed "Enter Gift Code:"** — it looks identical to the
+game's own gift-code screen. That is the right screen; the heading is reused.
 
 **Your code** is the character's name with spaces and punctuation removed —
 `Cynthia`, `LtSurge`, `Red`. Case does not matter.
