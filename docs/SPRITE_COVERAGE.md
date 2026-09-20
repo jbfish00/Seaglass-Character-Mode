@@ -556,3 +556,54 @@ order, commands, traps and attribution obligations live in **`SPRITE_PLAN.md` at
 workspace root** (`/home/jbfish00/Documents/Character Hacks/SPRITE_PLAN.md`).
 Read that first when picking up sprite work in a fresh session; it is to sprites what
 `CHARACTER_ROSTER_PLAN.md` is to rosters.
+
+## 2026-07-26 — PHASE 3 SHIPPED HERE: portraits render at character-select confirm
+
+Everything above this section describes *sourcing and wiring* work; this repo now
+has a render surface, closing the "nothing renders yet" gap the 2026-07-25 Radical
+Red entry left open. Commit `d842045`. Full RE writeup lives in this repo's own
+`CLAUDE.md` (2026-07-26 status block); the summary:
+
+- `src/character_sprite.c` (304 B, `0x08F42000`) is called from two `callnative`
+  hooks bracketing the give-block confirm message. On selection it reads
+  `VAR_CM_CHAR`, indexes the injected sprite-pointer table, and draws a 64x64
+  portrait at (192, 48) via the engine's own
+  `LoadCompressedSpritePalette`/`LoadCompressedSpriteSheet`/`CreateSprite` — the
+  same primitives a battle-intro trainer pic uses. Deactivation frees the sprite.
+  **No engine table is touched** — this is purely additive, same as Radical Red's
+  data path.
+- `verify_artifacts.py` section 15 re-locates the SpriteTemplate in the built ROM
+  and re-derives both `callnative` operands from the built binary, not from source
+  text.
+
+**Regenerate the numbers below with `python3 tools/character_mode/emit_sprite_table.py`
+— it recomputes from the current 193-character roster and is checked into the repo
+byte-for-byte reproducible (confirmed 2026-09-19, no diff on a clean re-run).**
+
+### Current coverage (2026-09-19, 193-character roster — supersedes every count above)
+
+**156 of 193 characters (81%) have a portrait; 37 do not.**
+
+| source | count |
+|---|---|
+| `rogue` (Pokabbie/pokeemerald-rogue) | 139 |
+| `taar` (Team Aqua's Asset Repo) | 9 |
+| `pokesho` | 2 |
+| `ashgray` | 4 |
+| `hns` | 1 |
+| `dollsteak` | 1 |
+
+No portrait (37): Ash, Kris, Tate, Maxie, Archie, Paul, Zoey, Nando, Colress,
+Alain, Sawyer, Guzma, Plumeria, Lusamine, Rose, Goh, Chloe, Elm, Birch, Rowan,
+Juniper, Sycamore, Burnet, Samson Oak, Sonia, Laventon, Cerise, Volo, Tobias,
+Anabel, Brandon, Greta, Lucy, Noland, Spenser, Tucker, Dahlia.
+
+⚠️ **Seven of those 37 are the Frontier Brains** (Anabel, Brandon, Greta, Lucy,
+Noland, Spenser, Tucker), even though the 2026-07-24 correction above found they
+already have engine-native `TRAINER_PIC_*` art needing no sourcing at all.
+`emit_sprite_table.py` only draws from the staged `sprites/donors/` blobs, not
+from a reference into the engine's own trainer-pic table — so engine-native
+coverage found by survey is not the same as coverage this renderer actually
+uses. Wiring the Brains (and any other engine-native character) in would mean
+teaching the injector to emit a table entry that points at the existing
+in-ROM trainer pic instead of a copied blob, which is unstarted.

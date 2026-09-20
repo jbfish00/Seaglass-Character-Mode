@@ -113,6 +113,11 @@ typedef unsigned int u32;
 #define FlagGet         ((u8   (*)(u16))                 0x0810D35D)
 #define GetVarPointer   ((u16 *(*)(u16))                 0x0810D0C1)
 #define GetMonData      ((u32  (*)(void *, int, void *)) 0x081A94AD)
+/* SetMonData: same RE pass as GetMonData/GiveMonToPlayer (docs/ROUTINE_MAP.md,
+   2026-07-16), standard pokeemerald-family signature. Used for the first time
+   in this file by the starter-substitution fix below -- see its own comment
+   for why only MON_DATA_SPECIES is touched, never MON_DATA_NICKNAME. */
+#define SetMonData      ((void (*)(void *, int, const void *)) 0x081A9CA1)
 #define GiveMonToPlayer ((u8   (*)(void *))              0x081AA5AD)
 #define CopyMonToPC     ((u8   (*)(void *))              0x081AA621)
 #define DoNamingScreen  ((void (*)(u8, u8 *, u16, u16, u32, void (*)(void))) 0x08174415)
@@ -400,15 +405,73 @@ void CM_BattleStringGated(const u8 *src, u8 *dst)
 /* --- 3. acquisition gate --- */
 u8 CM_GiveMonToPlayerGated(void *mon)
 {
-    if (gateActive() && gPlayerPartyCount != 0
-     && !GetMonData(mon, MON_DATA_IS_EGG, 0)) {
+    /* ⚠️ 2026-09-19: this used to also require `gPlayerPartyCount != 0`,
+     * i.e. skip enforcement entirely whenever this would be the player's
+     * very first Pokemon -- the SAME bug class just found and fixed in
+     * CM_NativeGiveGated below, on the catch/script-gift path instead of
+     * the native-give path. This one is actually the SAFER of the two to
+     * fix: nothing has been written into the party yet at this point, so
+     * routing an off-roster first-ever mon to CopyMonToPC() just means
+     * nothing lands in the (already-empty) party, not that something has
+     * to be reversed out of it. */
+    if (gateActive() && !GetMonData(mon, MON_DATA_IS_EGG, 0)) {
         u32 species = GetMonData(mon, MON_DATA_SPECIES, 0);
         /* "Offered until caught": retire this legendary from the 1%% roll.
            Done BEFORE the roster branch so it lands whether the mon joins the
            party or is routed to the PC -- it is caught either way. */
         markCaught(species);
-        if (!onRoster(*GetVarPointer(VAR_CM_CHAR), species))
+        if (!onRoster(*GetVarPointer(VAR_CM_CHAR), species)) {
+            /* 2026-09-20, user request: rather than route the player's
+             * very first Pokemon to the PC (leaving them with none for
+             * whatever forced encounter follows), turn it INTO the active
+             * character's own signature species instead -- so there is
+             * never an off-roster mon to begin with, on this path.
+             *
+             * SPECIES ONLY. Swapping species after the mon is already built
+             * is not risk-free: MON_DATA_NICKNAME's real field number for
+             * THIS ROM is NOT confirmed (the donor's ordinal, 16, is proven
+             * untrustworthy past this point -- MON_DATA_IS_EGG sits at 54 in
+             * the donor and 52 here, a confirmed divergence). Guessing wrong
+             * on a nickname write risks corrupting the mon's checksum into a
+             * Bad Egg. MON_DATA_SPECIES=18 is independently confirmed for
+             * this ROM and already exercised by every gate in this file, so
+             * only that field is touched. Consequence, accepted rather than
+             * silently hidden: the mon can show the ORIGINAL species' name
+             * in the party screen until renamed, and keeps whatever starting
+             * move(s) the original species would have had. Nicknaming and
+             * move recalculation are a follow-up, not done here.
+             *
+             * ⭐ LIVE-VERIFIED (2026-09-20), not just "should work": drove the
+             * real CMDBGGIVE2 debug code through the actual naming-screen UI
+             * from a genuinely emptied party (count AND slot bytes both
+             * zeroed -- an earlier pass of this same test faked only the
+             * count, leaving real Torchic bytes in an allegedly-empty slot,
+             * which produced a nonsensical result that was a test-setup bug,
+             * not a code bug). Breakpointed the SetMonData call site directly:
+             * args were exactly (mon, 18, &25) for a Red/Pikachu run. A
+             * hand-rolled Python re-implementation of the Gen3 decrypt+
+             * checksum first appeared to show the write had NOT taken (wrong
+             * species read back) -- but its checksum matched anyway, which
+             * turned out to mean the substruct permutation table it used was
+             * subtly wrong for this fork's struct layout, not that the game
+             * was. The authoritative check is the ENGINE'S OWN GetMonData,
+             * read live via a breakpoint inside CM_SweepPartyToPCNative's own
+             * pre-scan (which calls it on this exact mon moments later): it
+             * reported species 25, matching sStarters[0] exactly, and the
+             * sweep then correctly classified the mon as on-roster and kept
+             * it. Trust the engine's accessor over a hand-rolled one. */
+            if (gPlayerPartyCount == 0) {
+                u16 charId = *GetVarPointer(VAR_CM_CHAR);
+                u16 ace = sStarters[charId - 1];
+
+                if (ace != 0) {
+                    SetMonData(mon, MON_DATA_SPECIES, &ace);
+                    markCaught(ace);
+                    return GiveMonToPlayer(mon);
+                }
+            }
             return CopyMonToPC(mon);
+        }
     }
     return GiveMonToPlayer(mon);
 }
@@ -424,18 +487,48 @@ void CM_NativeGiveGated(void *ctx)
     if (!gateActive())
         return;
     after = gPlayerPartyCount;
-    if (after > before && after >= 2) {
+    /* ⚠️ 2026-09-19: this used to require `after >= 2`, which silently
+     * skipped the WHOLE check -- no onRoster test, no markCaught -- whenever
+     * the gift was the player's very first Pokemon (party 0->1). That state
+     * was unreachable before today's bedroom-cheat-device activation point
+     * (the only other entry, the mart clipboard, is unreachable before the
+     * player already has a starter), so the bug existed since this gate was
+     * written (2026-07-17) but nothing had ever exercised it. User-reported
+     * live: activate via the bedroom device before ever owning a Pokemon,
+     * then receive an off-roster gift as your first mon -- it was kept
+     * unconditionally. First fix boxed it like any other off-roster gift;
+     * superseded the same day (below) by species substitution instead, so
+     * the party is never left empty in the first place. */
+    if (after > before) {
         u8 *mon = gPlayerParty + (after - 1) * MON_SIZE;
         if (!GetMonData(mon, MON_DATA_IS_EGG, 0)) {
             u32 species = GetMonData(mon, MON_DATA_SPECIES, 0);
             markCaught(species);           /* script gifts retire it too */
-            if (!onRoster(*GetVarPointer(VAR_CM_CHAR), species)
-             && CopyMonToPC(mon) == 1) {   /* boxes full -> stays in party */
-                int j;
-                for (j = 0; j < MON_SIZE; j++)
-                    mon[j] = 0;
-                gPlayerPartyCount = after - 1;
-                *GetVarPointer(VAR_RESULT) = 1; /* "transferred to the PC" tail */
+            if (!onRoster(*GetVarPointer(VAR_CM_CHAR), species)) {
+                /* 2026-09-20: same substitution as CM_GiveMonToPlayerGated
+                 * above, live-verified there via engine GetMonData through a
+                 * breakpoint in this same sweep's pre-scan (see that comment)
+                 * -- if this gift is the player's only Pokemon, turn it into
+                 * the character's own signature species (species field only;
+                 * nickname/moves are left alone, same reasoning) instead of
+                 * boxing it and leaving the party empty. */
+                if (after == 1) {
+                    u16 charId = *GetVarPointer(VAR_CM_CHAR);
+                    u16 ace = sStarters[charId - 1];
+
+                    if (ace != 0) {
+                        SetMonData(mon, MON_DATA_SPECIES, &ace);
+                        markCaught(ace);
+                        return;
+                    }
+                }
+                if (CopyMonToPC(mon) == 1) {   /* boxes full -> stays in party */
+                    int j;
+                    for (j = 0; j < MON_SIZE; j++)
+                        mon[j] = 0;
+                    gPlayerPartyCount = after - 1;
+                    *GetVarPointer(VAR_RESULT) = 1; /* "transferred to the PC" tail */
+                }
             }
         }
     }

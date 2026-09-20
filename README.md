@@ -83,11 +83,30 @@ Only your character's roster can enter your party.
 ### How enforcement works
 - **Catching** an off-roster Pokemon: it goes straight to your PC, not your
   party.
-- **Gift Pokemon** (story/NPC gifts): off-roster gifts go to the PC.
+- **Gift Pokemon** (story/NPC gifts): off-roster gifts go to the PC — *unless*
+  it would be your very first Pokemon (e.g. you activated Character Mode from
+  the bedroom device before ever getting a starter). In that one case the
+  gift's species is swapped for your character's own signature Pokemon
+  instead of being sent away, so you're never left with an empty party. Its
+  nickname and starting move(s) may still reflect the original species until
+  you rename it or level it up.
 - **In-game trades** (DOTS/PLUSES/SEASOR/MEOWOW): if the offered Pokemon isn't
   in your character's roster, the trade is politely declined.
-- **Eggs** are exempt (they hatch normally), and anything already in your party
-  when you switch characters is left alone (grandfathered).
+- **PC Box withdrawals**: closing the PC re-runs the same party check that
+  runs at activation. If you withdraw an off-roster Pokemon and then exit the
+  PC, it gets sent right back to your box on the spot — off-roster Pokemon
+  can't be smuggled into your party this way.
+- **Eggs** are exempt (they hatch normally). One known, deliberate corner
+  case: if your party is down to an off-roster mon plus an unhatched egg,
+  the PC-exit sweep can leave you holding *only* the egg — see
+  `docs/EGG_ONLY_PARTY.md`. It's fully playable (the egg can battle and flee
+  normally); the only real cost is a minor spoiler about the egg's species.
+- **Switching characters (including turning Character Mode on for the first
+  time) sweeps your current party**: anything you already own that isn't an
+  egg and isn't on the *new* character's roster is moved to your PC on the
+  spot, the moment you confirm the code. You will never be left with zero
+  Pokemon — if everything in your party would otherwise be swept, one
+  off-roster mon is left behind rather than emptying your party entirely.
 
 ## Character codes
 
@@ -265,12 +284,17 @@ saves still load correctly; they simply cannot be chosen.
 
 ## Notes & limitations
 
-- **Sprites**: characters use the default player appearance — no per-character
-  overworld/battle sprites are installed (GBA-style art doesn't exist for the
-  3D-era Gen 6–9 characters, so none ship for consistency). Selection is
-  text-only.
-- **Grandfathering**: switching characters mid-game does not remove Pokemon you
-  already have; enforcement only applies to *new* acquisitions.
+- **Sprites**: 156 of the 193 characters (114 selectable + hidden slots) have a
+  64x64 portrait that draws beside the confirmation message when you select
+  them — see "How to turn Character Mode on" above. The remaining 37 (no GBA-
+  style art exists for them, mostly 3D-era Gen 6–9 characters and a few anime
+  cast members) show the confirmation text with no portrait. This is a
+  character-select portrait only — the player's own overworld and battle
+  sprites never change, regardless of which character you pick.
+- **Switching characters**: your current party is swept against the new
+  character's roster at the moment you activate (see "How enforcement works"
+  above) — it is not a one-time grandfather clause. Anything already sitting
+  in your PC boxes is left alone either way; only the active party is checked.
 - This modifies only free space and a handful of hooks; the base game plays
   identically with Character Mode off.
 
