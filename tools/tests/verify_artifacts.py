@@ -161,6 +161,14 @@ LEGENDARY_ADDR = _injector_addr("LEGENDARY_ADDR")
 _LEG = json.loads((ROOT / "tools" / "character_mode"
                    / "legendaries_manifest.json").read_text())
 LEGENDARY_COUNT = _LEG["count"]
+
+# In-game roster display (check [18]). Same rule as the legendary table above,
+# and it paid off the same way: this blob's first build reported 4,005 stray
+# bytes in diff containment, which is the ONLY symptom an unregistered region
+# produces.
+ROSTER_ROOTS_ADDR = _injector_addr("ROSTER_ROOTS_ADDR")
+_ROOTS = json.loads((ROOT / "tools" / "character_mode"
+                     / "roster_roots_manifest.json").read_text())
 # The flags array is SB1+0x13C0..0x14EB (vars start at 0x14EC), so flags above
 # 0x95F do not exist at all.
 FLAG_SPACE_END = 0x95F
@@ -189,8 +197,9 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 116  # +10: the PC-exit sweep, 5 checks x 2 sites (2026-09-07);
+EXPECT_CHECKS = 125  # +10: the PC-exit sweep, 5 checks x 2 sites (2026-09-07);
                      # +1: the COMPILED Battle Pyramid guard literal (2026-09-19)
+                     # +9: [19] the roster display's family-roots blob (2026-09-20)
 
 
 def ok(cond, msg):
@@ -288,6 +297,12 @@ def main():
                (WILDPOOL_ADDR & 0x01FFFFFF, NUM_CHARACTERS * WILDPOOL_STRIDE * 4),
                (LEGENDARY_ADDR & 0x01FFFFFF,
                 LEGENDARY_COUNT * 4 + NUM_CHARACTERS * 4),
+               # roster display roots: entry table + one u16 per root. Sized
+               # from the manifest and NUM_CHARACTERS, not from the .bin's own
+               # length, so a short blob cannot widen its own window.
+               (ROSTER_ROOTS_ADDR & 0x01FFFFFF,
+                NUM_CHARACTERS * _ROOTS["entry_size_bytes"]
+                + _ROOTS["total_roots"] * 2),
                (CM_SPRITE_BLOBS_ADDR & 0x01FFFFFF, len(_spr_blobs)),
                (CM_SPRITE_PTRS_ADDR & 0x01FFFFFF, len(_spr_ptrs)),
                (CM_MUGSHOT_ADDR & 0x01FFFFFF, _mugshot_len),
@@ -819,6 +834,116 @@ def main():
     ok(_lg_tob is None or not _lg_tob["roster_species_ids"][_lg_tob["starter_count"]:],
        "Tobias's legendary mask is empty -- his Latios stays repeatable via the "
        "pool rather than being retired on catch by the 1% roll")
+
+    print("[19] in-game roster display: family roots")
+    # ⚠️ Every local here is _rr*-prefixed, same reason as section 15's _mug*
+    # and section 16's _fp*: a bare `_p` shadows the module-level PASS COUNTER.
+    #
+    # Re-derived from characters_manifest.json, never read back from the .bin --
+    # a blob checked against itself agrees by construction. The dedup the
+    # emitter applies is re-applied here independently; if the two ever disagree
+    # the entry table stops lining up and every later character fails, which is
+    # the loud failure an off-by-one in a packed table should produce.
+    _rr_file = (CM / "roster_roots.bin").read_bytes()
+    _rr_off = ROSTER_ROOTS_ADDR & 0x01FFFFFF
+    ok(patched[_rr_off:_rr_off + len(_rr_file)] == _rr_file,
+       f"roster roots in-ROM == roster_roots.bin ({len(_rr_file)} B)")
+    # ⭐ EVERY STRUCTURAL CHECK BELOW READS THE BUILT ROM, NOT THE .bin.
+    # The first cut read _rr_file throughout and the negative test caught it
+    # immediately: seven of nine checks could not be made to fail by corrupting
+    # the ROM, because they were re-deriving the manifest against the very file
+    # the ROM was built from. Same shape as check [16] and the Battle Pyramid
+    # guard -- assert on what SHIPPED, not on the input that produced it.
+    _rr_blob = patched[_rr_off:_rr_off + len(_rr_file)]
+    _rr_esz = _ROOTS["entry_size_bytes"]
+    _rr_rootoff = NUM_CHARACTERS * _rr_esz
+    ok(_rr_rootoff == _ROOTS["roots_offset_bytes"],
+       f"roots[] offset re-derived from NUM_CHARACTERS == manifest "
+       f"({_rr_rootoff} vs {_ROOTS['roots_offset_bytes']})")
+    ok(len(_rr_file) == _rr_rootoff + _ROOTS["total_roots"] * 2,
+       "roster_roots.bin size == entry table + one u16 per root")
+
+    # The species name table this feature hands straight to the list menu. Read
+    # out of the BUILT ROM at base + id*stride, not out of the JSON dump, so
+    # this proves the exact pointer arithmetic the shim will do lands on a real
+    # name -- a root whose name is blank would draw an empty row.
+    _rr_sp_base = int(_ROOTS["species_table_base"], 16)
+    _rr_sp_stride = _ROOTS["species_table_stride"]
+
+    _rr_bad_entry, _rr_bad_name, _rr_cursor = [], [], 0
+    for _rr_ci, _rr_c in enumerate(manifest):
+        _rr_want = list(dict.fromkeys(_rr_c["roster_species_ids"]))
+        _rr_first, _rr_count = struct.unpack_from("<HH", _rr_blob, _rr_ci * _rr_esz)
+        if (_rr_first, _rr_count) != (_rr_cursor, len(_rr_want)):
+            _rr_bad_entry.append((_rr_c["character"], _rr_first, _rr_count,
+                                  _rr_cursor, len(_rr_want)))
+        # Read defensively: a bent first_root/count can point past the blob,
+        # and an exception here would abort the entire verifier instead of
+        # failing this one check.
+        _rr_lo = _rr_rootoff + _rr_first * 2
+        if _rr_count and _rr_lo + _rr_count * 2 <= len(_rr_blob):
+            _rr_got = list(struct.unpack_from(f"<{_rr_count}H", _rr_blob, _rr_lo))
+        elif _rr_count:
+            _rr_got = None          # out of range -- cannot equal _rr_want
+        else:
+            _rr_got = []
+        if _rr_got != _rr_want:
+            _rr_bad_entry.append((_rr_c["character"], "roots differ"))
+        for _rr_s in (_rr_got or []):
+            _rr_nm = patched[_rr_sp_base + _rr_s * _rr_sp_stride:
+                             _rr_sp_base + _rr_s * _rr_sp_stride + 11]
+            # 0xFF terminates a Gen 3 string; 0x00 is the blank-name filler the
+            # unused slots carry.
+            if not _rr_nm or _rr_nm[0] in (0xFF, 0x00):
+                _rr_bad_name.append((_rr_c["character"], _rr_s))
+        _rr_cursor += len(_rr_want)
+
+    ok(not _rr_bad_entry,
+       f"every character's (first,count) and root slice re-derive from the "
+       f"manifest ({len(_rr_bad_entry)} bad: {_rr_bad_entry[:3]})")
+    # ⚠️ Summed from the BLOB'S OWN counts, not from the manifest. The first
+    # cut accumulated len(manifest roots) here, so it re-derived
+    # total_roots from total_roots and could never disagree with itself --
+    # "a check that cannot fail", caught by case 6 of the negative test.
+    _rr_tiled, _rr_gap = 0, []
+    for _rr_ci in range(NUM_CHARACTERS):
+        _rr_f, _rr_n = struct.unpack_from("<HH", _rr_blob, _rr_ci * _rr_esz)
+        if _rr_f != _rr_tiled:
+            _rr_gap.append((_rr_ci, _rr_f, _rr_tiled))
+        _rr_tiled += _rr_n
+    ok(not _rr_gap and _rr_tiled == _ROOTS["total_roots"],
+       f"entries tile roots[] exactly, no gap and no overlap "
+       f"({_rr_tiled} vs {_ROOTS['total_roots']}; "
+       f"{len(_rr_gap)} discontinuities {_rr_gap[:3]})")
+    ok(not _rr_bad_name,
+       f"every root resolves to a non-empty name in the BUILT ROM's species "
+       f"table ({len(_rr_bad_name)} blank: {_rr_bad_name[:5]})")
+
+    # ⚠️ Probe a character FAR from the base. "A table probe at id 1 cannot
+    # catch a stride error" is a recorded trap in this workspace -- record 0
+    # starts at byte 0 and reads correctly under any stride.
+    _rr_late = NUM_CHARACTERS - 1
+    _rr_lf, _rr_lc = struct.unpack_from("<HH", _rr_blob, _rr_late * _rr_esz)
+    _rr_lwant = list(dict.fromkeys(manifest[_rr_late]["roster_species_ids"]))
+    ok(_rr_lc == len(_rr_lwant) and list(struct.unpack_from(
+        f"<{_rr_lc}H", _rr_blob, _rr_rootoff + _rr_lf * 2)) == _rr_lwant
+        if _rr_lc else _rr_lc == len(_rr_lwant),
+       f"late probe: character #{_rr_late + 1} "
+       f"({manifest[_rr_late]['character']}) reads back its own "
+       f"{len(_rr_lwant)} roots")
+
+    # The empty rosters are hidden by the threshold, so no player reaches them
+    # -- but they still occupy a record, and a consumer that assumes >= 1 row
+    # would read another character's roots. Pin that they are really empty.
+    _rr_empty = [c["character"] for ci, c in enumerate(manifest)
+                 if struct.unpack_from("<HH", _rr_blob, ci * _rr_esz)[1] == 0]
+    ok(_rr_empty == _ROOTS["empty_roster"],
+       f"characters with zero roots in-ROM == the emitter's list "
+       f"({_rr_empty} vs {_ROOTS['empty_roster']})")
+    ok(all(manifest[ci]["hidden"] for ci, c in enumerate(manifest)
+           if struct.unpack_from("<HH", _rr_blob, ci * _rr_esz)[1] == 0),
+       "every zero-root character is hidden, so the screen can never be "
+       "opened on an empty list")
 
     # ⚠️ Every local below is _fp*-prefixed on purpose. A bare `_p` or `_f` here
     # shadows the module-level PASS/FAIL COUNTERS that the summary line reads,

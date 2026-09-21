@@ -501,3 +501,135 @@ pointer and the renderer has **no BL-reach constraint anywhere**.
 free run (clear to `0x09000000`). Deliberately NOT in the main injection block —
 that has ~126 B of headroom below `SCRIPT_ADDR`, and `SCRIPT_ADDR` cannot move
 because `naming_open.ss` embeds a paused script context pointing at it.
+
+---
+
+## Dynamic multichoice (added 2026-09-20, for the in-game roster display)
+
+⚠️⚠️ **EVERY ADDRESS IN THIS SECTION IS A LEAD, NOT A FINDING.** They come from
+structural matching against `tools/pokeemerald_expansion_donor/src/scrcmd.c` and
+`src/script_menu.c`, anchored on `gScriptCmdTable`. `tools/find_sprite_api.py`'s
+own rule applies: *"an address that merely appears in the right place is not a
+finding. Confirm before trusting."* Nothing here has been executed yet.
+
+**Why it matters:** this ROM already contains pokeemerald-expansion's *dynamic
+multichoice* — a **scrolling `ListMenuItem` menu, invocable from a script, with
+per-row callbacks**. That is the whole screen the roster display needs, so the
+window/text/list API does **not** have to be mined from scratch.
+📄 `game_plans/roster_display.md` is the runbook.
+
+**Verification that the opcode really is `dynmultichoice`:** the handler at
+`0x081EE0B0` matches the donor instruction for instruction — two
+`ScriptReadHalfword`+`VarGet` pairs (left, top), three raw bytes (ignoreBPress,
+maxBeforeScroll, shouldSort), `ScriptReadHalfword`+`VarGet` (initialSelected),
+two bytes (callbackSet, argc), the `argc == 0` early-out, the
+`maxBeforeScroll == 0xFF` default, and `ScriptPeekWord` guarding the
+`MultichoiceDynamic_StackSize()` fallback branch.
+
+| symbol | address | derivation |
+|---|---|---|
+| `ScrCmd_dynmultichoice` | `0x081EE0B0` | `gScriptCmdTable` (`0x0826D970`) entry `0xE3` |
+| `ScriptMenu_MultichoiceDynamic` | `0x081EFA9C` | its final BL before `ScriptContext_Stop` |
+| `DrawMultichoiceMenuDynamic` | `0x081EFFF8` | tail call of the above |
+| `FuncIsActiveTask` | `0x08201B78` | called by BOTH multichoice entry points |
+| `Task_HandleMultichoiceInput` | `0x081F05CD` | literal operand passed to it |
+| `ScriptReadHalfword` | `0x081EF488` | matches the value already recorded above |
+| `ScriptPeekWord` | `0x081EF4CC` | guards the stack-vs-pointer branch |
+| `ScriptReadWord` | `0x081EF49C` | reads each vararg string pointer |
+| `ScriptContext_Stop` | `0x081EF5EC` | after a successful menu open |
+| `MultichoiceDynamic_StackSize` | `0x081EFE74` | else-branch of the pointer test |
+| `MultichoiceDynamic_PeekElementAt` | `0x081EFF28` | stack-branch loop |
+| `Alloc` | `0x080033D8` | the `Alloc(100)` name buffer |
+| `AllocZeroed` | `0x080033F0` | `AllocZeroed(sizeof(ListMenuItem) * argc)`, both branches |
+| `Free` | `0x08003438` | `FreeListMenuItems` loop |
+| `StringExpandPlaceholders` | `0x08005F30` | expands each vararg into the name buffer |
+| `GetStringWidth` | `0x08007C74` | inlined `DisplayTextAndGetWidth` loop |
+| `LoadMessageBoxAndBorderGfx` | `0x08166738` | after the width loop |
+| `CreateWindowFromRect` | `0x08167ECC` | window creation sequence |
+| `AddWindow` | `0x08008BDC` | reached from the above |
+| `SetStandardWindowBorderStyle` | `0x08166BC8` | immediately after window creation |
+| `CopyWindowToVram` | `0x08008EAC` | the `COPYWIN_FULL` call |
+| `CreateTask` | `0x08201984` | creates the scrolling-input task |
+| `ListMenuInit` | `0x0815D724` | result stored into `data[0]` |
+
+✅ **One independent cross-check has already passed**: the literal pool of
+`ScriptMenu_MultichoiceDynamic` yields `gSpecialVar_Result = 0x020055F0`, which
+is the value this document records from an entirely separate derivation.
+
+### ✅ CONFIRMED 2026-09-20 — the callback-set table, and the sprite idiom
+
+✅ **`sDynamicListMenuEventCollections` = `0x0895CC34`.** Not a structural
+guess: `DrawMultichoiceMenuDynamic` computes the entry address at
+`0x081F01CA`-`0x081F01D4` as `lsls r2,r1,#1 ; adds r2,r2,r1 ; lsls r2,r2,#2`,
+i.e. **index * 12 — three pointers per entry**, exactly the donor's
+`{OnInit, OnSelectionChanged, OnDestroy}`. The `cmp r1,#255` above it is the
+`DYN_MULTICHOICE_CB_NONE` test.
+
+⚠️ **THE INDEX IS NEVER BOUNDS-CHECKED.** The only test is `!= 0xFF`, so any
+other `callbackSet` value indexes straight off the end of the table. That is
+what makes a third set cheap, and also what makes a wrong id jump to garbage.
+
+| entry | OnInit | OnSelectionChanged | OnDestroy |
+|---|---|---|---|
+| `[0]` `DYN_MULTICHOICE_CB_DEBUG` | `0x081EFBF5` | `0x081EFBF9` | `0x081EFBFD` |
+| `[1]` `DYN_MULTICHOICE_CB_SHOW_ITEM` | `0x081EFC01` | `0x081EFC7D` | `0x081EFD25` |
+| `[2]` | — 12 zero bytes at `0x0895CC4C`, **no pointer references** — |
+
+⭐ **Two ways in, and the choice is not yet made.** Either write a third entry
+into the 12 zero bytes at `0x0895CC4C` (no relocation, but it overwrites
+shipped rodata that is only *probably* padding — a computed index would not
+show up as a reference), or **relocate the table into free space and repoint
+its three references**, which are all of them and are all found:
+`0x081EFFF4`, `0x081F02B0`, `0x081F05C4`. The second is reversible and
+verifiable; prefer it unless it proves impossible.
+
+✅ **`[1] OnSelectionChanged` = `0x081EFC7D` is this ROM's own worked example
+of "draw a sprite when the cursor moves"**, and it decodes against the donor
+line for line. Everything it needs is now pinned:
+
+| symbol | address | how it was read |
+|---|---|---|
+| `gWindows` | `0x0203B9C0` | literal at `0x081EFD14`, indexed `* 12` (`WindowTemplate` 8 B + tileData ptr) |
+| `gSprites` | `0x02039810` | literal at `0x081EFD1C` — ⭐ **independently confirmed**: `src/character_sprite.c:70` already uses this exact address, derived separately for the mugshot renderer and live-verified in a shipped feature |
+| `sizeof(struct Sprite)` | `68` (`0x44`) | `lsls r3,r0,#4 ; adds r3,r3,r0 ; lsls r3,r3,#2` = `id * 17 * 4`; agrees with `character_sprite.c` |
+| `MAX_SPRITES` | `64` | the `cmp r3,#64` "is a sprite already up" test |
+| `AddItemIconSprite` | `0x0814E2E0` | the BL taking `(tag, tag, eventArgs->selectedItem)` |
+| `TAG_CB_ITEM_ICON` | `0x0BB8` (3000) | literal at `0x081EFD20`, passed as both tag arguments |
+
+The placement maths is the donor's verbatim, and is what the roster display
+should copy rather than invent: `x = (tilemapLeft + width) * 8 + 36`,
+`y = tilemapTop * 8 + 20` — i.e. the icon is placed **relative to the list
+window**, not at a fixed screen position.
+
+⚠️ **One divergence from the donor, do not paper over it.** The donor keeps
+the live sprite id in a plain `static u8 sItemSpriteId`. This ROM reads it as
+`ldr r3,[0x0201D230] ; ldr r3,[r3] ; ldrh r3,[r3,#2]` — a **double**
+indirection through a pointer at `0x0201D230` into a heap/state struct, at
+`+2`. Assuming the donor's shape here would write the wrong address.
+
+### ⬜ Still open: the MON-ICON draw path
+
+`AddItemIconSprite` draws an ITEM. The roster display needs a species icon, and
+that path is **not located**. Two scans were run and both are clean NEGATIVES,
+recorded so they are not repeated:
+
+1. **Not a field of `gSpeciesInfo`.** Every ROM-pointer field of the 208-byte
+   species record was measured across 199 species; the distinct-value deltas
+   cluster at ~8, ~60-76, ~160-176 and ~3500-4200 B (dex text, learnsets,
+   front/back pics and palettes). **No field has the 512 B spacing an
+   uncompressed 32x32 4bpp icon requires.**
+2. **Not a contiguous `gMonIconTable`.** A whole-ROM scan for a word-aligned
+   run of pointers each exactly 512 B past the last found **no run of 50 or
+   more** anywhere in the ROM.
+
+So the icons are either LZ77-compressed (variable size, no stride to find) or
+reached through an indirection. ⭐ **The next primitive to try is a CALLER, not
+a table**: the party menu, the PC storage grid and the trade screen all draw
+species icons, so breakpointing one of those in the live harness reports the
+routine directly — which is exactly how this repo found the wild-encounter
+choke point and the trade's party write. **Photograph/trace the running game
+rather than writing a third static detector.**
+
+⚠️ **The callback receives a ROW INDEX, not a species.** In the script-pointer
+form `ScrCmd_dynmultichoice` sets `items[i].id = i`, so a roster-roots table is
+required to map the highlighted row back to a species.

@@ -94,6 +94,21 @@ negcase "species-gates negtest: control"      tools/tests/check_species_gates_ne
 negcase "species-gates negtest: drift fails"  tools/tests/check_species_gates_negative_test.py     99999 1
 negcase "selfcontained negtest: control"      tools/tests/check_repo_selfcontained_negative_test.py ""    0
 negcase "selfcontained negtest: drift fails"  tools/tests/check_repo_selfcontained_negative_test.py 99999 1
+negcase "roster-roots negtest: control"       tools/tests/roster_roots_negative_test.py            ""    0
+negcase "roster-roots negtest: drift fails"   tools/tests/roster_roots_negative_test.py            99999 1
+
+# ⚠⚠ THIS FILE'S OWN TALLY HAD THE HOLE IT EXISTS TO CLOSE.
+# It printed "$pass/$pass PASS" -- a total computed from what it actually ran,
+# so it agreed with itself by construction and deleting cases would have
+# reported a smaller number, still green. That is verbatim the defect
+# rowe_parity.md §13.46 found in the four repos' negative tests. Guarded now
+# with a literal, the same way cm_tally.assert_cases guards them.
+EXPECT_GUARD_CASES=${CM_EXPECT_GUARD_CASES:-16}
+if [ "$pass" != "$EXPECT_GUARD_CASES" ]; then
+    echo "checker guard test: ran $pass cases, expected $EXPECT_GUARD_CASES --" \
+         "a case was added or silently dropped"
+    fail=1
+fi
 
 [ $fail -eq 0 ] && echo "checker guard test: $pass/$pass PASS" \
                 || echo "checker guard test: FAILURES"

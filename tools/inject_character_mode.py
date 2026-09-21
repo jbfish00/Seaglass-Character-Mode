@@ -186,6 +186,23 @@ EGG_TAIL_ADDR = 0x8fa0000
 # tools/character_mode/pc_hook.py has the RE.
 PC_TAIL_ADDR = 0x8fa1000
 
+# --- in-game roster display (../game_plans/roster_display.md) ---
+# The family ROOTS of every character's roster, so the list's per-row callback
+# can map a ROW INDEX back to a species: dynmultichoice's script-pointer form
+# sets items[i].id = i, so the callback is never handed a species.
+# tools/character_mode/emit_roster_roots.py has the layout and the Rika note.
+# Same verified free run as the egg and PC tails, past both; measured 385,024
+# contiguous 0xFF bytes from here in the BASE ROM, and splice()'s 0xFF
+# precondition is what actually proves it clear at build time.
+# No BL-reach constraint: the shim reaches it through an absolute pointer.
+ROSTER_ROOTS_ADDR = 0x08FA2000
+_ROOTS_MANIFEST = json.loads(
+    (HERE / "character_mode" / "roster_roots_manifest.json").read_text())
+# Derived from the emitter's own manifest and passed to the shim as -D, never
+# restated: roots[] starting at a different offset in the data than in the C is
+# the WILDPOOL_STRIDE bug (104 vs 176) in a new costume.
+ROSTER_ROOTS_OFF = _ROOTS_MANIFEST["roots_offset_bytes"]
+
 GIVE_NATIVE   = 0x081F2175         # callnative give fn (49 inline script ptrs)
 GIVE_NATIVE_COUNT = 49
 
@@ -370,6 +387,18 @@ def main():
     legendaries = (CM / "legendaries.bin").read_bytes()
     assert len(legendaries) == LEGENDARY_COUNT * 4 + NUM_CHARACTERS * 4, (
         len(legendaries), LEGENDARY_COUNT, NUM_CHARACTERS)
+    roster_roots = (CM / "roster_roots.bin").read_bytes()
+    # Re-derived from the manifest rather than trusting the .bin's own length:
+    # entry table + one u16 per root, with the character count derived as
+    # everywhere else in this file.
+    assert len(roster_roots) == (
+        NUM_CHARACTERS * _ROOTS_MANIFEST["entry_size_bytes"]
+        + _ROOTS_MANIFEST["total_roots"] * 2), (
+        len(roster_roots), NUM_CHARACTERS, _ROOTS_MANIFEST["total_roots"])
+    assert _ROOTS_MANIFEST["characters"] == NUM_CHARACTERS, (
+        "roster_roots.bin was emitted for %d characters, this build has %d -- "
+        "re-run emit_roster_roots.py"
+        % (_ROOTS_MANIFEST["characters"], NUM_CHARACTERS))
 
     # --- code + starter tables ---
     #
@@ -471,6 +500,8 @@ def main():
                     f"-DTOBIAS_CHAR_ID={TOBIAS_CHAR_ID}",
                     f"-DLEGENDARY_ADDR={LEGENDARY_ADDR:#x}",
                     f"-DLEGENDARY_COUNT={LEGENDARY_COUNT}",
+                    f"-DROSTER_ROOTS_ADDR={ROSTER_ROOTS_ADDR:#x}",
+                    f"-DROSTER_ROOTS_OFF={ROSTER_ROOTS_OFF}",
                     "-o", str(obj), str(ROOT / "src" / "character_mode.c")],
                    check=True)
     libgcc = subprocess.run(["arm-none-eabi-gcc", "-mthumb", "-mcpu=arm7tdmi",
@@ -662,6 +693,7 @@ def main():
     splice(SCRIPT_ADDR, bytes(script), "scripts")
     splice(WILDPOOL_ADDR, wildpool, "wildpool")
     splice(LEGENDARY_ADDR, legendaries, "legendaries")
+    splice(ROSTER_ROOTS_ADDR, roster_roots, "roster roots")
     splice(CM_MUGSHOT_ADDR, mugshot, "mugshot renderer")
 
     # --- egg-hatch sweep ---
