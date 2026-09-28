@@ -683,3 +683,45 @@ All 501 named species hold a ROM pointer at +120, none LZ77-headed; 498
 distinct (3 shared pairs). A 24-species contact sheet rendered from ROM data
 (ids 1..1488) was correct by eye: `tools/savestates/mon_icon_sheet.png`
 (gitignored).
+
+## Roster display: callback set 2 + entry scripts (2026-09-27): ✅ SHIPPED, LIVE
+
+`src/roster_display.c` at `ROSTER_MENU_ADDR = 0x08FA6000` (its own unit, like
+the mugshot renderer): `CM_RosterPushRows` (callnative) plus set 2's
+OnInit / OnSelectionChanged / OnDestroy, written into slot [2] of the relocated
+table. Every engine address it uses was read from set 1's own calls
+(`0x081EFC01` / `0x081EFC7D` / `0x081EFD25`) or the `dynmultipush` handler
+(opcode `0xE4`, `0x081EE211`):
+
+| what | addr | read from |
+|---|---|---|
+| `Alloc(size, 0)` | `0x080033D8` | dynmultipush: `movs r0,#100; movs r1,#0; bl` |
+| `AllocZeroed(size, 0)` | `0x080033F0` | DrawMultichoiceMenuDynamic |
+| `StringExpandPlaceholders` | `0x08005F30` | dynmultipush |
+| `MultichoiceDynamic_PushElement(name, id)` | `0x081EFE84` | dynmultipush; the `ListMenuItem` is split over r0/r1 |
+| `sDynamicMenuEventScratchPad` (ptr) | `0x0201D230` | set 1: `[0]` aux window, `[1]` sprite (64 = none) |
+| `AddWindow` / `RemoveWindow` | `0x08008BDC` / `0x08008DB4` | set 1 OnInit / OnDestroy |
+| `SetStandardWindowBorderStyle(win, copy)` | `0x08166BC8` | set 1 OnInit |
+| `ClearStdWindowAndFrame(win, copy)` | `0x08166800` | set 1 OnDestroy |
+| `FillWindowPixelBuffer` / `CopyWindowToVram` | `0x0800939C` / `0x08008EAC` | set 1 OnInit |
+| `CreateWindowTemplate` (not needed) | `0x08167ECC` | set 1 OnInit |
+| `FreeSpriteTilesByTag` / `DestroySprite` | `0x08005528` / `0x08003DEC` | set 1 |
+| `FreeAndDestroyMonIconSprite` | `0x081B5FE8` (twin `0x081B63E4`) | points `images` at a stack `SpriteFrameImage`, then `DestroySprite` |
+| script opcode `0x00` | `0x081EC849` | `movs r0,#0; bx lr`: a nop, which the stack form's NULL word relies on |
+
+- **Stack form bytes:** `E3 left top ignoreB maxScroll sort initSel set 01
+  00000000`. The handler peeks the NULL word, doesn't consume it, and then
+  runs it as 4 nops. Pushed rows keep their own `id`, so the callback gets the
+  **species**.
+- **Rows must be heap strings:** `FreeListMenuItems` calls `Free()` on every
+  name when the list closes.
+- **Entry:** the two BG-event pointers land on appended pre-entries:
+  `checkflag 0x2B0; goto_if unset → <unchanged entry>`, then a
+  `dynmultichoice` (set NONE) with *View roster / Character code /
+  Questionnaire* (clipboard) or *… / Gift code* (cheat device). The first 305
+  B of the entry blob are byte-identical (`PRE_ROSTER_SCRIPT_LEN`, pinned by
+  `naming_open.ss`).
+- Evidence: `verify_artifacts` [21] (7 checks), [20]'s slot-2 check,
+  `roster_entry_negative_test.py` 10/10, and live layer 7c
+  (`cm_roster_menu_test.lua`, modes roster/code/off; with slot [2] nulled the
+  roster mode fails 8 of 10).

@@ -10,7 +10,8 @@ containment, so a bare non-zero exit would prove nothing about these eight.
   1. control                      -- the real build passes all eight
   2. a copied callback bent       -- [1].OnSelectionChanged no longer matches
                                      the base ROM's table
-  3. the reserved slot non-NULL   -- the engine would call through it
+  3. the roster set's slot bent   -- slot [2] no longer holds the three
+                                     callbacks linked into roster_display.elf
   4. one literal left behind      -- 0x081F02B0 still names the OLD table, so
                                      the init path and the change path read
                                      different tables. Both the literal check
@@ -66,7 +67,7 @@ STRAY_AT = 0x08FA5000             # free, 0xFF in base and build
 CHECKS = {
     # Substrings, not whole sentences (see roster_roots_negative_test.py).
     "entries": "== the base ROM's table at",
-    "reserved": "are all NULL, so the engine skips them",
+    "reserved": "== the roster set's OnInit/OnSelectionChanged/",
     "lit_first": "literal 0x81efff4 ->",
     "lit_left": "literal %#x ->" % (LIT_LEFT_BEHIND + 0x08000000),
     "lit_obo": "literal %#x ->" % (LIT_OFF_BY_ONE + 0x08000000),
@@ -171,10 +172,12 @@ def main():
         case("2 a copied callback bent", bend_copied, "entries",
              also_pass=("reserved", "exhaust"))
 
-        def fill_reserved(d):
+        def bend_slot2(d):
+            # the ROM's own set-1 OnSelectionChanged: a REAL callback, just
+            # the wrong one -- the plausible-wrong shape
             struct.pack_into("<I", d, TABLE_OFF + 2 * ENTRY + 4, 0x081EFC7D)
-        case("3 the reserved slot made non-NULL", fill_reserved, "reserved",
-             also_pass=("entries",))
+        case("3 the roster set's OnSelectionChanged swapped for set 1's", bend_slot2,
+             "reserved", also_pass=("entries",))
 
         def leave_one(d):
             struct.pack_into("<I", d, LIT_LEFT_BEHIND, TABLE_ORIG)

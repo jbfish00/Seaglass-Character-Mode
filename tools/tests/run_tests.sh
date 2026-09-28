@@ -381,5 +381,25 @@ grep -q "HARNESS RESULT: PASS" /tmp/sg_mon_icon.log && echo "  PASS mon icon = g
     || { echo "  FAIL mon-icon path (see /tmp/sg_mon_icon.log)"; grep -a "HARNESS.*FAIL" /tmp/sg_mon_icon.log; exit 1; }
 
 echo
+echo "=== Layer 7c: roster display -- the clipboard's roster menu, live (shipped build) ==="
+# CM on as Misty (char 10 -- discriminating, not #1): View roster pushes her
+# family roots in order, set 2 draws the first root's icon, one DOWN hands the
+# callback the SECOND root's species, B tears it all down. "Character code"
+# reaches the unchanged activation path; with CM off the clipboard behaves as
+# before. Rows are derived from characters_manifest.json, never from the blob.
+eval "$(python3 tools/tests/roster_menu_env.py 10)" \
+    || { echo "  FAIL deriving the roster test environment"; exit 1; }
+roster_case() {  # mode expected_checks
+    timeout 150 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=$2 MODE=$1 CM_CHAR=10 "$MGBA" \
+        --script tools/mgba_scripts/cm_roster_menu_test.lua \
+        -t tools/savestates/mart_inside.ss "$ROM" > /tmp/sg_roster_$1.log 2>&1 || true
+    grep -q "HARNESS RESULT: PASS" /tmp/sg_roster_$1.log && echo "  PASS roster menu, mode $1" \
+        || { echo "  FAIL roster menu, mode $1 (see /tmp/sg_roster_$1.log)"; grep -a "HARNESS.*FAIL" /tmp/sg_roster_$1.log; exit 1; }
+}
+roster_case roster 10
+roster_case code 3
+roster_case off 3
+
+echo
 echo "ALL AUTOMATED LAYERS GREEN (incl. real-UI activation + in-situ trade e2e + wild override + live egg hatch + live PC exit)."
 echo "Remaining human-in-the-loop verify: full playthrough (docs/TESTING.md)."

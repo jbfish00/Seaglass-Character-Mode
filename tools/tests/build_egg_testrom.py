@@ -77,7 +77,12 @@ def main():
     d = bytearray(SHIPPED.read_bytes())
 
     cur = struct.unpack_from("<I", d, BG_EVENT_PTR_OFF)[0]
-    assert cur == CM_ENTRY_ADDR, f"clipboard BG ptr drifted: {cur:#x} != {CM_ENTRY_ADDR:#x}"
+    # Since 2026-09-27 the clipboard lands on the roster display's pre-entry,
+    # whose first op is `checkflag 0x2B0; goto_if unset, <CM entry>`.
+    _o = cur - 0x08000000
+    assert (d[_o:_o + 5] == bytes([0x2B, 0xB0, 0x02, 0x06, 0x00])
+            and struct.unpack_from("<I", d, _o + 5)[0] == CM_ENTRY_ADDR), \
+        f"clipboard BG ptr {cur:#x} is not the roster pre-entry for {CM_ENTRY_ADDR:#x}"
 
     # The whole point of this ROM is to run the SHIPPED hook. If the splice is
     # not in place, the run would exercise the stock tail and report a green

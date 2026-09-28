@@ -98,6 +98,8 @@ negcase "roster-roots negtest: control"       tools/tests/roster_roots_negative_
 negcase "roster-roots negtest: drift fails"   tools/tests/roster_roots_negative_test.py            99999 1
 negcase "dyn-event-table negtest: control"    tools/tests/dyn_event_table_negative_test.py         ""    0
 negcase "dyn-event-table negtest: drift fails" tools/tests/dyn_event_table_negative_test.py        99999 1
+negcase "roster-entry negtest: control"       tools/tests/roster_entry_negative_test.py            ""    0
+negcase "roster-entry negtest: drift fails"   tools/tests/roster_entry_negative_test.py            99999 1
 
 # ⚠⚠ THIS FILE'S OWN TALLY HAD THE HOLE IT EXISTS TO CLOSE.
 # It printed "$pass/$pass PASS" -- a total computed from what it actually ran,
@@ -105,7 +107,7 @@ negcase "dyn-event-table negtest: drift fails" tools/tests/dyn_event_table_negat
 # reported a smaller number, still green. That is verbatim the defect
 # rowe_parity.md §13.46 found in the four repos' negative tests. Guarded now
 # with a literal, the same way cm_tally.assert_cases guards them.
-EXPECT_GUARD_CASES=${CM_EXPECT_GUARD_CASES:-18}
+EXPECT_GUARD_CASES=${CM_EXPECT_GUARD_CASES:-20}
 if [ "$pass" != "$EXPECT_GUARD_CASES" ]; then
     echo "checker guard test: ran $pass cases, expected $EXPECT_GUARD_CASES --" \
          "a case was added or silently dropped"

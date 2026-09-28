@@ -223,6 +223,13 @@ DYN_EVENT_SLOTS = 3                  # [2] reserved for the roster display
 # Past the roster roots (4,014 B, ending 0x08FA2FAE) with a page of headroom
 # for roster growth; the same verified free run, and splice() proves it clear.
 DYN_EVENT_TABLE_ADDR = 0x08FA4000
+# The set the roster display owns. NONE is 0xFF here, so 2 is a real index.
+ROSTER_CB_SET = 2
+# src/roster_display.c: its own compile unit and link address, like the
+# mugshot renderer, so nothing in the main shim moves. 0x08FA5000 is left
+# free on purpose: dyn_event_table_negative_test.py uses it as its stray target.
+ROSTER_MENU_ADDR = 0x08FA6000
+PRE_ROSTER_SCRIPT_LEN = 305
 
 GIVE_NATIVE   = 0x081F2175         # callnative give fn (49 inline script ptrs)
 GIVE_NATIVE_COUNT = 49
@@ -344,6 +351,18 @@ def op_callstd(n):          return bytes([0x09, n])
 def op_msgbox_yesno(addr):
     # loadword 0 (text ptr) then callstd 5 (yes/no) -> VAR_RESULT 1=yes 0=no
     return op_loadword(addr) + op_callstd(5)
+def op_dynmultichoice(cb_set, names):
+    """dynmultichoice, script-pointer form: left 0, top 0, B allowed, default
+    rows before scroll, unsorted, initial 0. Layout decoded from this ROM's
+    handler (0x081EE0B1): E3 u16 u16 u8 u8 u8 u16 u8(set) u8(argc) u32[argc]."""
+    return (bytes([0xE3]) + struct.pack("<HH", 0, 0) + bytes([0, 0xFF, 0])
+            + struct.pack("<H", 0) + bytes([cb_set, len(names)])
+            + b"".join(struct.pack("<I", n) for n in names))
+def op_dynmultistack(cb_set):
+    """The STACK form: argc 1 and a NULL word, which the handler peeks but does
+    not consume, so it then runs as four `nop` (opcode 0x00 is a no-op here)."""
+    return (bytes([0xE3]) + struct.pack("<HH", 0, 0) + bytes([0, 0xFF, 0])
+            + struct.pack("<H", 0) + bytes([cb_set, 1]) + struct.pack("<I", 0))
 def op_givenative(species_var_or_id, fn):
     # the ROM's own give idiom: callnative <fn> + 10 inline arg bytes
     # (const 0x0600, species, level 5, 0, 0). species may be a var id (VarGet'd).
@@ -388,7 +407,12 @@ def build_scripts(cm):
     # loadword t_off ; callstd 4 ; releaseall ; end
     HOOK = {}  # filled by caller via labels below; we need shim entry addrs
 
-    return dict(t_prompt=t_prompt, t_on=t_on, t_off=t_off, t_invalid=t_invalid)
+    t_view  = enc_text("View roster", cm)
+    t_code  = enc_text("Character code", cm)
+    t_quest = enc_text("Questionnaire", cm)
+    t_gift  = enc_text("Gift code", cm)
+    return dict(t_prompt=t_prompt, t_on=t_on, t_off=t_off, t_invalid=t_invalid,
+                t_view=t_view, t_code=t_code, t_quest=t_quest, t_gift=t_gift)
 
 
 def main():
@@ -585,6 +609,40 @@ def main():
     print(f"mugshot renderer: {len(mugshot)} bytes @ {CM_MUGSHOT_ADDR:#x} "
           f"(show {hook_mug_show:#x}, hide {hook_mug_hide:#x})")
 
+    # --- in-game roster display: row pusher + dynmultichoice callback set 2
+    # (src/roster_display.c). Separate unit and link address, same reasons as
+    # the mugshot renderer; every entry point is resolved from the ELF. ---
+    robj, relf, rbin = BUILD / "roster_display.o", BUILD / "roster_display.elf", BUILD / "roster_display.bin"
+    subprocess.run(["arm-none-eabi-gcc", "-c", "-mthumb", "-mcpu=arm7tdmi",
+                    "-O2", "-ffreestanding", "-fno-builtin", "-Wall", "-Wextra",
+                    f"-DNUM_CHARACTERS={NUM_CHARACTERS}",
+                    f"-DROSTER_ROOTS_ADDR={ROSTER_ROOTS_ADDR:#x}",
+                    f"-DROSTER_ROOTS_OFF={ROSTER_ROOTS_OFF}",
+                    "-o", str(robj), str(ROOT / "src" / "roster_display.c")], check=True)
+    subprocess.run(["arm-none-eabi-ld", "-Ttext", f"{ROSTER_MENU_ADDR:#x}",
+                    "--entry", "CM_RosterPushRows",
+                    "-o", str(relf), str(robj)], check=True)
+    subprocess.run(["arm-none-eabi-objcopy", "-O", "binary", str(relf), str(rbin)], check=True)
+    roster_menu = rbin.read_bytes()
+    _rsym = subprocess.run(["arm-none-eabi-nm", str(relf)], check=True,
+                           capture_output=True, text=True).stdout
+
+    def _roster_sym(name):
+        m = re.search(rf"^([0-9a-f]+) [Tt] {name}$", _rsym, re.M)
+        assert m, f"{name} not found in:\n{_rsym}"
+        a = int(m.group(1), 16)
+        assert ROSTER_MENU_ADDR <= a < ROSTER_MENU_ADDR + len(roster_menu), \
+            f"{name} at {a:#x} outside the spliced blob"
+        return a | 1
+
+    hook_roster_push = _roster_sym("CM_RosterPushRows")
+    roster_callbacks = (_roster_sym("CM_RosterMenu_OnInit"),
+                        _roster_sym("CM_RosterMenu_OnSelectionChanged"),
+                        _roster_sym("CM_RosterMenu_OnDestroy"))
+    print(f"roster display: {len(roster_menu)} bytes @ {ROSTER_MENU_ADDR:#x} "
+          f"(push {hook_roster_push:#x}, set {ROSTER_CB_SET} = "
+          f"{', '.join(f'{c:#x}' for c in roster_callbacks)})")
+
     # --- compile + link the separate wild-encounter trampoline (long-call
     # veneer: its hook site is ~7.6 MiB from the main shim blob, out of Thumb
     # BL range, so it lives in its own tiny scavenged slot near both the hook
@@ -669,12 +727,50 @@ def main():
         e += op_compare(0x800D, 1)
         e += op_goto_if(5, ORIG_CHEAT_DEVICE)     # != yes -> stock cheat device
         e += op_goto(addrs["accept"])
+        # ---- roster display entry (2026-09-27) ----
+        # ⚠️ APPENDED, never inserted: naming_open.ss holds a paused script
+        # context INSIDE the blob above, so no byte before this point may move.
+        # The two BG-event pointers now land on these pre-entries instead; with
+        # Character Mode OFF each one jumps straight to the unchanged entry
+        # above, so the activation flow is byte-for-byte what it was.
+        # With it ON: View roster / Character code / <the object's own use>.
+        def pre_entry(orig_entry, stock, t_third):
+            b = bytearray()
+            b += bytes([0x2B]) + struct.pack("<H", FLAG_CHARACTER_MODE)  # checkflag
+            b += op_goto_if(0, orig_entry)                               # unset -> as before
+            b += op_lockall()
+            b += op_dynmultichoice(0xFF, [addrs["t_view"], addrs["t_code"], t_third])
+            b += op_compare(0x800D, 0) + op_goto_if(1, addrs["roster"])
+            b += op_compare(0x800D, 1) + op_goto_if(1, addrs["accept"])
+            b += op_compare(0x800D, 2) + op_goto_if(1, stock)           # as a declined prompt does
+            b += op_releaseall() + op_end()                              # B
+            return b
+        addrs["clip_pre_here"] = len(e)
+        e += pre_entry(base_entry, ORIG_CLIPBOARD, addrs["t_quest"])
+        addrs["bed_pre_here"] = len(e)
+        e += pre_entry(base_entry + addrs["bedroom_here"], ORIG_CHEAT_DEVICE, addrs["t_gift"])
+        # shared list: push the active character's roots, then the stack form
+        # of dynmultichoice with callback set ROSTER_CB_SET. VAR_RESULT == 0
+        # (no rows) skips the menu rather than drawing an empty box.
+        addrs["roster_here"] = len(e)
+        e += op_callnative(hook_roster_push)
+        e += op_compare(0x800D, 0) + op_goto_if(1, addrs["roster_end"])
+        e += op_dynmultistack(ROSTER_CB_SET)
+        addrs["roster_end_here"] = len(e)
+        e += op_releaseall() + op_end()
+        addrs["t_view_here"]  = len(e); e += txt["t_view"]
+        addrs["t_code_here"]  = len(e); e += txt["t_code"]
+        addrs["t_quest_here"] = len(e); e += txt["t_quest"]
+        addrs["t_gift_here"]  = len(e); e += txt["t_gift"]
         return e
 
     base = SCRIPT_ADDR
+    base_entry = SCRIPT_ADDR
     # pass 1: placeholder addrs -> measure block offsets
     ph = dict(t_prompt=base, t_on=base, t_off=base, t_invalid=base,
-              tail=base, give=base, off=base, accept=base)
+              tail=base, give=base, off=base, accept=base,
+              roster=base, roster_end=base, t_view=base, t_code=base,
+              t_quest=base, t_gift=base)
     tmp = emit(ph)
     A = base
     addrs = dict(
@@ -686,10 +782,26 @@ def main():
         t_off    = A + ph["t_off_here"],
         t_invalid= A + ph["t_invalid_here"],
         accept   = A + ph["accept_here"],
+        roster     = A + ph["roster_here"],
+        roster_end = A + ph["roster_end_here"],
+        t_view   = A + ph["t_view_here"],
+        t_code   = A + ph["t_code_here"],
+        t_quest  = A + ph["t_quest_here"],
+        t_gift   = A + ph["t_gift_here"],
     )
     script = emit(addrs)
     assert len(script) == len(tmp)
     BEDROOM_ENTRY = A + addrs["bedroom_here"]
+    CLIPBOARD_PRE = A + addrs["clip_pre_here"]
+    BEDROOM_PRE = A + addrs["bed_pre_here"]
+    # The pre-roster blob must not change length: naming_open.ss holds a paused
+    # context pointing INTO it, so every label before the appended roster
+    # entry has to stay at its offset. 305 B measured on build d62f9d6b, the
+    # last build before the roster entry was appended.
+    assert addrs["clip_pre_here"] == PRE_ROSTER_SCRIPT_LEN, (
+        f"the entry blob before the roster pre-entries is "
+        f"{addrs['clip_pre_here']} B, expected {PRE_ROSTER_SCRIPT_LEN}: something "
+        f"was INSERTED, which shifts the paused script in naming_open.ss")
     # The blob must stay inside its own region: the trade wrappers start at
     # TRADE_SCRIPT_ADDR and splice() would only notice a collision by accident.
     assert SCRIPT_ADDR + len(script) <= TRADE_SCRIPT_ADDR, (
@@ -716,6 +828,8 @@ def main():
     splice(LEGENDARY_ADDR, legendaries, "legendaries")
     splice(ROSTER_ROOTS_ADDR, roster_roots, "roster roots")
     splice(CM_MUGSHOT_ADDR, mugshot, "mugshot renderer")
+    assert DYN_EVENT_TABLE_ADDR + DYN_EVENT_SLOTS * DYN_EVENT_ENTRY_SIZE <= ROSTER_MENU_ADDR
+    splice(ROSTER_MENU_ADDR, roster_menu, "roster display code")
 
     # --- dynamic multichoice callback table: relocate + repoint ---
     assert ROSTER_ROOTS_ADDR + len(roster_roots) <= DYN_EVENT_TABLE_ADDR, (
@@ -731,8 +845,8 @@ def main():
         assert 0x08000000 <= _w < 0x0A000000 and _w & 1, (
             f"callback table at {DYN_EVENT_TABLE_ORIG:#x} holds {_w:#x}, not a "
             f"Thumb function pointer -- wrong address or wrong ROM")
-    _dyn_table = _dyn_live + bytes(
-        (DYN_EVENT_SLOTS - DYN_EVENT_ORIG_ENTRIES) * DYN_EVENT_ENTRY_SIZE)
+    assert DYN_EVENT_SLOTS == ROSTER_CB_SET + 1 == DYN_EVENT_ORIG_ENTRIES + 1
+    _dyn_table = _dyn_live + struct.pack("<III", *roster_callbacks)
     splice(DYN_EVENT_TABLE_ADDR, _dyn_table, "dynamic multichoice callback table")
     for _roff in DYN_EVENT_TABLE_REFS:
         _cur = struct.unpack_from("<I", data, _roff)[0]
@@ -896,16 +1010,16 @@ def main():
 
     cur = struct.unpack_from("<I", data, BG_EVENT_PTR_OFF)[0]
     assert cur == ORIG_CLIPBOARD, f"BG ptr: {cur:#x} != {ORIG_CLIPBOARD:#x}"
-    struct.pack_into("<I", data, BG_EVENT_PTR_OFF, SCRIPT_ADDR)
+    struct.pack_into("<I", data, BG_EVENT_PTR_OFF, CLIPBOARD_PRE)
 
     # second activation point: the bedroom cheat device
     cur = struct.unpack_from("<I", data, BEDROOM_BG_PTR_OFF)[0]
     assert cur == ORIG_CHEAT_DEVICE, (
         f"bedroom BG ptr: {cur:#x} != {ORIG_CHEAT_DEVICE:#x} -- the bedroom "
         f"map's BG event table has moved; re-derive BEDROOM_BG_PTR_OFF")
-    struct.pack_into("<I", data, BEDROOM_BG_PTR_OFF, BEDROOM_ENTRY)
-    print(f"bedroom cheat device -> CM entry {BEDROOM_ENTRY:#x} "
-          f"(was {ORIG_CHEAT_DEVICE:#x})")
+    struct.pack_into("<I", data, BEDROOM_BG_PTR_OFF, BEDROOM_PRE)
+    print(f"bedroom cheat device -> CM pre-entry {BEDROOM_PRE:#x} "
+          f"(was {ORIG_CHEAT_DEVICE:#x}); clipboard -> {CLIPBOARD_PRE:#x}")
 
     pat = struct.pack("<I", GIVE_NATIVE)
     sites = []

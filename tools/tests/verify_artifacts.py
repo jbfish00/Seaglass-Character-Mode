@@ -184,6 +184,22 @@ DYN_EVENT_TABLE_LOADS = ((0x081EFFB4, 0x081EFFF4), (0x081F0116, 0x081F02B0),
 DYN_EVENT_ENTRY_SIZE = 12
 DYN_EVENT_ORIG_ENTRIES = 2
 DYN_EVENT_SLOTS = 3
+
+# The roster display's code unit (src/roster_display.c) and entry scripts.
+ROSTER_MENU_ADDR = _injector_addr("ROSTER_MENU_ADDR")
+ROSTER_CB_SET = int(re.search(r"^ROSTER_CB_SET\s*=\s*(\d+)", (ROOT / "tools"
+    / "inject_character_mode.py").read_text(), re.M).group(1))
+PRE_ROSTER_SCRIPT_LEN = int(re.search(r"^PRE_ROSTER_SCRIPT_LEN\s*=\s*(\d+)",
+    (ROOT / "tools" / "inject_character_mode.py").read_text(), re.M).group(1))
+ORIG_CM_ENTRY = 0x08EE3800          # SCRIPT_ADDR, pinned by naming_open.ss
+FLAG_CHARACTER_MODE = 0x2B0
+
+
+def _elf_syms(elf):
+    out = subprocess.run(["arm-none-eabi-nm", str(ROOT / "build" / elf)],
+                         check=True, capture_output=True, text=True).stdout
+    return {m.group(2): int(m.group(1), 16)
+            for m in re.finditer(r"^([0-9a-f]+) [Tt] (\w+)$", out, re.M)}
 # The flags array is SB1+0x13C0..0x14EB (vars start at 0x14EC), so flags above
 # 0x95F do not exist at all.
 FLAG_SPACE_END = 0x95F
@@ -212,10 +228,22 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 133  # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
+EXPECT_CHECKS = 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
+                     # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
                      # +10: the PC-exit sweep, 5 checks x 2 sites (2026-09-07);
                      # +1: the COMPILED Battle Pyramid guard literal (2026-09-19)
                      # +9: [19] the roster display's family-roots blob (2026-09-20)
+
+
+def _pre_entry_target(rom, ptr):
+    """The CM-off target of a roster pre-entry at `ptr`, or None if `ptr` does
+    not start with `checkflag 0x2B0 (2B B0 02); goto_if 0 (06 00) <u32>`."""
+    o = ptr & 0x01FFFFFF
+    if not (0x08000000 <= ptr < 0x0A000000) or o + 9 > len(rom):
+        return None
+    if rom[o:o + 5] != bytes([0x2B, 0xB0, 0x02, 0x06, 0x00]):
+        return None
+    return struct.unpack_from("<I", rom, o + 5)[0]
 
 
 def ok(cond, msg):
@@ -323,6 +351,10 @@ def main():
                (DYN_EVENT_TABLE_ADDR & 0x01FFFFFF,
                 DYN_EVENT_SLOTS * DYN_EVENT_ENTRY_SIZE),
                *[(r, 4) for r in DYN_EVENT_TABLE_REFS],
+               # roster display code (its .bin length; [21] asserts the
+               # ROM holds exactly that .bin, so it cannot widen itself)
+               (ROSTER_MENU_ADDR & 0x01FFFFFF,
+                len((ROOT / "build" / "roster_display.bin").read_bytes())),
                (CM_SPRITE_BLOBS_ADDR & 0x01FFFFFF, len(_spr_blobs)),
                (CM_SPRITE_PTRS_ADDR & 0x01FFFFFF, len(_spr_ptrs)),
                (CM_MUGSHOT_ADDR & 0x01FFFFFF, _mugshot_len),
@@ -464,8 +496,15 @@ def main():
     print("[9] BG-event ptr + entry script")
     ok(struct.unpack_from("<I", orig, BG_EVENT_PTR_OFF)[0] == ORIG_CLIPBOARD,
        "BG ptr originally -> clipboard script")
-    entry = struct.unpack_from("<I", patched, BG_EVENT_PTR_OFF)[0]
-    ok(entry == 0x08EE3800, f"BG ptr repointed -> entry script {entry:#x}")
+    # Since 2026-09-27 each BG pointer lands on a roster-display PRE-ENTRY
+    # ([21]), whose first instruction is `checkflag FLAG_CHARACTER_MODE;
+    # goto_if unset, <entry>`. Follow that CM-off branch: everything below then
+    # checks the unchanged entry exactly as before.
+    _clip_pre = struct.unpack_from("<I", patched, BG_EVENT_PTR_OFF)[0]
+    entry = _pre_entry_target(patched, _clip_pre)
+    ok(entry == 0x08EE3800,
+       f"BG ptr -> pre-entry {_clip_pre:#x}, whose CM-off branch -> entry script {entry}")
+    entry = entry or 0x08EE3800
     o = entry & 0x01FFFFFF
     # lockall; loadword; callstd 5; compare 0x800D,1; goto_if !=,ORIG; callnative; waitstate; callnative; goto
     ok(patched[o] == 0x69, "entry starts lockall")
@@ -478,9 +517,12 @@ def main():
     # that swallowed the object's own script -- would be invisible otherwise.
     ok(struct.unpack_from("<I", orig, BEDROOM_BG_PTR_OFF)[0] == ORIG_CHEAT_DEVICE,
        "bedroom BG ptr originally -> stock cheat-device script")
-    bed = struct.unpack_from("<I", patched, BEDROOM_BG_PTR_OFF)[0]
-    ok(0x08EE3800 <= bed < 0x08EE3B00,
-       f"bedroom BG ptr repointed into the entry-script block ({bed:#x})")
+    _bed_pre = struct.unpack_from("<I", patched, BEDROOM_BG_PTR_OFF)[0]
+    bed = _pre_entry_target(patched, _bed_pre)
+    ok(bed is not None and 0x08EE3800 <= bed < 0x08EE3B00,
+       f"bedroom BG ptr -> pre-entry {_bed_pre:#x}, whose CM-off branch lands "
+       f"in the entry-script block ({bed})")
+    bed = bed or 0x08EE3800
     bo = bed & 0x01FFFFFF
     ok(patched[bo] == 0x69, "bedroom stub starts lockall")
     ok(patched[bo + 14:bo + 20]
@@ -976,11 +1018,17 @@ def main():
     ok(patched[_dy_new:_dy_new + _dy_n] == orig[_dy_old:_dy_old + _dy_n],
        f"entries [0..{DYN_EVENT_ORIG_ENTRIES - 1}] at {DYN_EVENT_TABLE_ADDR:#x} "
        f"== the base ROM's table at {DYN_EVENT_TABLE_ORIG:#x} ({_dy_n} B)")
-    _dy_res = patched[_dy_new + _dy_n:
-                      _dy_new + DYN_EVENT_SLOTS * DYN_EVENT_ENTRY_SIZE]
-    ok(_dy_res == bytes(len(_dy_res)),
-       f"reserved slot(s) [{DYN_EVENT_ORIG_ENTRIES}..{DYN_EVENT_SLOTS - 1}] are all "
-       f"NULL, so the engine skips them until a callback set is written there")
+    # Slot [ROSTER_CB_SET] is the roster display's set: its three callbacks,
+    # read from the linked ELF, each with the Thumb bit (the engine BLXes them).
+    _dy_rs = _elf_syms("roster_display.elf")
+    _dy_want = b"".join(struct.pack("<I", _dy_rs[n] | 1) for n in (
+        "CM_RosterMenu_OnInit", "CM_RosterMenu_OnSelectionChanged",
+        "CM_RosterMenu_OnDestroy"))
+    _dy_res = patched[_dy_new + ROSTER_CB_SET * DYN_EVENT_ENTRY_SIZE:
+                      _dy_new + (ROSTER_CB_SET + 1) * DYN_EVENT_ENTRY_SIZE]
+    ok(_dy_res == _dy_want,
+       f"slot [{ROSTER_CB_SET}] == the roster set's OnInit/OnSelectionChanged/"
+       f"OnDestroy from roster_display.elf, Thumb bit set ({_dy_res.hex()})")
     for _dy_r in DYN_EVENT_TABLE_REFS:
         _dy_v = struct.unpack_from("<I", patched, _dy_r)[0]
         ok(_dy_v == DYN_EVENT_TABLE_ADDR,
@@ -1025,6 +1073,81 @@ def main():
     ok(not _dy_nocmp,
        f"every load is gated by `cmp r1, #255` (NONE = 0xFF), so slot [2] is a "
        f"real set ({_dy_nocmp})")
+
+    print("[21] roster display: entry scripts + code")
+    # _rd*-prefixed locals (a bare _p/_f shadows the pass/fail counters).
+    _rd_bin = (ROOT / "build" / "roster_display.bin").read_bytes()
+    _rd_off = ROSTER_MENU_ADDR & 0x01FFFFFF
+    ok(patched[_rd_off:_rd_off + len(_rd_bin)] == _rd_bin,
+       f"roster code in-ROM == roster_display.bin ({len(_rd_bin)} B @ {ROSTER_MENU_ADDR:#x})")
+    # Compiled constants, read out of the SHIPPED code: the roots blob's entry
+    # table and roots[] start as literals, and the character bound as
+    # `cmp rN, #NUM_CHARACTERS-1`. A stale -D fails here, not as a wrong row.
+    _rd_code = patched[_rd_off:_rd_off + len(_rd_bin)]
+    _rd_lits = {struct.unpack_from("<I", _rd_code, i)[0]
+                for i in range(0, len(_rd_code) - 3, 4)}
+    _rd_hw = {struct.unpack_from("<H", _rd_code, i)[0]
+              for i in range(0, len(_rd_code) - 1, 2)}
+    ok(ROSTER_ROOTS_ADDR in _rd_lits
+       and ROSTER_ROOTS_ADDR + _ROOTS["roots_offset_bytes"] in _rd_lits
+       and any((h & 0xF8FF) == (0x2800 | (NUM_CHARACTERS - 1)) for h in _rd_hw),
+       f"compiled roster code carries ROSTER_ROOTS_ADDR, roots[] at "
+       f"+{_ROOTS['roots_offset_bytes']}, and cmp #{NUM_CHARACTERS - 1}")
+
+    # The pre-entries were APPENDED: the clipboard's sits exactly where the old
+    # blob ended, so no byte naming_open.ss depends on moved.
+    _rd_clip = struct.unpack_from("<I", patched, BG_EVENT_PTR_OFF)[0]
+    _rd_bed = struct.unpack_from("<I", patched, BEDROOM_BG_PTR_OFF)[0]
+    ok(_rd_clip == ORIG_CM_ENTRY + PRE_ROSTER_SCRIPT_LEN,
+       f"clipboard pre-entry {_rd_clip:#x} starts exactly at the old blob's end "
+       f"({ORIG_CM_ENTRY + PRE_ROSTER_SCRIPT_LEN:#x}): appended, not inserted")
+
+    _rd_push = _elf_syms("roster_display.elf")["CM_RosterPushRows"] | 1
+    _rd_open = _elf_syms("cm.elf")["CM_OpenCodeEntry"]
+
+    def _rd_decode(ptr, stock):
+        """Decode one pre-entry; return (ok, roster block address)."""
+        o = ptr & 0x01FFFFFF
+        d = patched
+        i = o + 9                               # past checkflag + goto_if
+        if d[i] != 0x69:                        # lockall
+            return False, None
+        i += 1
+        if d[i] != 0xE3 or d[i + 10] != 0xFF or d[i + 11] != 3:
+            return False, None                  # dynmultichoice, set NONE, 3 rows
+        i += 12 + 3 * 4
+        tgt = []
+        for row in range(3):                    # compare 0x800D,row ; goto_if ==
+            if d[i:i + 7] != bytes([0x21, 0x0D, 0x80]) + struct.pack("<H", row) + bytes([0x06, 0x01]):
+                return False, None
+            tgt.append(struct.unpack_from("<I", d, i + 7)[0])
+            i += 11
+        # row 1 lands on the accept path, whose first op is the
+        # CM_OpenCodeEntry callnative; row 2 is the object's stock script
+        acc = tgt[1] & 0x01FFFFFF
+        good = (d[acc] == 0x23 and struct.unpack_from("<I", d, acc + 1)[0] == _rd_open | 1
+                and tgt[2] == stock)
+        return good, tgt[0]
+
+    _rd_c_ok, _rd_c_roster = _rd_decode(_rd_clip, ORIG_CLIPBOARD)
+    _rd_b_ok, _rd_b_roster = _rd_decode(_rd_bed, ORIG_CHEAT_DEVICE)
+    ok(_rd_c_ok, "clipboard pre-entry: lockall, menu (set NONE, 3 rows), rows -> "
+                 "roster / CM_OpenCodeEntry accept path / stock questionnaire")
+    ok(_rd_b_ok, "bedroom pre-entry: same menu, rows -> roster / accept / stock cheat device")
+    ok(_rd_c_roster is not None and _rd_c_roster == _rd_b_roster,
+       "both pre-entries share one roster block")
+    _rd_r = (_rd_c_roster or 0) & 0x01FFFFFF
+    _rd_blk_ok = (
+        patched[_rd_r] == 0x23
+        and struct.unpack_from("<I", patched, _rd_r + 1)[0] == _rd_push
+        and patched[_rd_r + 5:_rd_r + 12] == bytes([0x21, 0x0D, 0x80, 0, 0, 0x06, 0x01])
+        and patched[_rd_r + 16] == 0xE3
+        and patched[_rd_r + 16 + 10] == ROSTER_CB_SET
+        and patched[_rd_r + 16 + 11] == 1
+        and patched[_rd_r + 16 + 12:_rd_r + 16 + 16] == bytes(4))
+    ok(_rd_blk_ok,
+       f"roster block: callnative CM_RosterPushRows, skip on 0 rows, then the "
+       f"STACK form (argc 1 + NULL) with callback set {ROSTER_CB_SET}")
 
     # ⚠️ Every local below is _fp*-prefixed on purpose. A bare `_p` or `_f` here
     # shadows the module-level PASS/FAIL COUNTERS that the summary line reads,
