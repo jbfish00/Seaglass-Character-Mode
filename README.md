@@ -108,6 +108,22 @@ Only your character's roster can enter your party.
   Pokemon — if everything in your party would otherwise be swept, one
   off-roster mon is left behind rather than emptying your party entirely.
 
+## Seeing your roster in-game
+
+With Character Mode on, use the **CHEAT DEVICE in your bedroom** or the
+**clipboard in the Oldale Town Mart** again. Instead of the code question you
+get a short menu:
+
+- **View roster**: a list of your character's Pokémon, one row per
+  evolution family (the first stage is shown, and the whole family counts).
+  The highlighted Pokémon's icon appears in a box beside the list. Scroll with
+  Up/Down; A or B closes it.
+- **Character code**: the code entry screen, as before.
+- **Questionnaire** (clipboard) / **Gift code** (cheat device): the object's
+  normal use.
+
+With Character Mode off, both objects work exactly as they always did.
+
 ## Character codes
 
 Codes are the character's name with spaces and punctuation removed.
