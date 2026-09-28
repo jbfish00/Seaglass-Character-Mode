@@ -203,6 +203,27 @@ _ROOTS_MANIFEST = json.loads(
 # the WILDPOOL_STRIDE bug (104 vs 176) in a new costume.
 ROSTER_ROOTS_OFF = _ROOTS_MANIFEST["roots_offset_bytes"]
 
+# The dynamic multichoice callback table, RELOCATED so the roster display can
+# own a callback set (../game_plans/roster_display.md, user decision
+# 2026-09-27: relocate and repoint rather than write into the bytes after it).
+# sDynamicListMenuEventCollections is 2 entries x {OnInit, OnSelectionChanged,
+# OnDestroy} at 0x0895CC34 (docs/ROUTINE_MAP.md "Dynamic multichoice"). The
+# bytes after it belong to whatever the linker put there, so the table is
+# copied to free space with a reserved slot [2] and its three literal-pool
+# references are repointed. The original stays where it is, unreferenced.
+# ⭐ NONE is 0xFF in this ROM, NOT 2 as in the donor's enum: all four loads
+# (0x081EFFB4, 0x081F0116, 0x081F01CC, 0x081F04DA) skip on `cmp r1, #255` and
+# then on a NULL callback. So slot [2] is a real index, and while it holds
+# zeros it is a no-op. verify_artifacts [20] pins all of this in the built ROM.
+DYN_EVENT_TABLE_ORIG = 0x0895CC34
+DYN_EVENT_TABLE_REFS = (0x1EFFF4, 0x1F02B0, 0x1F05C4)   # literal-pool file offsets
+DYN_EVENT_ENTRY_SIZE = 12
+DYN_EVENT_ORIG_ENTRIES = 2
+DYN_EVENT_SLOTS = 3                  # [2] reserved for the roster display
+# Past the roster roots (4,014 B, ending 0x08FA2FAE) with a page of headroom
+# for roster growth; the same verified free run, and splice() proves it clear.
+DYN_EVENT_TABLE_ADDR = 0x08FA4000
+
 GIVE_NATIVE   = 0x081F2175         # callnative give fn (49 inline script ptrs)
 GIVE_NATIVE_COUNT = 49
 
@@ -695,6 +716,33 @@ def main():
     splice(LEGENDARY_ADDR, legendaries, "legendaries")
     splice(ROSTER_ROOTS_ADDR, roster_roots, "roster roots")
     splice(CM_MUGSHOT_ADDR, mugshot, "mugshot renderer")
+
+    # --- dynamic multichoice callback table: relocate + repoint ---
+    assert ROSTER_ROOTS_ADDR + len(roster_roots) <= DYN_EVENT_TABLE_ADDR, (
+        f"roster roots end at {ROSTER_ROOTS_ADDR + len(roster_roots):#x}, past "
+        f"the relocated callback table at {DYN_EVENT_TABLE_ADDR:#x} -- move it up")
+    assert DYN_EVENT_TABLE_ADDR % 4 == 0
+    _dyn_orig_off = DYN_EVENT_TABLE_ORIG - 0x08000000
+    _dyn_live = bytes(data[_dyn_orig_off:
+                           _dyn_orig_off + DYN_EVENT_ORIG_ENTRIES * DYN_EVENT_ENTRY_SIZE])
+    # Every copied word must be a Thumb ROM function pointer: a wrong
+    # DYN_EVENT_TABLE_ORIG would otherwise copy some other object faithfully.
+    for _w in struct.unpack(f"<{len(_dyn_live) // 4}I", _dyn_live):
+        assert 0x08000000 <= _w < 0x0A000000 and _w & 1, (
+            f"callback table at {DYN_EVENT_TABLE_ORIG:#x} holds {_w:#x}, not a "
+            f"Thumb function pointer -- wrong address or wrong ROM")
+    _dyn_table = _dyn_live + bytes(
+        (DYN_EVENT_SLOTS - DYN_EVENT_ORIG_ENTRIES) * DYN_EVENT_ENTRY_SIZE)
+    splice(DYN_EVENT_TABLE_ADDR, _dyn_table, "dynamic multichoice callback table")
+    for _roff in DYN_EVENT_TABLE_REFS:
+        _cur = struct.unpack_from("<I", data, _roff)[0]
+        assert _cur == DYN_EVENT_TABLE_ORIG, (
+            f"callback-table literal {_roff + 0x08000000:#x} holds {_cur:#x}, "
+            f"expected {DYN_EVENT_TABLE_ORIG:#x} -- wrong ROM, or already patched")
+        struct.pack_into("<I", data, _roff, DYN_EVENT_TABLE_ADDR)
+    print(f"dynmultichoice callback table: {DYN_EVENT_SLOTS} slots @ "
+          f"{DYN_EVENT_TABLE_ADDR:#x} (was {DYN_EVENT_TABLE_ORIG:#x}), "
+          f"{len(DYN_EVENT_TABLE_REFS)} refs repointed")
 
     # --- egg-hatch sweep ---
     # The one enforcement hole reachable in ordinary play: eggs are exempt

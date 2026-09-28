@@ -350,5 +350,36 @@ grep -q "HARNESS RESULT: PASS" /tmp/sg_wild_choke.log && echo "  PASS choke poin
     || { echo "  FAIL choke-point proof (see /tmp/sg_wild_choke.log)"; grep -a "HARNESS" /tmp/sg_wild_choke.log; exit 1; }
 
 echo
+echo "=== Layer 7a: roster display -- the RELOCATED dynmultichoice callback table is the one read ==="
+# inject_character_mode.py moves sDynamicListMenuEventCollections to
+# DYN_EVENT_TABLE_ADDR and repoints its 3 literals (verify_artifacts [20] pins
+# the bytes). This proves the ENGINE reads it: a test-only ROM opens a
+# dynmultichoice from the clipboard, and all four table loads must return the
+# new address. Set 1 is the ROM's own item-icon set (its callbacks must run);
+# set 2 is the reserved slot, still NULL (none may run, and the menu must still
+# open and close). Against the un-relocated build every load reports 0x0895CC34.
+DYN_EVENT_TABLE_ADDR=$(sed -n 's/^DYN_EVENT_TABLE_ADDR *= *\(0x[0-9A-Fa-f]*\).*/\1/p' \
+    tools/inject_character_mode.py | head -1)
+[ -n "$DYN_EVENT_TABLE_ADDR" ] || { echo "  FAIL reading DYN_EVENT_TABLE_ADDR from the injector"; exit 1; }
+export DYN_EVENT_TABLE_ADDR
+for set in 1 2; do
+    python3 tools/tests/build_dynmenu_testrom.py $set > /tmp/sg_dyn_build.log 2>&1 \
+        || { echo "  FAIL building dynmenu test ROM (see /tmp/sg_dyn_build.log)"; exit 1; }
+    timeout 150 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=7 CB_SET=$set "$MGBA" \
+        --script tools/mgba_scripts/cm_dynmenu_table_test.lua \
+        -t tools/savestates/mart_inside.ss build/seaglass_cm_dyntest.gba > /tmp/sg_dyn_set$set.log 2>&1 || true
+    grep -q "HARNESS RESULT: PASS" /tmp/sg_dyn_set$set.log && echo "  PASS callback table live, set $set" \
+        || { echo "  FAIL callback table, set $set (see /tmp/sg_dyn_set$set.log)"; grep -a "HARNESS.*FAIL" /tmp/sg_dyn_set$set.log; exit 1; }
+done
+
+echo
+echo "=== Layer 7b: roster display -- the mon-icon path (party menu, Torchic) ==="
+timeout 90 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=7 "$MGBA" \
+    --script tools/mgba_scripts/mon_icon_path_probe.lua \
+    -t tools/savestates/route101_party.ss "$ROM" > /tmp/sg_mon_icon.log 2>&1 || true
+grep -q "HARNESS RESULT: PASS" /tmp/sg_mon_icon.log && echo "  PASS mon icon = gSpeciesInfo+120, palette +134" \
+    || { echo "  FAIL mon-icon path (see /tmp/sg_mon_icon.log)"; grep -a "HARNESS.*FAIL" /tmp/sg_mon_icon.log; exit 1; }
+
+echo
 echo "ALL AUTOMATED LAYERS GREEN (incl. real-UI activation + in-situ trade e2e + wild override + live egg hatch + live PC exit)."
 echo "Remaining human-in-the-loop verify: full playthrough (docs/TESTING.md)."

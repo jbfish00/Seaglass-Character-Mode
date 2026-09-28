@@ -573,15 +573,29 @@ what makes a third set cheap, and also what makes a wrong id jump to garbage.
 |---|---|---|---|
 | `[0]` `DYN_MULTICHOICE_CB_DEBUG` | `0x081EFBF5` | `0x081EFBF9` | `0x081EFBFD` |
 | `[1]` `DYN_MULTICHOICE_CB_SHOW_ITEM` | `0x081EFC01` | `0x081EFC7D` | `0x081EFD25` |
-| `[2]` | — 12 zero bytes at `0x0895CC4C`, **no pointer references** — |
+| `[2]` | reserved in the RELOCATED table at `0x08FA4000` (NULL until the roster callback set is written) |
 
-⭐ **Two ways in, and the choice is not yet made.** Either write a third entry
-into the 12 zero bytes at `0x0895CC4C` (no relocation, but it overwrites
-shipped rodata that is only *probably* padding — a computed index would not
-show up as a reference), or **relocate the table into free space and repoint
-its three references**, which are all of them and are all found:
-`0x081EFFF4`, `0x081F02B0`, `0x081F05C4`. The second is reversible and
-verifiable; prefer it unless it proves impossible.
+✅ **DECIDED AND SHIPPED 2026-09-27: RELOCATED** (user decision: relocate and
+repoint). `inject_character_mode.py` copies entries [0] and [1] to
+**`DYN_EVENT_TABLE_ADDR = 0x08FA4000`** with a reserved, all-NULL slot [2]
+(36 B), and repoints the three literals `0x081EFFF4`, `0x081F02B0` and
+`0x081F05C4`. The original stays in place, unreferenced. The build differs from
+`041ae275` by exactly 45 bytes (3×3 literal bytes plus the 36-byte table).
+- There are **four** loads, not three: `0x081F02B0` is shared by the OnInit
+  load `0x081F0116` and the init-time OnSelectionChanged load `0x081F01CC`.
+  The others are `0x081EFFB4` (cursor move) and `0x081F04DA` (OnDestroy).
+- ⭐ **NONE is `0xFF` in this ROM, not 2.** The donor's enum puts
+  `DYN_MULTICHOICE_CB_NONE` right after `SHOW_ITEM`, i.e. at 2, which would
+  have made slot [2] the sentinel. All four loads here test `cmp r1, #255`
+  and then skip a NULL callback, so [2] is a real set, and a no-op while NULL.
+- The `0x0895CC64` literal at `0x081F1158` points 48 B past the table base, at a
+  different object. It was never a table reference.
+- Evidence: `verify_artifacts` [20] (8 checks, on the built ROM),
+  `dyn_event_table_negative_test.py` 9/9, and live layer 7a
+  (`cm_dynmenu_table_test.lua` via `build_dynmenu_testrom.py`). With set 1 all
+  four loads read `0x08FA4000` and the ROM's item-icon callbacks run. With set 2
+  (the NULL slot) none run and the menu still opens and closes. Against
+  `041ae275` every load reports `0x0895CC34` and the layer fails.
 
 ✅ **`[1] OnSelectionChanged` = `0x081EFC7D` is this ROM's own worked example
 of "draw a sprite when the cursor moves"**, and it decodes against the donor
@@ -633,3 +647,39 @@ rather than writing a third static detector.**
 ⚠️ **The callback receives a ROW INDEX, not a species.** In the script-pointer
 form `ScrCmd_dynmultichoice` sets `items[i].id = i`, so a roster-roots table is
 required to map the highlighted row back to a species.
+
+## Mon icons (2026-09-27, for the roster display): ✅ CONFIRMED LIVE
+
+Proved by `tools/mgba_scripts/mon_icon_path_probe.lua` (7/7, pinned; three
+tampers each fail: wrong icon field, wrong palette byte, wrong species). It
+opens the party menu from `route101_party.ss` and breaks on `CreateMonIcon`.
+
+⚠️ **`gSpeciesInfo` is `0x088F0780`**, the literal the ROM's own icon code
+loads. `rom_species_table.json`'s `table_base_offset` `0x8F07AC` is the
+**name** field at +44, so offsets measured from it are 44 lower than the
+struct's.
+
+| what | addr / offset | status |
+|---|---|---|
+| `gSpeciesInfo[s].iconSprite` | `0x088F0780 + s*208 + 120` | ✅ live: sprite `images` and VRAM (frame 0 and 1 byte-identical) |
+| `iconSpriteFemale` | `+124` (read only if non-NULL and female) | static |
+| `iconPalIndex` | low 3 bits of `+134` (female: bits 3-5) | ✅ live: OBJ palette == table entry; donor agrees on 346/368 species |
+| `gMonIconPaletteTable` | `0x0893F0B8`, 6 × {ptr, tag `0xDAC0+i`, pad} | ✅ live |
+| `CreateMonIcon(species, cb, x, y, subpri, personality)` | `0x081B5CE4` | ✅ live: party menu (call at `0x08184A6E`, LR `0x08184A73`) passes species 255 |
+| `CreateMonIconNoPersonality(species, cb, x, y, subpri)` | `0x081B5E18` | static: reads +120/+124/+134, calls the two below |
+| `CreateMonIconSprite` (static) | `0x081B6358` | ✅ live: receives template with image `0x08834EF4` |
+| `UpdateMonIconFrame` | `0x081B62B0` | static |
+| `SpriteCB_MonIcon` | `0x081B61BD` (thumb) | ✅ live: the cb the party menu passes; body is one BL to `UpdateMonIconFrame` |
+| `LoadMonIconPalette(species)` | `0x081B6078` (twin `0x081B603C`) | static; ⚠️ entry is the `lsls` one instruction BEFORE `push` |
+| `FreeMonIconPalette(species)` | `0x081B618C` (twin `0x081B615C`) | static; same entry caveat |
+| `LoadSpritePalette` / `IndexOfSpritePaletteTag` / `FreeSpritePaletteByTag` | `0x080056D4` / `0x080057BC` / `0x080057FC` | static, from the palette functions' own call shapes |
+
+**Why the two earlier negatives were clean and still wrong about the answer:**
+expansion's graphics are laid out **per species** (front pic, back pic, palettes,
+icon, footprint together), so consecutive icons are ~3,500-4,200 B apart, never
+512. The "~3500-4200 B" delta cluster the first scan recorded **was** the icon
+field. Icons are 1,024 B each (two 32×32 4bpp frames), uncompressed.
+All 501 named species hold a ROM pointer at +120, none LZ77-headed; 498
+distinct (3 shared pairs). A 24-species contact sheet rendered from ROM data
+(ids 1..1488) was correct by eye: `tools/savestates/mon_icon_sheet.png`
+(gitignored).

@@ -169,6 +169,21 @@ LEGENDARY_COUNT = _LEG["count"]
 ROSTER_ROOTS_ADDR = _injector_addr("ROSTER_ROOTS_ADDR")
 _ROOTS = json.loads((ROOT / "tools" / "character_mode"
                      / "roster_roots_manifest.json").read_text())
+
+# The relocated dynamic multichoice callback table (inject_character_mode.py,
+# "dynamic multichoice callback table"). The new address is read from the
+# injector; the ORIGINAL address, the three literal offsets and the four loads
+# are restated here on purpose -- they are facts about the base ROM that the
+# injector must agree with, not layout the injector chooses.
+DYN_EVENT_TABLE_ADDR = _injector_addr("DYN_EVENT_TABLE_ADDR")
+DYN_EVENT_TABLE_ORIG = 0x0895CC34
+DYN_EVENT_TABLE_REFS = (0x1EFFF4, 0x1F02B0, 0x1F05C4)
+# (instruction address, literal it loads): every PC-relative load of the table
+DYN_EVENT_TABLE_LOADS = ((0x081EFFB4, 0x081EFFF4), (0x081F0116, 0x081F02B0),
+                         (0x081F01CC, 0x081F02B0), (0x081F04DA, 0x081F05C4))
+DYN_EVENT_ENTRY_SIZE = 12
+DYN_EVENT_ORIG_ENTRIES = 2
+DYN_EVENT_SLOTS = 3
 # The flags array is SB1+0x13C0..0x14EB (vars start at 0x14EC), so flags above
 # 0x95F do not exist at all.
 FLAG_SPACE_END = 0x95F
@@ -197,7 +212,8 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 125  # +10: the PC-exit sweep, 5 checks x 2 sites (2026-09-07);
+EXPECT_CHECKS = 133  # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
+                     # +10: the PC-exit sweep, 5 checks x 2 sites (2026-09-07);
                      # +1: the COMPILED Battle Pyramid guard literal (2026-09-19)
                      # +9: [19] the roster display's family-roots blob (2026-09-20)
 
@@ -303,6 +319,10 @@ def main():
                (ROSTER_ROOTS_ADDR & 0x01FFFFFF,
                 NUM_CHARACTERS * _ROOTS["entry_size_bytes"]
                 + _ROOTS["total_roots"] * 2),
+               # relocated dynmultichoice callback table + its 3 literals
+               (DYN_EVENT_TABLE_ADDR & 0x01FFFFFF,
+                DYN_EVENT_SLOTS * DYN_EVENT_ENTRY_SIZE),
+               *[(r, 4) for r in DYN_EVENT_TABLE_REFS],
                (CM_SPRITE_BLOBS_ADDR & 0x01FFFFFF, len(_spr_blobs)),
                (CM_SPRITE_PTRS_ADDR & 0x01FFFFFF, len(_spr_ptrs)),
                (CM_MUGSHOT_ADDR & 0x01FFFFFF, _mugshot_len),
@@ -944,6 +964,67 @@ def main():
            if struct.unpack_from("<HH", _rr_blob, ci * _rr_esz)[1] == 0),
        "every zero-root character is hidden, so the screen can never be "
        "opened on an empty list")
+
+    print("[20] roster display: relocated dynmultichoice callback table")
+    # ⚠️ _dy*-prefixed locals, same reason as [19]'s _rr*: a bare `_p` or `_f`
+    # shadows the module-level PASS/FAIL counters.
+    # Every check reads the BUILT ROM, and the expected copy comes from the BASE
+    # ROM's bytes -- never from a constant restating them.
+    _dy_new = DYN_EVENT_TABLE_ADDR & 0x01FFFFFF
+    _dy_old = DYN_EVENT_TABLE_ORIG & 0x01FFFFFF
+    _dy_n = DYN_EVENT_ORIG_ENTRIES * DYN_EVENT_ENTRY_SIZE
+    ok(patched[_dy_new:_dy_new + _dy_n] == orig[_dy_old:_dy_old + _dy_n],
+       f"entries [0..{DYN_EVENT_ORIG_ENTRIES - 1}] at {DYN_EVENT_TABLE_ADDR:#x} "
+       f"== the base ROM's table at {DYN_EVENT_TABLE_ORIG:#x} ({_dy_n} B)")
+    _dy_res = patched[_dy_new + _dy_n:
+                      _dy_new + DYN_EVENT_SLOTS * DYN_EVENT_ENTRY_SIZE]
+    ok(_dy_res == bytes(len(_dy_res)),
+       f"reserved slot(s) [{DYN_EVENT_ORIG_ENTRIES}..{DYN_EVENT_SLOTS - 1}] are all "
+       f"NULL, so the engine skips them until a callback set is written there")
+    for _dy_r in DYN_EVENT_TABLE_REFS:
+        _dy_v = struct.unpack_from("<I", patched, _dy_r)[0]
+        ok(_dy_v == DYN_EVENT_TABLE_ADDR,
+           f"literal {_dy_r + 0x08000000:#x} -> {_dy_v:#x} "
+           f"(want {DYN_EVENT_TABLE_ADDR:#x})")
+    # Exhaustion: nothing in the built ROM still points at the old table, and
+    # exactly the three literals point at the new one. Word-aligned AND
+    # unaligned: script operands are unaligned u32s.
+    _dy_oldpat = struct.pack("<I", DYN_EVENT_TABLE_ORIG)
+    _dy_newpat = struct.pack("<I", DYN_EVENT_TABLE_ADDR)
+    _dy_left, _dy_i = [], patched.find(_dy_oldpat)
+    while _dy_i != -1:
+        _dy_left.append(_dy_i + 0x08000000)
+        _dy_i = patched.find(_dy_oldpat, _dy_i + 1)
+    _dy_newrefs, _dy_i = [], patched.find(_dy_newpat)
+    while _dy_i != -1:
+        _dy_newrefs.append(_dy_i)
+        _dy_i = patched.find(_dy_newpat, _dy_i + 1)
+    ok(not _dy_left and sorted(_dy_newrefs) == sorted(DYN_EVENT_TABLE_REFS),
+       f"no reference to the old table remains ({[hex(a) for a in _dy_left]}), "
+       f"and the new one has exactly the 3 literals "
+       f"({[hex(a + 0x08000000) for a in _dy_newrefs]})")
+    # The literals are the ones the table-indexing code actually reads: each
+    # load is a Thumb `ldr rX, [pc, #imm]` whose target is that literal.
+    _dy_badld = []
+    for _dy_ia, _dy_lit in DYN_EVENT_TABLE_LOADS:
+        _dy_h = struct.unpack_from("<H", patched, _dy_ia - 0x08000000)[0]
+        _dy_t = ((_dy_ia + 4) & ~3) + (_dy_h & 0xFF) * 4
+        if _dy_h >> 11 != 0b01001 or _dy_t != _dy_lit:
+            _dy_badld.append((hex(_dy_ia), hex(_dy_h), hex(_dy_t)))
+    ok(not _dy_badld,
+       f"all {len(DYN_EVENT_TABLE_LOADS)} table loads are pc-relative ldr's of "
+       f"the repointed literals ({_dy_badld})")
+    # ⭐ Why slot [2] is usable at all: NONE is 0xFF here, not 2 as in the
+    # donor's enum. Each load is preceded (within 16 B) by `cmp r1, #255`
+    # (0x29FF); if a rebuilt ROM ever tested `cmp r1, #2` instead, slot [2]
+    # would silently be the NONE sentinel and its callbacks would never run.
+    _dy_nocmp = [hex(_dy_ia) for _dy_ia, _ in DYN_EVENT_TABLE_LOADS
+                 if not any(struct.unpack_from("<H", patched,
+                                               _dy_ia - 0x08000000 - k)[0] == 0x29FF
+                            for k in range(2, 18, 2))]
+    ok(not _dy_nocmp,
+       f"every load is gated by `cmp r1, #255` (NONE = 0xFF), so slot [2] is a "
+       f"real set ({_dy_nocmp})")
 
     # ⚠️ Every local below is _fp*-prefixed on purpose. A bare `_p` or `_f` here
     # shadows the module-level PASS/FAIL COUNTERS that the summary line reads,
