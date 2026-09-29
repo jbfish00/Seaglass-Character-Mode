@@ -392,6 +392,20 @@ def copies(b):
                     r2_is_mon = True
                 elif (v & 0xFF00) == 0x2200:
                     r2_is_mon = False
+                # ⭐ THUMB FORMAT 12: `add rD, pc/sp, #imm` writes an ADDRESS
+                # into rD, so rD holds neither a mon size nor a party pointer.
+                # Undecoded, r2 kept its earlier "mon size" after
+                # `movs r2,#100 ; ... ; add r2,sp,#20`, and CFRU's
+                # CreateShedinja SetMonData loop (0x09093FA8, a field setter
+                # called as (mon, field, &data)) read as a mon copy once the
+                # window reached it (Radical Red, 2026-09-29). r1 already had
+                # this rule (0xA901 below); r2 did not.
+                if (v & 0xF000) == 0xA000:
+                    _rd = (v >> 8) & 7
+                    sized.discard(_rd)
+                    tracked.discard(_rd)
+                    if _rd == 2:
+                        r2_is_mon = False
                 # r1 = a small immediate means this is GetMonData/SetMonData
                 # (mon, FIELD, value), not memcpy(dst, src, n). Without this the
                 # inventory reports plain reads as copies whenever r2 still
