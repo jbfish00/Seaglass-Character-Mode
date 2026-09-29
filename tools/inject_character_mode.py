@@ -1024,11 +1024,11 @@ def main():
 
     pat = struct.pack("<I", GIVE_NATIVE)
     sites = []
-    i = bytes(data).find(pat)
+    i = data.find(pat)
     while i != -1:
         if data[i - 1] == 0x23:
             sites.append(i)
-        i = bytes(data).find(pat, i + 1)
+        i = data.find(pat, i + 1)
     assert len(sites) == GIVE_NATIVE_COUNT, f"expected {GIVE_NATIVE_COUNT} callnative sites, found {len(sites)}"
     for s in sites:
         struct.pack_into("<I", data, s, hook_native | 1)

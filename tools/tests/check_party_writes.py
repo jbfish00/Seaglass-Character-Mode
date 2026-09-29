@@ -232,7 +232,7 @@ INVENTORY = {
                  "from a buffer this same module filled from that same party. "
                  "⭐ Invisible until size_seed learned k*MON_SIZE -- it is one "
                  "600-byte memcpy, not six 100-byte ones"),
-    0x00208786: ("GATED",
+    0x00208786: ("UNVERIFIED",
                  "THE IN-GAME TRADE, and the site this whole fix exists for. "
                  "CopyMon(&gPlayerParty[slot], &gEnemyParty[0], 100) at "
                  "0x0820880E -- measured live 2026-09-19 with a WRITE_CHANGE "
@@ -243,7 +243,13 @@ INVENTORY = {
                  "special 0x100/0x101 and refuses an off-roster received "
                  "species, so this copy never executes for a mon the roster "
                  "forbids (docs/ROUTINE_MAP.md's in-game trades section; live "
-                 "layer 4g). Nothing gates the copy ITSELF"),
+                 "layer 4g). Nothing gates the copy ITSELF. ⚠️ WHY NOT GATED "
+                 "(downgraded 2026-09-28): this is TradeMons 0x08208778, and it "
+                 "has THREE BL callers. 0x08209474 and 0x08209CEE are the "
+                 "in-game trade (gSpecialVar_0x8005, 0); 0x0820ADC6 is the LINK "
+                 "trade, TradeMons(monIds[0], monIds[1] % 6), which nothing in "
+                 "Character Mode gates. Whether a link trade is reachable here "
+                 "is not measured. Found porting this checker to Lazarus"),
 }
 
 WINDOW = 96
@@ -333,14 +339,17 @@ def size_seed(b, i):
             imm[d] = val
             if d >= 4:
                 s.add(d) if val == MON_SIZE else s.discard(d)
-        elif (v & 0xFFC0) == 0x0000 and v != 0:
+        elif (v & 0xFFC0) == 0x0000 and v != 0:          # movs rD,rS (lsls #0)
+            # ⚠️ ONE branch for this encoding. The bulk rule was first added as
+            # a second `elif` with this same test AHEAD of the r4-r7 rule, which
+            # made the r4-r7 rule unreachable (the CreateShedinja blind spot in
+            # the docstring, back silently). Merged 2026-09-28; measured
+            # identical here (10/10), since no Emerald site needs it today.
             d, sr = v & 7, (v >> 3) & 7
             if d == 2:
                 _val = imm.get(sr)
                 bulk[0] = (_val is not None and _val % MON_SIZE == 0
                            and 2 <= _val // MON_SIZE <= 6)
-        elif (v & 0xFFC0) == 0x0000 and v != 0:          # movs rD,rS (lsls #0)
-            d, sr = v & 7, (v >> 3) & 7
             if d >= 4:
                 s.add(d) if sr in s else s.discard(d)
         elif (v & 0xF800) == 0x4800:                     # ldr rD,[pc,#imm]
