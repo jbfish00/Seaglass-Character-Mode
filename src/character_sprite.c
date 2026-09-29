@@ -40,7 +40,12 @@ typedef unsigned int u32;
 typedef signed short s16;
 
 #define VAR_CM_CHAR    0x40E4
-#define NUM_CHARACTERS 193
+/* Supplied by the injector, derived from characters_manifest.json. This was a
+ * literal 193 with no guard: a roster change would have left the bounds check
+ * below either rejecting real characters or trusting ids past the table. */
+#ifndef NUM_CHARACTERS
+#error "compile with -DNUM_CHARACTERS=<from characters_manifest.json>"
+#endif
 
 /* Supplied by the injector (-DSPRITE_PTRS_ADDR=<CM_SPRITE_PTRS_ADDR>):
  * NUM_CHARACTERS x {u32 gfx, u32 pal} absolute ROM pointers in character-index

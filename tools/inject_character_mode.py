@@ -587,6 +587,7 @@ def main():
     subprocess.run(["arm-none-eabi-gcc", "-c", "-mthumb", "-mcpu=arm7tdmi",
                     "-O2", "-ffreestanding", "-fno-builtin", "-Wall", "-Wextra",
                     f"-DSPRITE_PTRS_ADDR={CM_SPRITE_PTRS_ADDR:#x}",
+                    f"-DNUM_CHARACTERS={NUM_CHARACTERS}",
                     "-o", str(mobj), str(ROOT / "src" / "character_sprite.c")], check=True)
     subprocess.run(["arm-none-eabi-ld", "-Ttext", f"{CM_MUGSHOT_ADDR:#x}",
                     "--entry", "CM_ShowCharacterMugshot",

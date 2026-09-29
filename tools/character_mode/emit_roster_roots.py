@@ -7,19 +7,24 @@ ROOT for the ACTIVE character only, each row a species name plus a bordered
 species icon. This file emits the roots; the names come from the ROM's own
 species table and are never copied.
 
-⚠️⚠️ WHY THIS BLOB EXISTS AT ALL -- the reason is not "the data was not handy".
-Seaglass draws the list with pokeemerald-expansion's DYNAMIC MULTICHOICE, whose
-script-pointer form sets `items[i].id = i`. So the per-row callback
-(`OnSelectionChanged`) is handed a ROW INDEX, not a species, and something has
-to map the row back to a species before an icon can be drawn. That mapping is
-this blob. docs/ROUTINE_MAP.md "Dynamic multichoice" has the RE.
+⚠️⚠️ WHY THIS BLOB EXISTS AT ALL. Nothing else in the ROM holds a character's
+roots in order. The allow-bitmap is a SET of every species in every family
+(every stage, no order), and the ROM has no cheap way to walk a family back to
+its root at run time. So the ordered roots are emitted here, once, from the
+audited roster.
 
-⭐ ROWE's trap, recorded here because this blob is what makes it possible to hit
-it again: `moveCursorFunc`'s first parameter is the item's ID, not its index.
-Indexing the item array with it drew Scyther for Pikachu, and because Scyther is
-green it read as a palette bug and cost two rebuilds "fixing" a palette that was
-never broken. The two are only interchangeable while `id == index`, which is
-exactly the case here -- so the shim must still say which one it means.
+The shim (src/roster_display.c) pushes one row per root with the STACK form of
+dynmultichoice, and each row's id is the SPECIES. (An earlier design used the
+script-pointer form, which sets `items[i].id = i` and would have needed this blob
+to map a row index back to a species. That design was abandoned.) So
+`OnSelectionChanged` gets the species directly. docs/ROUTINE_MAP.md "Dynamic
+multichoice" has the RE.
+
+⭐ ROWE's trap, recorded here because the stack form is what keeps it away:
+`moveCursorFunc`'s first parameter is the item's ID, not its index. Indexing
+the item array with it drew Scyther for Pikachu, and because Scyther is green
+it read as a palette bug and cost two rebuilds "fixing" a palette that was never
+broken. Here the id IS the species, so nothing indexes the item array at all.
 
 WHAT IS IN THE LIST. `roster_species_ids` verbatim, whole: the signature species
 first (84 of 84 characters with a signature have it at [0]), then the rest of
@@ -32,9 +37,11 @@ consumes the already-mapped, already-audited ids and only checks them.
 
 ⚠️ NAMES ARE NOT EMITTED. Every root is asserted to resolve in the ROM's own
 species table (rom_species_table.json, base 0x008F07AC, stride 208, name at
-offset 0), so the shim can hand `dynmultichoice` a pointer straight into that
-table. An id with no name there would draw a blank row, so a miss is a hard
-error here rather than something to notice on the screen later.
+offset 0; that base is gSpeciesInfo 0x088F0780 + 44, the NAME field). The shim
+copies each name out of that table into a heap buffer, because the engine
+Free()s every row name when the list closes (FreeListMenuItems), and a pointer
+into ROM would be freed. An id with no name there would draw a blank row, so a
+miss is a hard error here rather than something to notice on the screen later.
 
 ⭐ ONE CHARACTER'S ROOTS COLLAPSE, AND THE DISPLAY IS THE ONLY THING THAT CARES.
 Rika's roster holds both Wooper (-> Quagsire) and Clodsire, whose root is
