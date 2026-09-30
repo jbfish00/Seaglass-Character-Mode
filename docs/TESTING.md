@@ -47,8 +47,16 @@ risky hand-written ARM hooks whose correctness is the thing in question.
 Every capability the ROWE debug menu provided is a form of **(a) mutate game
 state, (b) drive input, (c) observe state**. All three are available from
 *outside* a closed ROM through mGBA's scripting API, which we reach with the
-`mgba-headless` binary built from source (see `CLAUDE.md`'s Toolchain section
-for why the packaged `mgba-qt` 0.10.2 can't do this — no `--script` flag).
+`mgba-headless` binary built from source, because the packaged `mgba-qt` 0.10.2
+can't do this (no `--script` flag). To build it from a fresh clone: clone
+upstream mGBA into `tools/mgba_src` (gitignored), check out
+`5157ce208a5965e8a47bf5b48b5aae5198c22a5e`, `git apply
+../patches/mgba-headless-local.patch` (a video buffer for screenshots and a
+debugger for `MGBA_HEADLESS_DEBUGGER=1`), then `cmake -B tools/mgba_src/build -S
+tools/mgba_src -DBUILD_HEADLESS=ON -DBUILD_QT=OFF -DBUILD_SDL=OFF
+-DCMAKE_BUILD_TYPE=Release -DUSE_LIBZIP=OFF` and build the `mgba-headless`
+target. Lazarus, Radical Red and Unbound script exactly this as
+`tools/build_mgba.sh`.
 
 `tools/mgba_scripts/harness.lua` is the reusable library. The mapping:
 
@@ -169,13 +177,13 @@ block used to claim nor the 24 `../../game_plans/rowe_parity.md` carried.
 bash    tools/tests/run_tests.sh                    # ALL AUTOMATED LAYERS GREEN
                                                     #   22 layers, 137 checks
                                                     #   (108 of them Layer 3's)
-python3 tools/tests/verify_artifacts.py             # 108 checks (was 24 in the matrix)
-bash    tools/tests/checker_guard_test.sh           # 8/8
+python3 tools/tests/verify_artifacts.py             # 140 checks (2026-09-28)
+bash    tools/tests/checker_guard_test.sh           # 20/20
 python3 tools/tests/check_gift_eggs.py              # + _negative_test.py 7/7
 python3 tools/tests/egg_hook_negative_test.py       # 6/6
 python3 tools/tests/pc_hook_negative_test.py        # 7/7
 python3 tools/tests/check_acquisition_paths.py      # + _negative_test.py 7/7
-python3 tools/tests/check_party_writes.py           # + _negative_test.py 8/8
+python3 tools/tests/check_party_writes.py           # 10 sites; + _negative_test.py 11/11
 python3 tools/tests/check_repo_selfcontained.py     # + _negative_test.py 6/6
 python3 tools/character_mode/verify_docs.py         # ALL PASS (1792 doc rows)
 ```
