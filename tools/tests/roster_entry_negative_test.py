@@ -72,7 +72,7 @@ def run(rom_path):
     src = open(VERIFY, encoding="utf-8").read()
     src = src.replace('ROM_OUT = ROOT / "build" / "seaglass_cm.gba"',
                       'ROM_OUT = Path(%r)' % rom_path, 1)
-    path = os.path.join(HERE, "_negtest_verify_roster_entry.py")
+    path = os.path.join(HERE, "_negtest_verify_roster_entry.%d.py" % os.getpid())  # unique per run; gitignored
     open(path, "w", encoding="utf-8").write(src)
     try:
         p = subprocess.run([sys.executable, path], capture_output=True,

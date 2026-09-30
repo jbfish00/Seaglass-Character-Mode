@@ -83,7 +83,7 @@ def main():
         elif want_rc != 0:
             fails.append("%s: TAMPER CHANGED NOTHING" % name)
             return
-        path = os.path.join(HERE, "_negtest_gift_eggs.py")
+        path = os.path.join(HERE, "_negtest_gift_eggs.%d.py" % os.getpid())  # unique per run; gitignored
         open(path, "w", encoding="utf-8").write(text)
         tmps.append(path)
         rc, out = run(path)

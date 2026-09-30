@@ -92,7 +92,7 @@ def run(rom_path):
                       'ROM_OUT = Path(%r)' % rom_path, 1)
     # Must live in tools/tests/: verify_artifacts resolves the repo root from
     # its own __file__.
-    path = os.path.join(HERE, "_negtest_verify_dyn.py")
+    path = os.path.join(HERE, "_negtest_verify_dyn.%d.py" % os.getpid())  # unique per run; gitignored
     open(path, "w", encoding="utf-8").write(src)
     try:
         p = subprocess.run([sys.executable, path], capture_output=True,

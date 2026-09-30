@@ -55,3 +55,7 @@ docs/all_strings_dump.stderr
 
 # Local Claude Code handoff notes (kept out of the public repo)
 CLAUDE.md
+
+# Negative tests write a patched verifier copy here per run (PID in the name).
+# A killed run can leave one behind; never commit it.
+tools/tests/_negtest_*.py

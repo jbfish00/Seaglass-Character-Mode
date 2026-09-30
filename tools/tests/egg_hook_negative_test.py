@@ -84,7 +84,7 @@ def run(rom_path, tmp):
     # fails for a reason that has nothing to do with the tamper. That is what
     # this test hit on its first run -- all six cases MISSED, control included,
     # which is the signature of a broken harness rather than a broken checker.
-    path = os.path.join(HERE, "_negtest_verify_egg.py")
+    path = os.path.join(HERE, "_negtest_verify_egg.%d.py" % os.getpid())  # unique per run; gitignored
     open(path, "w", encoding="utf-8").write(src)
     try:
         p = subprocess.run([sys.executable, path], capture_output=True,
