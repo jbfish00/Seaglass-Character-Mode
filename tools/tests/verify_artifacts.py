@@ -111,7 +111,13 @@ GIVEMON_ADDR = 0x081AA5AC
 BL_CATCH = 0x0A6A46
 BL_GIFT  = 0x1F18DE
 BL_EGG   = 0x188514              # egg-hatch caller (exempt, stays original)
-TRAMPOLINE_ADDR = 0x08470200
+# Near-hook trampolines: one block over the DEAD standalone
+# IsRemovingLastPartyMon (injector TRAMPOLINE_BLOCK). NOT 0x08470200: that is a
+# referenced 64-byte sprite frame the old trampolines overwrote ([23]).
+TRAMPOLINE_BLOCK = 0x081C3430
+TRAMPOLINE_BLOCK_LEN = 36
+TRAMPOLINE_ADDR = TRAMPOLINE_BLOCK + 8
+OLD_SPRITE_FRAME = (0x08470200, 0x40)
 GIVE_NATIVE = 0x081F2175
 BG_EVENT_PTR_OFF = 0x123ACC
 # Second activation point (2026-09-19): the bedroom cheat device, map 1.1 BG
@@ -131,10 +137,12 @@ PSS_COUNT_ALIVE_EXCEPT = 0x081BADEC
 PSS_GUARD_BL_SITES = (0x1BC576, 0x1BC62C, 0x1BCB04, 0x1BCB3C, 0x1BCB6E)
 PSS_CANSHIFT_BL = 0x1C352C
 PSS_CANSHIFT_TAIL = 0x1C3530
-PSS_GUARD_TRAMPOLINE_ADDR = 0x081C3430   # over the DEAD standalone IsRemovingLastPartyMon
+PSS_GUARD_TRAMPOLINE_ADDR = TRAMPOLINE_BLOCK   # +0 of the block
 PSS_SPECIAL_ANCHOR = 0x88   # CountPartyAliveNonEggMons_IgnoreVar0x8004Slot
 CREATE_MON_WITH_IVS = 0x081A7504
-WILD_TRAMPOLINE_ADDR = 0x08470208
+WILD_TRAMPOLINE_ADDR = 0x08FA8000   # the wild long-call veneer
+WILD_STUB_ADDR = TRAMPOLINE_BLOCK + 24   # its 12-byte entry stub (the BL target)
+WILD_RET_LABEL = 0x08FA8014          # the veneer's return label (Lua breakpoints)
 WILDPOOL_ADDR = 0x08EE5000
 # Phase 3. ⚠️ These three were hardcoded with a "keep in sync with the injector"
 # comment -- the exact arrangement check [16] exists to stop. On 2026-07-29 four
@@ -235,7 +243,8 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 147  # +7: [22] the PC second guard (2026-09-29)
+EXPECT_CHECKS = 152  # +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
+# 147: +7: [22] the PC second guard (2026-09-29)
 # was 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
                      # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
                      # +10: the PC-exit sweep, 5 checks x 2 sites (2026-09-07);
@@ -340,8 +349,10 @@ def main():
     print("[3] diff containment")
     windows = [(BL_CATCH, 4), (BL_GIFT, 4), (BG_EVENT_PTR_OFF, 4),
                (BEDROOM_BG_PTR_OFF, 4),
-               (TRAMPOLINE_ADDR & 0x01FFFFFF, 8),
-               (WILD_BL_SITE, 4), (WILD_TRAMPOLINE_ADDR & 0x01FFFFFF, 64 - 8),
+               (TRAMPOLINE_BLOCK & 0x01FFFFFF, TRAMPOLINE_BLOCK_LEN),
+               (WILD_BL_SITE, 4),
+               (WILD_TRAMPOLINE_ADDR & 0x01FFFFFF,
+                len((ROOT / "build" / "wtramp.bin").read_bytes())),
                (0xED2200, 0x2000), (BITMAPS_ADDR & 0x01FFFFFF, NUM_CHARACTERS * BITMAP_STRIDE),
                (CODES_ADDR & 0x01FFFFFF, NUM_CHARACTERS * CODE_LEN),
                (STARTERS_ADDR & 0x01FFFFFF, NUM_CHARACTERS * 2),
@@ -375,7 +386,6 @@ def main():
                # the 8-byte trampoline over the dead IsRemovingLastPartyMon.
                *[(_s, 4) for _s in PSS_GUARD_BL_SITES + (PSS_CANSHIFT_BL,
                                                           PSS_CANSHIFT_TAIL)],
-               (PSS_GUARD_TRAMPOLINE_ADDR & 0x01FFFFFF, 8),
                # egg-hatch sweep: the 11-byte replayed tail, and the 6-byte
                # overlay on the hatch script that jumps to it
                (EGG_TAIL_ADDR & 0x01FFFFFF, 11),
@@ -674,11 +684,17 @@ def main():
     print("[11] wild-encounter hook + trampoline")
     ok(decode_bl(orig, WILD_BL_SITE) == CREATE_MON_WITH_IVS,
        "wild BL originally -> CreateMonWithIVs-simple")
-    ok(decode_bl(patched, WILD_BL_SITE) == WILD_TRAMPOLINE_ADDR,
-       "wild BL retargeted -> wild trampoline")
-    wt = patched[WILD_TRAMPOLINE_ADDR & 0x01FFFFFF: (WILD_TRAMPOLINE_ADDR & 0x01FFFFFF) + 40]
-    ok(wt[0:2] == bytes([0x1D, 0xB5]), "wild trampoline starts push {r0,r2,r3,r4,lr}")
-    gated_word, orig_word = struct.unpack_from("<II", wt, 0x20)
+    ok(decode_bl(patched, WILD_BL_SITE) == WILD_STUB_ADDR,
+       "wild BL retargeted -> wild entry stub")
+    _ws = WILD_STUB_ADDR & 0x01FFFFFF
+    ok(bytes(patched[_ws:_ws + 12])
+       == struct.pack("<HHHHI", 0xB408, 0x4B01, 0x4718, 0x46C0, WILD_TRAMPOLINE_ADDR | 1),
+       "wild stub = push {r3}; ldr r3,=veneer; bx r3 (saves the fixedIV it clobbers)")
+    _wlen = len((ROOT / "build" / "wtramp.bin").read_bytes())
+    wt = patched[WILD_TRAMPOLINE_ADDR & 0x01FFFFFF: (WILD_TRAMPOLINE_ADDR & 0x01FFFFFF) + _wlen]
+    ok(wt[0:4] == bytes([0x08, 0xBC, 0x1D, 0xB5]),
+       "wild veneer starts pop {r3}; push {r0,r2,r3,r4,lr}")
+    gated_word, orig_word = struct.unpack_from("<II", wt, _wlen - 8)
     ok(0x08ED2200 <= (gated_word & ~1) < 0x08EDA000,
        f"wild trampoline's long-call literal -> main shim blob ({gated_word:#x})")
     ok((orig_word & ~1) == CREATE_MON_WITH_IVS,
@@ -1254,7 +1270,7 @@ def main():
     print("\n[18] encounter marker")
     _MARKER_ADDR, _MARKER_STRIDE = 0x08F12000, 64
     _TEXT_WILD = 0x084C646C
-    _BL, _EXPAND, _TRAMP = 0x086EAA, 0x080876DC, 0x08470230
+    _BL, _EXPAND, _TRAMP = 0x086EAA, 0x080876DC, TRAMPOLINE_BLOCK + 16
     _mk = (CM / "marker_strings.bin").read_bytes()
     ok(len(_mk) == NUM_CHARACTERS * _MARKER_STRIDE,
        f"marker_strings.bin is {NUM_CHARACTERS}x{_MARKER_STRIDE} "
@@ -1332,6 +1348,28 @@ def main():
     _glits = {struct.unpack_from("<I", _gcode, k)[0] for k in range(0, len(_gcode) - 3, 4)}
     ok({0x081C3530, 0x0201A104, PSS_COUNT_ALIVE_EXCEPT | 1} <= _glits,
        "compiled guard carries 0x081C3530, sStorage 0x0201A104 and the count routine")
+
+    print("[23] trampolines out of the sprite frame (2026-09-29)")
+    # ⭐ The defect: the "64-byte 0xFF scavenge run" at 0x08470200 is a
+    # referenced sprite frame (SpriteFrameImage {0x08470200, 0x40} at
+    # 0x0895ED54). It must now be byte-identical to the base ROM.
+    _sf = OLD_SPRITE_FRAME[0] - 0x08000000
+    ok(bytes(patched[_sf:_sf + OLD_SPRITE_FRAME[1]])
+       == bytes(orig[_sf:_sf + OLD_SPRITE_FRAME[1]]),
+       "the sprite frame at 0x08470200 is untouched (byte-identical to base)")
+    ok(struct.unpack_from("<II", orig, 0x95ED54) == (OLD_SPRITE_FRAME[0], OLD_SPRITE_FRAME[1]),
+       "base: 0x0895ED54 really is SpriteFrameImage {0x08470200, 0x40}")
+    # Every Lua layer that breakpoints the wild path must use the NEW
+    # addresses: a stale breakpoint looks exactly like a dead hook.
+    _luas = sorted((ROOT / "tools" / "mgba_scripts").glob("*.lua"))
+    _stale = [p.name for p in _luas
+              if re.search(r"0x0847020[0-9A-Fa-f]|0x0847021[0-9A-Fa-f]|0x0847023[0-9A-Fa-f]",
+                           p.read_text(errors="replace"))]
+    ok(not _stale, f"no Lua layer breakpoints the old trampoline addresses ({_stale})")
+    _lr = WILD_RET_LABEL - 0x08000000
+    ok(struct.unpack_from("<HH", patched, _lr - 4) == (0x4720, 0x46C0)
+       and struct.unpack_from("<H", patched, _lr)[0] == 0x1C01,
+       "WILD_RET_LABEL is the veneer's return label (bx r4; nop | mov r1, r0)")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     if assert_tally(_p + _f, EXPECT_CHECKS, "verify_artifacts"):

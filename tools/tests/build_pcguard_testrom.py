@@ -89,7 +89,7 @@ def main():
 
     sites = _inj_tuple("PSS_GUARD_BL_SITES") + (_inj("PSS_CANSHIFT_BL"),
                                                 _inj("PSS_CANSHIFT_TAIL"))
-    tramp = _inj("PSS_GUARD_TRAMPOLINE_ADDR")
+    tramp = _inj("TRAMPOLINE_BLOCK")   # PSS_GUARD_TRAMPOLINE_ADDR = TRAMPOLINE_BLOCK (+0)
     for s in sites[:-1]:
         hw1, hw2 = struct.unpack_from("<HH", d, s)
         off = ((hw1 & 0x7FF) << 12) | ((hw2 & 0x7FF) << 1)

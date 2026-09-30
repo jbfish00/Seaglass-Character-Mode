@@ -4,7 +4,7 @@
 -- The catch-based probe (dex_flag_probe.lua) could not pin the convention: a
 -- catch churns playtime, RNG, party and event flags, and with only one species
 -- there is no way to tell a dex bit from a coincidence. This one fixes both
--- problems. The wild trampoline at 0x08470208 fires with the rolled species in
+-- problems. The wild trampoline at 0x081C3448 fires with the rolled species in
 -- r1 at the moment the wild mon is created, so we snapshot there and again after
 -- the battle intro has run -- the interval in which the engine sets "seen".
 --
@@ -48,7 +48,7 @@ emu:setBreakpoint(function()
     before2 = emu:readRange(base2, SPAN2)
     snapped = true
     console:log(string.format("DEX pre_species=%d (pre-override)", species))
-end, 0x08470208)
+end, 0x081C3448)
 
 -- The species actually CREATED -- and therefore actually marked seen -- is the
 -- shim's return value, not the vanilla roll. Watching r1 at entry would expect
@@ -64,7 +64,7 @@ emu:setBreakpoint(function()
                               .. "or bit%d (MSB-first)",
                               species, species // 8, species % 8,
                               7 - (species % 8)))
-end, 0x08470218)
+end, 0x08FA8014)
 
 local function bitdiff(tag, old, new, base)
     for i = 1, #old do

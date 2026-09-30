@@ -1,7 +1,17 @@
-/* CM_WildMonSpecies_Trampoline -- a tiny standalone blob placed in a
- * SEPARATE scavenged free-space slot (0x08470208, immediately after the
- * existing 8-byte catch-gate trampoline at 0x08470200) because it must sit
- * within Thumb BL range (+-4 MiB) of BOTH:
+/* CM_WildMonSpecies_Trampoline -- the wild-encounter long-call veneer.
+ *
+ * ⚠️ MOVED 2026-09-29 (rowe_parity.md §13.53). It used to sit at 0x08470208,
+ * inside what was taken for a 64-byte 0xFF "scavenge run" -- which is really a
+ * referenced SPRITE FRAME (SpriteFrameImage {0x08470200, 0x40} at 0x0895ED54).
+ * Now the retargeted BL lands on a 12-byte ENTRY STUB in the dead standalone
+ * IsRemovingLastPartyMon (injector WILD_STUB_ADDR):
+ *     push {r3} ; ldr r3, =<this veneer | 1> ; bx r3 ; nop ; .word
+ * and this veneer lives in the CM free block. The stub needs r3 for the jump,
+ * so it SAVES it, and the veneer's first instruction pops it back: every
+ * register reaches the code below exactly as the original BL left it.
+ *
+ * Historical note, still true of the hook itself -- the call must reach
+ * BOTH:
  *   - the retargeted hook site: the BL to CreateMonWithIVs-simple inside the
  *     wild-encounter species/level roll, ROM file offset 0x22BF36
  *     (ROM addr 0x0822BF36) -- CONFIRMED live via mgba-headless breakpoint:
@@ -49,6 +59,7 @@ __attribute__((naked)) void CM_WildMonSpecies_Trampoline(void)
      *   sp+16 = orig lr (return-into-CreateWildMon)
      */
     __asm__ volatile(
+        "pop  {r3}\n"                  /* the entry stub saved fixedIV; restore it */
         "push {r0, r2, r3, r4, lr}\n"
         "mov  r0, r1\n"                 /* r0 = species (CM_WildMonSpeciesGated arg1) */
         "mov  r1, r2\n"                 /* r1 = level   (CM_WildMonSpeciesGated arg2) */
@@ -57,6 +68,9 @@ __attribute__((naked)) void CM_WildMonSpecies_Trampoline(void)
         "mov  lr, r4\n"
         "ldr  r4, =%c[gated]\n"
         "bx   r4\n"                     /* long call: CM_WildMonSpeciesGated(species,level) */
+        /* `adr` needs a word-aligned label; the pop {r3} above shifted it by
+         * 2 bytes. The padding follows the bx, so it never executes. */
+        ".balign 4\n"
         "1:\n"
         "mov  r1, r0\n"                 /* r1 = returned (possibly overridden) species (final) */
         "pop  {r0, r2}\n"               /* restore mon(r0), level(r2); sp now at fixedIV slot */

@@ -1,10 +1,10 @@
 -- Wild-encounter species override test (task #5). From at_8_8.ss (clean
 -- overworld next to Route 101 grass), optionally turns Character Mode on for
 -- a given character, walks into grass (same pattern as
--- battle_bag_oneshot.lua), and breakpoints the wild trampoline (0x08470208,
--- 0x08470218) to observe:
---   - r1/r2 at trampoline entry (0x08470208) = the vanilla roll's species/level
---   - r0 at label "1:" (0x08470218) = CM_WildMonSpeciesGated's return value
+-- battle_bag_oneshot.lua), and breakpoints the wild trampoline (0x081C3448,
+-- 0x08FA8014) to observe:
+--   - r1/r2 at trampoline entry (0x081C3448) = the vanilla roll's species/level
+--   - r0 at label "1:" (0x08FA8014) = CM_WildMonSpeciesGated's return value
 --     (species after the 10%-chance override, or unchanged)
 -- Env vars: CM_ON=1, CM_CHAR=<1..170>, START_DELAY=<extra idle frames before
 -- walking, shifts VCOUNT/timing so repeated runs sample different rolls>.
@@ -48,13 +48,13 @@ emu:setBreakpoint(function()
     preSpecies = emu:readRegister("r1")
     preLevel = emu:readRegister("r2")
     H.log(string.format("TRAMP ENTRY frame=%d species=%d level=%d", H.frame(), preSpecies, preLevel))
-end, 0x08470208)
+end, 0x081C3448)
 
 emu:setBreakpoint(function()
     if postSpecies then return end
     postSpecies = emu:readRegister("r0")
     H.log(string.format("TRAMP RESULT frame=%d species=%d", H.frame(), postSpecies))
-end, 0x08470218)
+end, 0x08FA8014)
 
 local function enemyLv()
     local lv = emu:read8(ENEMY + 0x54); if lv < 1 or lv > 100 then return nil end

@@ -3,12 +3,13 @@
  * Six entry points. The first five live in the big free block (ROM
  * 0x08ED2164+) and are reached only through full 32-bit pointers (BG-event
  * ptr, specials-free script pointers, 49 callnative operands) — except the
- * two acquisition BLs, which go through the 8-byte trampoline at 0x08470200.
- * The sixth (CM_WildMonSpeciesGated) lives in the SAME far blob but is
- * reached via a SEPARATE small trampoline (src/wild_trampoline.c, placed
- * right after the acquisition trampoline at 0x08470208) because its hook
- * site is ~7.6 MiB away — out of Thumb BL range from here, so the far
- * trampoline does a manual long-call (no BLX on this CPU). See
+ * near-hook BLs, which go through 8-byte trampolines in the block the
+ * injector writes over a DEAD function at 0x081C3430 (TRAMPOLINE_BLOCK; until
+ * 2026-09-29 they sat in a sprite frame at 0x08470200, see rowe_parity.md
+ * §13.53). The sixth (CM_WildMonSpeciesGated) is reached through a 12-byte
+ * entry stub in that block and a long-call veneer (src/wild_trampoline.c)
+ * because its hook site is ~7.6 MiB away -- out of Thumb BL range, and this
+ * CPU has no BLX. See
  * tools/inject_character_mode.py + docs/ROUTINE_MAP.md; every fixed address is
  * CONFIRMED for this exact ROM (rom.sha1).
  *

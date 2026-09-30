@@ -39,13 +39,13 @@ emu:setBreakpoint(function()
     preSpecies = emu:readRegister("r1")
     emu:writeRegister("r2", FORCE_LEVEL)   -- force the level the shim will see
     H.log(string.format("TRAMP ENTRY frame=%d species=%d level(forced)=%d", H.frame(), preSpecies, FORCE_LEVEL))
-end, 0x08470208)
+end, 0x081C3448)
 
 emu:setBreakpoint(function()
     if postSpecies then return end
     postSpecies = emu:readRegister("r0")
     H.log(string.format("TRAMP RESULT frame=%d species=%d", H.frame(), postSpecies))
-end, 0x08470218)
+end, 0x08FA8014)
 
 local function enemyLv()
     local hp = emu:read16(ENEMY + 0x56); local mx = emu:read16(ENEMY + 0x58)

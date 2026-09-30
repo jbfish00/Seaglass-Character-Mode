@@ -117,7 +117,7 @@ emu:setBreakpoint(function()
         end
     end
     H.log("no forcing pair found this frame (unexpected); retrying next encounter")
-end, 0x08470208)
+end, 0x081C3448)
 
 emu:setBreakpoint(function()
     if observed ~= nil then return end
@@ -132,7 +132,7 @@ emu:setBreakpoint(function()
         dexBefore1 = emu:readRange(dexBase1, SPAN1)
         dexBefore2 = emu:readRange(dexBase2, SPAN2)
     end
-end, 0x08470218)
+end, 0x08FA8014)
 
 local function dexDiff(tag, old, new, base, species)
     local want = species % 8

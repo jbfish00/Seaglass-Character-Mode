@@ -14,10 +14,11 @@ Pipeline:
      the .bin outputs.
   2. Compile src/character_mode.c (6 entry points) at SHIM_ADDR in the big
      free block (ROM 0x08ED2164+). Referenced only via 32-bit pointers except
-     the two acquisition BLs (8-byte trampoline @0x08470200) and the wild-
-     encounter species override (separate 40-byte long-call trampoline,
-     src/wild_trampoline.c, @0x08470208 -- its hook site is ~7.6 MiB from the
-     main shim, out of Thumb BL range, hence the manual long-call).
+     the near-hook entries (catch/gift, marker, PC guard, wild stub), which
+     share an 8-byte-slot block over a DEAD function at 0x081C3430 (see
+     TRAMPOLINE_BLOCK; until 2026-09-29 they sat in a sprite frame). The wild
+     stub hops to a 40-byte long-call veneer, src/wild_trampoline.c, because
+     the main shim is out of Thumb BL range of its hook site.
   3. Splice payloads (shim/bitmaps/codes/starters/wildpool/entry+confirm
      script) into a ROM copy; the source ROM is never written.
   4. Patch (verify-original-first):
@@ -144,14 +145,27 @@ CM_SPRITE_BLOBS_ADDR = 0x08f20800
 CM_MUGSHOT_ADDR = 0x08F60000
 FREE_END_ROM   = 0x09000000
 
-TRAMPOLINE_ADDR      = 0x08470200  # 8B 0xFF scavenge, in BL range of both sites
-WILD_TRAMPOLINE_ADDR = 0x08470208  # same 64B scavenge run, immediately after; 40B used
-# Encounter marker (../game_plans/rowe_parity.md §3). Third user of the same
-# verified 64-byte 0xFF scavenge run at 0x08470200; the wild trampoline ends at
-# 0x08470230, leaving 16 B. 4-aligned, and 3.91 MB from the hook site at
-# 0x08086EAA -- inside the +-4 MB Thumb BL window, with no margin to spare, so
-# check the reach again if either address ever moves.
-MARKER_TRAMPOLINE_ADDR = 0x08470230
+# ⚠️⚠️ THE TRAMPOLINES USED TO LIVE IN A SPRITE FRAME. The "verified 64-byte
+# 0xFF scavenge run" at 0x08470200 is a referenced 64-byte image:
+# SpriteFrameImage {0x08470200, 0x40} at 0x0895ED54, used by the sprite
+# template at 0x0895E894. The catch, wild and marker trampolines overwrote 56 B
+# of it until 2026-09-29 (rowe_parity.md §13.53). A run of 0xFF is not free
+# space unless nothing points at it.
+#
+# All four near-hook entries now share one block over the standalone
+# IsRemovingLastPartyMon at 0x081C3430, which this build inlines at every call
+# site (no BL callers, no pointer to its entry: verify_artifacts [22]):
+#   +0  PC second guard   +8 catch/gift gate   +16 encounter marker
+#   +24 wild ENTRY STUB (12 B: push {r3}; ldr r3,=veneer; bx r3; .word) --
+#       the 40-byte wild veneer itself moved to the CM free block, since only
+#       its entry must be in BL reach; it pops r3 back first thing.
+TRAMPOLINE_BLOCK      = 0x081C3430
+TRAMPOLINE_BLOCK_ORIG = bytes.fromhex("00b50a4b1b781b0600201b16012b03d1074b1b78002b01d002bc0847054b1878f7f7ccfc")   # 36 B of the dead function, base ROM
+TRAMPOLINE_ADDR        = TRAMPOLINE_BLOCK + 8     # catch + gift gate
+MARKER_TRAMPOLINE_ADDR = TRAMPOLINE_BLOCK + 16    # encounter marker (1.24 MB from its hook)
+WILD_STUB_ADDR         = TRAMPOLINE_BLOCK + 24    # wild entry stub (the BL target)
+WILD_TRAMPOLINE_ADDR   = 0x08FA8000               # the wild veneer (src/wild_trampoline.c)
+OLD_SPRITE_FRAME       = (0x08470200, 0x40)       # must stay byte-identical to the base
 # The BL inside BufferStringBattle that every intro string funnels through:
 #   ldr r0, =<one of several strings> ; b 0x08086EA8
 #   0x08086EA8: ldr r1, =dst ; bl BattleStringExpandPlaceholders
@@ -173,8 +187,7 @@ PSS_COUNT_ALIVE_EXCEPT = 0x081BADEC   # special 0x88's wrapper calls it (the anc
 PSS_GUARD_BL_SITES = (0x1BC576, 0x1BC62C, 0x1BCB04, 0x1BCB3C, 0x1BCB6E)
 PSS_CANSHIFT_BL    = 0x1C352C         # CanShiftMon (0x081C3508): bl Count
 PSS_CANSHIFT_TAIL  = 0x1C3530         # cmp r0,#0 ; bne -> b <epilogue 0x081C3524> ; nop
-PSS_GUARD_TRAMPOLINE_ADDR = 0x081C3430   # the dead standalone IsRemovingLastPartyMon
-PSS_DEAD_FN_HEAD = bytes.fromhex("00b50a4b1b781b060020")   # its first 5 instructions, base ROM
+PSS_GUARD_TRAMPOLINE_ADDR = TRAMPOLINE_BLOCK   # +0 of the block over the dead function
 TEXT_WILD_APPEARED = 0x084C646C     # "Wild {FD}{06} appeared!{FB}"
 # 193*64 = 12,352 B, in the run verified 0xFF from 0x08F0A000 to 0x08F1C000.
 # ⚠️ NOT 0x08F10000: tools/tests/build_trade_testrom.py already writes its
@@ -680,9 +693,9 @@ def main():
     subprocess.run(["arm-none-eabi-objcopy", "-O", "binary", str(welf), str(wbin)],
                    check=True)
     wild_tramp = wbin.read_bytes()
-    assert len(wild_tramp) <= TRAMPOLINE_ADDR + 64 - WILD_TRAMPOLINE_ADDR, (
-        f"wild trampoline too big: {len(wild_tramp)} bytes, "
-        f"only {TRAMPOLINE_ADDR + 64 - WILD_TRAMPOLINE_ADDR} available")
+    assert len(wild_tramp) <= 0x100, f"wild veneer grew to {len(wild_tramp)} B"
+    # The stub must reach the veneer only by absolute address; the BL reach
+    # constraint is on the stub, which the thumb_bl below asserts.
     print(f"wild trampoline: {len(wild_tramp)} bytes @ {WILD_TRAMPOLINE_ADDR:#x}")
 
     # --- assemble entry + confirm scripts (two-pass fixup) ---
@@ -970,11 +983,24 @@ def main():
               f"{len(_blobs):,} B @ {CM_SPRITE_BLOBS_ADDR:#x}, table @ {CM_SPRITE_PTRS_ADDR:#x}")
 
 
+    # The trampoline block: prove it is still the base ROM's dead function,
+    # then clear it so splice()'s 0xFF precondition covers it like free space.
+    _tb = TRAMPOLINE_BLOCK - 0x08000000
+    assert bytes(data[_tb:_tb + len(TRAMPOLINE_BLOCK_ORIG)]) == TRAMPOLINE_BLOCK_ORIG, (
+        "the dead IsRemovingLastPartyMon is not at %#x -- re-derive before "
+        "overwriting it" % TRAMPOLINE_BLOCK)
+    data[_tb:_tb + len(TRAMPOLINE_BLOCK_ORIG)] = b"\xff" * len(TRAMPOLINE_BLOCK_ORIG)
+
     tramp = struct.pack("<HH", 0x4B00, 0x4718) + struct.pack("<I", hook_gate)
     assert TRAMPOLINE_ADDR % 4 == 0
     splice(TRAMPOLINE_ADDR, tramp, "trampoline")
-    assert WILD_TRAMPOLINE_ADDR % 2 == 0
-    splice(WILD_TRAMPOLINE_ADDR, wild_tramp, "wild trampoline")
+    assert WILD_TRAMPOLINE_ADDR % 4 == 0
+    splice(WILD_TRAMPOLINE_ADDR, wild_tramp, "wild veneer")
+    # push {r3} ; ldr r3, [pc, #4] ; bx r3 ; nop ; .word veneer|1
+    assert WILD_STUB_ADDR % 4 == 0
+    splice(WILD_STUB_ADDR,
+           struct.pack("<HHHHI", 0xB408, 0x4B01, 0x4718, 0x46C0, WILD_TRAMPOLINE_ADDR | 1),
+           "wild entry stub")
 
     # --- encounter marker: per-character intro strings + its trampoline ---
     marker_blob = (CM / "marker_strings.bin").read_bytes()
@@ -989,22 +1015,16 @@ def main():
         f"{TRADE_TEST_SCRIPT_ADDR:#x}")
     splice(MARKER_ADDR, marker_blob, "encounter marker strings")
     assert MARKER_TRAMPOLINE_ADDR % 4 == 0
-    assert MARKER_TRAMPOLINE_ADDR >= WILD_TRAMPOLINE_ADDR + len(wild_tramp), (
-        f"marker trampoline at {MARKER_TRAMPOLINE_ADDR:#x} overlaps the wild "
-        f"trampoline, which ends at "
-        f"{WILD_TRAMPOLINE_ADDR + len(wild_tramp):#x}")
     splice(MARKER_TRAMPOLINE_ADDR,
            struct.pack("<HH", 0x4B00, 0x4718) + struct.pack("<I", hook_marker),
            "marker trampoline")
     print(f"encounter marker: {len(marker_blob):,} B @ {MARKER_ADDR:#x}, "
           f"stride {MARKER_STRIDE}, trampoline @ {MARKER_TRAMPOLINE_ADDR:#x}")
+    _of = OLD_SPRITE_FRAME[0] - 0x08000000
+    assert all(x == 0xFF for x in data[_of:_of + OLD_SPRITE_FRAME[1]]), (
+        "something wrote into the sprite frame at %#x again" % OLD_SPRITE_FRAME[0])
 
     # --- PC second guard: one trampoline, six retargeted BLs, one tail ---
-    _t = PSS_GUARD_TRAMPOLINE_ADDR - 0x08000000
-    assert bytes(data[_t:_t + len(PSS_DEAD_FN_HEAD)]) == PSS_DEAD_FN_HEAD, (
-        "the dead IsRemovingLastPartyMon is not at %#x -- re-derive before "
-        "overwriting it" % PSS_GUARD_TRAMPOLINE_ADDR)
-    data[_t:_t + 8] = b"\xff" * 8   # splice() proves 0xFF; this 8 B is ours
     splice(PSS_GUARD_TRAMPOLINE_ADDR,
            struct.pack("<HH", 0x4B00, 0x4718) + struct.pack("<I", hook_pss_guard),
            "PC second-guard trampoline")
@@ -1031,7 +1051,7 @@ def main():
     cur = bytes(data[WILD_BL_SITE:WILD_BL_SITE + 4])
     expect = thumb_bl(0x08000000 + WILD_BL_SITE, CREATE_MON_WITH_IVS)
     assert cur == expect, (f"wild BL site {WILD_BL_SITE:#x}: {cur.hex()} != {expect.hex()}")
-    data[WILD_BL_SITE:WILD_BL_SITE + 4] = thumb_bl(0x08000000 + WILD_BL_SITE, WILD_TRAMPOLINE_ADDR)
+    data[WILD_BL_SITE:WILD_BL_SITE + 4] = thumb_bl(0x08000000 + WILD_BL_SITE, WILD_STUB_ADDR)
 
     # The shim compares `src` against TEXT_WILD_APPEARED by hardcoded address,
     # so prove that address still holds that exact string before moving the BL.

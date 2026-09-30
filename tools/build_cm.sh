@@ -6,7 +6,8 @@
 # the shim can grow/move without hand-editing the trampoline.
 #
 # Free-block layout: shim @0x08ED2164, roster bitmap @0x08ED2400 (must not
-# overlap; shim is <0x29C bytes). Trampoline @0x08470200 (0xFF scavenge).
+# overlap; shim is <0x29C bytes). Trampolines: see TRAMPOLINE_BLOCK in
+# tools/inject_character_mode.py (NOT 0x08470200: that is a sprite frame).
 set -e
 cd "$(dirname "$0")/.."
 mkdir -p build

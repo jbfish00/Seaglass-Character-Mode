@@ -27,7 +27,7 @@ local EXPECT    = os.getenv("CM_EXPECT_NAME") or "RED"
 
 local DISPLAYED = 0x020000CC        -- gDisplayedStringBattle, from the literal
                                     -- at 0x080870EC that the intro tail loads
-local WILD_TRAMP = 0x08470208
+local WILD_TRAMP = 0x081C3448
 
 -- Gen3 charmap, decode side only.
 local CH = {}

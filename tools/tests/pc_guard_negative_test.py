@@ -18,7 +18,9 @@ Checks that must stay SILENT prove the tamper was precise.
                                       address against 0x081C3534 instead of
                                       0x081C3530: CanShiftMon would be treated
                                       as a deposit site and compile fine
-  6. control again                 -- proves 2-5 left nothing behind
+  6. a trampoline back in the sprite -- code bytes written into the frame at
+                                      0x08470200 again ([23])
+  7. control again                 -- proves 2-6 left nothing behind
 
 ⚠️ THE ROM IS NEVER MODIFIED IN PLACE.
 """
@@ -46,7 +48,10 @@ def _inj(name):
     return int(re.search(rf"^{name}\s*=\s*(0x[0-9A-Fa-f]+)", _INJ, re.M).group(1), 16)
 
 
-TRAMP = _inj("PSS_GUARD_TRAMPOLINE_ADDR") - 0x08000000
+# The injector writes it as TRAMPOLINE_BLOCK (+0); assert that shape.
+assert re.search(r"^PSS_GUARD_TRAMPOLINE_ADDR\s*=\s*TRAMPOLINE_BLOCK\b", _INJ, re.M)
+TRAMP = _inj("TRAMPOLINE_BLOCK") - 0x08000000
+OLD_FRAME = 0x470200   # the sprite frame the old trampolines overwrote
 TAIL = _inj("PSS_CANSHIFT_TAIL")
 COUNT = _inj("PSS_COUNT_ALIVE_EXCEPT")
 FIRST_SITE = int(re.search(r"^PSS_GUARD_BL_SITES\s*=\s*\((0x[0-9A-Fa-f]+)",
@@ -71,6 +76,7 @@ CHECKS = {
     "tramp": "trampoline is ldr r3,[pc]; bx r3 -> CM_PSSLastMonGuard",
     "tail": "CanShiftMon tail:",
     "lits": "compiled guard carries 0x081C3530",
+    "sprite": "the sprite frame at 0x08470200 is untouched",
 }
 
 
@@ -104,7 +110,7 @@ def _hit(out, key, marker):
 
 
 # A deliberate LITERAL -- see cm_tally.assert_cases.
-EXPECT_CASES = 6
+EXPECT_CASES = 7
 
 
 def main():
@@ -132,7 +138,7 @@ def main():
             _rc, out = run(rom)
             if want_fail is None:
                 ok = all(_hit(out, k, "PASS") for k in CHECKS)
-                detail = "every [22] check passes"
+                detail = "every [22]/[23] check passes"
             else:
                 ok = _hit(out, want_fail, "FAIL")
                 detail = "%r reported FAIL" % CHECKS[want_fail]
@@ -173,7 +179,13 @@ def main():
         case("5 the dispatch address bent to 0x081C3534", bend_dispatch,
              "lits", also_pass=("sites", "tramp", "tail"))
 
-        case("6 control again -- nothing left behind", None, None)
+        def back_in_sprite(d):
+            d[OLD_FRAME:OLD_FRAME + 8] = struct.pack("<HHI", 0x4B00, 0x4718,
+                                                     syms["CM_PSSLastMonGuard"] | 1)
+        case("6 a trampoline written back into the sprite frame", back_in_sprite,
+             "sprite", also_pass=("sites", "tramp", "tail", "lits"))
+
+        case("7 control again -- nothing left behind", None, None)
 
     total = passes + len(fails)
     if fails:
