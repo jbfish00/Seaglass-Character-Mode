@@ -192,7 +192,20 @@ INVENTORY = {
                  "CopyMon(gPlayerParty + order[i]*100, buffer + i*100, 100) "
                  "and the buffer is Free'd at 0x0818A8A4. A permutation: every "
                  "mon written was in the party a moment earlier"),
-    0x001df426: ("UNVERIFIED",
+    0x001df426: ("EXEMPT",
+                 "✅ SETTLED 2026-09-29 (rowe_parity.md §13.53): RECORDED-BATTLE "
+                 "PLAYBACK, TEMPORARY. This is pokeemerald's "
+                 "SetVariablesForRecordedBattle: zero both parties, then copy "
+                 "RecordedBattleSave.playerParty[6] (+0) and .opponentParty[6] "
+                 "(+600). Its caller 0x081DF46C is called from 0x081DF680 = "
+                 "PlayRecordedBattle, in vanilla order: AllocZeroed 0x080033F0, "
+                 "CopyRecordedBattleFromSave 0x081DF300, "
+                 "RecordedBattle_SaveParties 0x081DF714 (bl at 0x081DF6A2), "
+                 "THEN this load (bl at 0x081DF6A8). The restore half "
+                 "0x081DF744 (the EXEMPT 0x001df74e) has one caller, 0x081DF396, "
+                 "in the same module: the end-of-playback CB. The recorded "
+                 "parties exist only for the length of a replay. Original "
+                 "finding follows. "
                  "RESTORES BOTH PARTIES from a caller-supplied 1200-byte "
                  "buffer: 6 x CopyMon(gPlayerParty + i*100, buf + i*100, 100) "
                  "interleaved with the same into gEnemyParty from buf + 600, "
@@ -208,7 +221,21 @@ INVENTORY = {
                  "borrowed team loaded through the same routine would "
                  "introduce species. GO LOOK; this is not a clean bill of "
                  "health"),
-    0x0008040a: ("UNVERIFIED",
+    0x0008040a: ("EXEMPT",
+                 "✅ SETTLED 2026-09-29 (rowe_parity.md §13.53): TEMPORARY, AND "
+                 "UNREACHABLE HERE. (1) The Cable Club saves the player's party "
+                 "on the way in: EnterColosseum @0x08315511 is vanilla -- "
+                 "special 0x0 (heal), special 0x28 (SavePlayerParty, "
+                 "gSpecials -> 0x0815EF85), special 0x14D, copyvar 0x4087, "
+                 "0x8004. (2) The link-battle return restores it: "
+                 "LoadPlayerParty is 0x0815EFC4 (the next function), and its "
+                 "caller 0x080DFD14 sits in the cable-club code and then calls "
+                 "0x0815F29C and 0x0813672C -- the donor's "
+                 "CB2_ReturnFromCableClubBattle (LoadPlayerParty; SavePlayerBag; "
+                 "UpdateTrainerFansAfterLinkBattle). Partner mons occupy these "
+                 "slots only during the link battle. (3) And Seaglass has no "
+                 "stairs to any Pokemon Center 2F, so the Colosseum cannot be "
+                 "entered at all. Original finding follows. "
                  "LINK MULTI-BATTLE PARTY ASSEMBLY, and the reason the size "
                  "rule below accepts k*MON_SIZE. `movs r2,#200 ; mov r1,r9 ; "
                  "ldr r0,=gPlayerParty ; bl CopyMon` at 0x08080406 writes "
@@ -232,7 +259,13 @@ INVENTORY = {
                  "from a buffer this same module filled from that same party. "
                  "⭐ Invisible until size_seed learned k*MON_SIZE -- it is one "
                  "600-byte memcpy, not six 100-byte ones"),
-    0x00208786: ("UNVERIFIED",
+    0x00208786: ("GATED",
+                 "✅ SETTLED 2026-09-29 (rowe_parity.md §13.53): GATED. The "
+                 "in-game callers are gated at the script level (below), and "
+                 "the LINK caller 0x0820ADC6 is UNREACHABLE here: Seaglass "
+                 "removed the stairs to every Pokemon Center 2F (each PC 1F "
+                 "has only its exit doors), the only way into the Cable Club "
+                 "and Trade Center. Original finding follows. "
                  "THE IN-GAME TRADE, and the site this whole fix exists for. "
                  "CopyMon(&gPlayerParty[slot], &gEnemyParty[0], 100) at "
                  "0x0820880E -- measured live 2026-09-19 with a WRITE_CHANGE "

@@ -145,18 +145,6 @@ Read the two together; neither is sufficient alone.
 
 ## 10 inventoried copy site(s)
 
-### `0x0808040a` (file `0x0008040a`) -- **UNVERIFIED**
-
-LINK MULTI-BATTLE PARTY ASSEMBLY, and the reason the size rule below accepts k*MON_SIZE. `movs r2,#200 ; mov r1,r9 ; ldr r0,=gPlayerParty ; bl CopyMon` at 0x08080406 writes gPlayerParty[0..1] from a link receive buffer, and the sibling arm at 0x0808041C writes gPlayerParty[2] (pool 0x0808052C = 0x02019CE8 = party + 200); the enemy pools 0x02019E78/0x02019F40 sit beside them. Reached through the jump table at 0x08080324 from the state machine entered at 0x08080004. ⚠️ THIS IS THE SHAPE PLATINUM'S LESSON #1 FOUND AS A REAL UNGATED PATH (the link trade and the GTS): mons arriving into party slots from ANOTHER CONSOLE. The save/restore pair at 0x081DF714 / 0x081DF744 plausibly brackets it and puts the player's own party back, but THAT IS NOT PROVEN HERE. GO LOOK
-
-### `0x081df426` (file `0x001df426`) -- **UNVERIFIED**
-
-RESTORES BOTH PARTIES from a caller-supplied 1200-byte buffer: 6 x CopyMon(gPlayerParty + i*100, buf + i*100, 100) interleaved with the same into gEnemyParty from buf + 600, after two zeroing calls (0x081A6E90 / 0x081A6EB0). Same SHAPE as the EXEMPT restore 0x0015efd4 in check_acquisition_paths.py, but the subsystem is NOT identified: single-caller chain 0x081DF414 <- 0x081DF46C <- 0x081DF6A8 <- 0x081DF680 <- 0x081408CA, terminating at 0x08140874, which has no BL callers and is reached only as a pointer from two callback tables (0x0814096C, 0x08140D6C). ⚠️ 'restores a party from a buffer' is only harmless if the buffer always holds the PLAYER'S OWN party -- a rental or borrowed team loaded through the same routine would introduce species. GO LOOK; this is not a clean bill of health
-
-### `0x08208786` (file `0x00208786`) -- **UNVERIFIED**
-
-THE IN-GAME TRADE, and the site this whole fix exists for. CopyMon(&gPlayerParty[slot], &gEnemyParty[0], 100) at 0x0820880E -- measured live 2026-09-19 with a WRITE_CHANGE watchpoint on the slot PID (pc=0x08368F28 inside CopyMon, lr=0x08208813, r0=gPlayerParty, r1=gEnemyParty, r2=100), party count 1 -> 1. ⭐ GATED at the SCRIPT level, not here: CM_TradeCheck runs in the per-trade wrapper before special 0x100/0x101 and refuses an off-roster received species, so this copy never executes for a mon the roster forbids (docs/ROUTINE_MAP.md's in-game trades section; live layer 4g). Nothing gates the copy ITSELF. ⚠️ WHY NOT GATED (downgraded 2026-09-28): this is TradeMons 0x08208778, and it has THREE BL callers. 0x08209474 and 0x08209CEE are the in-game trade (gSpecialVar_0x8005, 0); 0x0820ADC6 is the LINK trade, TradeMons(monIds[0], monIds[1] % 6), which nothing in Character Mode gates. Whether a link trade is reachable here is not measured. Found porting this checker to Lazarus
-
 ### `0x081aa5d4` (file `0x001aa5d4`) -- **GATED**
 
 inside GiveMonToPlayer 0x081AA5AC -- THE enforcement choke point, the CopyMon that places the mon in the party slot. Its count writer 0x001aa608 is the GATED entry in check_acquisition_paths.py
@@ -164,6 +152,14 @@ inside GiveMonToPlayer 0x081AA5AC -- THE enforcement choke point, the CopyMon th
 ### `0x081f1f6c` (file `0x001f1f6c`) -- **GATED**
 
 inside the script give CORE 0x081F1D64 -- the bypass docs/ROUTINE_MAP.md:149 documents as writing gPlayerParty/gPlayerPartyCount directly and never BLing GiveMonToPlayer. Closed by retargeting all 49 callnative operands to the wrapper; verify_artifacts.py check [8] pins them
+
+### `0x08208786` (file `0x00208786`) -- **GATED**
+
+✅ SETTLED 2026-09-29 (rowe_parity.md §13.53): GATED. The in-game callers are gated at the script level (below), and the LINK caller 0x0820ADC6 is UNREACHABLE here: Seaglass removed the stairs to every Pokemon Center 2F (each PC 1F has only its exit doors), the only way into the Cable Club and Trade Center. Original finding follows. THE IN-GAME TRADE, and the site this whole fix exists for. CopyMon(&gPlayerParty[slot], &gEnemyParty[0], 100) at 0x0820880E -- measured live 2026-09-19 with a WRITE_CHANGE watchpoint on the slot PID (pc=0x08368F28 inside CopyMon, lr=0x08208813, r0=gPlayerParty, r1=gEnemyParty, r2=100), party count 1 -> 1. ⭐ GATED at the SCRIPT level, not here: CM_TradeCheck runs in the per-trade wrapper before special 0x100/0x101 and refuses an off-roster received species, so this copy never executes for a mon the roster forbids (docs/ROUTINE_MAP.md's in-game trades section; live layer 4g). Nothing gates the copy ITSELF. ⚠️ WHY NOT GATED (downgraded 2026-09-28): this is TradeMons 0x08208778, and it has THREE BL callers. 0x08209474 and 0x08209CEE are the in-game trade (gSpecialVar_0x8005, 0); 0x0820ADC6 is the LINK trade, TradeMons(monIds[0], monIds[1] % 6), which nothing in Character Mode gates. Whether a link trade is reachable here is not measured. Found porting this checker to Lazarus
+
+### `0x0808040a` (file `0x0008040a`) -- **EXEMPT**
+
+✅ SETTLED 2026-09-29 (rowe_parity.md §13.53): TEMPORARY, AND UNREACHABLE HERE. (1) The Cable Club saves the player's party on the way in: EnterColosseum @0x08315511 is vanilla -- special 0x0 (heal), special 0x28 (SavePlayerParty, gSpecials -> 0x0815EF85), special 0x14D, copyvar 0x4087, 0x8004. (2) The link-battle return restores it: LoadPlayerParty is 0x0815EFC4 (the next function), and its caller 0x080DFD14 sits in the cable-club code and then calls 0x0815F29C and 0x0813672C -- the donor's CB2_ReturnFromCableClubBattle (LoadPlayerParty; SavePlayerBag; UpdateTrainerFansAfterLinkBattle). Partner mons occupy these slots only during the link battle. (3) And Seaglass has no stairs to any Pokemon Center 2F, so the Colosseum cannot be entered at all. Original finding follows. LINK MULTI-BATTLE PARTY ASSEMBLY, and the reason the size rule below accepts k*MON_SIZE. `movs r2,#200 ; mov r1,r9 ; ldr r0,=gPlayerParty ; bl CopyMon` at 0x08080406 writes gPlayerParty[0..1] from a link receive buffer, and the sibling arm at 0x0808041C writes gPlayerParty[2] (pool 0x0808052C = 0x02019CE8 = party + 200); the enemy pools 0x02019E78/0x02019F40 sit beside them. Reached through the jump table at 0x08080324 from the state machine entered at 0x08080004. ⚠️ THIS IS THE SHAPE PLATINUM'S LESSON #1 FOUND AS A REAL UNGATED PATH (the link trade and the GTS): mons arriving into party slots from ANOTHER CONSOLE. The save/restore pair at 0x081DF714 / 0x081DF744 plausibly brackets it and puts the player's own party back, but THAT IS NOT PROVEN HERE. GO LOOK
 
 ### `0x08144efa` (file `0x00144efa`) -- **EXEMPT**
 
@@ -180,6 +176,10 @@ PARTY REORDER (the party-menu 'switch order' apply step). 0x0818A8CC allocates 6
 ### `0x081c32d8` (file `0x001c32d8`) -- **EXEMPT**
 
 CompactPartySlots. 0x081C32C4 walks the 6 slots calling GetMonData(mon, 18 /* species */); on a non-empty slot it memcpy's that mon down to the first free index when the two differ, fixes up the stored cursor index when it points at the mon that moved, and zeroes the tail. Closes holes in the array; introduces nothing
+
+### `0x081df426` (file `0x001df426`) -- **EXEMPT**
+
+✅ SETTLED 2026-09-29 (rowe_parity.md §13.53): RECORDED-BATTLE PLAYBACK, TEMPORARY. This is pokeemerald's SetVariablesForRecordedBattle: zero both parties, then copy RecordedBattleSave.playerParty[6] (+0) and .opponentParty[6] (+600). Its caller 0x081DF46C is called from 0x081DF680 = PlayRecordedBattle, in vanilla order: AllocZeroed 0x080033F0, CopyRecordedBattleFromSave 0x081DF300, RecordedBattle_SaveParties 0x081DF714 (bl at 0x081DF6A2), THEN this load (bl at 0x081DF6A8). The restore half 0x081DF744 (the EXEMPT 0x001df74e) has one caller, 0x081DF396, in the same module: the end-of-playback CB. The recorded parties exist only for the length of a replay. Original finding follows. RESTORES BOTH PARTIES from a caller-supplied 1200-byte buffer: 6 x CopyMon(gPlayerParty + i*100, buf + i*100, 100) interleaved with the same into gEnemyParty from buf + 600, after two zeroing calls (0x081A6E90 / 0x081A6EB0). Same SHAPE as the EXEMPT restore 0x0015efd4 in check_acquisition_paths.py, but the subsystem is NOT identified: single-caller chain 0x081DF414 <- 0x081DF46C <- 0x081DF6A8 <- 0x081DF680 <- 0x081408CA, terminating at 0x08140874, which has no BL callers and is reached only as a pointer from two callback tables (0x0814096C, 0x08140D6C). ⚠️ 'restores a party from a buffer' is only harmless if the buffer always holds the PLAYER'S OWN party -- a rental or borrowed team loaded through the same routine would introduce species. GO LOOK; this is not a clean bill of health
 
 ### `0x081df74e` (file `0x001df74e`) -- **EXEMPT**
 
