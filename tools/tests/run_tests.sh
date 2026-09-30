@@ -237,6 +237,52 @@ grep -q "HARNESS RESULT: FAIL" /tmp/sg_pc_nohook.log \
     || { echo "  FAIL negative control did not fail, or failed for another reason (see /tmp/sg_pc_nohook.log)"; exit 1; }
 
 echo
+# The PC SECOND GUARD live (ROWE's IsRemovingLastAllowedPartyMon; src/
+# character_mode.c CM_PSSLastMonGuard; verify_artifacts [22]). The fixture is
+# built in-game: CM off, the clipboard hatches a real Horsea (party [Torchic,
+# Horsea]); then CM on and the clipboard opens the SHIPPED PC script. Deposit
+# Torchic. ⭐ With an alive Horsea beside it VANILLA ALLOWS that deposit, so
+# only the guard can refuse it -- and only for a character who has Torchic but
+# not Horsea. The swap is asserted (Torchic's personality), before the exit
+# sweep runs.
+echo "=== Layer 4j: live PC second guard (deposit the last on-roster mon) ==="
+python3 tools/tests/build_pcguard_testrom.py > /tmp/sg_pcg_build.log 2>&1 \
+    || { echo "  FAIL building PC-guard test ROM (see /tmp/sg_pcg_build.log)"; exit 1; }
+python3 tools/tests/build_pcguard_testrom.py --no-guard >> /tmp/sg_pcg_build.log 2>&1 \
+    || { echo "  FAIL building PC-guard negative-control ROM (see /tmp/sg_pcg_build.log)"; exit 1; }
+CM_GUARD_ADDR=$(arm-none-eabi-nm build/cm.elf \
+    | awk '/ T CM_PSSLastMonGuard$/{printf "0x%s\n", toupper($1)}')
+[ -n "$CM_GUARD_ADDR" ] || { echo "  FAIL locating CM_PSSLastMonGuard in build/cm.elf"; exit 1; }
+CM_PSS_ADDR=$(python3 -c "
+import sys
+sys.path.insert(0, 'tools/character_mode')
+import pc_hook
+print('0x%08X' % pc_hook.special_handler(
+    open('build/seaglass_cm_pcguard.gba','rb').read()))")
+export CM_GUARD_ADDR CM_PSS_ADDR
+pcg_case() {  # name  CM_CHAR  EXPECT  CHECKS
+    log=/tmp/sg_pcg_$1.log
+    timeout 300 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=$4 CM_CHAR=$2 \
+        EXPECT=$3 "$MGBA" --script tools/mgba_scripts/cm_pc_guard_test.lua \
+        -t tools/savestates/mart_inside.ss build/seaglass_cm_pcguard.gba > "$log" 2>&1 || true
+    grep -q "HARNESS RESULT: PASS" "$log" && echo "  PASS PC guard $1" \
+        || { echo "  FAIL PC guard $1 (see $log)"; grep -a "HARNESS.*FAIL" "$log"; exit 1; }
+}
+pcg_case BRENDAN 39 refused   5   # Torchic ON, Horsea OFF -> "That's your last POKeMON!"
+pcg_case MISTY   10 deposited 4   # Torchic OFF             -> deposited (discrimination)
+pcg_case CTRL    0  deposited 4   # CM off                  -> deposited (control)
+# ⭐ The negative control: guard sites restored to the base ROM. It must fail on
+# the DEPOSIT (Torchic left the party), not on a timeout or a tally.
+timeout 300 env MGBA_HEADLESS_DEBUGGER=1 CM_CHAR=39 EXPECT=refused "$MGBA" \
+    --script tools/mgba_scripts/cm_pc_guard_test.lua \
+    -t tools/savestates/mart_inside.ss build/seaglass_cm_pcguard_noguard.gba \
+    > /tmp/sg_pcg_noguard.log 2>&1 || true
+grep -q "HARNESS RESULT: FAIL" /tmp/sg_pcg_noguard.log \
+    && grep -q "FAIL Torchic (the last on-roster mon) is still in the party" /tmp/sg_pcg_noguard.log \
+    && echo "  PASS PC guard NEGATIVE CONTROL (guard absent -> the deposit goes through)" \
+    || { echo "  FAIL negative control did not fail, or failed for another reason (see /tmp/sg_pcg_noguard.log)"; exit 1; }
+
+echo
 echo "=== Layer 5a: wild-encounter override inert with CM off ==="
 timeout 60 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=3 CM_ON=0 "$MGBA" --script tools/mgba_scripts/cm_wild_test.lua \
     -t tools/savestates/at_8_8.ss "$ROM" > /tmp/sg_wild_off.log 2>&1 || true

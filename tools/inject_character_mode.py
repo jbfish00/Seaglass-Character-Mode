@@ -157,6 +157,24 @@ MARKER_TRAMPOLINE_ADDR = 0x08470230
 #   0x08086EA8: ldr r1, =dst ; bl BattleStringExpandPlaceholders
 MARKER_BL_SITE   = 0x086EAA
 EXPAND_STRING    = 0x080876DC
+
+# ROWE's second guard in the PC (src/character_mode.c CM_PSSLastMonGuard;
+# docs/ROUTINE_MAP.md "PC second guard"). Every storage-system "is this the
+# last party mon?" test calls CountPartyAliveNonEggMonsExcept; five inlined
+# IsRemovingLastPartyMon sites and CanShiftMon's call are retargeted through ONE
+# trampoline, written over the standalone IsRemovingLastPartyMon at 0x081C3430:
+# this build inlines it at all five call sites, so the function has NO BL
+# callers and no pointer to its entry (verify_artifacts [22] re-checks both on
+# the base ROM). It sits right beside the patch sites.
+# ⚠️ NOT the 0x08470200 "scavenge run": that is a referenced 64-byte SPRITE
+# FRAME (SpriteFrameImage {0x08470200, 0x40} at 0x0895ED54, used by the
+# template at 0x0895E894), not free space. See rowe_parity.md §13.53.
+PSS_COUNT_ALIVE_EXCEPT = 0x081BADEC   # special 0x88's wrapper calls it (the anchor)
+PSS_GUARD_BL_SITES = (0x1BC576, 0x1BC62C, 0x1BCB04, 0x1BCB3C, 0x1BCB6E)
+PSS_CANSHIFT_BL    = 0x1C352C         # CanShiftMon (0x081C3508): bl Count
+PSS_CANSHIFT_TAIL  = 0x1C3530         # cmp r0,#0 ; bne -> b <epilogue 0x081C3524> ; nop
+PSS_GUARD_TRAMPOLINE_ADDR = 0x081C3430   # the dead standalone IsRemovingLastPartyMon
+PSS_DEAD_FN_HEAD = bytes.fromhex("00b50a4b1b781b060020")   # its first 5 instructions, base ROM
 TEXT_WILD_APPEARED = 0x084C646C     # "Wild {FD}{06} appeared!{FB}"
 # 193*64 = 12,352 B, in the run verified 0xFF from 0x08F0A000 to 0x08F1C000.
 # ⚠️ NOT 0x08F10000: tools/tests/build_trade_testrom.py already writes its
@@ -578,6 +596,7 @@ def main():
     hook_wild   = syms["CM_WildMonSpeciesGated"]
     hook_marker = syms["CM_BattleStringGated"] | 1
     hook_sweep  = syms["CM_SweepPartyToPCNative"] | 1
+    hook_pss_guard = syms["CM_PSSLastMonGuard"] | 1
 
     # --- mugshot renderer: separate compile unit + link address (see
     # CM_MUGSHOT_ADDR). Both entry points are resolved from the linked ELF
@@ -979,6 +998,28 @@ def main():
            "marker trampoline")
     print(f"encounter marker: {len(marker_blob):,} B @ {MARKER_ADDR:#x}, "
           f"stride {MARKER_STRIDE}, trampoline @ {MARKER_TRAMPOLINE_ADDR:#x}")
+
+    # --- PC second guard: one trampoline, six retargeted BLs, one tail ---
+    _t = PSS_GUARD_TRAMPOLINE_ADDR - 0x08000000
+    assert bytes(data[_t:_t + len(PSS_DEAD_FN_HEAD)]) == PSS_DEAD_FN_HEAD, (
+        "the dead IsRemovingLastPartyMon is not at %#x -- re-derive before "
+        "overwriting it" % PSS_GUARD_TRAMPOLINE_ADDR)
+    data[_t:_t + 8] = b"\xff" * 8   # splice() proves 0xFF; this 8 B is ours
+    splice(PSS_GUARD_TRAMPOLINE_ADDR,
+           struct.pack("<HH", 0x4B00, 0x4718) + struct.pack("<I", hook_pss_guard),
+           "PC second-guard trampoline")
+    for _site in PSS_GUARD_BL_SITES + (PSS_CANSHIFT_BL,):
+        _cur = bytes(data[_site:_site + 4])
+        _exp = thumb_bl(0x08000000 + _site, PSS_COUNT_ALIVE_EXCEPT)
+        assert _cur == _exp, f"PC guard site {_site:#x}: {_cur.hex()} != {_exp.hex()}"
+        data[_site:_site + 4] = thumb_bl(0x08000000 + _site, PSS_GUARD_TRAMPOLINE_ADDR)
+    # CanShiftMon's `cmp r0,#0 ; bne 0x081C351E` becomes `b 0x081C3524 ; nop`:
+    # the guard already returned the final answer, so go straight to the pop.
+    _cur = bytes(data[PSS_CANSHIFT_TAIL:PSS_CANSHIFT_TAIL + 4])
+    assert _cur == bytes.fromhex("0028f4d1"), f"CanShiftMon tail: {_cur.hex()}"
+    data[PSS_CANSHIFT_TAIL:PSS_CANSHIFT_TAIL + 4] = struct.pack("<HH", 0xE7F8, 0x46C0)
+    print(f"PC second guard: {len(PSS_GUARD_BL_SITES)} deposit/move/release sites + "
+          f"CanShiftMon -> {hook_pss_guard:#x} via {PSS_GUARD_TRAMPOLINE_ADDR:#x}")
 
     # --- patches (verify-then-write) ---
     for site in (BL_SITE_CATCH, BL_SITE_GIFT):

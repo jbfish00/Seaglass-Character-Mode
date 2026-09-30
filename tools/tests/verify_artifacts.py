@@ -126,6 +126,13 @@ TRADE_TABLE = 0xA3DB30
 
 # Wild-encounter species override (task #5, docs/ROUTINE_MAP.md).
 WILD_BL_SITE = 0x22BF36
+# PC second guard ([22]; injector PSS_*). Restated, as everywhere here.
+PSS_COUNT_ALIVE_EXCEPT = 0x081BADEC
+PSS_GUARD_BL_SITES = (0x1BC576, 0x1BC62C, 0x1BCB04, 0x1BCB3C, 0x1BCB6E)
+PSS_CANSHIFT_BL = 0x1C352C
+PSS_CANSHIFT_TAIL = 0x1C3530
+PSS_GUARD_TRAMPOLINE_ADDR = 0x081C3430   # over the DEAD standalone IsRemovingLastPartyMon
+PSS_SPECIAL_ANCHOR = 0x88   # CountPartyAliveNonEggMons_IgnoreVar0x8004Slot
 CREATE_MON_WITH_IVS = 0x081A7504
 WILD_TRAMPOLINE_ADDR = 0x08470208
 WILDPOOL_ADDR = 0x08EE5000
@@ -228,7 +235,8 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
+EXPECT_CHECKS = 147  # +7: [22] the PC second guard (2026-09-29)
+# was 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
                      # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
                      # +10: the PC-exit sweep, 5 checks x 2 sites (2026-09-07);
                      # +1: the COMPILED Battle Pyramid guard literal (2026-09-19)
@@ -363,6 +371,11 @@ def main():
                # 64-byte scavenge run already covered above.
                (0xF12000, NUM_CHARACTERS * 64),
                (0x086EAA, 4),
+               # PC second guard: six retargeted BLs, CanShiftMon's tail, and
+               # the 8-byte trampoline over the dead IsRemovingLastPartyMon.
+               *[(_s, 4) for _s in PSS_GUARD_BL_SITES + (PSS_CANSHIFT_BL,
+                                                          PSS_CANSHIFT_TAIL)],
+               (PSS_GUARD_TRAMPOLINE_ADDR & 0x01FFFFFF, 8),
                # egg-hatch sweep: the 11-byte replayed tail, and the 6-byte
                # overlay on the hatch script that jumps to it
                (EGG_TAIL_ADDR & 0x01FFFFFF, 11),
@@ -1285,6 +1298,40 @@ def main():
     _bad = [i for i in range(NUM_CHARACTERS)
             if 0xFF not in _mk[i * _MARKER_STRIDE:(i + 1) * _MARKER_STRIDE]]
     ok(not _bad, f"every marker slot is 0xFF-terminated ({len(_bad)} bad)")
+
+    print("[22] PC second guard (ROWE's IsRemovingLastAllowedPartyMon)")
+    # The anchor: special 0x88's wrapper must call the routine we hook. It is
+    # what located CountPartyAliveNonEggMonsExcept, so check it on the BASE.
+    _sp88 = struct.unpack_from("<I", orig, 0x26DD68 + 4 * PSS_SPECIAL_ANCHOR)[0]
+    ok(any(decode_bl(orig, (_sp88 & ~1) - 0x08000000 + k) == PSS_COUNT_ALIVE_EXCEPT
+           for k in range(0, 12, 2)),
+       f"base: special {PSS_SPECIAL_ANCHOR:#x}'s wrapper calls {PSS_COUNT_ALIVE_EXCEPT:#x}")
+    # The trampoline overwrites a function; that is only safe if nothing calls
+    # it. Checked on the BASE: a BL anywhere into its first 8 bytes.
+    ok(not bl_callers(orig, PSS_GUARD_TRAMPOLINE_ADDR),
+       f"base: the function the trampoline overwrites ({PSS_GUARD_TRAMPOLINE_ADDR:#x}) has no BL callers")
+    _sites = PSS_GUARD_BL_SITES + (PSS_CANSHIFT_BL,)
+    ok(all(decode_bl(orig, x) == PSS_COUNT_ALIVE_EXCEPT for x in _sites),
+       f"base: all {len(_sites)} guard sites call CountPartyAliveNonEggMonsExcept")
+    ok(all(decode_bl(patched, x) == PSS_GUARD_TRAMPOLINE_ADDR for x in _sites),
+       f"built: all {len(_sites)} sites call the guard trampoline")
+    _gt = PSS_GUARD_TRAMPOLINE_ADDR - 0x08000000
+    _guard = _elf_syms("cm.elf")["CM_PSSLastMonGuard"]
+    ok(bytes(patched[_gt:_gt + 8])
+       == struct.pack("<HHI", 0x4B00, 0x4718, _guard | 1),
+       f"trampoline is ldr r3,[pc]; bx r3 -> CM_PSSLastMonGuard {_guard | 1:#x}")
+    ok(bytes(orig[PSS_CANSHIFT_TAIL:PSS_CANSHIFT_TAIL + 4]) == bytes.fromhex("0028f4d1")
+       and bytes(patched[PSS_CANSHIFT_TAIL:PSS_CANSHIFT_TAIL + 4])
+       == struct.pack("<HH", 0xE7F8, 0x46C0),
+       "CanShiftMon tail: cmp r0,#0 ; bne  ->  b <epilogue> ; nop")
+    # Asserted on the COMPILED ROM, not the source: the guard must carry the
+    # CanShiftMon return address it dispatches on, the storage pointer and
+    # the routine it wraps -- a stale constant compiles fine and misfires.
+    _g0 = (_guard & ~1) - 0x08000000
+    _gcode = bytes(patched[_g0:_g0 + 0x200])
+    _glits = {struct.unpack_from("<I", _gcode, k)[0] for k in range(0, len(_gcode) - 3, 4)}
+    ok({0x081C3530, 0x0201A104, PSS_COUNT_ALIVE_EXCEPT | 1} <= _glits,
+       "compiled guard carries 0x081C3530, sStorage 0x0201A104 and the count routine")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     if assert_tally(_p + _f, EXPECT_CHECKS, "verify_artifacts"):

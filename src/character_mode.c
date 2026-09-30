@@ -641,6 +641,84 @@ void CM_SweepPartyToPCNative(void)
     gPlayerPartyCount = w;
 }
 
+/* --- ROWE's second guard: never let the PC take your last ON-ROSTER mon ---
+ *
+ * The PC-withdraw hook is undo-on-exit (the sweep above), and the sweep's
+ * never-empty rule KEEPS an off-roster mon when nothing on the roster is
+ * left. So "deposit your only on-roster mon, withdraw an off-roster one,
+ * close the PC" still ends with the off-roster mon in the party. ROWE closes
+ * that inside the storage system (IsRemovingLastAllowedPartyMon,
+ * src/pokemon_storage_system.c); this is the same rule in this binary.
+ *
+ * Hook: every "is this the last party mon?" test in the storage system calls
+ * CountPartyAliveNonEggMonsExcept(cursorPos) and treats 0 as "refuse". Five
+ * inlined IsRemovingLastPartyMon sites (deposit / move / release) and
+ * CanShiftMon's one call are BL-retargeted, through ONE trampoline, to
+ * CM_PSSLastMonGuard. It tells the two apart by its return address:
+ *   - the five sites: return 0 ("that's your last POKEMON") when the cursor
+ *     mon is the last alive, non-egg, on-roster one;
+ *   - CanShiftMon: its patched tail branches straight to the epilogue, so the
+ *     guard returns the FINAL answer -- vanilla's egg/fainted rule, plus
+ *     ROWE's: refuse swapping out the last on-roster mon for an off-roster one.
+ * With Character Mode off, the five get the plain count and CanShiftMon gets
+ * exactly vanilla's answer. Addresses: docs/ROUTINE_MAP.md "PC second guard". */
+#define CountPartyAliveNonEggMonsExcept ((u8 (*)(u8)) 0x081BADED)
+#define MON_DATA_HP            10      /* CanShiftMon's own GetMonData(moving, 10) @0x081C3544 */
+#define PSS_STORAGE            (*(u8 **) 0x0201A104)
+#define PSS_MOVING_MON         0x20A4  /* sStorage->movingMon (CanShiftMon @0x081C3540) */
+#define PSS_DISPLAY_MON_IS_EGG 0x0CED  /* sStorage->displayMonIsEgg (@0x081C3538) */
+#define PSS_CANSHIFT_RET       0x081C3530  /* return address of CanShiftMon's call */
+
+static int removingLastAllowed(u8 slot)
+{
+    const u8 *mon = gPlayerParty + slot * MON_SIZE;
+    u32 species;
+    u16 me;
+    int i;
+
+    if (!gateActive() || slot >= 6)
+        return 0;
+    me = *GetVarPointer(VAR_CM_CHAR);
+    species = GetMonData((void *) mon, MON_DATA_SPECIES, 0);
+    if (species == 0 || GetMonData((void *) mon, MON_DATA_IS_EGG, 0)
+        || !onRoster(me, species))
+        return 0;
+    for (i = 0; i < 6; i++) {
+        if (i == slot)
+            continue;
+        mon = gPlayerParty + i * MON_SIZE;
+        species = GetMonData((void *) mon, MON_DATA_SPECIES, 0);
+        if (species != 0
+            && !GetMonData((void *) mon, MON_DATA_IS_EGG, 0)
+            && GetMonData((void *) mon, MON_DATA_HP, 0) != 0
+            && onRoster(me, species))
+            return 0;
+    }
+    return 1;
+}
+
+u32 CM_PSSLastMonGuard(u8 slot)
+{
+    u32 ret = (u32) __builtin_return_address(0) & ~1u;
+    u8 alive = CountPartyAliveNonEggMonsExcept(slot);
+
+    if (ret == PSS_CANSHIFT_RET) {
+        u8 *storage = PSS_STORAGE;
+        u8 *moving = storage + PSS_MOVING_MON;
+        if (alive == 0 && (storage[PSS_DISPLAY_MON_IS_EGG]
+                           || GetMonData(moving, MON_DATA_HP, 0) == 0))
+            return 0;
+        if (removingLastAllowed(slot)
+            && !onRoster(*GetVarPointer(VAR_CM_CHAR),
+                         GetMonData(moving, MON_DATA_SPECIES, 0)))
+            return 0;
+        return 1;
+    }
+    if (alive != 0 && removingLastAllowed(slot))
+        return 0;
+    return alive;
+}
+
 void CM_TradeCheck(void *ctx)
 {
     u16 allowed = 1;
