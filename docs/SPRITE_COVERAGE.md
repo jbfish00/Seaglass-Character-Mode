@@ -8,6 +8,27 @@ sprite report (`/home/jbfish00/Documents/Pokemon Rowe Alteration/tools/character
 Gen 1–8 slice of this roster is the same real-world characters ROWE already
 sourced donor art for. All 170 characters appear in ROWE's 182-entry report.
 
+## 2026-10-03 — overworld sprites SHIPPED (walk/run)
+
+The player's overworld sprite now follows the chosen character while walking
+and running (bike, surf, fishing, field moves and underwater stay the normal
+player). This supersedes the planning numbers below for the overworld column.
+Source of truth: `tools/character_mode/seaglass_ow_player.py`; RE in `docs/ROUTINE_MAP.md`
+"Overworld sprite".
+
+| | count | of 114 offered |
+|---|---|---|
+| Injected player-grade sheet (`sprites/ow_player/`) | 98 | 85% |
+| Seaglass's own player sprite | 2 | 1% |
+| **Total with an overworld sprite** | **100** | **87%** |
+| Normal player sprite | 14 | 12% |
+
+- Native: Brendan, May.
+- Sheets with their own running frames (5): Ethan, Kris, Lyra, Lucas, Dawn. Every
+  other sheet repeats its walk frames, so those characters run with their walk
+  cycle at running speed (the fast-walk the user chose).
+- Normal player sprite: Red, Leaf, Ritchie, Paul, Zoey, Hilbert, Guzma, Lana (anime), Goh, Chloe, Sycamore, Tobias, Dahlia, Darach.
+
 ## Coverage summary
 
 | | count | % of 170 |
