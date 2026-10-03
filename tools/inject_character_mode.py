@@ -256,10 +256,17 @@ DYN_EVENT_SLOTS = 3                  # [2] reserved for the roster display
 DYN_EVENT_TABLE_ADDR = 0x08FA4000
 # The set the roster display owns. NONE is 0xFF here, so 2 is a real index.
 ROSTER_CB_SET = 2
+ROSTER_LIST_TOP = 6
 # src/roster_display.c: its own compile unit and link address, like the
 # mugshot renderer, so nothing in the main shim moves. 0x08FA5000 is left
 # free on purpose: dyn_event_table_negative_test.py uses it as its stray target.
 ROSTER_MENU_ADDR = 0x08FA6000
+# The roster screen's header ("<name>'s roster", user ruling 2026-10-02 adds a
+# second line saying evolutions count too). NUM_CHARACTERS x 16 B display names
+# indexed by TABLE index, like Radical Red's. A page past the roster code
+# (which is well under 4 KB: asserted below); splice() proves it clear.
+ROSTER_NAMES_ADDR = 0x08FA7000
+ROSTER_NAME_STRIDE = 16              # longest display name is 12 bytes + 0xFF
 PRE_ROSTER_SCRIPT_LEN = 305
 
 GIVE_NATIVE   = 0x081F2175         # callnative give fn (49 inline script ptrs)
@@ -389,10 +396,11 @@ def op_dynmultichoice(cb_set, names):
     return (bytes([0xE3]) + struct.pack("<HH", 0, 0) + bytes([0, 0xFF, 0])
             + struct.pack("<H", 0) + bytes([cb_set, len(names)])
             + b"".join(struct.pack("<I", n) for n in names))
-def op_dynmultistack(cb_set):
+def op_dynmultistack(cb_set, top=0):
     """The STACK form: argc 1 and a NULL word, which the handler peeks but does
-    not consume, so it then runs as four `nop` (opcode 0x00 is a no-op here)."""
-    return (bytes([0xE3]) + struct.pack("<HH", 0, 0) + bytes([0, 0xFF, 0])
+    not consume, so it then runs as four `nop` (opcode 0x00 is a no-op here).
+    top: CreateWindowFromRect adds 1, so top=6 puts the list at tile row 7."""
+    return (bytes([0xE3]) + struct.pack("<HH", 0, top) + bytes([0, 0xFF, 0])
             + struct.pack("<H", 0) + bytes([cb_set, 1]) + struct.pack("<I", 0))
 def op_givenative(species_var_or_id, fn):
     # the ROM's own give idiom: callnative <fn> + 10 inline arg bytes
@@ -651,12 +659,25 @@ def main():
                     f"-DNUM_CHARACTERS={NUM_CHARACTERS}",
                     f"-DROSTER_ROOTS_ADDR={ROSTER_ROOTS_ADDR:#x}",
                     f"-DROSTER_ROOTS_OFF={ROSTER_ROOTS_OFF}",
+                    f"-DROSTER_NAMES_ADDR={ROSTER_NAMES_ADDR:#x}",
+                    f"-DROSTER_NAME_STRIDE={ROSTER_NAME_STRIDE}",
                     "-o", str(robj), str(ROOT / "src" / "roster_display.c")], check=True)
     subprocess.run(["arm-none-eabi-ld", "-Ttext", f"{ROSTER_MENU_ADDR:#x}",
                     "--entry", "CM_RosterPushRows",
                     "-o", str(relf), str(robj)], check=True)
     subprocess.run(["arm-none-eabi-objcopy", "-O", "binary", str(relf), str(rbin)], check=True)
     roster_menu = rbin.read_bytes()
+    assert ROSTER_MENU_ADDR + len(roster_menu) <= ROSTER_NAMES_ADDR, (
+        f"roster display code ({len(roster_menu)} B) runs into the header names")
+    # Header names, fixed stride, indexed by table index (VAR_CM_CHAR - 1).
+    _names_bin = (CM / "names.bin").read_bytes()
+    _cm_chars = json.loads((CM / "characters_manifest.json").read_text())["characters"]
+    assert len(_cm_chars) == NUM_CHARACTERS
+    roster_names = bytearray()
+    for _c in _cm_chars:
+        _nm = _names_bin[_c["name_offset"]:_names_bin.index(b"\xff", _c["name_offset"])]
+        assert len(_nm) < ROSTER_NAME_STRIDE, (_c["character"], len(_nm))
+        roster_names += _nm + b"\xff" * (ROSTER_NAME_STRIDE - len(_nm))
     _rsym = subprocess.run(["arm-none-eabi-nm", str(relf)], check=True,
                            capture_output=True, text=True).stdout
 
@@ -788,7 +809,9 @@ def main():
         addrs["roster_here"] = len(e)
         e += op_callnative(hook_roster_push)
         e += op_compare(0x800D, 0) + op_goto_if(1, addrs["roster_end"])
-        e += op_dynmultistack(ROSTER_CB_SET)
+        # top 6: list at rows 7-18 under the 4-row header window that
+        # CM_RosterMenu_OnInit adds at rows 1-4 (frames 0-5 and 6-19).
+        e += op_dynmultistack(ROSTER_CB_SET, ROSTER_LIST_TOP)
         addrs["roster_end_here"] = len(e)
         e += op_releaseall() + op_end()
         addrs["t_view_here"]  = len(e); e += txt["t_view"]
@@ -863,6 +886,7 @@ def main():
     splice(CM_MUGSHOT_ADDR, mugshot, "mugshot renderer")
     assert DYN_EVENT_TABLE_ADDR + DYN_EVENT_SLOTS * DYN_EVENT_ENTRY_SIZE <= ROSTER_MENU_ADDR
     splice(ROSTER_MENU_ADDR, roster_menu, "roster display code")
+    splice(ROSTER_NAMES_ADDR, bytes(roster_names), "roster header names")
 
     # --- dynamic multichoice callback table: relocate + repoint ---
     assert ROSTER_ROOTS_ADDR + len(roster_roots) <= DYN_EVENT_TABLE_ADDR, (

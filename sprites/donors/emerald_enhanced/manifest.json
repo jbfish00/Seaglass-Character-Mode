@@ -1,0 +1,129 @@
+{
+ "source": "emerald_enhanced",
+ "format": "GBA 4bpp tiles + 16-colour BGR555 palette, plus LZ77 (BIOS type 0x10) streams of each. gfx is 64*64/2 = 2048 B for a front pic -- the exact size gTrainerFrontPicTable and CFRU's MugshotTable.size declare.",
+ "converted_by": "tools/png_to_gba.py (round-trip verified per file)",
+ "count": 11,
+ "entries": {
+  "gladion_back": {
+   "kind": "back6",
+   "width": 64,
+   "height": 384,
+   "colours": 15,
+   "gfx_raw_bytes": 12288,
+   "gfx_lz_bytes": 4213,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "gladion_back.png"
+  },
+  "gladion_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 16,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 718,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "gladion_front.png"
+  },
+  "gladion_ow": {
+   "kind": "overworld",
+   "width": 288,
+   "height": 32,
+   "colours": 16,
+   "gfx_raw_bytes": 4608,
+   "gfx_lz_bytes": 1780,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "gladion_ow.png"
+  },
+  "lillie_back": {
+   "kind": "back4",
+   "width": 64,
+   "height": 256,
+   "colours": 16,
+   "gfx_raw_bytes": 8192,
+   "gfx_lz_bytes": 3496,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "lillie_back.png"
+  },
+  "lillie_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 16,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 834,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "lillie_front.png"
+  },
+  "lillie_ow": {
+   "kind": "overworld",
+   "width": 288,
+   "height": 32,
+   "colours": 16,
+   "gfx_raw_bytes": 4608,
+   "gfx_lz_bytes": 1650,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "lillie_ow.png"
+  },
+  "lucy_back": {
+   "kind": "back4",
+   "width": 64,
+   "height": 256,
+   "colours": 15,
+   "gfx_raw_bytes": 8192,
+   "gfx_lz_bytes": 2351,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "lucy_back.png"
+  },
+  "lucy_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 16,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 757,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "lucy_front.png"
+  },
+  "lucy_ow": {
+   "kind": "overworld",
+   "width": 288,
+   "height": 32,
+   "colours": 12,
+   "gfx_raw_bytes": 4608,
+   "gfx_lz_bytes": 1394,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 35,
+   "source_path": "lucy_ow.png"
+  },
+  "lusamine_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 16,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 831,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "lusamine_front.png"
+  },
+  "lusamine_ow": {
+   "kind": "overworld",
+   "width": 144,
+   "height": 32,
+   "colours": 16,
+   "gfx_raw_bytes": 2304,
+   "gfx_lz_bytes": 1008,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "lusamine_ow.png"
+  }
+ }
+}

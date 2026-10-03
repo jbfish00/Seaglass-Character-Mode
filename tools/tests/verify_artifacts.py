@@ -202,6 +202,12 @@ DYN_EVENT_SLOTS = 3
 
 # The roster display's code unit (src/roster_display.c) and entry scripts.
 ROSTER_MENU_ADDR = _injector_addr("ROSTER_MENU_ADDR")
+# The header's names (2026-10-02): NUM_CHARACTERS x stride, by table index.
+ROSTER_NAMES_ADDR = _injector_addr("ROSTER_NAMES_ADDR")
+ROSTER_NAME_STRIDE = int(re.search(r"^ROSTER_NAME_STRIDE\s*=\s*(\d+)", (ROOT / "tools"
+    / "inject_character_mode.py").read_text(), re.M).group(1))
+ROSTER_LIST_TOP = int(re.search(r"^ROSTER_LIST_TOP\s*=\s*(\d+)", (ROOT / "tools"
+    / "inject_character_mode.py").read_text(), re.M).group(1))
 ROSTER_CB_SET = int(re.search(r"^ROSTER_CB_SET\s*=\s*(\d+)", (ROOT / "tools"
     / "inject_character_mode.py").read_text(), re.M).group(1))
 PRE_ROSTER_SCRIPT_LEN = int(re.search(r"^PRE_ROSTER_SCRIPT_LEN\s*=\s*(\d+)",
@@ -243,7 +249,7 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 152  # +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
+EXPECT_CHECKS = 155  # +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
 # 147: +7: [22] the PC second guard (2026-09-29)
 # was 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
                      # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
@@ -374,6 +380,8 @@ def main():
                # ROM holds exactly that .bin, so it cannot widen itself)
                (ROSTER_MENU_ADDR & 0x01FFFFFF,
                 len((ROOT / "build" / "roster_display.bin").read_bytes())),
+               # the header's display names ([21] checks every record)
+               (ROSTER_NAMES_ADDR & 0x01FFFFFF, NUM_CHARACTERS * ROSTER_NAME_STRIDE),
                (CM_SPRITE_BLOBS_ADDR & 0x01FFFFFF, len(_spr_blobs)),
                (CM_SPRITE_PTRS_ADDR & 0x01FFFFFF, len(_spr_ptrs)),
                (CM_MUGSHOT_ADDR & 0x01FFFFFF, _mugshot_len),
@@ -1177,6 +1185,31 @@ def main():
     ok(_rd_blk_ok,
        f"roster block: callnative CM_RosterPushRows, skip on 0 rows, then the "
        f"STACK form (argc 1 + NULL) with callback set {ROSTER_CB_SET}")
+
+    # The header (user ruling 2026-10-02: a hint line under "<name>'s roster").
+    # Names: every record is the manifest character's names.bin entry, padded.
+    _rdn_names = (ROOT / "tools" / "character_mode" / "names.bin").read_bytes()
+    _rdn_chars = json.loads((ROOT / "tools" / "character_mode"
+                             / "characters_manifest.json").read_text())["characters"]
+    _rdn_off = ROSTER_NAMES_ADDR & 0x01FFFFFF
+    _rdn_bad = []
+    for _rdn_i, _rdn_c in enumerate(_rdn_chars):
+        _rdn_n = _rdn_names[_rdn_c["name_offset"]:_rdn_names.index(b"\xff", _rdn_c["name_offset"])]
+        _rdn_rec = patched[_rdn_off + _rdn_i * ROSTER_NAME_STRIDE:
+                           _rdn_off + (_rdn_i + 1) * ROSTER_NAME_STRIDE]
+        if _rdn_rec[:len(_rdn_n)] != _rdn_n or _rdn_rec[len(_rdn_n)] != 0xFF:
+            _rdn_bad.append(_rdn_c["character"])
+    ok(len(_rdn_chars) == NUM_CHARACTERS and not _rdn_bad,
+       f"every header name record matches names.bin for its character ({_rdn_bad[:3]})")
+    # Code: the names blob, the text printer, and the hint string, compiled in.
+    _rdn_hint = bytes.fromhex("bfeae3e0e9e8dde3e2e700d7e3e9e2e800e8e3e3adff")
+    # GCC folds (id - 1) * stride into a base of ROSTER_NAMES_ADDR - stride.
+    ok((ROSTER_NAMES_ADDR in _rd_lits or ROSTER_NAMES_ADDR - ROSTER_NAME_STRIDE in _rd_lits)
+       and 0x08006415 in _rd_lits and _rdn_hint in _rd_code,
+       "compiled roster code carries ROSTER_NAMES_ADDR, AddTextPrinterParameterized "
+       "and the 'Evolutions count too.' hint")
+    ok(struct.unpack_from("<H", patched, _rd_r + 16 + 3)[0] == ROSTER_LIST_TOP,
+       f"the list opens at top {ROSTER_LIST_TOP}, under the 4-row header")
 
     # ⚠️ Every local below is _fp*-prefixed on purpose. A bare `_p` or `_f` here
     # shadows the module-level PASS/FAIL COUNTERS that the summary line reads,

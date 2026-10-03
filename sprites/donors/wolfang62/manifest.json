@@ -1,0 +1,107 @@
+{
+ "source": "wolfang62",
+ "format": "GBA 4bpp tiles + 16-colour BGR555 palette, plus LZ77 (BIOS type 0x10) streams of each. gfx is 64*64/2 = 2048 B for a front pic -- the exact size gTrainerFrontPicTable and CFRU's MugshotTable.size declare.",
+ "converted_by": "tools/png_to_gba.py (round-trip verified per file)",
+ "count": 9,
+ "entries": {
+  "birch_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 16,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 756,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "birch_front.png"
+  },
+  "elm_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 16,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 647,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "elm_front.png"
+  },
+  "juniper_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 16,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 725,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "juniper_front.png"
+  },
+  "kukui_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 15,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 688,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "kukui_front.png"
+  },
+  "magnolia_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 16,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 620,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "magnolia_front.png"
+  },
+  "oak_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 15,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 659,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "oak_front.png"
+  },
+  "rowan_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 12,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 680,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 36,
+   "source_path": "rowan_front.png"
+  },
+  "sonia_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 16,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 705,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 40,
+   "source_path": "sonia_front.png"
+  },
+  "sycamore_front": {
+   "kind": "front",
+   "width": 64,
+   "height": 64,
+   "colours": 13,
+   "gfx_raw_bytes": 2048,
+   "gfx_lz_bytes": 774,
+   "pal_raw_bytes": 32,
+   "pal_lz_bytes": 39,
+   "source_path": "sycamore_front.png"
+  }
+ }
+}

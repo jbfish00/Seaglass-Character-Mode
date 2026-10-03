@@ -45,6 +45,9 @@ typedef signed int s32;
 #ifndef ROSTER_ROOTS_OFF
 #error "compile with -DROSTER_ROOTS_OFF=<roots_offset_bytes from the manifest>"
 #endif
+#if !defined(ROSTER_NAMES_ADDR) || !defined(ROSTER_NAME_STRIDE)
+#error "compile with -DROSTER_NAMES_ADDR=0x08xxxxxx -DROSTER_NAME_STRIDE=<n>"
+#endif
 
 /* gSpeciesInfo 0x088F0780; the name is at +44 (rom_species_table.json's
  * "table base" 0x8F07AC is this field, not the struct). */
@@ -67,6 +70,12 @@ typedef signed int s32;
 #define ClearStdWindowAndFrame       ((void (*)(u8, u8)) 0x08166801)
 #define FillWindowPixelBuffer        ((void (*)(u8, u8)) 0x0800939D)
 #define CopyWindowToVram             ((void (*)(u8, u8)) 0x08008EAD)
+/* (windowId, fontId, str, x, y, speed, callback). Located 2026-10-02 from the
+ * PC multichoice's "LOG OFF" print (BL at 0x081F0A9E, string literal pool
+ * 0x081F0AE0); its body reads the gFonts pointer at stride 12. 381 callers. */
+#define AddTextPrinterParameterized \
+    ((u16 (*)(u8, u8, const u8 *, u8, u8, u8, void *)) 0x08006415)
+#define FONT_NORMAL 1
 #define COPYWIN_FULL 3
 #define PIXEL_FILL_1 0x11
 
@@ -84,6 +93,7 @@ typedef signed int s32;
 #define PAD_AUX_WINDOW 0
 #define PAD_SPRITE     1
 #define PAD_SPECIES    2             /* the species whose icon palette we hold */
+#define PAD_HEADER     3             /* the "<name>'s roster" header window */
 
 /* The icon box: 4x4 tiles, two tiles right of the list, like set 1's. The
  * sprite is centred in it, raised 4 px because icon art is bottom-weighted in
@@ -92,6 +102,20 @@ typedef signed int s32;
 #define AUX_SIZE  4
 #define AUX_PAL   15
 #define ICON_RAISE 4
+
+/* The header: two lines, "<name>'s roster" then sText_Hint (user ruling
+ * 2026-10-02: the list is family roots only while every stage is allowed, so
+ * say so). Rows 1-4, frame 0-5; the script opens the list at top 6, i.e. rows
+ * 7-18 with frame 6-19, so the two fill the 20-row screen exactly. */
+#define HEADER_LEFT   1
+#define HEADER_TOP    1
+#define HEADER_WIDTH  18
+#define HEADER_HEIGHT 4
+
+/* "'s roster" and "Evolutions count too." in the game charmap */
+static const u8 sText_Suffix[] = { 0xB4, 0xE7, 0x00, 0xE6, 0xE3, 0xE7, 0xE8, 0xD9, 0xE6, EOS };
+static const u8 sText_Hint[] = { 0xBF, 0xEA, 0xE3, 0xE0, 0xE9, 0xE8, 0xDD, 0xE3, 0xE2, 0xE7, 0x00,
+                                 0xD7, 0xE3, 0xE9, 0xE2, 0xE8, 0x00, 0xE8, 0xE3, 0xE3, 0xAD, EOS };
 
 struct WindowTemplate {
     u8 bg, tilemapLeft, tilemapTop, width, height, paletteNum;
@@ -151,6 +175,26 @@ static void DestroyIcon(u16 *pad)
     }
 }
 
+/* VAR_CM_CHAR is 1-based and was range-checked by CM_RosterPushRows, which
+ * runs first and leaves no rows (so no menu) for an out-of-range id. */
+static void DrawHeader(u8 win)
+{
+    u16 id = *GetVarPointer(VAR_CM_CHAR);
+    const u8 *name = (const u8 *) ROSTER_NAMES_ADDR + (u32) (id - 1) * ROSTER_NAME_STRIDE;
+    u8 buf[ROSTER_NAME_STRIDE + sizeof(sText_Suffix)];
+    u32 n = 0, k;
+
+    if (id >= 1 && id <= NUM_CHARACTERS)
+        while (n < ROSTER_NAME_STRIDE - 1 && name[n] != EOS) {
+            buf[n] = name[n];
+            n++;
+        }
+    for (k = 0; k < sizeof(sText_Suffix); k++)
+        buf[n + k] = sText_Suffix[k];
+    AddTextPrinterParameterized(win, FONT_NORMAL, buf, 0, 1, 0, 0);
+    AddTextPrinterParameterized(win, FONT_NORMAL, sText_Hint, 0, 16, 0, 0);
+}
+
 void CM_RosterMenu_OnInit(struct DynamicListMenuEventArgs *a)
 {
     const struct WindowTemplate *w = ListWindow(a);
@@ -172,6 +216,19 @@ void CM_RosterMenu_OnInit(struct DynamicListMenuEventArgs *a)
 
     pad[PAD_AUX_WINDOW] = win;
     pad[PAD_SPRITE] = MAX_SPRITES;
+
+    /* The header window's tiles follow the icon box's. */
+    aux.tilemapLeft = HEADER_LEFT;
+    aux.tilemapTop = HEADER_TOP;
+    aux.baseBlock += AUX_SIZE * AUX_SIZE;
+    aux.width = HEADER_WIDTH;
+    aux.height = HEADER_HEIGHT;
+    win = AddWindow(&aux);
+    SetStandardWindowBorderStyle(win, 0);
+    FillWindowPixelBuffer(win, PIXEL_FILL_1);
+    DrawHeader(win);
+    CopyWindowToVram(win, COPYWIN_FULL);
+    pad[PAD_HEADER] = win;
 }
 
 void CM_RosterMenu_OnSelectionChanged(struct DynamicListMenuEventArgs *a)
@@ -204,4 +261,6 @@ void CM_RosterMenu_OnDestroy(struct DynamicListMenuEventArgs *a)
     DestroyIcon(pad);
     ClearStdWindowAndFrame(pad[PAD_AUX_WINDOW], 1);
     RemoveWindow(pad[PAD_AUX_WINDOW]);
+    ClearStdWindowAndFrame(pad[PAD_HEADER], 1);
+    RemoveWindow(pad[PAD_HEADER]);
 }

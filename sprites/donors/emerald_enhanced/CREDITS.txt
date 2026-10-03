@@ -1,0 +1,38 @@
+SPRITE HARVEST — PROVENANCE AND ATTRIBUTION
+===========================================
+
+Source repository : https://github.com/Enhanced-Projects/Emerald-Enhanced
+Commit SHA        : 8feeffde06a160c3f7a0e94689c0fd2ed13214f7
+Fetched           : 2026-10-02
+Fetched via       : raw.githubusercontent.com/Enhanced-Projects/Emerald-Enhanced/HEAD/<path>
+Unmodified copies : sprites/donors/emerald_enhanced/graphics/ (workspace root)
+
+Files (staged name <- upstream path):
+  lusamine_front.png <- graphics/trainers/front_pics/aether_leader_lusamine.png
+  gladion_front.png  <- graphics/trainers/front_pics/trainer_gladion.png
+  lillie_front.png   <- graphics/trainers/front_pics/trainer_lillie.png
+  lucy_front.png     <- graphics/trainers/front_pics/pike_queen_lucy_front_pic.png
+  gladion_back.png   <- graphics/trainers/back_pics/gladion_back_pic.png   (6 frames)
+  lillie_back.png    <- graphics/trainers/back_pics/lillie_back_pic.png    (4 frames)
+  lucy_back.png      <- graphics/trainers/back_pics/lucy_back_pic.png      (4 frames)
+  lusamine_ow.png    <- graphics/object_events/pics/people/team_aether/lusamine.png (9 frames)
+  gladion_ow.png     <- graphics/object_events/pics/people/followers/gladion.png    (18 frames)
+  lillie_ow.png      <- graphics/object_events/pics/people/followers/lillie.png     (18 frames)
+  lucy_ow.png        <- graphics/object_events/pics/people/frontier_brains/lucy.png (18 frames)
+All are byte-identical to upstream (no conversion).
+
+LICENSING
+---------
+Upstream README, verbatim: "If you intend to use Art from this project, you
+must obtain permission from an executive of Enhanced Projects." ... "When in
+doubt, obtain permission before using anything! We rarely decline such
+requests, we just need to know who is using what."
+
+Permission status: the user directed on 2026-10-02 that this art be used on the
+basis that permission is granted (PERMISSION_REQUESTS.md, tracking table). If
+that turns out not to be the case, remove the 'emerald_enhanced' donor set from
+every repo and rebuild -- it is self-contained.
+
+ATTRIBUTION
+-----------
+Emerald Enhanced, by Enhanced Projects -- credited in every repo's CREDITS.md.

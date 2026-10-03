@@ -1,0 +1,39 @@
+SPRITE HARVEST — PROVENANCE AND ATTRIBUTION
+===========================================
+
+Artist            : Wolfang62
+Source            : "All Professors" (DeviantArt, published 2021-07-16)
+                    https://www.deviantart.com/wolfang62/art/All-Professors-885889095
+Fetched           : 2026-10-02 (the full-size 400x56 original, via the
+                    deviation page's signed download URL)
+Unmodified copy   : sprites/donors/wolfang62/all_professors.png (workspace root)
+
+WHAT WAS DONE TO THE ART
+------------------------
+The sheet is ten chibi professors in a row. Nine are identified from the
+deviation's own tags and staged; the tenth (purple-haired) is not tagged and is
+NOT staged -- names are not guessed.
+
+Each figure was cut out at its transparent column boundaries, trimmed to its
+opaque rows, and placed unscaled on a 64x64 trainer-pic canvas (centred, feet
+4 px above the bottom), with palette index 0 transparent. Order on the sheet:
+oak, elm, birch, rowan, juniper, sycamore, kukui, magnolia, sonia, (untagged).
+
+Two figures use more than the 15 opaque colours a GBA sprite allows; the
+closest colour pairs were merged, least-used into most-used:
+  magnolia: (192,152,72) -> (176,136,88), 44 px
+  sonia:    (116,61,46) -> (117,62,47), 8 px; (120,64,64) -> (117,62,47), 52 px
+Every other figure is pixel-identical to the original.
+
+These are overworld-style chibi figures, not battle front pics; they fill the
+front-pic slot for professors who had no art at all.
+
+LICENSING
+---------
+Wolfang62's art is permission-gated. The user directed on 2026-10-02 that it be
+used on the basis that permission is granted (PERMISSION_REQUESTS.md, tracking
+table), with Wolfang62 acknowledged in the credits of every repo that ships it.
+
+ATTRIBUTION
+-----------
+Wolfang62 -- https://www.deviantart.com/wolfang62

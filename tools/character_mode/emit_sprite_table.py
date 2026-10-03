@@ -39,7 +39,12 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 DONORS = ROOT / "sprites" / "donors"
 
-PREFERENCE = ["ashgray", "rogue", "taar", "hns", "pokesho", "dollsteak", "loulilie", "platinum"]
+# "emerald_enhanced" and "wolfang62" (2026-10-02) fill gaps only, so they sit
+# after every older source: a character that already had art keeps it.
+# Wolfang62's are chibi overworld-style figures on a front-pic canvas, so
+# they are last of all -- any real battle front pic wins.
+PREFERENCE = ["ashgray", "rogue", "taar", "hns", "pokesho", "dollsteak", "loulilie", "platinum",
+              "emerald_enhanced", "wolfang62"]
 
 slug = lambda s: re.sub(r"[^a-z0-9]+", "_", s.lower()).strip("_")
 
