@@ -18,6 +18,16 @@ sinnoh-remakes/pokeemerald-platinum, PokemonHnS-Development/pokemonHnS,
 DiegoWT's Gen5-style resource, StreakOfSprites' Ash sheet.)
 
 
+## Overworld sprites now in the patch (added 2026-10-03)
+
+Since 2026-10-03 the player's walk/run sprite follows the chosen character. The
+98 sheets used come from `sprites/ow_player/` (ROWE's built player-grade sheets,
+vendored by `tools/character_mode/import_ow_sheets.py`); their donors are the
+ones credited in this file (Emerald Rogue with its full credits roll, Team
+Aqua's Asset Repo, kalarie, and the ROWE project's own sheets from
+pokefirered, pokeemerald-platinum, pokemonHnS, DiegoWT and StreakOfSprites).
+Brendan and May use Seaglass's own player sprites, referenced, not copied.
+
 ## Emerald Rogue — trainer, back and overworld sprites (added 2026-07-25)
 
 Staged in `sprites/donors/rogue/` — 294 sprites covering 160 Character Mode

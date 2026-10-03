@@ -304,9 +304,17 @@ saves still load correctly; they simply cannot be chosen.
   64x64 portrait that draws beside the confirmation message when you select
   them — see "How to turn Character Mode on" above. The remaining 29 (no GBA-
   style art exists for them, mostly 3D-era Gen 6–9 characters and a few anime
-  cast members) show the confirmation text with no portrait. This is a
-  character-select portrait only — the player's own overworld and battle
-  sprites never change, regardless of which character you pick.
+  cast members) show the confirmation text with no portrait.
+- **Overworld sprite** (new 2026-10-03): 100 of the 114 selectable characters
+  look like themselves while **walking and running**, from the moment their
+  code is accepted (Brendan and May use Seaglass's own player sprites). On a
+  bike, surfing, fishing, using a field move or underwater you're the normal
+  player, because the sprites have no frames for those. Most sprites have no
+  running frames of their own, so running shows their walk cycle at running
+  speed. The other 14 (Red, Leaf, Ritchie, Paul, Zoey, Hilbert, Guzma, Lana,
+  Goh, Chloe, Sycamore, Tobias, Dahlia, Darach) keep the normal player sprite.
+  No NPC's sprite changes, and your battle back sprite is unchanged. The debug
+  off code restores the normal sprite at the next map change.
 - **Switching characters**: your current party is swept against the new
   character's roster at the moment you activate (see "How enforcement works"
   above) — it is not a one-time grandfather clause. Anything already sitting

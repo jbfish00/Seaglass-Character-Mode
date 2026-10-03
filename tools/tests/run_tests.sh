@@ -447,5 +447,12 @@ roster_case code 3
 roster_case off 3
 
 echo
+echo "=== Layer 8: overworld sprite follows the character (2026-10-03) ==="
+# Real code entry, then VRAM/palette against the source art, walk and run in all
+# four directions outside the mart; Seaglass's own May; CM off; and a copy with
+# the GetObjectEventGraphicsInfo trampoline removed, which must FAIL.
+bash tools/tests/run_ow_sprite_test.sh || { echo "  FAIL overworld sprite layer"; exit 1; }
+
+echo
 echo "ALL AUTOMATED LAYERS GREEN (incl. real-UI activation + in-situ trade e2e + wild override + live egg hatch + live PC exit)."
 echo "Remaining human-in-the-loop verify: full playthrough (docs/TESTING.md)."

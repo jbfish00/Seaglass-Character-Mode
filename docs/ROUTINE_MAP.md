@@ -725,3 +725,28 @@ table. Every engine address it uses was read from set 1's own calls
   `roster_entry_negative_test.py` 10/10, and live layer 7c
   (`cm_roster_menu_test.lua`, modes roster/code/off; with slot [2] nulled the
   roster mode fails 8 of 10).
+
+## Overworld sprite (2026-10-03): ✅ SHIPPED, LIVE
+
+The player's walk/run sprite follows the character. Builder
+`tools/character_mode/seaglass_ow_player.py` (asserts every fact below on the
+base ROM), hook unit `src/ow_sprite.c` at `0x08FB0000`, live layer 8
+`tools/tests/run_ow_sprite_test.sh`, static [24] + `ow_sprite_negative_test.py`.
+
+| what | address | notes |
+|---|---|---|
+| `sPlayerAvatarGfxIds` | `0x085F24E4` | **u8** [state][gender]: normal {0, 89}, mach {1, 90}, acro {63, 91}, surf {2, 92}, underwater {111, 112}, field move {3, 93}, fishing {137, 138}, watering {191, 192}, Vs Seeker {3, 93}. Inlined into **14** readers, so it isn't hooked. |
+| `GetObjectEventGraphicsInfo` | `0x0811059C` (entry; 39 BL callers) | the only reader of `gObjectEventGraphicsInfoPointers 0x085CE6BC` (298 entries, literal `0x08110694`). First 8 bytes `ldr r2,[pc,#232] (0xFF060000); mov ip,r2; lsls r3,r0,#16; lsrs r0,r3,#16` → replaced by `ldr r3,[pc]; bx r3`; `CM_OrigGetObjectEventGraphicsInfo` replays them and resumes at `0x081105A4` (r1 is free there). For ids 0/89 with CM on it returns the character's info. |
+| `ObjectEventSetGraphicsId` | `0x08110268` | `(objEvent, u16 id)`, graphicsId u16 at objEvent+4; calls `ObjectEventSetGraphics 0x08110100` (palette by tag, `LoadSheetGraphicsInfo 0x0810DF58`: built with OW_GFX_COMPRESS, but uncompressed infos pass through), which reads the sprite id at objEvent+**0x23**. `PlayerAvatarTransition_Normal 0x0812DAD8` uses it. |
+| `gObjectEvents` / `gSprites` | `0x0200564C` (stride 0x24) / `0x02039810` | the player object is the one with **isPlayer (bit 16)** set. ⚠️ `gPlayerAvatar 0x0202588C`'s objectEventId named the **Pokémon follower** from the activation script, and its flags byte reads as noise: don't use it. |
+| player infos | Brendan id 0 (16×32, size 512), May id 89 (32×32) | player anims `0x085D0F98`: run anims 20–23 in pokeemerald order, so sheets need no remap. 16×32 oam/subsprites `0x085D1234`/`0x085D12C0`, 32×32 `0x085D123C`/`0x085D1314`. Red/Leaf (230/231) are one-frame NPC sprites: unusable. |
+| `sObjectEventSpritePalettes` | `0x085D4234` | 63 entries (tags from 0x1103), `0x11FF` terminator; **12** literal readers (`0x0810F038` … `0x0811DB14`), all repointed to a copy with tags `0x1400+k`. |
+| map objects with id 0 | 34 | all `OBJ_KIND_CLONE` placeholders (or false-positive tables); none with 89. So an id-keyed swap only ever reaches the player. |
+
+Activation: the give block's existing `callnative CM_SweepPartyToPCNative` now
+calls `CM_SweepThenRefresh` (same 5 bytes: `naming_open.ss` pins the entry
+blob's length), which sweeps and then re-sets the player's graphics in place.
+The debug off code doesn't refresh. Seaglass's own player sprites (May,
+Brendan) are adjusted after the frame copy, so the live layer checks the images
+table for them, not VRAM bytes. Running needs leaving the Oldale Mart (Emerald
+forbids running there); the live gait comes from the sprite's anim number.

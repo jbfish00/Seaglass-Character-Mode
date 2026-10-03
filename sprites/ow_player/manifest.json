@@ -1,0 +1,1239 @@
+{
+ "source": "ROWE (Pokemon Rowe Alteration) built overworld sheets; per-sheet donor credits are ROWE's tools/character_mode/donor_ow_backs.txt and imported_ow.txt, and this repo's CREDITS.md",
+ "frames": 18,
+ "count": 154,
+ "characters": {
+  "Aaron": {
+   "stem": "aaron",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_AARON",
+   "rowe_pic": "graphics/object_events/pics/people/cm_aaron.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_aaron.gbapal"
+  },
+  "Acerola": {
+   "stem": "acerola",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ACEROLA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_acerola.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_acerola.gbapal"
+  },
+  "Agatha": {
+   "stem": "agatha",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_AGATHA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_agatha.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_agatha.gbapal"
+  },
+  "Allister": {
+   "stem": "allister",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ALLISTER",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_allister.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_allister.gbapal"
+  },
+  "Anabel": {
+   "stem": "anabel",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ANABEL",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_anabel.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_anabel.gbapal"
+  },
+  "Archer": {
+   "stem": "archer",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ARCHER",
+   "rowe_pic": "graphics/object_events/pics/people/cm_archer.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_archer.gbapal"
+  },
+  "Archie": {
+   "stem": "archie",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ARCHIE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_archie.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_archie.gbapal"
+  },
+  "Ariana": {
+   "stem": "ariana",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ARIANA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_ariana.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_ariana.gbapal"
+  },
+  "Arven": {
+   "stem": "arven",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ARVEN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_arven.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_arven.gbapal"
+  },
+  "Ash": {
+   "stem": "ash",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ASH",
+   "rowe_pic": "graphics/object_events/pics/people/cm_ash.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_ash.gbapal"
+  },
+  "Barry": {
+   "stem": "barry",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BARRY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_barry.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_barry.gbapal"
+  },
+  "Bea": {
+   "stem": "bea",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BEA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_bea.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_bea.gbapal"
+  },
+  "Bede": {
+   "stem": "bede",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BEDE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_bede.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_bede.gbapal"
+  },
+  "Bertha": {
+   "stem": "bertha",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BERTHA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_bertha.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_bertha.gbapal"
+  },
+  "Birch": {
+   "stem": "birch",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BIRCH",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_birch.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_birch.gbapal"
+  },
+  "Blaine": {
+   "stem": "blaine",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BLAINE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_blaine.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_blaine.gbapal"
+  },
+  "Blue": {
+   "stem": "blue",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BLUE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_blue.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_blue.gbapal"
+  },
+  "Brandon": {
+   "stem": "brandon",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BRANDON",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_brandon.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_brandon.gbapal"
+  },
+  "Brassius": {
+   "stem": "brassius",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BRASSIUS",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_brassius.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_brassius.gbapal"
+  },
+  "Brawly": {
+   "stem": "brawly",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BRAWLY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_brawly.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_brawly.gbapal"
+  },
+  "Brock": {
+   "stem": "brock",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BROCK",
+   "rowe_pic": "graphics/object_events/pics/people/cm_brock.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_brock.gbapal"
+  },
+  "Bruno": {
+   "stem": "bruno",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BRUNO",
+   "rowe_pic": "graphics/object_events/pics/people/cm_bruno.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_bruno.gbapal"
+  },
+  "Brycen": {
+   "stem": "brycen",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BRYCEN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_brycen.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_brycen.gbapal"
+  },
+  "Bugsy": {
+   "stem": "bugsy",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BUGSY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_bugsy.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_bugsy.gbapal"
+  },
+  "Burgh": {
+   "stem": "burgh",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BURGH",
+   "rowe_pic": "graphics/object_events/pics/people/cm_burgh.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_burgh.gbapal"
+  },
+  "Byron": {
+   "stem": "byron",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BYRON",
+   "rowe_pic": "graphics/object_events/pics/people/cm_byron.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_byron.gbapal"
+  },
+  "Caitlin": {
+   "stem": "caitlin",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CAITLIN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_caitlin.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_caitlin.gbapal"
+  },
+  "Calem": {
+   "stem": "calem",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CALEM",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_calem.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_calem.gbapal"
+  },
+  "Candice": {
+   "stem": "candice",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CANDICE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_candice.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_candice.gbapal"
+  },
+  "Cheren": {
+   "stem": "cheren",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CHEREN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_cheren.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_cheren.gbapal"
+  },
+  "Chili": {
+   "stem": "chili",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CHILI",
+   "rowe_pic": "graphics/object_events/pics/people/cm_chili.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_chili.gbapal"
+  },
+  "Chuck": {
+   "stem": "chuck",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CHUCK",
+   "rowe_pic": "graphics/object_events/pics/people/cm_chuck.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_chuck.gbapal"
+  },
+  "Cilan": {
+   "stem": "cilan",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CILAN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_cilan.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_cilan.gbapal"
+  },
+  "Clair": {
+   "stem": "clair",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CLAIR",
+   "rowe_pic": "graphics/object_events/pics/people/cm_clair.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_clair.gbapal"
+  },
+  "Clay": {
+   "stem": "clay",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CLAY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_clay.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_clay.gbapal"
+  },
+  "Colress": {
+   "stem": "colress",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_COLRESS",
+   "rowe_pic": "graphics/object_events/pics/people/cm_colress.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_colress.gbapal"
+  },
+  "Crasher Wake": {
+   "stem": "crasher_wake",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CRASHER_WAKE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_crasher_wake.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_crasher_wake.gbapal"
+  },
+  "Cress": {
+   "stem": "cress",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CRESS",
+   "rowe_pic": "graphics/object_events/pics/people/cm_cress.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_cress.gbapal"
+  },
+  "Cynthia": {
+   "stem": "cynthia",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CYNTHIA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_cynthia.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_cynthia.gbapal"
+  },
+  "Cyrus": {
+   "stem": "cyrus",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CYRUS",
+   "rowe_pic": "graphics/object_events/pics/people/cm_cyrus.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_cyrus.gbapal"
+  },
+  "Dawn": {
+   "stem": "dawn",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_DAWN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_dawn.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_dawn.gbapal"
+  },
+  "Diantha": {
+   "stem": "diantha",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_DIANTHA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_diantha.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_diantha.gbapal"
+  },
+  "Drake": {
+   "stem": "drake",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_DRAKE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_drake.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_drake.gbapal"
+  },
+  "Drayden": {
+   "stem": "drayden",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_DRAYDEN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_drayden.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_drayden.gbapal"
+  },
+  "Elesa": {
+   "stem": "elesa",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ELESA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_elesa.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_elesa.gbapal"
+  },
+  "Elio": {
+   "stem": "elio",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ELIO",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_elio.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_elio.gbapal"
+  },
+  "Elm": {
+   "stem": "elm",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ELM",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_elm.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_elm.gbapal"
+  },
+  "Erika": {
+   "stem": "erika",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ERIKA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_erika.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_erika.gbapal"
+  },
+  "Ethan": {
+   "stem": "ethan",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ETHAN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_ethan.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_ethan.gbapal"
+  },
+  "Falkner": {
+   "stem": "falkner",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_FALKNER",
+   "rowe_pic": "graphics/object_events/pics/people/cm_falkner.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_falkner.gbapal"
+  },
+  "Fantina": {
+   "stem": "fantina",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_FANTINA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_fantina.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_fantina.gbapal"
+  },
+  "Flannery": {
+   "stem": "flannery",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_FLANNERY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_flannery.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_flannery.gbapal"
+  },
+  "Flint": {
+   "stem": "flint",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_FLINT",
+   "rowe_pic": "graphics/object_events/pics/people/cm_flint.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_flint.gbapal"
+  },
+  "Gardenia": {
+   "stem": "gardenia",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_GARDENIA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_gardenia.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_gardenia.gbapal"
+  },
+  "Gary": {
+   "stem": "gary",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_BLUE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_blue.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_blue.gbapal"
+  },
+  "Giovanni": {
+   "stem": "giovanni",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_GIOVANNI",
+   "rowe_pic": "graphics/object_events/pics/people/cm_giovanni.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_giovanni.gbapal"
+  },
+  "Glacia": {
+   "stem": "glacia",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_GLACIA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_glacia.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_glacia.gbapal"
+  },
+  "Gladion": {
+   "stem": "gladion",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_GLADION",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_gladion.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_gladion.gbapal"
+  },
+  "Greta": {
+   "stem": "greta",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_GRETA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_greta.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_greta.gbapal"
+  },
+  "Grimsley": {
+   "stem": "grimsley",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_GRIMSLEY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_grimsley.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_grimsley.gbapal"
+  },
+  "Grusha": {
+   "stem": "grusha",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_GRUSHA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_grusha.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_grusha.gbapal"
+  },
+  "Hala": {
+   "stem": "hala",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_HALA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_hala.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_hala.gbapal"
+  },
+  "Hapu": {
+   "stem": "hapu",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_HAPU",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_hapu.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_hapu.gbapal"
+  },
+  "Hassel": {
+   "stem": "hassel",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_HASSEL",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_hassel.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_hassel.gbapal"
+  },
+  "Hau": {
+   "stem": "hau",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_HAU",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_hau.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_hau.gbapal"
+  },
+  "Hop": {
+   "stem": "hop",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_HOP",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_hop.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_hop.gbapal"
+  },
+  "Hugh": {
+   "stem": "hugh",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_HUGH",
+   "rowe_pic": "graphics/object_events/pics/people/cm_hugh.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_hugh.gbapal"
+  },
+  "Iono": {
+   "stem": "iono",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_IONO",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_iono.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_iono.gbapal"
+  },
+  "Iris": {
+   "stem": "iris",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_IRIS",
+   "rowe_pic": "graphics/object_events/pics/people/cm_iris.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_iris.gbapal"
+  },
+  "James": {
+   "stem": "james",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_JAMES",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_james.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_james.gbapal"
+  },
+  "Janine": {
+   "stem": "janine",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_JANINE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_janine.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_janine.gbapal"
+  },
+  "Jasmine": {
+   "stem": "jasmine",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_JASMINE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_jasmine.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_jasmine.gbapal"
+  },
+  "Jessie": {
+   "stem": "jessie",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_JESSIE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_jessie.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_jessie.gbapal"
+  },
+  "Juan": {
+   "stem": "juan",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_JUAN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_juan.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_juan.gbapal"
+  },
+  "Jupiter": {
+   "stem": "jupiter",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_JUPITER",
+   "rowe_pic": "graphics/object_events/pics/people/cm_jupiter.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_jupiter.gbapal"
+  },
+  "Kabu": {
+   "stem": "kabu",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_KABU",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_kabu.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_kabu.gbapal"
+  },
+  "Kahili": {
+   "stem": "kahili",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_KAHILI",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_kahili.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_kahili.gbapal"
+  },
+  "Karen": {
+   "stem": "karen",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_KAREN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_karen.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_karen.gbapal"
+  },
+  "Katy": {
+   "stem": "katy",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_KATY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_katy.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_katy.gbapal"
+  },
+  "Kofu": {
+   "stem": "kofu",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_KOFU",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_kofu.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_kofu.gbapal"
+  },
+  "Koga": {
+   "stem": "koga",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_KOGA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_koga.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_koga.gbapal"
+  },
+  "Korrina": {
+   "stem": "korrina",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_KORRINA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_korrina.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_korrina.gbapal"
+  },
+  "Kris": {
+   "stem": "kris",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_KRIS",
+   "rowe_pic": "graphics/object_events/pics/people/cm_kris.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_kris.gbapal"
+  },
+  "Kukui": {
+   "stem": "kukui",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_KUKUI",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_kukui.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_kukui.gbapal"
+  },
+  "Lance": {
+   "stem": "lance",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_LANCE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_lance.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_lance.gbapal"
+  },
+  "Larry": {
+   "stem": "larry",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_LARRY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_larry.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_larry.gbapal"
+  },
+  "Lenora": {
+   "stem": "lenora",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_LENORA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_lenora.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_lenora.gbapal"
+  },
+  "Leon": {
+   "stem": "leon",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_LEON",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_leon.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_leon.gbapal"
+  },
+  "Liza": {
+   "stem": "liza",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_LIZA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_liza.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_liza.gbapal"
+  },
+  "Lorelei": {
+   "stem": "lorelei",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_LORELEI",
+   "rowe_pic": "graphics/object_events/pics/people/cm_lorelei.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_lorelei.gbapal"
+  },
+  "Lt. Surge": {
+   "stem": "lt_surge",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_LT_SURGE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_lt_surge.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_lt_surge.gbapal"
+  },
+  "Lucas": {
+   "stem": "lucas",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_LUCAS",
+   "rowe_pic": "graphics/object_events/pics/people/cm_lucas.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_lucas.gbapal"
+  },
+  "Lucian": {
+   "stem": "lucian",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_LUCIAN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_lucian.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_lucian.gbapal"
+  },
+  "Lucy": {
+   "stem": "lucy",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_LUCY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_lucy.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_lucy.gbapal"
+  },
+  "Lusamine": {
+   "stem": "lusamine",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_LUSAMINE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_lusamine.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_lusamine.gbapal"
+  },
+  "Lyra": {
+   "stem": "lyra",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_LYRA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_lyra.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_lyra.gbapal"
+  },
+  "Malva": {
+   "stem": "malva",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_MALVA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_malva.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_malva.gbapal"
+  },
+  "Marlon": {
+   "stem": "marlon",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_MARLON",
+   "rowe_pic": "graphics/object_events/pics/people/cm_marlon.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_marlon.gbapal"
+  },
+  "Marnie": {
+   "stem": "marnie",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_MARNIE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_marnie.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_marnie.gbapal"
+  },
+  "Mars": {
+   "stem": "mars",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_MARS",
+   "rowe_pic": "graphics/object_events/pics/people/cm_mars.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_mars.gbapal"
+  },
+  "Marshal": {
+   "stem": "marshal",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_MARSHAL",
+   "rowe_pic": "graphics/object_events/pics/people/cm_marshal.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_marshal.gbapal"
+  },
+  "Maxie": {
+   "stem": "maxie",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_MAXIE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_maxie.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_maxie.gbapal"
+  },
+  "Maylene": {
+   "stem": "maylene",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_MAYLENE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_maylene.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_maylene.gbapal"
+  },
+  "Milo": {
+   "stem": "milo",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_MILO",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_milo.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_milo.gbapal"
+  },
+  "Misty": {
+   "stem": "misty",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_MISTY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_misty.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_misty.gbapal"
+  },
+  "Molayne": {
+   "stem": "molayne",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_MOLAYNE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_molayne.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_molayne.gbapal"
+  },
+  "Morty": {
+   "stem": "morty",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_MORTY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_morty.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_morty.gbapal"
+  },
+  "N": {
+   "stem": "n",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_N",
+   "rowe_pic": "graphics/object_events/pics/people/cm_n.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_n.gbapal"
+  },
+  "Nanu": {
+   "stem": "nanu",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_NANU",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_nanu.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_nanu.gbapal"
+  },
+  "Nate": {
+   "stem": "nate",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_NATE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_nate.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_nate.gbapal"
+  },
+  "Nemona": {
+   "stem": "nemona",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_NEMONA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_nemona.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_nemona.gbapal"
+  },
+  "Nessa": {
+   "stem": "nessa",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_NESSA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_nessa.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_nessa.gbapal"
+  },
+  "Noland": {
+   "stem": "noland",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_NOLAND",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_noland.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_noland.gbapal"
+  },
+  "Norman": {
+   "stem": "norman",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_NORMAN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_norman.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_norman.gbapal"
+  },
+  "Oak": {
+   "stem": "oak",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_OAK",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_oak.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_oak.gbapal"
+  },
+  "Olivia": {
+   "stem": "olivia",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_OLIVIA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_olivia.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_olivia.gbapal"
+  },
+  "Palmer": {
+   "stem": "palmer",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_PALMER",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_palmer.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_palmer.gbapal"
+  },
+  "Penny": {
+   "stem": "penny",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_PENNY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_penny.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_penny.gbapal"
+  },
+  "Phoebe": {
+   "stem": "phoebe",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_PHOEBE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_phoebe.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_phoebe.gbapal"
+  },
+  "Poppy": {
+   "stem": "poppy",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_POPPY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_poppy.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_poppy.gbapal"
+  },
+  "Pryce": {
+   "stem": "pryce",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_PRYCE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_pryce.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_pryce.gbapal"
+  },
+  "Raihan": {
+   "stem": "raihan",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_RAIHAN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_raihan.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_raihan.gbapal"
+  },
+  "Ramos": {
+   "stem": "ramos",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_RAMOS",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_ramos.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_ramos.gbapal"
+  },
+  "Rika": {
+   "stem": "rika",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_RIKA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_rika.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_rika.gbapal"
+  },
+  "Roark": {
+   "stem": "roark",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ROARK",
+   "rowe_pic": "graphics/object_events/pics/people/cm_roark.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_roark.gbapal"
+  },
+  "Rowan": {
+   "stem": "rowan",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ROWAN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_rowan.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_rowan.gbapal"
+  },
+  "Roxanne": {
+   "stem": "roxanne",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ROXANNE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_roxanne.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_roxanne.gbapal"
+  },
+  "Roxie": {
+   "stem": "roxie",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ROXIE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_roxie.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_roxie.gbapal"
+  },
+  "Ryme": {
+   "stem": "ryme",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_RYME",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_ryme.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_ryme.gbapal"
+  },
+  "Sabrina": {
+   "stem": "sabrina",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_SABRINA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_sabrina.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_sabrina.gbapal"
+  },
+  "Saturn": {
+   "stem": "saturn",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_SATURN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_saturn.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_saturn.gbapal"
+  },
+  "Selene": {
+   "stem": "selene",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_SELENE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_selene.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_selene.gbapal"
+  },
+  "Serena": {
+   "stem": "serena",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_SERENA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_serena.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_serena.gbapal"
+  },
+  "Shauna": {
+   "stem": "shauna",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_SHAUNA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_shauna.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_shauna.gbapal"
+  },
+  "Shauntal": {
+   "stem": "shauntal",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_SHAUNTAL",
+   "rowe_pic": "graphics/object_events/pics/people/cm_shauntal.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_shauntal.gbapal"
+  },
+  "Sidney": {
+   "stem": "sidney",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_SIDNEY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_sidney.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_sidney.gbapal"
+  },
+  "Siebold": {
+   "stem": "siebold",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_SIEBOLD",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_siebold.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_siebold.gbapal"
+  },
+  "Silver": {
+   "stem": "silver",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_SILVER",
+   "rowe_pic": "graphics/object_events/pics/people/cm_silver.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_silver.gbapal"
+  },
+  "Skyla": {
+   "stem": "skyla",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_SKYLA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_skyla.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_skyla.gbapal"
+  },
+  "Sophocles": {
+   "stem": "sophocles",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_SOPHOCLES",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_sophocles.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_sophocles.gbapal"
+  },
+  "Spenser": {
+   "stem": "spenser",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_SPENSER",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_spenser.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_spenser.gbapal"
+  },
+  "Steven": {
+   "stem": "steven",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_STEVEN",
+   "rowe_pic": "graphics/object_events/pics/people/cm_steven.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_steven.gbapal"
+  },
+  "Tate": {
+   "stem": "tate",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_TATE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_tate.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_tate.gbapal"
+  },
+  "Tucker": {
+   "stem": "tucker",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_TUCKER",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_tucker.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_tucker.gbapal"
+  },
+  "Tulip": {
+   "stem": "tulip",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_TULIP",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_tulip.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_tulip.gbapal"
+  },
+  "Valerie": {
+   "stem": "valerie",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_VALERIE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_valerie.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_valerie.gbapal"
+  },
+  "Volkner": {
+   "stem": "volkner",
+   "width": 32,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_VOLKNER",
+   "rowe_pic": "graphics/object_events/pics/people/cm_volkner.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_volkner.gbapal"
+  },
+  "Wallace": {
+   "stem": "wallace",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_WALLACE",
+   "rowe_pic": "graphics/object_events/pics/people/cm_wallace.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_wallace.gbapal"
+  },
+  "Wally": {
+   "stem": "wally",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_WALLY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_wally.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_wally.gbapal"
+  },
+  "Wattson": {
+   "stem": "wattson",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_WATTSON",
+   "rowe_pic": "graphics/object_events/pics/people/cm_wattson.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_wattson.gbapal"
+  },
+  "Whitney": {
+   "stem": "whitney",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_WHITNEY",
+   "rowe_pic": "graphics/object_events/pics/people/cm_whitney.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_whitney.gbapal"
+  },
+  "Wikstrom": {
+   "stem": "wikstrom",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_WIKSTROM",
+   "rowe_pic": "graphics/object_events/pics/people/cm_donor_wikstrom.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_donor_wikstrom.gbapal"
+  },
+  "Will": {
+   "stem": "will",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_WILL",
+   "rowe_pic": "graphics/object_events/pics/people/cm_will.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_will.gbapal"
+  },
+  "Winona": {
+   "stem": "winona",
+   "width": 16,
+   "height": 32,
+   "rowe_gfx_id": "OBJ_EVENT_GFX_CM_WINONA",
+   "rowe_pic": "graphics/object_events/pics/people/cm_winona.4bpp",
+   "rowe_palette": "graphics/object_events/pics/people/cm_winona.gbapal"
+  }
+ }
+}

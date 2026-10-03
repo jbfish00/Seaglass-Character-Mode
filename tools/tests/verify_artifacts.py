@@ -40,6 +40,8 @@ import unicodedata
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'character_mode'))
+import seaglass_ow_player as owp  # noqa: E402
 from cm_tally import assert_tally  # noqa: E402
 
 HERE = Path(__file__).parent
@@ -249,7 +251,7 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 155  # +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
+EXPECT_CHECKS = 163  # +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
 # 147: +7: [22] the PC second guard (2026-09-29)
 # was 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
                      # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
@@ -404,6 +406,15 @@ def main():
                 PC_TAIL_SPACING + pc_hook.TAIL_LEN),
                (pc_hook.SITES[0][1], len(pc_hook.SITES[0][2])),
                (pc_hook.SITES[1][1], len(pc_hook.SITES[1][2]))]
+    # overworld sprite (2026-10-03): the hook unit, the planner's data (replayed
+    # against the base ROM; [24] checks the CONTENT against the source art),
+    # the 12 palette-table literals and the 8-byte entry trampoline.
+    _ow_code_len = len((ROOT / "build" / "ow_sprite.bin").read_bytes())
+    _OW = owp.build(bytes(orig), json.loads(owp.CHAR_MANIFEST.read_text())["characters"])
+    windows += [(owp.OW_CODE_ADDR & 0x01FFFFFF, _ow_code_len)]
+    windows += [(_o, len(_b)) for _o, _b in _OW[0]]
+    windows += [(_o, 4) for _o, _old, _new in _OW[1]]
+    windows += [(owp.R(owp.GET_INFO), 8)]
     give_sites = [i for i in range(len(orig))
                   if orig[i - 1] == 0x23 and orig[i:i + 4] == struct.pack("<I", GIVE_NATIVE)]
     windows += [(s, 4) for s in give_sites]
@@ -586,8 +597,20 @@ def main():
         after = gi + len(give_idiom)
         ok(patched[after] == 0x23, "a callnative follows the give")
         sweep = struct.unpack_from("<I", patched, after + 1)[0]
-        ok((sweep & 1) == 1 and SHIM_ADDR <= (sweep & ~1) < SHIM_ADDR + 0x2000,
-           f"it points into the shim ({sweep:#x})")
+        # Since 2026-10-03 that callnative is src/ow_sprite.c's
+        # CM_SweepThenRefresh, which calls the sweep and then refreshes the
+        # player's sprite. The sweep is the ONE shim routine its compiled code
+        # carries; everything below keeps checking against that.
+        _wo = (sweep & ~1) - 0x08000000
+        _wcode = bytes(patched[_wo:_wo + 0x60])
+        _wl = {struct.unpack_from("<I", _wcode, k)[0] for k in range(0, len(_wcode) - 3, 4)}
+        _shim_l = sorted(v for v in _wl if (v & 1) and SHIM_ADDR <= (v & ~1) < SHIM_ADDR + 0x2000)
+        ok((sweep & 1) == 1
+           and owp.OW_CODE_ADDR <= (sweep & ~1) < owp.OW_CODE_ADDR + owp.OW_CODE_MAX
+           and len(_shim_l) == 1,
+           f"it is the overworld wrapper, which carries exactly one shim routine: "
+           f"the sweep ({sweep:#x} -> {[hex(v) for v in _shim_l]})")
+        sweep = _shim_l[0] if len(_shim_l) == 1 else sweep
         ok(sweep != cm_native_give,
            "and it is NOT the give hook again")
         ok(patched[after + 5:after + 7] == bytes([0x6B, 0x02]),
@@ -1403,6 +1426,81 @@ def main():
     ok(struct.unpack_from("<HH", patched, _lr - 4) == (0x4720, 0x46C0)
        and struct.unpack_from("<H", patched, _lr)[0] == 0x1C01,
        "WILD_RET_LABEL is the veneer's return label (bx r4; nop | mov r1, r0)")
+
+    print("[24] overworld sprite (2026-10-03)")
+    # Expected art from sprites/ow_player/ and the BASE ROM, not the planner's
+    # output: a build that wrote the wrong bytes fails here.
+    _R = owp.R
+    _osyms = _elf_syms(ROOT / "build" / "ow_sprite.elf")
+    _hook = _osyms["CM_GetObjectEventGraphicsInfo"]
+    _wrap = _osyms["CM_SweepThenRefresh"]
+    try:
+        owp.check_engine(bytes(orig))
+        _eng = True
+    except AssertionError as _e:
+        _eng = f"{_e}"
+    ok(_eng is True, f"base: GetObjectEventGraphicsInfo, its one table reader, the "
+                     f"avatar table, ObjectEventSetGraphicsId and the 12 palette readers ({_eng})")
+    _gi = _R(owp.GET_INFO)
+    ok(bytes(patched[_gi:_gi + 8]) == struct.pack("<HHI", 0x4B00, 0x4718, _hook | 1),
+       "built: GetObjectEventGraphicsInfo's entry is ldr r3,[pc]; bx r3 -> CM_GetObjectEventGraphicsInfo")
+    _ho = (_hook & ~1) - 0x08000000
+    _hc = bytes(patched[owp.R(owp.OW_CODE_ADDR):owp.R(owp.OW_CODE_ADDR) + 0x100])
+    _hl = {struct.unpack_from("<I", _hc, k)[0] for k in range(0, len(_hc) - 3, 4)}
+    _tab = _OW[2]
+    ok({0xFF060000, (owp.GET_INFO + 8) | 1, 0x0810D35D, 0x0810D0C1, owp.SET_GFX_ID | 1} <= _hl
+       and any(v in _hl for v in (_tab, _tab - 4)),
+       "compiled hook unit carries the replayed literal, the resume address, FlagGet, "
+       "GetVarPointer, ObjectEventSetGraphicsId and the info table")
+    _chars = json.loads(owp.CHAR_MANIFEST.read_text())["characters"]
+    _sheets = owp.sheets()
+    _ptrs = struct.unpack_from(f"<{len(_chars)}I", patched, _R(_tab))
+    _want = [None if c.get("hidden") else "native" if c["character"] in owp.NATIVE
+             else "sheet" if c["character"] in _sheets else None for c in _chars]
+    ok(all((p != 0) == (k is not None) for p, k in zip(_ptrs, _want))
+       and all(p == owp.info_ptr(orig, owp.NATIVE[c["character"]])
+               for p, k, c in zip(_ptrs, _want, _chars) if k == "native"),
+       f"built: the info table gives every offered character with art an info, and no one else "
+       f"({sum(1 for p in _ptrs if p)} infos)")
+    _prefs = {struct.unpack_from("<I", patched, _R(r))[0] for r in owp.PAL_TABLE_REFS}
+    _pt = _R(next(iter(_prefs)))
+    _bpt = bytes(orig[_R(owp.PAL_TABLE):_R(owp.PAL_TABLE) + owp.PAL_TABLE_ENTRIES * 8])
+    _pals, _i = {}, 0
+    while struct.unpack_from("<IH", patched, _pt + 8 * _i)[1] != owp.PAL_TAG_NONE and _i < 400:
+        _pp, _tt = struct.unpack_from("<IH", patched, _pt + 8 * _i)
+        _pals[_tt] = _pp
+        _i += 1
+    ok(len(_prefs) == 1 and bytes(patched[_pt:_pt + len(_bpt)]) == _bpt
+       and struct.unpack_from("<H", patched, _pt + 8 * _i + 4)[0] == owp.PAL_TAG_NONE,
+       "built: all 12 palette readers share one copy that starts with the base table verbatim")
+    _bad = []
+    for p, k, c in zip(_ptrs, _want, _chars):
+        if k != "sheet" or p == 0:      # a missing info is the table check's to report
+            continue
+        e = _sheets[c["character"]]
+        fb = e["width"] * e["height"] // 2
+        gfx = (owp.SHEETS / f"{e['stem']}.4bpp").read_bytes()
+        pal = (owp.SHEETS / f"{e['stem']}.gbapal").read_bytes()
+        tag, refl, size, w, h = struct.unpack_from("<HHHhh", patched, _R(p) + 2)
+        oam, sub, anims, imgs = struct.unpack_from("<IIII", patched, _R(p) + 0x10)
+        good = ((w, h, size) == (e["width"], e["height"], fb) and anims == owp.PLAYER_ANIMS
+                and (oam, sub) == owp.OAM_SUB[(w, h)] and refl == tag and tag in _pals
+                and bytes(patched[_R(_pals[tag]):_R(_pals[tag]) + 32]) == pal)
+        for f in range(18):
+            d, sz = struct.unpack_from("<IH", patched, _R(imgs) + 8 * f)
+            good = good and sz == fb and bytes(patched[_R(d):_R(d) + fb]) == gfx[f * fb:(f + 1) * fb]
+        if not good:
+            _bad.append(c["character"])
+    ok(not _bad, f"built: every sheet character's info draws its own sheet, palette and the "
+                 f"player anims ({', '.join(_bad[:4])})")
+    _it = _R(owp.INFO_TABLE)
+    ok(bytes(patched[_it:_it + 298 * 4]) == bytes(orig[_it:_it + 298 * 4]),
+       "built: gObjectEventGraphicsInfoPointers is untouched (no NPC or opponent sprite)")
+    _wo = (_wrap & ~1) - 0x08000000
+    _wc = bytes(patched[_wo:_wo + 0x60])
+    _wl = {struct.unpack_from("<I", _wc, k)[0] for k in range(0, len(_wc) - 3, 4)}
+    ok({sweep, owp.SET_GFX_ID | 1, 0x0200564C} <= _wl,
+       "compiled CM_SweepThenRefresh carries the sweep, ObjectEventSetGraphicsId and gObjectEvents")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     if assert_tally(_p + _f, EXPECT_CHECKS, "verify_artifacts"):
