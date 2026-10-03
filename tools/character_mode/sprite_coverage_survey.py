@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
-"""Lazarus Phase 3 sprite-coverage survey: cross-reference the final
-179-character manifest against ROWE's sprite_report.txt (same methodology
+"""Seaglass sprite-coverage survey: cross-reference the final
+character manifest against ROWE's sprite_report.txt (same methodology
 as RadicalRed-Character-Mode/docs/SPRITE_COVERAGE.md)."""
 import json, re, sys
 
 MANIFEST = "/home/jbfish00/Documents/Character Hacks/Seaglass-Character-Mode/tools/character_mode/characters_manifest.json"
 REPORT = "/home/jbfish00/Documents/Pokemon Rowe Alteration/tools/character_mode/sprite_report.txt"
 
-chars = [c["character"] for c in json.load(open(MANIFEST))["characters"]]
-gens = {c["character"]: c["generation"] for c in json.load(open(MANIFEST))["characters"]}
-assert len(chars) == 170, len(chars)
+manifest = json.load(open(MANIFEST))
+chars = [c["character"] for c in manifest["characters"]]
+gens = {c["character"]: c["generation"] for c in manifest["characters"]}
+# The count comes from the manifest's own header, never a literal (a literal
+# went stale twice). The list and the header are written separately, so this
+# still catches a truncated or padded character list.
+assert len(chars) == manifest["record_count"], (len(chars), manifest["record_count"])
+assert manifest["selectable_count"] + manifest["hidden_count"] == manifest["record_count"], manifest
 
 report = {}
 for line in open(REPORT):

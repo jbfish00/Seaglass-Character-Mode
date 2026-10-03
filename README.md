@@ -300,9 +300,9 @@ saves still load correctly; they simply cannot be chosen.
 
 ## Notes & limitations
 
-- **Sprites**: 156 of the 193 characters (114 selectable + hidden slots) have a
+- **Sprites**: 164 of the 193 characters (96 of the 114 selectable) have a
   64x64 portrait that draws beside the confirmation message when you select
-  them — see "How to turn Character Mode on" above. The remaining 37 (no GBA-
+  them — see "How to turn Character Mode on" above. The remaining 29 (no GBA-
   style art exists for them, mostly 3D-era Gen 6–9 characters and a few anime
   cast members) show the confirmation text with no portrait. This is a
   character-select portrait only — the player's own overworld and battle
