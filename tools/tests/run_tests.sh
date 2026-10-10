@@ -42,7 +42,7 @@ grep -q "HARNESS RESULT: PASS" /tmp/sg_boot.log && echo "  PASS boot smoke" \
     || { echo "  FAIL boot smoke (see /tmp/sg_boot.log)"; exit 1; }
 
 echo
-echo "=== Layer 4a: catch gate ON (char 1 Red blocks Zigzagoon -> PC) ==="
+echo "=== Layer 4a: catch gate ON (char 1 Red: Zigzagoon is uncatchable) ==="
 timeout 100 env CM_EXPECT_CHECKS=1 CM_ON=1 CM_CHAR=1 "$MGBA" --script tools/mgba_scripts/cm_catch_test.lua \
     -t tools/savestates/battle_menu2.ss "$ROM" > /tmp/sg_gate_on.log 2>&1 || true
 grep -q "HARNESS RESULT: PASS" /tmp/sg_gate_on.log && echo "  PASS catch gate ON" \
@@ -470,7 +470,7 @@ python3 tools/tests/reusable_tm_negative_test.py || { echo "  FAIL reusable TM n
 echo
 echo "=== Layer 10: 100% catch for on-roster species (2026-10-09) ==="
 # Wild Zigzagoon at FULL HP, one Poke Ball. Norman (51) has it on his roster,
-# Red (1) does not. The odds the game decides on are read at the bhi after the
+# Red (1) does not: his ball is refused. The odds are read at the bhi after the
 # hooked compare. A copy of the ROM with the compare restored must FAIL "sure".
 sure_case() {   # name rom cm char seed expect
     timeout 150 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=2 CM_ON=$3 CM_CHAR=$4 SEED=$5 EXPECT=$6 \
@@ -482,8 +482,8 @@ for seed in 1 2 3 4; do
     sure_case on$seed "$ROM" 1 51 $seed sure && echo "  PASS on-roster caught at full HP (seed $seed)" \
         || { echo "  FAIL on-roster sure catch, seed $seed (see /tmp/sg_sure_on$seed.log)"; exit 1; }
 done
-sure_case offroster "$ROM" 1 1 1 vanilla && echo "  PASS off-roster keeps vanilla odds" \
-    || { echo "  FAIL off-roster odds (see /tmp/sg_sure_offroster.log)"; exit 1; }
+sure_case offroster "$ROM" 1 1 1 dodged && echo "  PASS off-roster (Red): the ball is refused, uncatchable" \
+    || { echo "  FAIL off-roster refusal (see /tmp/sg_sure_offroster.log)"; exit 1; }
 sure_case cmoff "$ROM" 0 51 2 miss && echo "  PASS CM off: vanilla odds, seed 2 breaks out" \
     || { echo "  FAIL CM off control (see /tmp/sg_sure_cmoff.log)"; exit 1; }
 python3 - "$ROM" /tmp/sg_nosure.gba <<'PY'

@@ -254,7 +254,7 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 176  # +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
+EXPECT_CHECKS = 177  # +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
 # 147: +7: [22] the PC second guard (2026-09-29)
 # was 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
                      # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
@@ -1566,12 +1566,21 @@ def main():
     ok(bytes(patched[_cv:_cv + 8]) == struct.pack("<HHI", 0x4B00, 0x4718, _stub | 1),
        f"built: the veneer is ldr r3,[pc]; bx r3 -> CM_CatchOddsStub {_stub | 1:#x}")
     _so = (_stub & ~1) - 0x08000000
-    _sh = struct.unpack_from("<10H", patched, _so)
+    _sh = struct.unpack_from("<12H", patched, _so)
     ok(_sh[0] == 0xB500 and _sh[1] == 0x4648 and decode_bl(patched, _so + 4) == (_fn & ~1)
-       and _sh[4] == 0x4681 and _sh[5] == 0x1C03 and _sh[6] == 0x2BFE
-       and _sh[7] == 0xBC02 and _sh[8] == 0x4708,
+       and _sh[4] == 0xBC02 and _sh[5] == 0x1C42 and _sh[6] == 0xD003
+       and _sh[7] == 0x4681 and _sh[8] == 0x1C03 and _sh[9] == 0x2BFE and _sh[10] == 0x4708
+       and _sh[11] == 0x4901 and struct.unpack_from("<I", patched, _so + 28)[0] == 0x080A6187,
        "built: the stub passes r9 to CM_CatchOdds, writes the result back to r9/r3 and "
-       "redoes `cmp r3,#254` before returning")
+       "redoes `cmp r3,#254` before returning; CATCH_BLOCKED exits via the epilogue 0x080A6186")
+    _fc2 = bytes(patched[(_fn & ~1) - 0x08000000:_so])
+    _fl2 = {struct.unpack_from("<I", _fc2, k)[0] for k in range(0, len(_fc2) - 3, 4)}
+    _dsc = [v for v in _fl2 if 0x08000000 <= v < 0x0A000000
+            and bytes(patched[v - 0x08000000:v - 0x08000000 + 10]) == bytes.fromhex("12300010050112300 0f6".replace(" ", ""))]
+    ok({0x080646B1, 0x080BB495, 0x02000508, 0x02000510} <= _fl2 and len(_dsc) == 1,
+       "built: an off-roster target is refused: CM_CatchOdds calls EmitBallThrowAnim and "
+       "MarkBattlerForControllerExec for gBattlerAttacker and sets gBattlescriptCurrInstr to a "
+       "script printing string 0x105 (\"It dodged the thrown BALL!\")")
     _fo = (_fn & ~1) - 0x08000000
     _fc = bytes(patched[_fo:(_stub & ~1) - 0x08000000])   # the function and its pool
     _fl = {struct.unpack_from("<I", _fc, k)[0] for k in range(0, len(_fc) - 3, 4)}

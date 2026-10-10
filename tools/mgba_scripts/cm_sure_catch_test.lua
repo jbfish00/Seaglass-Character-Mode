@@ -8,6 +8,8 @@
 --                     (caught on the first throw at full HP)
 --   EXPECT=vanilla -> odds below 255 at full HP (the Poke Ball's own maths);
 --                     the throw's outcome is left to chance and not asserted
+--   EXPECT=dodged  -> off-roster with CM on: the stub sends the ball into the
+--                     ghost-dodge script before the decision; never caught
 --   EXPECT=miss    -> as vanilla, and the throw fails (party stays 1): with
 --                     SEED=2 the vanilla roll breaks out, the same seed the
 --                     sure runs catch with -- so the guarantee is the hook's
@@ -22,6 +24,7 @@ local DECISION = 0x080A6288           -- bhi after `cmp r3,#254`
 local CM_ON = os.getenv("CM_ON") == "1"
 local EXPECT = os.getenv("EXPECT") or "sure"
 local SEED = tonumber(os.getenv("SEED") or "1")
+local SHOT = os.getenv("CM_SHOT_PREFIX")
 local odds = nil
 
 H.breakpoint("odds decision", DECISION, function()
@@ -53,12 +56,16 @@ H.onFrame(function(f)
     end
     if f==1720 then H.press(K.A, 12, 40) end        -- throw
     if f>1900 and f<4200 and f%80==0 then H.press(K.B, 8, 30) end   -- B: no nickname prompt
+    if SHOT and f >= 1700 and f <= 3100 and f % 40 == 0 then emu:screenshot(SHOT .. "_" .. f .. ".png") end
     if f==4400 then
         local n = emu:read8(PARTY_COUNT)
         H.log(string.format("odds at the decision=%s partyCount=%d", tostring(odds), n))
         if EXPECT == "sure" then
             H.assertEq("odds at the caught/shake decision", odds, 255)
             H.assertEq("caught on the first throw at full HP (party 1 -> 2)", n, 2)
+        elseif EXPECT == "dodged" then
+            H.assertTrue("the ball never reaches the odds decision (dodged: off-roster is uncatchable)", odds == nil)
+            H.assertEq("not caught (party stays 1)", n, 1)
         elseif EXPECT == "miss" then
             H.assertTrue("odds are the Poke Ball's own (below 255 at full HP)", odds ~= nil and odds < 255)
             H.assertEq("this seed's vanilla roll breaks out (party stays 1)", n, 1)

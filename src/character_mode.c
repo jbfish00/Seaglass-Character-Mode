@@ -448,6 +448,28 @@ void CM_BattleStringGated(const u8 *src, u8 *dst)
 #define gEnemyParty          ((u8 *)            0x02019E78)
 #define CATCH_ODDS_SURE      255
 
+/* Off-roster species are UNCATCHABLE (user, 2026-10-09: "you should only be
+ * able to catch pokemon on the roster"). Until now the throw went ahead and the
+ * acquisition gate sent the mon to the PC. With Character Mode on, an
+ * off-roster target is refused the way the engine refuses a trainer's Pokemon:
+ * the ball bounces off (BALL_BLOCK_ANIM), then a battle script that prints
+ * string 0x105, "It dodged the thrown BALL! This POKEMON can't be caught!"
+ * (the trainer-block script's waitmessage/printstring/finishaction, with the
+ * dodge id), and Cmd_handleballthrow returns through its own epilogue
+ * (0x080a6186). CM_CatchOdds returns CATCH_BLOCKED for that; the stub exits. */
+#define EmitBallThrowAnim     ((void (*)(u32, u32, u32)) 0x080646b1)
+#define MarkBattlerForControllerExec ((void (*)(u32)) 0x080bb495)
+#define gBattlerAttacker      (*(volatile u8 *) 0x02000508)
+#define gBattlescriptCurrInstr (*(const u8 * volatile *) 0x02000510)
+#define BALL_BLOCK_ANIM       5   /* the ball bounces off; 6 (ghost dodge) draws a capture here */
+#define CATCH_BLOCKED         0xFFFFFFFFu
+static const u8 sCatchDodgeScript[] = {
+    0x12, 0x30, 0x00,     /* waitmessage 0x30 */
+    0x10, 0x05, 0x01,     /* printstring 0x105: "It dodged the thrown BALL!..." */
+    0x12, 0x30, 0x00,     /* waitmessage 0x30 */
+    0xF6,                 /* finishaction */
+};
+
 __attribute__((noinline, used)) u32 CM_CatchOdds(u32 odds)
 {
     if (gateActive()) {
@@ -455,9 +477,14 @@ __attribute__((noinline, used)) u32 CM_CatchOdds(u32 odds)
         u32 species = GetMonData(mon, MON_DATA_SPECIES, 0);
         /* onRoster() says "allowed" for an out-of-model species so it never
            blocks; a guarantee needs a real one. */
-        if (species != 0 && species < NUM_SPECIES
-            && onRoster(*GetVarPointer(VAR_CM_CHAR), species))
-            return CATCH_ODDS_SURE;
+        if (species != 0 && species < NUM_SPECIES) {
+            if (onRoster(*GetVarPointer(VAR_CM_CHAR), species))
+                return CATCH_ODDS_SURE;
+            EmitBallThrowAnim(gBattlerAttacker, 0, BALL_BLOCK_ANIM);
+            MarkBattlerForControllerExec(gBattlerAttacker);
+            gBattlescriptCurrInstr = sCatchDodgeScript;
+            return CATCH_BLOCKED;
+        }
     }
     return odds;
 }
@@ -468,11 +495,18 @@ __attribute__((naked)) void CM_CatchOddsStub(void)
         "push {lr}\n\t"
         "mov r0, r9\n\t"
         "bl CM_CatchOdds\n\t"
+        "pop {r1}\n\t"
+        "add r2, r0, #1\n\t"    /* CATCH_BLOCKED (-1): leave through the epilogue */
+        "beq 2f\n\t"
         "mov r9, r0\n\t"
         "mov r3, r0\n\t"
-        "cmp r3, #254\n\t"      /* the replaced compare; pop/bx keep the flags */
-        "pop {r1}\n\t"
-        "bx r1\n\t");
+        "cmp r3, #254\n\t"      /* the replaced compare; bx keeps the flags */
+        "bx r1\n\t"
+        "2:\n\t"
+        "ldr r1, 3f\n\t"
+        "bx r1\n\t"
+        ".align 2\n"
+        "3: .word 0x080a6187\n\t");   /* Cmd_handleballthrow's epilogue */
 }
 
 /* --- 3. acquisition gate --- */

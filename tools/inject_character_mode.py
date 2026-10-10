@@ -435,7 +435,10 @@ def build_scripts(cm):
     All internal pointers are resolved to absolute ROM addresses."""
     # text
     t_prompt  = enc_text("Enter a Character Mode code?", cm)
-    t_on      = enc_text("Character Mode is now active!\nOff-roster catches go to the PC.", cm)
+    # Same length as the old line (32 chars, trailing space): the entry blob is
+    # pinned at 305 B by naming_open.ss. Off-roster species are uncatchable
+    # since 2026-10-09 (they used to be sent to the PC).
+    t_on      = enc_text("Character Mode is now active!\nOnly roster Pokémon are caught. ", cm)
     t_off     = enc_text("Character Mode is now off.", cm)
     t_invalid = enc_text("That code is not valid.", cm)
 
