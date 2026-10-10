@@ -57,14 +57,14 @@ grep -q "HARNESS RESULT: PASS" /tmp/sg_gate_off.log && echo "  PASS catch gate O
 
 echo
 echo "=== Layer 4c: real-UI activation e2e (type RED at the CODE screen) ==="
-timeout 120 env CM_EXPECT_CHECKS=10 CM_CODE=RED CM_EXPECT_CHAR=1 "$MGBA" --script tools/mgba_scripts/cm_ui_activate.lua \
+timeout 120 env CM_EXPECT_CHECKS=13 CM_CODE=RED CM_EXPECT_CHAR=1 "$MGBA" --script tools/mgba_scripts/cm_ui_activate.lua \
     -t tools/savestates/naming_open.ss "$ROM" > /tmp/sg_ui_red.log 2>&1 || true
 grep -q "HARNESS RESULT: PASS" /tmp/sg_ui_red.log && echo "  PASS activation (RED -> char 1 + starter)" \
     || { echo "  FAIL activation RED (see /tmp/sg_ui_red.log)"; exit 1; }
 
 echo
 echo "=== Layer 4d: activation discrimination (MISTY -> char 10) ==="
-timeout 120 env CM_EXPECT_CHECKS=10 CM_CODE=MISTY CM_EXPECT_CHAR=10 "$MGBA" --script tools/mgba_scripts/cm_ui_activate.lua \
+timeout 120 env CM_EXPECT_CHECKS=13 CM_CODE=MISTY CM_EXPECT_CHAR=10 "$MGBA" --script tools/mgba_scripts/cm_ui_activate.lua \
     -t tools/savestates/naming_open.ss "$ROM" > /tmp/sg_ui_misty.log 2>&1 || true
 grep -q "HARNESS RESULT: PASS" /tmp/sg_ui_misty.log && echo "  PASS activation (MISTY -> char 10 + starter)" \
     || { echo "  FAIL activation MISTY (see /tmp/sg_ui_misty.log)"; exit 1; }
@@ -452,6 +452,49 @@ echo "=== Layer 8: overworld sprite follows the character (2026-10-03) ==="
 # four directions outside the mart; Seaglass's own May; CM off; and a copy with
 # the GetObjectEventGraphicsInfo trampoline removed, which must FAIL.
 bash tools/tests/run_ow_sprite_test.sh || { echo "  FAIL overworld sprite layer"; exit 1; }
+
+echo
+echo "=== Layer 9: reusable TMs (2026-10-09) ==="
+# Teach TM06 through the real bag UI. The built ROM keeps it; the BASE ROM must
+# consume it (the control that proves the driver really taught).
+tm_case() {
+    timeout 120 env CM_EXPECT_CHECKS=2 EXPECT=$2 "$MGBA" --script tools/mgba_scripts/cm_tm_reuse_test.lua \
+        -t tools/savestates/have_starter.ss "$1" > /tmp/sg_tm_$2.log 2>&1 || true
+    grep -q "HARNESS RESULT: PASS" /tmp/sg_tm_$2.log && echo "  PASS TM reuse ($2)" \
+        || { echo "  FAIL TM reuse ($2) (see /tmp/sg_tm_$2.log)"; grep -a "HARNESS.*FAIL" /tmp/sg_tm_$2.log; exit 1; }
+}
+tm_case "$ROM" keep
+tm_case "rom/seaglass v3.0.gba" consumed
+python3 tools/tests/reusable_tm_negative_test.py || { echo "  FAIL reusable TM negative test"; exit 1; }
+
+echo
+echo "=== Layer 10: 100% catch for on-roster species (2026-10-09) ==="
+# Wild Zigzagoon at FULL HP, one Poke Ball. Norman (51) has it on his roster,
+# Red (1) does not. The odds the game decides on are read at the bhi after the
+# hooked compare. A copy of the ROM with the compare restored must FAIL "sure".
+sure_case() {   # name rom cm char seed expect
+    timeout 150 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=2 CM_ON=$3 CM_CHAR=$4 SEED=$5 EXPECT=$6 \
+        "$MGBA" --script tools/mgba_scripts/cm_sure_catch_test.lua \
+        -t tools/savestates/battle_menu2.ss "$2" > /tmp/sg_sure_$1.log 2>&1 || true
+    grep -q "HARNESS RESULT: PASS" /tmp/sg_sure_$1.log
+}
+for seed in 1 2 3 4; do
+    sure_case on$seed "$ROM" 1 51 $seed sure && echo "  PASS on-roster caught at full HP (seed $seed)" \
+        || { echo "  FAIL on-roster sure catch, seed $seed (see /tmp/sg_sure_on$seed.log)"; exit 1; }
+done
+sure_case offroster "$ROM" 1 1 1 vanilla && echo "  PASS off-roster keeps vanilla odds" \
+    || { echo "  FAIL off-roster odds (see /tmp/sg_sure_offroster.log)"; exit 1; }
+sure_case cmoff "$ROM" 0 51 2 miss && echo "  PASS CM off: vanilla odds, seed 2 breaks out" \
+    || { echo "  FAIL CM off control (see /tmp/sg_sure_cmoff.log)"; exit 1; }
+python3 - "$ROM" /tmp/sg_nosure.gba <<'PY'
+import sys
+d = bytearray(open(sys.argv[1], "rb").read())
+d[0x0A6284:0x0A6288] = bytes.fromhex("4b46fe2b")   # the base ROM's mov r3,r9 ; cmp r3,#254
+open(sys.argv[2], "wb").write(d)
+PY
+sure_case nohook /tmp/sg_nosure.gba 1 51 2 sure && { echo "  FAIL negative control: the no-hook ROM passed 'sure'"; exit 1; } \
+    || echo "  PASS negative control: the no-hook ROM fails 'sure' (want FAIL)"
+python3 tools/tests/sure_catch_negative_test.py || { echo "  FAIL sure-catch negative test"; exit 1; }
 
 echo
 echo "ALL AUTOMATED LAYERS GREEN (incl. real-UI activation + in-situ trade e2e + wild override + live egg hatch + live PC exit)."

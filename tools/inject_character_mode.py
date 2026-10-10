@@ -164,6 +164,14 @@ TRAMPOLINE_BLOCK_ORIG = bytes.fromhex("00b50a4b1b781b0600201b16012b03d1074b1b780
 TRAMPOLINE_ADDR        = TRAMPOLINE_BLOCK + 8     # catch + gift gate
 MARKER_TRAMPOLINE_ADDR = TRAMPOLINE_BLOCK + 16    # encounter marker (1.24 MB from its hook)
 WILD_STUB_ADDR         = TRAMPOLINE_BLOCK + 24    # wild entry stub (the BL target)
+# 100% catch for on-roster species (2026-10-09). The dead function runs past
+# the 36 B above: its tail (b, nop) and literal pool reach 0x081C3467, and
+# nothing outside it points or pc-loads into 0x081C3454..0x081C3467
+# (verify_artifacts [26]). The veneer takes 0x081C3458..0x081C345F.
+CATCH_VENEER_ADDR = 0x081C3458
+CATCH_VENEER_ORIG = bytes.fromhex("f6e7c04674a10102")
+CATCH_ODDS_SITE   = 0x0A6284          # Cmd_handleballthrow: mov r3,r9 ; cmp r3,#254
+CATCH_ODDS_ORIG   = bytes.fromhex("4b46fe2b")
 WILD_TRAMPOLINE_ADDR   = 0x08FA8000               # the wild veneer (src/wild_trampoline.c)
 OLD_SPRITE_FRAME       = (0x08470200, 0x40)       # must stay byte-identical to the base
 # The BL inside BufferStringBattle that every intro string funnels through:
@@ -271,6 +279,15 @@ PRE_ROSTER_SCRIPT_LEN = 305
 
 GIVE_NATIVE   = 0x081F2175         # callnative give fn (49 inline script ptrs)
 GIVE_NATIVE_COUNT = 49
+
+# Reusable TMs (2026-10-09). gItemsInfo records are 84 B with the name inline at
+# +0; ITEM_NAME_BASE is item 1's (Poke Ball's) name. The importance bitfield byte
+# is name+0x2C (HM01-08 carry 0x01 there, TM01-100 0x00; Lazarus's TMs 0x01).
+ITEM_NAME_BASE = 0x0867E7D0
+ITEM_STRIDE = 84
+ITEM_IMPORTANCE_OFF = 0x2C
+TM_FIRST_ID = 582        # TM01; TM100 = 681, contiguous
+TM_COUNT = 100
 
 # Wild-encounter species/level roll override (task #5). Found live via
 # mgba-headless breakpoint tracing (docs/ROUTINE_MAP.md): the BL at this ROM
@@ -602,7 +619,8 @@ def main():
     syms = {m.group(2): int(m.group(1), 16)
             for m in re.finditer(r"^([0-9a-f]+) [Tt] (\w+)$", sym_out, re.M)}
     for need in ("CM_OpenCodeEntry", "CM_MatchCode", "CM_GiveMonToPlayerGated",
-                 "CM_NativeGiveGated", "CM_TradeCheck", "CM_WildMonSpeciesGated"):
+                 "CM_NativeGiveGated", "CM_TradeCheck", "CM_WildMonSpeciesGated",
+                 "CM_CatchOddsStub", "CM_CatchOdds"):
         assert need in syms, f"missing symbol {need}"
     assert len(shim) <= BITMAPS_ADDR - SHIM_ADDR, f"shim too big: {len(shim)}"
     print(f"shim: {len(shim)} bytes @ {SHIM_ADDR:#x}")
@@ -1108,6 +1126,19 @@ def main():
     print(f"PC second guard: {len(PSS_GUARD_BL_SITES)} deposit/move/release sites + "
           f"CanShiftMon -> {hook_pss_guard:#x} via {PSS_GUARD_TRAMPOLINE_ADDR:#x}")
 
+    # --- 100% catch for on-roster species (src/character_mode.c CM_CatchOddsStub) ---
+    _cv = CATCH_VENEER_ADDR - 0x08000000
+    assert bytes(data[_cv:_cv + 8]) == CATCH_VENEER_ORIG, (
+        "the dead function's tail is not at %#x" % CATCH_VENEER_ADDR)
+    assert CATCH_VENEER_ADDR % 4 == 0
+    data[_cv:_cv + 8] = struct.pack("<HHI", 0x4B00, 0x4718, syms["CM_CatchOddsStub"] | 1)
+    assert bytes(data[CATCH_ODDS_SITE:CATCH_ODDS_SITE + 4]) == CATCH_ODDS_ORIG, (
+        "Cmd_handleballthrow's odds compare is not at %#x" % CATCH_ODDS_SITE)
+    data[CATCH_ODDS_SITE:CATCH_ODDS_SITE + 4] = thumb_bl(0x08000000 + CATCH_ODDS_SITE,
+                                                         CATCH_VENEER_ADDR)
+    print(f"100% roster catch: odds compare @ {0x08000000 + CATCH_ODDS_SITE:#x} -> veneer "
+          f"{CATCH_VENEER_ADDR:#x} -> {syms['CM_CatchOddsStub']:#x}")
+
     # --- patches (verify-then-write) ---
     for site in (BL_SITE_CATCH, BL_SITE_GIFT):
         cur = bytes(data[site:site + 4])
@@ -1211,6 +1242,24 @@ def main():
     data[_gi:_gi + 8] = struct.pack("<HHI", 0x4B00, 0x4718, hook_ow_info)
     print(f"overworld sprite: GetObjectEventGraphicsInfo @ {owp.GET_INFO:#x} -> "
           f"{hook_ow_info:#x}; {len(ow_patches)} palette-table literals repointed")
+
+    # --- reusable TMs (user, 2026-10-09: every hack, CM on or off) ---
+    # Seaglass's engine already has the mechanism: the teach path's
+    # Task_LearnedMove removes the TM only when !GetItemImportance(item)
+    # (pokeemerald-expansion's I_REUSABLE_TMS just sets .importance = 1 on
+    # every TM). Seaglass shipped with I_REUSABLE_TMS off, so TM06 x36 went to
+    # x35 when taught (measured live 2026-10-09); Lazarus, same engine, ships
+    # it on. The fix is data only: set importance bit 0 on the 100 TM records.
+    # HMs already carry it. Side effects are expansion's own for important
+    # items (no quantity shown, can't toss or sell), as in Lazarus.
+    for k in range(TM_COUNT):
+        o = ITEM_NAME_BASE - 0x08000000 + (TM_FIRST_ID - 1 + k) * ITEM_STRIDE
+        want = enc_text("TM%02d" % (k + 1), cm)
+        assert bytes(data[o:o + len(want)]) == want, f"item {TM_FIRST_ID + k} is not TM{k + 1:02d}"
+        b = o + ITEM_IMPORTANCE_OFF
+        assert data[b] & 0x03 == 0, f"TM{k + 1:02d} importance byte {data[b]:#x}"
+        data[b] |= 0x01
+    print(f"reusable TMs: importance set on items {TM_FIRST_ID}-{TM_FIRST_ID + TM_COUNT - 1}")
 
     # --- outputs ---
     out_rom = BUILD / "seaglass_cm.gba"

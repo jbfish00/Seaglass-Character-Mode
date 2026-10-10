@@ -138,6 +138,9 @@ WILD_BL_SITE = 0x22BF36
 PSS_COUNT_ALIVE_EXCEPT = 0x081BADEC
 PSS_GUARD_BL_SITES = (0x1BC576, 0x1BC62C, 0x1BCB04, 0x1BCB3C, 0x1BCB6E)
 PSS_CANSHIFT_BL = 0x1C352C
+# 100% catch for on-roster species ([26], 2026-10-09; injector CATCH_*). Restated.
+CATCH_ODDS_SITE = 0x0A6284           # Cmd_handleballthrow: mov r3,r9 ; cmp r3,#254 ; bhi
+CATCH_VENEER_ADDR = 0x081C3458       # the dead IsRemovingLastPartyMon's tail
 PSS_CANSHIFT_TAIL = 0x1C3530
 PSS_GUARD_TRAMPOLINE_ADDR = TRAMPOLINE_BLOCK   # +0 of the block
 PSS_SPECIAL_ANCHOR = 0x88   # CountPartyAliveNonEggMons_IgnoreVar0x8004Slot
@@ -251,7 +254,7 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 163  # +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
+EXPECT_CHECKS = 176  # +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
 # 147: +7: [22] the PC second guard (2026-09-29)
 # was 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
                      # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
@@ -269,6 +272,25 @@ def _pre_entry_target(rom, ptr):
     if rom[o:o + 5] != bytes([0x2B, 0xB0, 0x02, 0x06, 0x00]):
         return None
     return struct.unpack_from("<I", rom, o + 5)[0]
+
+
+def _tm_importance_bytes(orig):
+    """Offsets of the importance byte of every TM record, found from the BASE
+    ROM's own item names (no injector constants): TM01's inline name, the
+    stride from TM02, then TM03..TM100 must sit on that stride. Importance is
+    name+0x2C, the byte HM01-08 carry as 0x01 in the base ROM."""
+    def enc(t):
+        return bytes(0xBB + ord(c) - 65 if c.isupper() else 0xA1 + ord(c) - 48 for c in t) + b"\xff"
+    t1 = orig.find(enc("TM01"))
+    t2 = orig.find(enc("TM02"), t1)
+    stride = t2 - t1
+    names = []
+    for k in range(1, 101):
+        o = t1 + (k - 1) * stride
+        names.append(o if bytes(orig[o:o + 5 + (k == 100)]) == enc("TM%02d" % k) else None)
+    h1 = t1 + 100 * stride
+    hms = [h1 + j * stride for j in range(8)]
+    return stride, names, hms
 
 
 def ok(cond, msg):
@@ -419,6 +441,10 @@ def main():
                   if orig[i - 1] == 0x23 and orig[i:i + 4] == struct.pack("<I", GIVE_NATIVE)]
     windows += [(s, 4) for s in give_sites]
     windows += [(j, 5) for j in TRADE_JUNCTIONS]
+    # 100% roster catch ([26]): the 4-byte compare and the 8-byte veneer
+    windows += [(CATCH_ODDS_SITE, 4), (CATCH_VENEER_ADDR - 0x08000000, 8)]
+    # reusable TMs (2026-10-09): one importance byte per TM record ([25])
+    windows += [(o + 0x2C, 1) for o in _tm_importance_bytes(orig)[1] if o is not None]
     def allowed(b):
         return any(w <= b < w + n for w, n in windows)
     bad = [b for b in range(len(orig)) if orig[b] != patched[b] and not allowed(b)]
@@ -1501,6 +1527,79 @@ def main():
     _wl = {struct.unpack_from("<I", _wc, k)[0] for k in range(0, len(_wc) - 3, 4)}
     ok({sweep, owp.SET_GFX_ID | 1, 0x0200564C} <= _wl,
        "compiled CM_SweepThenRefresh carries the sweep, ObjectEventSetGraphicsId and gObjectEvents")
+
+    print("[25] reusable TMs (2026-10-09)")
+    _tstride, _tms, _hms = _tm_importance_bytes(orig)
+    ok(_tstride == 84 and all(o is not None for o in _tms),
+       f"base ROM: TM01-TM100 are 100 item records on one {_tstride}-byte stride")
+    ok(all(orig[o + 0x2C] & 3 == 0 for o in _tms if o is not None)
+       and all(orig[h + 0x2C] & 3 == 1 for h in _hms),
+       "base ROM: every TM has importance 0 (consumed when taught), every HM importance 1")
+    ok(all(patched[o + 0x2C] == (orig[o + 0x2C] | 1) for o in _tms if o is not None),
+       "built: every TM01-TM100 record has importance 1 (Task_LearnedMove keeps it), "
+       "other bits untouched")
+    ok(all(patched[h + 0x2C] == orig[h + 0x2C] for h in _hms)
+       and sum(1 for o in _tms if o is not None for b in range(o, o + 84)
+               if patched[b] != orig[b]) == 100,
+       "built: exactly 100 bytes changed across the TM records, HMs untouched")
+
+    print("[26] 100% catch for on-roster species (2026-10-09)")
+    ok(bytes(orig[CATCH_ODDS_SITE:CATCH_ODDS_SITE + 4]) == bytes.fromhex("4b46fe2b")
+       and orig[CATCH_ODDS_SITE + 5] == 0xD8,
+       "base: Cmd_handleballthrow's `mov r3,r9 ; cmp r3,#254 ; bhi <caught>` is at the site")
+    _lo, _hi = 0x081C3454, 0x081C3468
+    _into = [i for i in range(0, len(orig) - 3, 4)
+             if _lo <= struct.unpack_from("<I", orig, i)[0] <= _hi]
+    _ldrs = []
+    for _a in range(_lo - 1024, _hi, 2):
+        _h = struct.unpack_from("<H", orig, _a - 0x08000000)[0]
+        if _h >> 11 == 0b01001 and not (TRAMPOLINE_BLOCK <= _a < _hi):
+            if _lo <= ((_a + 4) & ~3) + (_h & 0xFF) * 4 < _hi:
+                _ldrs.append(_a)
+    ok(not _into and not _ldrs and not bl_callers(orig, CATCH_VENEER_ADDR),
+       "base: nothing points, BLs or pc-loads into the dead function's tail 0x081C3454..67")
+    ok(decode_bl(patched, CATCH_ODDS_SITE) == CATCH_VENEER_ADDR,
+       "built: the odds compare is a BL to the catch veneer")
+    _cs = _elf_syms("cm.elf")
+    _stub, _fn = _cs["CM_CatchOddsStub"], _cs["CM_CatchOdds"]
+    _cv = CATCH_VENEER_ADDR - 0x08000000
+    ok(bytes(patched[_cv:_cv + 8]) == struct.pack("<HHI", 0x4B00, 0x4718, _stub | 1),
+       f"built: the veneer is ldr r3,[pc]; bx r3 -> CM_CatchOddsStub {_stub | 1:#x}")
+    _so = (_stub & ~1) - 0x08000000
+    _sh = struct.unpack_from("<10H", patched, _so)
+    ok(_sh[0] == 0xB500 and _sh[1] == 0x4648 and decode_bl(patched, _so + 4) == (_fn & ~1)
+       and _sh[4] == 0x4681 and _sh[5] == 0x1C03 and _sh[6] == 0x2BFE
+       and _sh[7] == 0xBC02 and _sh[8] == 0x4708,
+       "built: the stub passes r9 to CM_CatchOdds, writes the result back to r9/r3 and "
+       "redoes `cmp r3,#254` before returning")
+    _fo = (_fn & ~1) - 0x08000000
+    _fc = bytes(patched[_fo:(_stub & ~1) - 0x08000000])   # the function and its pool
+    _fl = {struct.unpack_from("<I", _fc, k)[0] for k in range(0, len(_fc) - 3, 4)}
+    ok({0x02000509, 0x02000348, 0x02019E78, 0x081A94AD} <= _fl
+       and any(struct.unpack_from("<H", _fc, k)[0] == 0x20FF for k in range(0, len(_fc), 2)),
+       "built: CM_CatchOdds reads gBattlerTarget, gBattlerPartyIndexes, gEnemyParty via "
+       "GetMonData and returns 255")
+
+    print("[27] early party-wide Exp. Share (2026-10-09)")
+    ok(bytes(orig[0x0D00D0:0x0D00DC]) == bytes.fromhex("00b52020") + orig[0x0D00D4:0x0D00D8]
+       + bytes.fromhex("02bc0847") and decode_bl(orig, 0x0D00D4) == 0x0810D35C
+       and all(decode_bl(orig, x - 0x08000000) == 0x080D00D0
+               for x in (0x08093F50, 0x0809417E, 0x08094402)),
+       "base: Cmd_getexp's three share tests call 0x080D00D0 = `return FlagGet(0x20)`")
+    ok(bytes(orig[0x26EADE:0x26EAE1]) == bytes([0x29, 0x20, 0x00])
+       and bytes(orig[0x26EAD2:0x26EAD7]) == bytes.fromhex("1a0080cd01"),
+       "base: Mr. Stone's gift script gives item 461 then `setflag 0x20`")
+    _cs2 = _elf_syms("cm.elf")
+    _mc = (_cs2["CM_MatchCode"] & ~1) - 0x08000000
+    _mcode = bytes(patched[_mc:_mc + 0x200])
+    _mlits = {struct.unpack_from("<I", _mcode, k)[0] for k in range(0, len(_mcode) - 3, 4)}
+    ok({0x0814D089, 0x0814D2D1} <= _mlits or (
+        any(decode_bl(patched, _mc + k) for k in range(0, 0x1F0, 2))
+        and {0x0814D089, 0x0814D2D1} <= {struct.unpack_from("<I", patched, (_cs2[n] & ~1) - 0x08000000 + k)[0]
+                                          for n in _cs2 for k in range(0, 0x40, 4)
+                                          if n.startswith("grantExpShare")}),
+       "built: CM_MatchCode (or its grantExpShare) carries CheckBagHasItem 0x0814D088 and "
+       "AddBagItem 0x0814D2D0")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     if assert_tally(_p + _f, EXPECT_CHECKS, "verify_artifacts"):

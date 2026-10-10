@@ -298,6 +298,27 @@ static const u8 sDbgOff[CODE_LEN]   = {0xBD,0xC7,0xBE,0xBC,0xC1,0xC9,0xC0,0xC0,0
 static const u8 sDbgGive1[CODE_LEN] = {0xBD,0xC7,0xBE,0xBC,0xC1,0xC1,0xC3,0xD0,0xBF,0xA2,0xFF};
 static const u8 sDbgGive2[CODE_LEN] = {0xBD,0xC7,0xBE,0xBC,0xC1,0xC1,0xC3,0xD0,0xBF,0xA3,0xFF};
 
+/* --- early party-wide Exp. Share (user, 2026-10-09) ---
+ * Seaglass's battle engine already gives every party member a share when flag
+ * 0x20 is set: Cmd_getexp's three Exp. Share tests call 0x080D00D0, which is
+ * exactly `return FlagGet(0x20)` (expansion's IsGen6ExpShareEnabled). The game
+ * sets it only in Mr. Stone's gift script (setflag 0x20 at 0x0826EADE, right
+ * after the Exp. Share giveitem), mid-game. Activation now does the same, at
+ * the start: switch it on and, if the bag has no Exp. Share (item 461), add one.
+ * The item itself is the Gen 5 held item here (its field use is "Dad's
+ * advice"), so the flag is what makes it party-wide. */
+#define FLAG_EXP_SHARE_PARTY 0x20
+#define ITEM_EXP_SHARE       461
+#define CheckBagHasItem ((u8 (*)(u16, u16)) 0x0814D089)
+#define AddBagItem      ((u8 (*)(u16, u16)) 0x0814D2D1)
+
+static void grantExpShare(void)
+{
+    FlagSet(FLAG_EXP_SHARE_PARTY);
+    if (!CheckBagHasItem(ITEM_EXP_SHARE, 1))
+        AddBagItem(ITEM_EXP_SHARE, 1);
+}
+
 void CM_MatchCode(void *ctx)
 {
     u16 i;
@@ -329,6 +350,7 @@ void CM_MatchCode(void *ctx)
             *GetVarPointer(VAR_CM_CHAR) = i + 1;
             FlagSet(FLAG_CHARACTER_MODE);
             *GetVarPointer(VAR_CM_STARTER) = sStarters[i];
+            grantExpShare();
             *result = 1;             /* script: confirm + give starter */
             return;
         }
@@ -401,6 +423,56 @@ void CM_BattleStringGated(const u8 *src, u8 *dst)
                                 + (u32) (charId - 1) * MARKER_STRIDE);
     }
     OrigExpandString(src, dst);
+}
+
+/* --- 100%% catch for on-roster species (user, 2026-10-09) ---
+ * Cmd_handleballthrow (inlined odds, older expansion) decides at 0x080A6284:
+ *     mov r3, r9 ; cmp r3, #254 ; bhi <caught>      (r9 = capture odds)
+ * That `mov ; cmp` pair is replaced by a BL to an 8-byte veneer (the dead tail
+ * of IsRemovingLastPartyMon, 0x081C3458) that jumps to CM_CatchOddsStub. With
+ * Character Mode on and the target's species on the active roster the odds
+ * become 255, so the game's own `bhi` takes its caught path (three shakes,
+ * "Gotcha!"); otherwise the odds are untouched. The stub redoes the compare
+ * itself so the flags the `bhi` reads are the real ones.
+ *
+ * The species is read from the party Pokemon (gEnemyParty[gBattlerPartyIndexes
+ * [gBattlerTarget]]), not gBattleMons[]: Transform overwrites the battle
+ * species, and a Ditto copying an on-roster lead must not be guaranteed
+ * (Platinum, 2026-10-08). Off-roster species keep their odds, and the
+ * acquisition gate below still routes them to the PC. Addresses are the
+ * literals Cmd_handleballthrow itself loads (0x080A64D0, 0x080A64FC,
+ * 0x080A6500). Registers: at the site r0-r3 and r12 are dead (both successor
+ * paths reload them), so the C call may clobber them. */
+#define gBattlerTarget       (*(volatile u8 *)  0x02000509)
+#define gBattlerPartyIndexes ((volatile u16 *)  0x02000348)
+#define gEnemyParty          ((u8 *)            0x02019E78)
+#define CATCH_ODDS_SURE      255
+
+__attribute__((noinline, used)) u32 CM_CatchOdds(u32 odds)
+{
+    if (gateActive()) {
+        u8 *mon = gEnemyParty + gBattlerPartyIndexes[gBattlerTarget] * MON_SIZE;
+        u32 species = GetMonData(mon, MON_DATA_SPECIES, 0);
+        /* onRoster() says "allowed" for an out-of-model species so it never
+           blocks; a guarantee needs a real one. */
+        if (species != 0 && species < NUM_SPECIES
+            && onRoster(*GetVarPointer(VAR_CM_CHAR), species))
+            return CATCH_ODDS_SURE;
+    }
+    return odds;
+}
+
+__attribute__((naked)) void CM_CatchOddsStub(void)
+{
+    __asm__ volatile(
+        "push {lr}\n\t"
+        "mov r0, r9\n\t"
+        "bl CM_CatchOdds\n\t"
+        "mov r9, r0\n\t"
+        "mov r3, r0\n\t"
+        "cmp r3, #254\n\t"      /* the replaced compare; pop/bx keep the flags */
+        "pop {r1}\n\t"
+        "bx r1\n\t");
 }
 
 /* --- 3. acquisition gate --- */

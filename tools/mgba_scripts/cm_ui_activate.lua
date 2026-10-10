@@ -108,6 +108,7 @@ H.onFrame(function(f)
         -- replaces it, so this value is what makes the swap observable --
         -- see the activate branch below.
         before.slot0 = H.rd32(H.gPlayerParty)
+        before.expFlag = H.getFlag(0x20)
         before.pc1 = H.rd32(H.rd32(H.gPokemonStoragePtr) + PC_SLOT1)
         H.log(("before: party=%d flag=%d char=%d slot0=%08x pc1=%08x"):format(
             before.party, before.flag, H.getVar(VAR_CHAR), before.slot0,
@@ -188,6 +189,19 @@ H.onFrame(function(f)
             H.assertTrue("confirm message was sampled", mugSampled)
             H.assertEq("mugshot drawn during the confirm message", mugSeen, 1)
             H.assertEq("mugshot torn down afterwards", countMugshot(), 0)
+            -- Early party-wide Exp. Share (2026-10-09): activation sets flag
+            -- 0x20 (what Cmd_getexp's share test reads) and puts an Exp. Share
+            -- (item 461, Key Items) in the bag. The fixture starts with neither.
+            local hasExpShare = false
+            for p = 0, 4 do
+                local slots, cap = H.rd32(H.BAG_POCKETS + 8 * p), H.rd8(H.BAG_POCKETS + 8 * p + 4)
+                for i = 0, cap - 1 do
+                    if H.rd16(slots + 4 * i) == 461 then hasExpShare = true; H.log("Exp. Share in pocket " .. p) end
+                end
+            end
+            H.assertEq("the fixture starts with the party-wide Exp. Share off", before.expFlag, 0)
+            H.assertEq("party-wide Exp. Share switched on (flag 0x20)", H.getFlag(0x20), 1)
+            H.assertTrue("an Exp. Share is in the bag (item 461)", hasExpShare)
         end
         H.finish()
     end
