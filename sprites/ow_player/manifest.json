@@ -1,7 +1,7 @@
 {
  "source": "ROWE (Pokemon Rowe Alteration) built overworld sheets; per-sheet donor credits are ROWE's tools/character_mode/donor_ow_backs.txt and imported_ow.txt, and this repo's CREDITS.md",
  "frames": 18,
- "count": 154,
+ "count": 185,
  "characters": {
   "Aaron": {
    "stem": "aaron",
@@ -26,6 +26,12 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_AGATHA",
    "rowe_pic": "graphics/object_events/pics/people/cm_agatha.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_agatha.gbapal"
+  },
+  "Alain": {
+   "stem": "gen_alain",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   },
   "Allister": {
    "stem": "allister",
@@ -163,6 +169,12 @@
    "rowe_pic": "graphics/object_events/pics/people/cm_brawly.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_brawly.gbapal"
   },
+  "Brendan": {
+   "stem": "gen_brendan",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
   "Brock": {
    "stem": "brock",
    "width": 16,
@@ -235,6 +247,12 @@
    "rowe_pic": "graphics/object_events/pics/people/cm_candice.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_candice.gbapal"
   },
+  "Cerise": {
+   "stem": "gen_cerise",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
   "Cheren": {
    "stem": "cheren",
    "width": 32,
@@ -250,6 +268,12 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CHILI",
    "rowe_pic": "graphics/object_events/pics/people/cm_chili.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_chili.gbapal"
+  },
+  "Chloe": {
+   "stem": "gen_chloe",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   },
   "Chuck": {
    "stem": "chuck",
@@ -282,6 +306,12 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CLAY",
    "rowe_pic": "graphics/object_events/pics/people/cm_clay.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_clay.gbapal"
+  },
+  "Clemont": {
+   "stem": "gen_clemont",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   },
   "Colress": {
    "stem": "colress",
@@ -322,6 +352,18 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_CYRUS",
    "rowe_pic": "graphics/object_events/pics/people/cm_cyrus.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_cyrus.gbapal"
+  },
+  "Dahlia": {
+   "stem": "gen_dahlia",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
+  "Darach": {
+   "stem": "gen_darach",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   },
   "Dawn": {
    "stem": "dawn",
@@ -467,6 +509,12 @@
    "rowe_pic": "graphics/object_events/pics/people/cm_donor_gladion.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_donor_gladion.gbapal"
   },
+  "Goh": {
+   "stem": "gen_goh",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
   "Greta": {
    "stem": "greta",
    "width": 16,
@@ -490,6 +538,12 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_GRUSHA",
    "rowe_pic": "graphics/object_events/pics/people/cm_donor_grusha.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_donor_grusha.gbapal"
+  },
+  "Guzma": {
+   "stem": "gen_guzma",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   },
   "Hala": {
    "stem": "hala",
@@ -522,6 +576,12 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_HAU",
    "rowe_pic": "graphics/object_events/pics/people/cm_donor_hau.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_donor_hau.gbapal"
+  },
+  "Hilbert": {
+   "stem": "gen_hilbert",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   },
   "Hop": {
    "stem": "hop",
@@ -595,6 +655,12 @@
    "rowe_pic": "graphics/object_events/pics/people/cm_juan.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_juan.gbapal"
   },
+  "Juniper": {
+   "stem": "gen_juniper",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
   "Jupiter": {
    "stem": "jupiter",
    "width": 32,
@@ -634,6 +700,12 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_KATY",
    "rowe_pic": "graphics/object_events/pics/people/cm_donor_katy.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_donor_katy.gbapal"
+  },
+  "Kiawe (anime)": {
+   "stem": "gen_kiawe_anime",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   },
   "Kofu": {
    "stem": "kofu",
@@ -675,6 +747,12 @@
    "rowe_pic": "graphics/object_events/pics/people/cm_donor_kukui.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_donor_kukui.gbapal"
   },
+  "Lana (anime)": {
+   "stem": "gen_lana_anime",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
   "Lance": {
    "stem": "lance",
    "width": 16,
@@ -691,6 +769,18 @@
    "rowe_pic": "graphics/object_events/pics/people/cm_donor_larry.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_donor_larry.gbapal"
   },
+  "Laventon": {
+   "stem": "gen_laventon",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
+  "Leaf": {
+   "stem": "gen_leaf",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
   "Lenora": {
    "stem": "lenora",
    "width": 32,
@@ -706,6 +796,12 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_LEON",
    "rowe_pic": "graphics/object_events/pics/people/cm_donor_leon.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_donor_leon.gbapal"
+  },
+  "Lillie (anime)": {
+   "stem": "gen_lillie_anime",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   },
   "Liza": {
    "stem": "liza",
@@ -771,6 +867,18 @@
    "rowe_pic": "graphics/object_events/pics/people/cm_donor_lyra.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_donor_lyra.gbapal"
   },
+  "Lysandre": {
+   "stem": "gen_lysandre",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
+  "Mallow (anime)": {
+   "stem": "gen_mallow_anime",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
   "Malva": {
    "stem": "malva",
    "width": 16,
@@ -819,6 +927,12 @@
    "rowe_pic": "graphics/object_events/pics/people/cm_maxie.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_maxie.gbapal"
   },
+  "May": {
+   "stem": "gen_may",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
   "Maylene": {
    "stem": "maylene",
    "width": 32,
@@ -866,6 +980,12 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_N",
    "rowe_pic": "graphics/object_events/pics/people/cm_n.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_n.gbapal"
+  },
+  "Nando": {
+   "stem": "gen_nando",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   },
   "Nanu": {
    "stem": "nanu",
@@ -939,6 +1059,12 @@
    "rowe_pic": "graphics/object_events/pics/people/cm_donor_palmer.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_donor_palmer.gbapal"
   },
+  "Paul": {
+   "stem": "gen_paul",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
   "Penny": {
    "stem": "penny",
    "width": 16,
@@ -954,6 +1080,12 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_PHOEBE",
    "rowe_pic": "graphics/object_events/pics/people/cm_phoebe.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_phoebe.gbapal"
+  },
+  "Plumeria": {
+   "stem": "gen_plumeria",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   },
   "Poppy": {
    "stem": "poppy",
@@ -987,6 +1119,12 @@
    "rowe_pic": "graphics/object_events/pics/people/cm_donor_ramos.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_donor_ramos.gbapal"
   },
+  "Red": {
+   "stem": "gen_red",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
   "Rika": {
    "stem": "rika",
    "width": 16,
@@ -995,6 +1133,12 @@
    "rowe_pic": "graphics/object_events/pics/people/cm_donor_rika.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_donor_rika.gbapal"
   },
+  "Ritchie": {
+   "stem": "gen_ritchie",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
   "Roark": {
    "stem": "roark",
    "width": 32,
@@ -1002,6 +1146,12 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_ROARK",
    "rowe_pic": "graphics/object_events/pics/people/cm_roark.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_roark.gbapal"
+  },
+  "Rose": {
+   "stem": "gen_rose",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   },
   "Rowan": {
    "stem": "rowan",
@@ -1043,6 +1193,12 @@
    "rowe_pic": "graphics/object_events/pics/people/cm_sabrina.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_sabrina.gbapal"
   },
+  "Samson Oak": {
+   "stem": "gen_samson_oak",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
   "Saturn": {
    "stem": "saturn",
    "width": 32,
@@ -1050,6 +1206,12 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_SATURN",
    "rowe_pic": "graphics/object_events/pics/people/cm_saturn.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_saturn.gbapal"
+  },
+  "Sawyer": {
+   "stem": "gen_sawyer",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   },
   "Selene": {
    "stem": "selene",
@@ -1139,6 +1301,12 @@
    "rowe_pic": "graphics/object_events/pics/people/cm_steven.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_steven.gbapal"
   },
+  "Sycamore": {
+   "stem": "gen_sycamore",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
+  },
   "Tate": {
    "stem": "tate",
    "width": 16,
@@ -1146,6 +1314,12 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_TATE",
    "rowe_pic": "graphics/object_events/pics/people/cm_tate.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_tate.gbapal"
+  },
+  "Tobias": {
+   "stem": "gen_tobias",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   },
   "Tucker": {
    "stem": "tucker",
@@ -1178,6 +1352,12 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_VOLKNER",
    "rowe_pic": "graphics/object_events/pics/people/cm_volkner.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_volkner.gbapal"
+  },
+  "Volo": {
+   "stem": "gen_volo",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   },
   "Wallace": {
    "stem": "wallace",
@@ -1234,6 +1414,12 @@
    "rowe_gfx_id": "OBJ_EVENT_GFX_CM_WINONA",
    "rowe_pic": "graphics/object_events/pics/people/cm_winona.4bpp",
    "rowe_palette": "graphics/object_events/pics/people/cm_winona.gbapal"
+  },
+  "Zoey": {
+   "stem": "gen_zoey",
+   "width": 16,
+   "height": 32,
+   "origin": "generated"
   }
  }
 }

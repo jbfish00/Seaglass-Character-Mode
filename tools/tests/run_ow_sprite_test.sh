@@ -13,6 +13,8 @@
 #   LUCAS  32x32 sheet with real run frames (sideways running is the case that
 #          showed RR a running player's back)
 #   MAY    Seaglass's own May sprite on a male player (images table asserted)
+#   PAUL   GENERATED 16x32 sheet (2026-10-10, ../game_plans/ow_generated)
+#   DAHLIA GENERATED 16x32 sheet, the last offered character in the manifest
 #   ZZZ    refused code: the player stays stock
 # and a NEGATIVE CONTROL: a copy with GetObjectEventGraphicsInfo's entry put
 # back, typing MISTY, which must FAIL.
@@ -50,6 +52,8 @@ run misty Misty MISTY on 12 "$ROM" PASS
 run kris  Kris  KRIS  on 12 "$ROM" PASS
 run lucas Lucas LUCAS on 12 "$ROM" PASS
 run may   May   MAY   on 3  "$ROM" PASS
+run paul  Paul  PAUL  on 12 "$ROM" PASS
+run dahlia Dahlia DAHLIA on 12 "$ROM" PASS
 run off   Misty ZZZ   off 3 "$ROM" PASS
 run NEGATIVE_CONTROL_no_hook Misty MISTY on 12 "$NEG" FAIL
 exit $fail

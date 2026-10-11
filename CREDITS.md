@@ -228,3 +228,15 @@ and Lucy; overworld sheets of Lusamine, Gladion, Lillie and Lucy. Byte-identical
 to Emerald Enhanced's own files. Used with the permission of Enhanced Projects,
 whose README asks for it ("We rarely decline such requests, we just need to know
 who is using what").
+
+## Generated overworld sheets (2026-10-10, `sprites/ow_player/gen_*`)
+
+Made in the Character Hacks workspace (`game_plans/ow_generated/`) for characters with no
+player-grade sheet. Most are base edits (recoloured and reshaped) of Gen 3 sheets already shipped
+here; Red, Leaf, Brendan, May and Gary come from the official player graphics. Outside art used:
+- **Alain**: "Pokemon Trainer Alain in Gen. 3 Style" by RichardPT (DeviantArt), sprite credited
+  to Derlo (Pokemon Stone Dragon 2).
+- **Tobias** and **Sawyer**: downscaled from vitorluiscolnago's "TOBIAS" and "SAWYER" sheets (DeviantArt).
+- **Lysandre**: resampled from PizzaSun's "Lysandre Gen IV Pokemon Sprite Sheet" (DeviantArt; base Zender1752).
+- **Ritchie, Paul, Zoey, Nando**: the standing-south frame is Pokesho's field frame.
+Pokemon Showdown trainer sprites, Zender1752 and ShiningStar5022 fan sprites were references only.
