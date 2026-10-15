@@ -4,7 +4,7 @@ An optional add-on patch for **Pokemon Emerald Seaglass v3.0** (by Nemo622)
 that adds **Character Mode**: pick one iconic Pokemon character and play
 restricted to *their* canonical roster — you can only keep Pokemon from that
 character's Bulbapedia-documented team (full evolution families included).
-Anything off-roster you catch, are gifted, or trade for is automatically sent
+Off-roster wild Pokémon can't be caught at all; anything off-roster you are gifted or trade for is automatically sent
 to your PC instead of your party.
 
 This is a fan project distributed **only as a patch**. You must supply your own
@@ -81,8 +81,8 @@ will fail or corrupt.
 Only your character's roster can enter your party.
 
 ### How enforcement works
-- **Catching** an off-roster Pokemon: it goes straight to your PC, not your
-  party.
+- **Catching** an off-roster Pokemon is impossible: the ball bounces off with no shakes.
+  On-roster Pokemon are caught every time.
 - **Gift Pokemon** (story/NPC gifts): off-roster gifts go to the PC — *unless*
   it would be your very first Pokemon (e.g. you activated Character Mode from
   the bedroom device before ever getting a starter). In that one case the
@@ -107,6 +107,16 @@ Only your character's roster can enter your party.
   spot, the moment you confirm the code. You will never be left with zero
   Pokemon — if everything in your party would otherwise be swept, one
   off-roster mon is left behind rather than emptying your party entirely.
+
+## Quality-of-life rules (added 2026-10)
+
+While Character Mode is on:
+- **Every on-roster Pokémon is caught at 100%**, with any ball. **Off-roster wild Pokémon cannot be caught at all**
+  (the ball is dodged or bounces off with no shakes). Gifts, eggs and trades keep their PC routing.
+- **TMs are reusable.** Fixed in the game data.
+- **Exp. Share, party-wide.** Given at activation (flag `0x20` plus item 461) and shared by the whole party.
+- **HMs** are already badge-only in Seaglass, so any party Pokémon can use them.
+- **Overworld sprite**: you walk and run as your character (all 114 offered characters, including Seaglass's own Brendan and May).
 
 ## Seeing your roster in-game
 
