@@ -254,7 +254,7 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 177  # +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
+EXPECT_CHECKS = 180  # +3: [28] free tutors + egg relearner (2026-10-17); +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
 # 147: +7: [22] the PC second guard (2026-09-29)
 # was 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
                      # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
@@ -445,6 +445,18 @@ def main():
     windows += [(CATCH_ODDS_SITE, 4), (CATCH_VENEER_ADDR - 0x08000000, 8)]
     # reusable TMs (2026-10-09): one importance byte per TM record ([25])
     windows += [(o + 0x2C, 1) for o in _tm_importance_bytes(orig)[1] if o is not None]
+    # QoL free tutors + egg relearner (2026-10-17, [28]): relearner gate / payment / three text pointers + texts,
+    # the 20 Frontier price operands, GetNumberOfRelearnableMoves' entry + veneer, the list-site BL
+    _fg = 0x0829A72B - 0x08000000
+    _pm = re.search(rb"\x21\x04\x80\x00\x00\x06\x01(.{4})(?:\x28\x02\x00)?(\x0f\x00.{4}\x09\x04\x45\x98\x00\x01\x00)",
+                    bytes(orig[_fg:_fg + 0x100]), re.S)
+    windows += [(_fg, 16), (_fg + _pm.start(2), 13), (0x08F1D000 - 0x08000000, 0x100), (0x081AD818 - 0x08000000, 20),
+                (0x0816F4E4 - 0x08000000, 4)]
+    windows += [(i + 2, 4) for i in range(_fg - 0x40, _fg + 0x100) if orig[i] == 0x0F and orig[i + 1] == 0]
+    _bye = struct.unpack_from("<I", orig, _fg + 12)[0] - 0x08000000
+    windows += [(i + 2, 4) for i in range(_bye, _bye + 8) if orig[i] == 0x0F and orig[i + 1] == 0]
+    windows += [(m.start() + 3, 2) for m in re.finditer(rb"\x16\x08\x80..(?:\x16\x05\x80..)?\x05"
+                                                      + re.escape(struct.pack("<I", 0x08301904)), bytes(orig), re.S)]
     def allowed(b):
         return any(w <= b < w + n for w, n in windows)
     bad = [b for b in range(len(orig)) if orig[b] != patched[b] and not allowed(b)]
@@ -1609,6 +1621,24 @@ def main():
                                           if n.startswith("grantExpShare")}),
        "built: CM_MatchCode (or its grantExpShare) carries CheckBagHasItem 0x0814D088 and "
        "AddBagItem 0x0814D2D0")
+
+    print("[28] free move tutors + egg moves in the relearner (QoL 2026-10-17)")
+    _g = 0x0829A72B - 0x08000000
+    ok(patched[_g] == 0x05 and bytes(orig[_g:_g + 5]) == bytes.fromhex("4798000100")
+       and b"\x45\x98\x00\x01\x00" not in bytes(patched[_g:_g + 0x100]),
+       "relearner: Heart Scale gate -> goto, no removeitem HEART_SCALE left (base: both)")
+    _rx = re.compile(rb"\x16\x08\x80(..)(?:\x16\x05\x80..)?\x05" + re.escape(struct.pack("<I", 0x08301904)), re.S)
+    _pr = [struct.unpack("<H", m.group(1))[0] for m in _rx.finditer(bytes(patched))]
+    _pb = sorted({struct.unpack("<H", m.group(1))[0] for m in _rx.finditer(bytes(orig))})
+    ok(len(_pr) == 20 and set(_pr) == {0} and _pb == [16, 24, 48], "20 Battle Frontier tutor prices are 0 BP (base 16/24/48)")
+    _cs3 = _elf_syms("cm.elf")
+    _c = 0x081AD818 - 0x08000000
+    ok(bytes(patched[_c:_c + 4]) == bytes.fromhex("004b1847")
+       and struct.unpack_from("<I", patched, _c + 4)[0] == _cs3["CM_NumRelearnable"] | 1
+       and decode_bl(patched, 0x0816F4E4 - 0x08000000) == 0x081AD818 + 8
+       and struct.unpack_from("<I", patched, _c + 16)[0] == _cs3["CM_RelearnerMoves"] | 1
+       and decode_bl(orig, 0x0816F4E4 - 0x08000000) == 0x081AD6DC,
+       "egg moves: GetNumberOfRelearnableMoves -> CM_NumRelearnable; the list BL -> veneer -> CM_RelearnerMoves")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     if assert_tally(_p + _f, EXPECT_CHECKS, "verify_artifacts"):

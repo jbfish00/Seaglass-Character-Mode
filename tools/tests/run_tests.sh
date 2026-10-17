@@ -136,6 +136,21 @@ echo
 # Three positive runs plus a negative control, and the control is the point:
 # with the splice reverted the same run must FAIL, or the layer is only ever
 # testing that the sweep works when something calls it.
+echo "=== Layer 4r: live relearner egg moves (QoL 2026-10-17; real ChooseMonForMoveRelearner -> VAR_0x8005) ==="
+python3 tools/tests/build_relearn_testrom.py > /tmp/sg_rel_build.log 2>&1 \
+    && python3 tools/tests/build_relearn_testrom.py --control >> /tmp/sg_rel_build.log 2>&1 \
+    || { echo "  FAIL building relearner test ROMs (see /tmp/sg_rel_build.log)"; exit 1; }
+rel_case() {  # tag WANT
+    log=/tmp/sg_rel_$1.log
+    timeout 300 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=2 TAG=$1 WANT=$2 "$MGBA" \
+        --script tools/mgba_scripts/cm_relearn_test.lua -t tools/savestates/mart_inside.ss build/seaglass_cm_$1.gba > "$log" 2>&1 || true
+    grep -q "HARNESS RESULT: PASS" "$log" && echo "  PASS relearner $1 ($(grep -ao 'RELEARN count=[0-9]*' "$log" | tail -1))" \
+        || { echo "  FAIL relearner $1 (see $log)"; grep -a "HARNESS.*FAIL" "$log"; exit 1; }
+}
+rel_case reltest     pos    # shipped hook: the lead's egg moves are relearnable
+rel_case reltest_ctl zero   # CM_NO_EGGRELEARN: the vanilla count
+echo
+
 echo "=== Layer 4h: live egg hatch (giveegg 116 -> real hatch -> shipped sweep) ==="
 python3 tools/tests/build_egg_testrom.py 116 1 > /tmp/sg_egg_build.log 2>&1 \
     || { echo "  FAIL building egg test ROM (see /tmp/sg_egg_build.log)"; exit 1; }

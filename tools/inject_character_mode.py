@@ -41,6 +41,7 @@ Debug codes: CMDBGOFF, CMDBGGIVE1 (on-roster give), CMDBGGIVE2 (off-roster).
 """
 import hashlib
 import json
+import os
 import re
 import struct
 import sys
@@ -472,6 +473,68 @@ def build_scripts(cm):
     t_gift  = enc_text("Gift code", cm)
     return dict(t_prompt=t_prompt, t_on=t_on, t_off=t_off, t_invalid=t_invalid,
                 t_view=t_view, t_code=t_code, t_quest=t_quest, t_gift=t_gift)
+
+
+
+# ---- QoL (user 2026-10-17): move tutors and the move relearner are free -------------------------------------------
+# The Fallarbor relearner (Heart Scale, item 0x98): its gate `checkitem; compare; goto_if` becomes a goto past it, and
+# after a lesson the "handed over" message + removeitem become a goto back to ChooseMon (teach another). Its three
+# Heart Scale texts are repointed to free-wording copies. The 20 Battle Frontier Lounge 7 tutor prices
+# (`setvar VAR_0x8008, price; goto ConfirmMoveSelection`) become 0 BP. CM_NO_FREETUTOR=1 builds the control.
+import re as _re
+
+
+def free_tutors(data, cm, gate, bp_confirm, text_addr):
+    if os.environ.get("CM_NO_FREETUTOR") == "1":
+        return {}
+    o = gate - 0x08000000
+    m = _re.match(rb"\x47\x98\x00\x01\x00\x21\x0d\x80\x00\x00\x06\x01(.{4})", bytes(data[o:o + 16]), _re.S)
+    assert m, "relearner Heart Scale gate not at %08X" % gate
+    bye_lbl = struct.unpack("<I", m.group(1))[0]
+    ask_lw = next(i for i in range(o + 16, o + 24) if data[i] == 0x0F and data[i + 1] == 0)
+    data[o:o + 16] = bytes([0x05]) + struct.pack("<I", ask_lw + 0x08000000) + b"\x00" * 11
+    seg = bytes(data[o:o + 0x100])
+    pm = _re.search(rb"\x21\x04\x80\x00\x00\x06\x01(.{4})(?:\x28\x02\x00)?(\x0f\x00.{4}\x09\x04\x45\x98\x00\x01\x00)", seg, _re.S)
+    assert pm, "relearner payment not found after %08X" % gate
+    p = o + pm.start(2)
+    data[p:p + len(pm.group(2))] = bytes([0x05]) + pm.group(1) + b"\x00" * (len(pm.group(2)) - 5)
+    bl = bye_lbl - 0x08000000
+    bye_lw = next(i for i in range(bl, bl + 8) if data[i] == 0x0F and data[i + 1] == 0)
+    intro_lw = [i for i in range(o - 0x40, o) if data[i] == 0x0F and data[i + 1] == 0][-1]
+    texts = {intro_lw: "I am the MOVE TUTOR.\nI know all the moves that POKéMON\nlearn, and I teach them for free!",
+             ask_lw: "Do you want me to teach a move\nto one of your POKéMON?",
+             bye_lw: "If your POKéMON need to learn a move,\ncome back any time."}
+    t = text_addr
+    for lw, s in texts.items():
+        e = enc_text(s, cm)
+        assert set(data[t - 0x08000000:t - 0x08000000 + len(e)]) == {0xFF}, "free-tutor text space at %08X not blank" % t
+        data[t - 0x08000000:t - 0x08000000 + len(e)] = e
+        data[lw + 2:lw + 6] = struct.pack("<I", t)
+        t = (t + len(e) + 3) & ~3
+    bp = [mm.start() for mm in _re.finditer(rb"\x16\x08\x80..(?:\x16\x05\x80..)?\x05" + _re.escape(struct.pack("<I", bp_confirm)), bytes(data), _re.S)]
+    assert len(bp) == 20, "BP tutor price sites: %d" % len(bp)
+    for b in bp:
+        data[b + 3:b + 5] = b"\x00\x00"
+    return {"relearner": 1, "bp_prices": len(bp)}
+
+def egg_relearner(data, syms, count_fn, list_site, gmrm):
+    """QoL 2026-10-17: GetNumberOfRelearnableMoves -> CM_NumRelearnable at its entry; its dead body holds the veneer the
+    relearner list site (CreateLearnableMovesList's BL to GetMoveRelearnerMoves) now calls: CM_RelearnerMoves."""
+    if os.environ.get("CM_NO_EGGRELEARN") == "1":
+        return False
+    o = count_fn - 0x08000000
+    assert count_fn % 4 == 0 and data[o + 1] == 0xB5, "GetNumberOfRelearnableMoves entry %08X is not a push" % count_fn
+    data[o:o + 8] = struct.pack("<HHI", 0x4B00, 0x4718, syms["CM_NumRelearnable"] | 1)        # ldr r3,[pc]; bx r3
+    v = count_fn + 8
+    data[v - 0x08000000:v - 0x08000000 + 12] = struct.pack("<HHHHI", 0x4B01, 0x4718, 0x46C0, 0x46C0, syms["CM_RelearnerMoves"] | 1)
+    s = list_site - 0x08000000
+    assert bytes(data[s:s + 4]) == thumb_bl(list_site, gmrm), "list site %08X does not BL GetMoveRelearnerMoves" % list_site
+    data[s:s + 4] = thumb_bl(list_site, v)
+    return True
+
+
+EGG_COUNT_FN, EGG_LIST_SITE, EGG_GMRM = 0x081AD818, 0x0816F4E4, 0x081AD6DC   # QoL 2026-10-17 (symmatch vs expansion; see the shim)
+FREE_TUTOR_GATE, FREE_TUTOR_BP_CONFIRM, FREE_TUTOR_TEXT = 0x829a72b, 0x8301904, 0x8f1d000   # QoL 2026-10-17
 
 
 def main():
@@ -1266,6 +1329,9 @@ def main():
 
     # --- outputs ---
     out_rom = BUILD / "seaglass_cm.gba"
+    free = free_tutors(data, cm, FREE_TUTOR_GATE, FREE_TUTOR_BP_CONFIRM, FREE_TUTOR_TEXT)
+    print("free tutors:", free)
+    print("egg moves in the relearner:", egg_relearner(data, syms, EGG_COUNT_FN, EGG_LIST_SITE, EGG_GMRM))
     out_rom.write_bytes(data)
     print(f"wrote {out_rom} sha1={hashlib.sha1(data).hexdigest()}")
     flips = ROOT / "tools" / "bin" / "flips"
