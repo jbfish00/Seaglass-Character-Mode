@@ -115,6 +115,7 @@ While Character Mode is on:
   (the ball is dodged or bounces off with no shakes). Gifts, eggs and trades keep their PC routing.
 - **TMs are reusable.** Fixed in the game data.
 - **Exp. Share, party-wide.** Given at activation (flag `0x20` plus item 461) and shared by the whole party.
+  Not yet given with Character Mode off (ruled 2026-10-21, planned: same new-game grant as Radical Red).
 - **HMs** are already badge-only in Seaglass, so any party Pokémon can use them.
 - **Overworld sprite**: you walk and run as your character (all 114 offered characters, including Seaglass's own Brendan and May).
 
