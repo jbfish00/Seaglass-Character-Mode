@@ -237,6 +237,6 @@ here; Red, Leaf, Brendan, May and Gary come from the official player graphics. O
 - **Alain**: "Pokemon Trainer Alain in Gen. 3 Style" by RichardPT (DeviantArt), sprite credited
   to Derlo (Pokemon Stone Dragon 2).
 - **Tobias** and **Sawyer**: downscaled from vitorluiscolnago's "TOBIAS" and "SAWYER" sheets (DeviantArt).
-- **Lysandre**: resampled from PizzaSun's "Lysandre Gen IV Pokemon Sprite Sheet" (DeviantArt; base Zender1752).
+- **Lysandre**: PizzaSun's "Lysandre Gen IV Pokemon Sprite Sheet" (DeviantArt; base Zender1752) at its original 1x size in a 32x32 sheet; only the palette was reduced to 15 colours (2026-10-21).
 - **Ritchie, Paul, Zoey, Nando**: the standing-south frame is Pokesho's field frame.
 Pokemon Showdown trainer sprites, Zender1752 and ShiningStar5022 fan sprites were references only.
