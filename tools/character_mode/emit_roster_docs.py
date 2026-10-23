@@ -38,8 +38,6 @@ import map_species as M                     # noqa: E402  donor family parser
 from map_species_stage_b import normalize   # noqa: E402
 
 GAME_TITLE = "Pokémon Emerald Seaglass v3.0"
-WIP_NOTE = ("> ⚠️ **Work in progress** — availability in this specific game "
-            "may differ.")
 
 CATEGORY_LABEL = {
     "protagonist": "Protagonist", "rival": "Rival", "gymleader": "Gym Leader",
@@ -342,11 +340,12 @@ def main():
            "roster resolves to, in **National Pokédex order**. Rosters were "
            "researched from Bulbapedia (union of all games, remakes, rematches, "
            "and anime) and cross-checked where possible. Regional/cosmetic forms "
-           "show as their base species. Off-roster Pokémon are routed to your PC.",
+           "show as their base species. Off-roster wild Pokémon cannot be caught; off-roster "
+           "gifts, eggs and trades go to your PC.",
            "", "Only species this ROM actually contains are listed: this hack ships a "
            "**curated dex** (see `docs/SPECIES_CAP.md`), so canon roster members the "
            "binary simply does not have are omitted rather than promised.",
-           "", WIP_NOTE, "", prov_note, "",
+           "", prov_note, "",
            "**%d characters.** Sprite version: `ROSTERS_SPRITES.md`." % len(chars),
            "", generated_note, "", "## Contents"]
     for g in gens:

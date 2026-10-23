@@ -1,10 +1,8 @@
 # Character Mode — Final-Evolution Rosters (Pokémon Emerald Seaglass v3.0)
 
-Every playable character and the **final evolutions** their complete roster resolves to, in **National Pokédex order**. Rosters were researched from Bulbapedia (union of all games, remakes, rematches, and anime) and cross-checked where possible. Regional/cosmetic forms show as their base species. Off-roster Pokémon are routed to your PC.
+Every playable character and the **final evolutions** their complete roster resolves to, in **National Pokédex order**. Rosters were researched from Bulbapedia (union of all games, remakes, rematches, and anime) and cross-checked where possible. Regional/cosmetic forms show as their base species. Off-roster wild Pokémon cannot be caught; off-roster gifts, eggs and trades go to your PC.
 
 Only species this ROM actually contains are listed: this hack ships a **curated dex** (see `docs/SPECIES_CAP.md`), so canon roster members the binary simply does not have are omitted rather than promised.
-
-> ⚠️ **Work in progress** — availability in this specific game may differ.
 
 > **Provenance:** ᵃ = only in the anime (never on this character's team in a core game) · ᵍ = only in one core game. Markers come from `docs/roster_provenance.json`; an entry without one is unclassified rather than known to be multi-game (that research pass predates the roster additions).
 
