@@ -117,6 +117,8 @@ While Character Mode is on:
 - **Exp. Share, party-wide, for every new game.** Every new game starts with it switched on (flag `0x20`, which the
   battle engine reads to share with the whole party) and an Exp. Share (item 461) in Key Items, with Character Mode on
   or off. Existing saves get it when Character Mode is activated. Mr. Stone's gift later is a harmless second copy.
+- **Move relearner, any level** (Character Mode on or off, 2026-10-24): the relearner offers every level-up move of the
+  Pokémon, not only the ones up to its level, then its egg moves (24 at most).
 - **HMs** are already badge-only in Seaglass, so any party Pokémon can use them.
 - **Overworld sprite**: you walk and run as your character (all 114 offered characters, including Seaglass's own Brendan and May).
 

@@ -139,6 +139,7 @@ echo
 echo "=== Layer 4r: live relearner egg moves (QoL 2026-10-17; real ChooseMonForMoveRelearner -> VAR_0x8005) ==="
 python3 tools/tests/build_relearn_testrom.py > /tmp/sg_rel_build.log 2>&1 \
     && python3 tools/tests/build_relearn_testrom.py --control >> /tmp/sg_rel_build.log 2>&1 \
+    && python3 tools/tests/build_relearn_testrom.py --anylevel-control >> /tmp/sg_rel_build.log 2>&1 \
     || { echo "  FAIL building relearner test ROMs (see /tmp/sg_rel_build.log)"; exit 1; }
 rel_case() {  # tag WANT
     log=/tmp/sg_rel_$1.log
@@ -149,6 +150,8 @@ rel_case() {  # tag WANT
 }
 rel_case reltest     pos    # shipped hook: the lead's egg moves are relearnable
 rel_case reltest_ctl zero   # CM_NO_EGGRELEARN: the vanilla count
+SHIP=$(grep -ao 'RELEARN count=[0-9]*' /tmp/sg_rel_reltest.log | tail -1 | cut -d= -f2)
+rel_case reltest_lv "less:$SHIP"   # QoL A2 control CM_NO_ANYLEVEL: egg moves only, fewer than the any-level list
 echo
 
 echo "=== Layer 4h: live egg hatch (giveegg 116 -> real hatch -> shipped sweep) ==="

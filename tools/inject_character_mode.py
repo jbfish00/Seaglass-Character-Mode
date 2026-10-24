@@ -659,6 +659,7 @@ def main():
     BUILD.mkdir(exist_ok=True)
     obj, elf, binf = BUILD / "cm.o", BUILD / "cm.elf", BUILD / "cm.bin"
     subprocess.run(["arm-none-eabi-gcc", "-c", "-mthumb", "-mcpu=arm7tdmi",
+                    *(["-DCM_NO_ANYLEVEL"] if os.environ.get("CM_NO_ANYLEVEL") == "1" else []),   # test control (QoL A2)
                     "-O2", "-ffreestanding", "-fno-builtin", "-fno-jump-tables",
                     f"-DCODES_ADDR={CODES_ADDR:#x}",
                     f"-DSTARTERS_ADDR={STARTERS_ADDR:#x}",

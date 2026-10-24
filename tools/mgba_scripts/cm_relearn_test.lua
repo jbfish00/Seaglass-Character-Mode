@@ -40,8 +40,12 @@ H.onFrame(function(f)
         local n = emu:read16(V8005)
         H.log("RELEARN count=" .. n)
         H.assertTrue("ChooseMonForMoveRelearner wrote VAR_0x8005 (sentinel replaced)", n ~= 0xBEEF)
-        if os.getenv("WANT") == "zero" then     -- control: the starter knows every level-up move it has reached
+        local want = os.getenv("WANT") or ""
+        if want == "zero" then     -- control: the starter knows every level-up move it has reached
             H.assertEq("vanilla relearnable count (no egg moves)", n, 0)
+        elseif want:match("^less:") then   -- QoL A2 control (CM_NO_ANYLEVEL): fewer than the shipped count, egg moves only
+            local ship = tonumber(want:sub(6))
+            H.assertTrue("level-cut count " .. n .. " is > 0 and below the shipped any-level count " .. ship, n > 0 and n < ship)
         else
             H.assertTrue("the lead has relearnable moves (its egg moves)", n > 0 and n <= 24)
         end

@@ -1010,7 +1010,10 @@ u16 CM_WildMonSpeciesGated(u16 species, u8 level)
  * the mon's hatch species (GetEggSpecies 0x080F445C + GetEggMoves 0x080F49B8, symmatch high against expansion 1.9.2, on a
  * copy whose species is set to the hatch species), minus known and listed moves; cap 24 (MAX_RELEARNER_MOVES 25).
  * GetNumberOfRelearnableMoves (0x081AD818) is replaced at its entry by CM_NumRelearnable (all its callers: the party menu,
- * the relearner's party screen), and its dead body holds the list site's veneer. */
+ * the relearner's party screen), and its dead body holds the list site's veneer.
+ * QoL A2 (2026-10-24): every level-up move of the species, not only those at or below the mon's level: the hack's own
+ * builder runs on a copy whose level byte (+84, the byte it reads: `ldrb r7,[r6,#84]` at 0x081AD6F4) is 100
+ * (CM_NO_ANYLEVEL, test builds only: the mon's level). Level-up moves come first, so egg moves are what a full list drops. */
 #define CM_GetMoveRelearnerMoves ((u8 (*)(void *, u16 *)) (0x081AD6DC | 1))
 #define CM_GetEggSpecies         ((u16 (*)(u16)) (0x080F445C | 1))
 #define CM_GetEggMoves           ((u8 (*)(void *, u16 *)) (0x080F49B8 | 1))
@@ -1018,20 +1021,31 @@ u16 CM_WildMonSpeciesGated(u16 species, u8 level)
 #define CM_MON_DATA_MOVE1        20
 #define CM_RELEARNER_MAX         24
 #define CM_EGG_MOVES_MAX         19
+#define CM_ALL_LEVEL_MOVES       128     /* QoL A2: the any-level builder's own buffer */
 
 u8 CM_RelearnerMoves(void *mon, u16 *moves)
 {
     u32 copy[25];       /* struct Pokemon, 100 bytes */
     u16 egg[CM_EGG_MOVES_MAX + 1];
+    u16 all[CM_ALL_LEVEL_MOVES];
     u16 species, base, mv;
     u8 n, k, i, j;
 
-    n = CM_GetMoveRelearnerMoves(mon, moves);
+    for (i = 0; i < 25; i++)
+        copy[i] = ((const u32 *) mon)[i];
+#ifndef CM_NO_ANYLEVEL
+    ((u8 *) copy)[84] = 100;
+#endif
+    /* At level 100 the builder writes every level-up move of the family, unbounded (it stops at each learnset's end), so
+     * it gets a big buffer and the caller's 25-entry one gets at most CM_RELEARNER_MAX (it overran: a black screen). */
+    n = CM_GetMoveRelearnerMoves(copy, all);
+    if (n > CM_RELEARNER_MAX)
+        n = CM_RELEARNER_MAX;
+    for (i = 0; i < n; i++)
+        moves[i] = all[i];
     species = GetMonData(mon, MON_DATA_SPECIES, 0);
     if (!species || GetMonData(mon, MON_DATA_IS_EGG, 0))
         return n;
-    for (i = 0; i < 25; i++)
-        copy[i] = ((const u32 *) mon)[i];
     base = CM_GetEggSpecies(species);
     CM_SetMonDataX(copy, MON_DATA_SPECIES, &base);
     k = CM_GetEggMoves(copy, egg);
