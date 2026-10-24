@@ -750,3 +750,18 @@ The debug off code doesn't refresh. Seaglass's own player sprites (May,
 Brendan) are adjusted after the frame copy, so the live layer checks the images
 table for them, not VRAM bytes. Running needs leaving the Oldale Mart (Emerald
 forbids running there); the live gait comes from the sprite's anim number.
+
+## New game: Exp. Share for every game (2026-10-24): ✅ SHIPPED, LIVE
+
+User ruling 2026-10-21: the early party-wide Exp. Share also applies with Character Mode off.
+
+| what | addr | how found |
+|---|---|---|
+| `NewGameInitData` | `0x08176DF4` | `expansion-kit/tools/symmatch.py` vs `~/src-ports/exp-1.9.2` (one BL vote, "low"), confirmed by its BL order: `ClearBag 0x0814DA90` ... `WipeTrainerNameRecords 0x0815D534`, `ResetTrainerHillResults 0x0820E4A8`, `ResetContestLinkResults 0x080E83A8` (all three "high", the reference's last three calls) |
+| hooked BL | `0x08176F50` | its `bl ResetContestLinkResults`. After it Seaglass adds a few stores and a memset of SB1+`0x2F9C` (0x5F4 B), which does not touch the bag or the flags (live: the granted item and flag survive to the truck) |
+| veneer | `0x081C3460` (8 B) | the dead `IsRemovingLastPartyMon`'s last two pool words, after the catch veneer. verify [26] already proves nothing points, BLs or pc-loads into `0x081C3454..67` |
+| `CM_NewGameExpShare` | shim (appended last in `src/character_mode.c`) | runs `ResetContestLinkResults`, then `FlagSet(0x20)` + `AddBagItem(461)` if absent. The grant is written out rather than calling `grantExpShare`: a second caller would stop GCC inlining it and move every function in the shim |
+
+Evidence: verify [29] (4), `newgame_exp_share_negative_test.py` 6/6 (in the checker guard), live layer 11
+(`cm_newgame_expshare_test.lua`: cold boot, A-mash the real intro, CM never on; the hooked call ran once, flag 0x20 = 1,
+item 461 in pocket 4; the same ROM with only the BL restored grants nothing and fails "granted").

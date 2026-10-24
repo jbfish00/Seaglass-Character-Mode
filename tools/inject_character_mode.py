@@ -172,6 +172,14 @@ WILD_STUB_ADDR         = TRAMPOLINE_BLOCK + 24    # wild entry stub (the BL targ
 CATCH_VENEER_ADDR = 0x081C3458
 CATCH_VENEER_ORIG = bytes.fromhex("f6e7c04674a10102")
 CATCH_ODDS_SITE   = 0x0A6284          # Cmd_handleballthrow: mov r3,r9 ; cmp r3,#254
+# Exp. Share for every new game (2026-10-24; user ruling 2026-10-21, CM on or off). NewGameInitData's last call
+# (bl ResetContestLinkResults @ 0x08176F50) -> an 8-byte veneer in the dead function's literal pool (its last two
+# words, after the catch veneer; [26] proves nothing else points or pc-loads there) -> CM_NewGameExpShare.
+# CM_NO_NEWGAME_EXPSHARE=1 builds the control (BL and pool untouched).
+NEWGAME_VENEER_ADDR = 0x081C3460
+NEWGAME_VENEER_ORIG = bytes.fromhex("76a1010275a10102")
+NEWGAME_BL_SITE     = 0x176F50
+RESET_CONTEST_LINK  = 0x080E83A8
 CATCH_ODDS_ORIG   = bytes.fromhex("4b46fe2b")
 WILD_TRAMPOLINE_ADDR   = 0x08FA8000               # the wild veneer (src/wild_trampoline.c)
 OLD_SPRITE_FRAME       = (0x08470200, 0x40)       # must stay byte-identical to the base
@@ -686,7 +694,7 @@ def main():
             for m in re.finditer(r"^([0-9a-f]+) [Tt] (\w+)$", sym_out, re.M)}
     for need in ("CM_OpenCodeEntry", "CM_MatchCode", "CM_GiveMonToPlayerGated",
                  "CM_NativeGiveGated", "CM_TradeCheck", "CM_WildMonSpeciesGated",
-                 "CM_CatchOddsStub", "CM_CatchOdds"):
+                 "CM_CatchOddsStub", "CM_CatchOdds", "CM_NewGameExpShare"):
         assert need in syms, f"missing symbol {need}"
     assert len(shim) <= BITMAPS_ADDR - SHIM_ADDR, f"shim too big: {len(shim)}"
     print(f"shim: {len(shim)} bytes @ {SHIM_ADDR:#x}")
@@ -1204,6 +1212,22 @@ def main():
                                                          CATCH_VENEER_ADDR)
     print(f"100% roster catch: odds compare @ {0x08000000 + CATCH_ODDS_SITE:#x} -> veneer "
           f"{CATCH_VENEER_ADDR:#x} -> {syms['CM_CatchOddsStub']:#x}")
+
+    # --- Exp. Share for every new game (src/character_mode.c CM_NewGameExpShare) ---
+    _nv = NEWGAME_VENEER_ADDR - 0x08000000
+    assert bytes(data[_nv:_nv + 8]) == NEWGAME_VENEER_ORIG, (
+        "the dead function's literal pool is not at %#x" % NEWGAME_VENEER_ADDR)
+    assert bytes(data[NEWGAME_BL_SITE:NEWGAME_BL_SITE + 4]) == thumb_bl(0x08000000 + NEWGAME_BL_SITE,
+                                                                        RESET_CONTEST_LINK), (
+        "NewGameInitData's last BL (ResetContestLinkResults) is not at %#x" % (0x08000000 + NEWGAME_BL_SITE))
+    if os.environ.get("CM_NO_NEWGAME_EXPSHARE") == "1":
+        print("new-game Exp. Share: OFF (CM_NO_NEWGAME_EXPSHARE=1 control build)")
+    else:
+        assert NEWGAME_VENEER_ADDR % 4 == 0
+        data[_nv:_nv + 8] = struct.pack("<HHI", 0x4B00, 0x4718, syms["CM_NewGameExpShare"] | 1)
+        data[NEWGAME_BL_SITE:NEWGAME_BL_SITE + 4] = thumb_bl(0x08000000 + NEWGAME_BL_SITE, NEWGAME_VENEER_ADDR)
+        print(f"new-game Exp. Share: NewGameInitData BL @ {0x08000000 + NEWGAME_BL_SITE:#x} -> veneer "
+              f"{NEWGAME_VENEER_ADDR:#x} -> {syms['CM_NewGameExpShare']:#x}")
 
     # --- patches (verify-then-write) ---
     for site in (BL_SITE_CATCH, BL_SITE_GIFT):

@@ -1059,3 +1059,25 @@ u8 CM_NumRelearnable(void *mon)
 
     return CM_RelearnerMoves(mon, moves);
 }
+
+/* --- the same grant for EVERY new game (user, 2026-10-21: the early party-wide
+ * Exp. Share with Character Mode OFF too; the catch rules stay CM-only) ---
+ * NewGameInitData (0x08176DF4, symmatch vs expansion 1.9.2; its BL order matches
+ * the reference) calls ResetContestLinkResults (0x080E83A8) last, after ClearBag
+ * and the map-flag reset. That BL (0x08176F50) goes through an 8-byte veneer in
+ * the dead IsRemovingLastPartyMon's tail (0x081C3460) to here: run the call,
+ * then grant. Existing saves never run NewGameInitData again, so they are
+ * untouched; a CM player who activates later already has both, and the
+ * activation grant above then adds nothing. */
+#define ResetContestLinkResults ((void (*)(void)) 0x080E83A9)
+
+/* The grant is written out, not a call to grantExpShare: a second caller makes GCC
+ * stop inlining it, which moves every function in the shim (and the savestates and
+ * pinned addresses with them). */
+void CM_NewGameExpShare(void)
+{
+    ResetContestLinkResults();
+    FlagSet(FLAG_EXP_SHARE_PARTY);
+    if (!CheckBagHasItem(ITEM_EXP_SHARE, 1))
+        AddBagItem(ITEM_EXP_SHARE, 1);
+}

@@ -512,5 +512,31 @@ sure_case nohook /tmp/sg_nosure.gba 1 51 2 sure && { echo "  FAIL negative contr
 python3 tools/tests/sure_catch_negative_test.py || { echo "  FAIL sure-catch negative test"; exit 1; }
 
 echo
+echo "=== Layer 11: Exp. Share for every new game, CM on or off (2026-10-24) ==="
+# Cold boot, no save, A-mash the real intro to the truck with Character Mode never
+# on: flag 0x20 + item 461 must be granted by NewGameInitData's hooked last call.
+# The control is the same ROM with only that BL restored: it must grant nothing.
+python3 - "$ROM" /tmp/sg_nonewgame.gba <<'PY'
+import sys
+d = bytearray(open(sys.argv[1], "rb").read())
+off = 0x080E83A8 - (0x08176F50 + 4)            # the base ROM's bl ResetContestLinkResults
+d[0x176F50:0x176F54] = ((0xF000 | ((off >> 12) & 0x7FF)).to_bytes(2, "little")
+                        + (0xF800 | ((off >> 1) & 0x7FF)).to_bytes(2, "little"))
+open(sys.argv[2], "wb").write(d)
+PY
+ng_case() {   # name rom expect
+    timeout 300 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=4 EXPECT=$3 SHOT=/tmp/sg_ng_$1.png \
+        "$MGBA" --script tools/mgba_scripts/cm_newgame_expshare_test.lua "$2" > /tmp/sg_ng_$1.log 2>&1 || true
+    grep -q "HARNESS RESULT: PASS" /tmp/sg_ng_$1.log
+}
+ng_case granted "$ROM" granted && echo "  PASS new game, CM off: Exp. Share granted (flag 0x20 + item 461)" \
+    || { echo "  FAIL new-game Exp. Share (see /tmp/sg_ng_granted.log)"; grep -a "HARNESS.*FAIL" /tmp/sg_ng_granted.log; exit 1; }
+ng_case nohook /tmp/sg_nonewgame.gba none && echo "  PASS negative control: the BL-restored ROM grants nothing" \
+    || { echo "  FAIL negative control (see /tmp/sg_ng_nohook.log)"; grep -a "HARNESS.*FAIL" /tmp/sg_ng_nohook.log; exit 1; }
+ng_case nohook_as_granted /tmp/sg_nonewgame.gba granted && { echo "  FAIL negative control: the BL-restored ROM passed 'granted'"; exit 1; } \
+    || echo "  PASS negative control: the BL-restored ROM fails 'granted' (want FAIL)"
+python3 tools/tests/newgame_exp_share_negative_test.py || { echo "  FAIL new-game Exp. Share negative test"; exit 1; }
+
+echo
 echo "ALL AUTOMATED LAYERS GREEN (incl. real-UI activation + in-situ trade e2e + wild override + live egg hatch + live PC exit)."
 echo "Remaining human-in-the-loop verify: full playthrough (docs/TESTING.md)."

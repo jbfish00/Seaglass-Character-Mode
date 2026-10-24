@@ -114,8 +114,9 @@ While Character Mode is on:
 - **Every on-roster Pokémon is caught at 100%**, with any ball. **Off-roster wild Pokémon cannot be caught at all**
   (the ball is dodged or bounces off with no shakes). Gifts, eggs and trades keep their PC routing.
 - **TMs are reusable.** Fixed in the game data.
-- **Exp. Share, party-wide.** Given at activation (flag `0x20` plus item 461) and shared by the whole party.
-  Not yet given with Character Mode off (ruled 2026-10-21, planned: same new-game grant as Radical Red).
+- **Exp. Share, party-wide, for every new game.** Every new game starts with it switched on (flag `0x20`, which the
+  battle engine reads to share with the whole party) and an Exp. Share (item 461) in Key Items, with Character Mode on
+  or off. Existing saves get it when Character Mode is activated. Mr. Stone's gift later is a harmless second copy.
 - **HMs** are already badge-only in Seaglass, so any party Pokémon can use them.
 - **Overworld sprite**: you walk and run as your character (all 114 offered characters, including Seaglass's own Brendan and May).
 

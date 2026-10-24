@@ -141,6 +141,11 @@ PSS_CANSHIFT_BL = 0x1C352C
 # 100% catch for on-roster species ([26], 2026-10-09; injector CATCH_*). Restated.
 CATCH_ODDS_SITE = 0x0A6284           # Cmd_handleballthrow: mov r3,r9 ; cmp r3,#254 ; bhi
 CATCH_VENEER_ADDR = 0x081C3458       # the dead IsRemovingLastPartyMon's tail
+# Exp. Share for every new game ([29], 2026-10-24; injector NEWGAME_*). Restated.
+NEWGAME_VENEER_ADDR = 0x081C3460     # the dead function's literal pool, after the catch veneer
+NEWGAME_BL_SITE     = 0x176F50       # NewGameInitData: bl ResetContestLinkResults (its last call)
+NEWGAME_FN          = 0x08176DF4
+RESET_CONTEST_LINK  = 0x080E83A8
 PSS_CANSHIFT_TAIL = 0x1C3530
 PSS_GUARD_TRAMPOLINE_ADDR = TRAMPOLINE_BLOCK   # +0 of the block
 PSS_SPECIAL_ANCHOR = 0x88   # CountPartyAliveNonEggMons_IgnoreVar0x8004Slot
@@ -254,7 +259,7 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 180  # +3: [28] free tutors + egg relearner (2026-10-17); +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
+EXPECT_CHECKS = 184  # +4: [29] new-game Exp. Share (2026-10-24); +3: [28] free tutors + egg relearner (2026-10-17); +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
 # 147: +7: [22] the PC second guard (2026-09-29)
 # was 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
                      # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
@@ -443,6 +448,8 @@ def main():
     windows += [(j, 5) for j in TRADE_JUNCTIONS]
     # 100% roster catch ([26]): the 4-byte compare and the 8-byte veneer
     windows += [(CATCH_ODDS_SITE, 4), (CATCH_VENEER_ADDR - 0x08000000, 8)]
+    # Exp. Share for every new game ([29], 2026-10-24): NewGameInitData's last BL and its 8-byte veneer
+    windows += [(NEWGAME_BL_SITE, 4), (NEWGAME_VENEER_ADDR - 0x08000000, 8)]
     # reusable TMs (2026-10-09): one importance byte per TM record ([25])
     windows += [(o + 0x2C, 1) for o in _tm_importance_bytes(orig)[1] if o is not None]
     # QoL free tutors + egg relearner (2026-10-17, [28]): relearner gate / payment / three text pointers + texts,
@@ -1639,6 +1646,34 @@ def main():
        and struct.unpack_from("<I", patched, _c + 16)[0] == _cs3["CM_RelearnerMoves"] | 1
        and decode_bl(orig, 0x0816F4E4 - 0x08000000) == 0x081AD6DC,
        "egg moves: GetNumberOfRelearnableMoves -> CM_NumRelearnable; the list BL -> veneer -> CM_RelearnerMoves")
+
+    print("[29] Exp. Share for every new game, CM on or off (2026-10-24)")
+    _ngb = [x for x in range(NEWGAME_FN - 0x08000000, NEWGAME_BL_SITE + 0x30, 2) if decode_bl(orig, x)]
+    _ngt = [decode_bl(orig, x) for x in _ngb]
+    _cb = (0x0814DA90, 0x0815D534, 0x0820E4A8, RESET_CONTEST_LINK)   # ClearBag, Wipe..Names, ResetTrainerHill, this
+    ok(decode_bl(orig, NEWGAME_BL_SITE) == RESET_CONTEST_LINK
+       and [t for t in _ngt if t in _cb] == list(_cb)
+       and _ngb.index(NEWGAME_BL_SITE) == _ngt.index(RESET_CONTEST_LINK)
+       and all(t not in (0x0810D254, 0x0814D2D0, 0x0814DA90) for t in _ngt[_ngt.index(RESET_CONTEST_LINK) + 1:]),
+       "base: NewGameInitData calls ClearBag, then WipeTrainerNameRecords / ResetTrainerHillResults / "
+       "ResetContestLinkResults (the BL at the site), and nothing after it clears the bag or sets a flag")
+    _cs4 = _elf_syms("cm.elf")
+    _ng = _cs4["CM_NewGameExpShare"]
+    _nv = NEWGAME_VENEER_ADDR - 0x08000000
+    ok(decode_bl(patched, NEWGAME_BL_SITE) == NEWGAME_VENEER_ADDR
+       and bytes(patched[_nv:_nv + 8]) == struct.pack("<HHI", 0x4B00, 0x4718, _ng | 1)
+       and bytes(orig[_nv:_nv + 8]) == bytes.fromhex("76a1010275a10102"),
+       f"built: the BL goes through the veneer (ldr r3,[pc]; bx r3) to CM_NewGameExpShare {_ng | 1:#x}")
+    _no = (_ng & ~1) - 0x08000000
+    _nc = bytes(patched[_no:_no + 0x48])   # code + its 4-word pool
+    _nl = {struct.unpack_from("<I", _nc, k)[0] for k in range(0, len(_nc) - 3, 4)}
+    _nb = [decode_bl(patched, _no + k) for k in range(0, 0x3C, 2) if decode_bl(patched, _no + k)]
+    ok({RESET_CONTEST_LINK | 1, 0x0810D255, 0x0814D089, 0x0814D2D1} <= _nl and len(_nb) >= 4
+       and any(struct.unpack_from("<H", _nc, k)[0] == 0x2020 for k in range(0, len(_nc), 2))
+       and len(re.findall(rb"\xce\x20\x01\x21..\xff\x30", _nc, re.S)) == 2,   # movs r0,#206 ; movs r1,#1 ; ldr ; adds r0,#255 = 461, twice
+       "built: CM_NewGameExpShare calls ResetContestLinkResults, FlagSet(0x20), CheckBagHasItem / AddBagItem(461)")
+    ok(not bl_callers(orig, NEWGAME_VENEER_ADDR) and not bl_callers(orig, NEWGAME_VENEER_ADDR + 4),
+       "base: nothing BLs into the veneer's 8 bytes")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     if assert_tally(_p + _f, EXPECT_CHECKS, "verify_artifacts"):
