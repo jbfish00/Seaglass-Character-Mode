@@ -387,10 +387,10 @@ def main():
             page.append("### %s — %s" % (c["name"], c["label"]))
             page.append("<table>")
             row = []
-            for name, num, _src in c["finals"]:
-                row.append('<td align="center" width="80"><img width="56" src="%s">'
-                           "<br><sub>%s</sub></td>"
-                           % (SPRITE_URL % num, marked(c["name"], name)))
+            for name, num, src in c["finals"]:
+                row.append('<td align="center" width="100"><img width="56" src="%s">'
+                           "<br><sub>%s</sub><br><sub><i>%s</i></sub></td>"
+                           % (SPRITE_URL % num, marked(c["name"], name), src))
                 if len(row) == SPRITES_PER_ROW:
                     page.append("<tr>" + "".join(row) + "</tr>")
                     row = []
