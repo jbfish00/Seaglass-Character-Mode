@@ -119,6 +119,8 @@ While Character Mode is on:
   or off. Existing saves get it when Character Mode is activated. Mr. Stone's gift later is a harmless second copy.
 - **Move relearner, any level** (Character Mode on or off, 2026-10-24): the relearner offers every level-up move of the
   Pokémon, not only the ones up to its level, then its egg moves (24 at most).
+- **Battle animations off for new games** (Character Mode on or off, 2026-10-28): set by the same new-game hook;
+  Options turns them back on, and existing saves keep their own setting.
 - **HMs** are already badge-only in Seaglass, so any party Pokémon can use them.
 - **Overworld sprite**: you walk and run as your character (all 114 offered characters, including Seaglass's own Brendan and May).
 

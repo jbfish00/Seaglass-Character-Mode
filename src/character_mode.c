@@ -1088,10 +1088,17 @@ u8 CM_NumRelearnable(void *mon)
 /* The grant is written out, not a call to grantExpShare: a second caller makes GCC
  * stop inlining it, which moves every function in the shim (and the savestates and
  * pinned addresses with them). */
+/* QoL A3 (2026-10-28): new games start with battle animations off. SaveBlock2 +0x15 bit 2 is
+ * optionsBattleSceneOff (the hack's option menu loads +0x14 bits 0-2, then +0x15 bits 2, 1, 0: text speed,
+ * battle scene, battle style, sound, at 0x081770C0). SetDefaultOptions ran earlier in the Birch speech; the Options
+ * menu still turns them back on. */
+#define gSaveBlock2Ptr_ (*(u8 **) 0x030051BC)
+
 void CM_NewGameExpShare(void)
 {
     ResetContestLinkResults();
     FlagSet(FLAG_EXP_SHARE_PARTY);
     if (!CheckBagHasItem(ITEM_EXP_SHARE, 1))
         AddBagItem(ITEM_EXP_SHARE, 1);
+    gSaveBlock2Ptr_[0x15] |= 1 << 2;
 }

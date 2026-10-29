@@ -259,7 +259,7 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 184  # +4: [29] new-game Exp. Share (2026-10-24); +3: [28] free tutors + egg relearner (2026-10-17); +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
+EXPECT_CHECKS = 185  # +1: [29] battle animations off on new games (2026-10-28); +4: [29] new-game Exp. Share (2026-10-24); +3: [28] free tutors + egg relearner (2026-10-17); +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
 # 147: +7: [22] the PC second guard (2026-09-29)
 # was 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
                      # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
@@ -1665,13 +1665,15 @@ def main():
        and bytes(orig[_nv:_nv + 8]) == bytes.fromhex("76a1010275a10102"),
        f"built: the BL goes through the veneer (ldr r3,[pc]; bx r3) to CM_NewGameExpShare {_ng | 1:#x}")
     _no = (_ng & ~1) - 0x08000000
-    _nc = bytes(patched[_no:_no + 0x48])   # code + its 4-word pool
+    _nc = bytes(patched[_no:_no + 0x54])   # code + its 5-word pool (2026-10-28: + the battle-scene store)
     _nl = {struct.unpack_from("<I", _nc, k)[0] for k in range(0, len(_nc) - 3, 4)}
     _nb = [decode_bl(patched, _no + k) for k in range(0, 0x3C, 2) if decode_bl(patched, _no + k)]
     ok({RESET_CONTEST_LINK | 1, 0x0810D255, 0x0814D089, 0x0814D2D1} <= _nl and len(_nb) >= 4
        and any(struct.unpack_from("<H", _nc, k)[0] == 0x2020 for k in range(0, len(_nc), 2))
        and len(re.findall(rb"\xce\x20\x01\x21..\xff\x30", _nc, re.S)) == 2,   # movs r0,#206 ; movs r1,#1 ; ldr ; adds r0,#255 = 461, twice
        "built: CM_NewGameExpShare calls ResetContestLinkResults, FlagSet(0x20), CheckBagHasItem / AddBagItem(461)")
+    ok(0x030051BC in _nl and b"\x04\x21" in _nc and re.search(rb"[\x50-\x57]\x7d\x0b\x43[\x50-\x57]\x75", _nc) is not None,
+       "built: CM_NewGameExpShare sets SaveBlock2+0x15 bit 2 (battle animations off; QoL A3 2026-10-28)")
     ok(not bl_callers(orig, NEWGAME_VENEER_ADDR) and not bl_callers(orig, NEWGAME_VENEER_ADDR + 4),
        "base: nothing BLs into the veneer's 8 bytes")
 

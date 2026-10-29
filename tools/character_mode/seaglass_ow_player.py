@@ -144,6 +144,7 @@ def build(rom, characters):
     sheet_names = [n for c, n in zip(characters, names)
                    if not c.get("hidden") and n not in NATIVE and n in have]
     assert all(PAL_TAG_BASE + k not in used_tags for k in range(len(sheet_names)))
+    assert len(pals) - 1 + len(sheet_names) <= 255, "palette rows %d: past 255 the engine's u8 FindObjectEventPaletteIndexByTag loops forever (2026-10-28; widen it as vanilla-fr-kit PAL_WIDE_PATCHES / expansion-kit pal_wide do)" % (len(pals) - 1 + len(sheet_names))
 
     pal_table = bytearray((len(pals) + len(sheet_names)) * 8)
     for i, (p, tag) in enumerate(pals[:-1]):

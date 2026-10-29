@@ -515,7 +515,7 @@ sure_case nohook /tmp/sg_nosure.gba 1 51 2 sure && { echo "  FAIL negative contr
 python3 tools/tests/sure_catch_negative_test.py || { echo "  FAIL sure-catch negative test"; exit 1; }
 
 echo
-echo "=== Layer 11: Exp. Share for every new game, CM on or off (2026-10-24) ==="
+echo "=== Layer 11: Exp. Share + battle animations off for every new game, CM on or off (2026-10-24/28) ==="
 # Cold boot, no save, A-mash the real intro to the truck with Character Mode never
 # on: flag 0x20 + item 461 must be granted by NewGameInitData's hooked last call.
 # The control is the same ROM with only that BL restored: it must grant nothing.
@@ -528,11 +528,11 @@ d[0x176F50:0x176F54] = ((0xF000 | ((off >> 12) & 0x7FF)).to_bytes(2, "little")
 open(sys.argv[2], "wb").write(d)
 PY
 ng_case() {   # name rom expect
-    timeout 300 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=4 EXPECT=$3 SHOT=/tmp/sg_ng_$1.png \
+    timeout 300 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=5 EXPECT=$3 SHOT=/tmp/sg_ng_$1.png \
         "$MGBA" --script tools/mgba_scripts/cm_newgame_expshare_test.lua "$2" > /tmp/sg_ng_$1.log 2>&1 || true
     grep -q "HARNESS RESULT: PASS" /tmp/sg_ng_$1.log
 }
-ng_case granted "$ROM" granted && echo "  PASS new game, CM off: Exp. Share granted (flag 0x20 + item 461)" \
+ng_case granted "$ROM" granted && echo "  PASS new game, CM off: Exp. Share granted (flag 0x20 + item 461), battle animations off" \
     || { echo "  FAIL new-game Exp. Share (see /tmp/sg_ng_granted.log)"; grep -a "HARNESS.*FAIL" /tmp/sg_ng_granted.log; exit 1; }
 ng_case nohook /tmp/sg_nonewgame.gba none && echo "  PASS negative control: the BL-restored ROM grants nothing" \
     || { echo "  FAIL negative control (see /tmp/sg_ng_nohook.log)"; grep -a "HARNESS.*FAIL" /tmp/sg_ng_nohook.log; exit 1; }

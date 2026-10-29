@@ -2,6 +2,7 @@
 -- or off (user ruling 2026-10-21; src/character_mode.c CM_NewGameExpShare,
 -- hooked at NewGameInitData's last BL 0x08176F50, built 2026-10-24).
 --
+-- 2026-10-28 (QoL A3): the same hook also turns battle animations off (SaveBlock2+0x15 bit 2).
 -- Cold boot with no save, A-mash the whole real intro (Birch speech, naming,
 -- truck) exactly as drive_intro.lua does. Character Mode is never turned on.
 -- Then:
@@ -40,12 +41,15 @@ H.onFrame(function(f)
     end
     H.assertEq("NewGameInitData's hooked call ran once (the intro reached the new game)", ngRan, 1)
     H.assertEq("Character Mode never turned on (flag 0x2B0)", H.getFlag(0x2B0), 0)
+    local sceneOff = (H.rd8(H.rd32(H.gSaveBlock2Ptr) + 0x15) >> 2) & 1   -- QoL A3 (2026-10-28)
     if want == "granted" then
         H.assertEq("party-wide Exp. Share switched on (flag 0x20)", H.getFlag(0x20), 1)
         H.assertTrue("an Exp. Share is in the bag (item 461)", has)
+        H.assertEq("battle animations off on the new game (SaveBlock2+0x15 bit 2)", sceneOff, 1)
     else
         H.assertEq("no hook: flag 0x20 stays off", H.getFlag(0x20), 0)
         H.assertTrue("no hook: no Exp. Share in the bag", not has)
+        H.assertEq("no hook: battle animations keep the game's default (on)", sceneOff, 0)
     end
     H.finish()
 end)

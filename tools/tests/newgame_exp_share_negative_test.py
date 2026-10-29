@@ -12,7 +12,8 @@ stay PASS.
   3. the veneer aimed one halfword off            -- jumps into the middle of the function
   4. CM_NewGameExpShare sets flag 0x21            -- the wrong flag (Cmd_getexp reads 0x20)
   5. CM_NewGameExpShare drops its first call      -- ResetContestLinkResults no longer runs
-  6. control again                                -- nothing left behind
+  6. the orrs that sets the battle-scene bit nopped -- QoL A3 (2026-10-28)
+  7. control again                                -- nothing left behind
 
 THE ROM IS NEVER MODIFIED IN PLACE.
 """
@@ -32,6 +33,7 @@ BUILT = os.path.join(ROOT, "build", "seaglass_cm.gba")
 CHECKS = {
     "site": "the BL goes through the veneer (ldr r3,[pc]; bx r3) to CM_NewGameExpShare",
     "fn": "CM_NewGameExpShare calls ResetContestLinkResults, FlagSet(0x20), CheckBagHasItem / AddBagItem(461)",
+    "scene": "CM_NewGameExpShare sets SaveBlock2+0x15 bit 2 (battle animations off; QoL A3 2026-10-28)",
 }
 SITE = 0x176F50
 VENEER = 0x1C3460
@@ -74,7 +76,7 @@ def thumb_bl(src, dst):
 
 
 # A deliberate LITERAL -- see cm_tally.assert_cases.
-EXPECT_CASES = 6
+EXPECT_CASES = 7
 
 
 def _syms():
@@ -92,7 +94,7 @@ def main():
     fn = (_syms()["CM_NewGameExpShare"] & ~1) - 0x08000000
     flag = fn + bytes(good[fn:fn + 0x20]).find(bytes.fromhex("2020"))      # movs r0,#0x20
     assert flag > fn, "movs r0,#0x20 not found in CM_NewGameExpShare"
-    pool = fn + bytes(good[fn:fn + 0x48]).find((ORIG_BL_TARGET | 1).to_bytes(4, "little"))
+    pool = fn + bytes(good[fn:fn + 0x54]).find((ORIG_BL_TARGET | 1).to_bytes(4, "little"))
     assert pool > fn, "ResetContestLinkResults literal not found in CM_NewGameExpShare"
     fails, passes = [], 0
 
@@ -146,7 +148,13 @@ def main():
             d[pool:pool + 4] = (0x0810D255).to_bytes(4, "little")   # first call now FlagSet, not the original
         case("5 CM_NewGameExpShare drops ResetContestLinkResults", no_reset, "fn")
 
-        case("6 control again -- nothing left behind", None, None)
+        def no_scene(d):
+            k = fn + bytes(d[fn:fn + 0x54]).find(bytes.fromhex("0b43"))       # orrs r3,r1 -> movs r3,r3
+            assert k > fn
+            d[k:k + 2] = bytes.fromhex("1b00")
+        case("6 the battle-scene bit is no longer set", no_scene, "scene")
+
+        case("7 control again -- nothing left behind", None, None)
 
     total = passes + len(fails)
     if fails:
