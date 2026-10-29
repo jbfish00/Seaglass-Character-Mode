@@ -545,6 +545,25 @@ EGG_COUNT_FN, EGG_LIST_SITE, EGG_GMRM = 0x081AD818, 0x0816F4E4, 0x081AD6DC   # Q
 FREE_TUTOR_GATE, FREE_TUTOR_BP_CONFIRM, FREE_TUTOR_TEXT = 0x829a72b, 0x8301904, 0x8f1d000   # QoL 2026-10-17
 
 
+# ---- QoL A3 instant HP bar (2026-10-28) ------------------------------------------------------------------------------
+# pokeemerald-expansion's MoveBattleBar (entry 0x0807CAD0) computes B_FAST_HP_DRAIN's toAdd = max(maxHP / 24, 1)
+# (`movs r0,#1; cmp r6,#23; ble; movs r1,#24; movs r0,r6; bl __divsi3; lsls; lsrs`) and passes scale 6 (`movs r2,#6`).
+# toAdd becomes 255 (`movs r0,#255; b past the division; nop`) and scale 0, so every bar takes the integer path and
+# moves up to 255 HP a frame, clamped at the target. CM_NO_INSTANTHP=1 builds the control (build/seaglass_cm_nohp.gba).
+HPBAR_SITE = 0x0807CB10
+HPBAR_ORIG = bytes.fromhex("0120172e05dd18213000b0f1f7fd0004000c0622")
+HPBAR_NEW = bytes.fromhex("ff2006e0c04618213000b0f1f7fd0004000c0022")
+
+
+def instant_hp(data):
+    if os.environ.get("CM_NO_INSTANTHP") == "1":
+        return False
+    o = HPBAR_SITE - 0x08000000
+    assert bytes(data[o:o + len(HPBAR_ORIG)]) == HPBAR_ORIG, "MoveBattleBar's HP step not at %08X" % HPBAR_SITE
+    data[o:o + len(HPBAR_NEW)] = HPBAR_NEW
+    return True
+
+
 def main():
     data = bytearray(ROM_IN.read_bytes())
     got = hashlib.sha1(data).hexdigest()
@@ -1357,15 +1376,19 @@ def main():
     free = free_tutors(data, cm, FREE_TUTOR_GATE, FREE_TUTOR_BP_CONFIRM, FREE_TUTOR_TEXT)
     print("free tutors:", free)
     print("egg moves in the relearner:", egg_relearner(data, syms, EGG_COUNT_FN, EGG_LIST_SITE, EGG_GMRM))
+    print("instant HP bar:", instant_hp(data))
+    if os.environ.get("CM_NO_INSTANTHP") == "1":
+        out_rom = BUILD / "seaglass_cm_nohp.gba"
     out_rom.write_bytes(data)
     print(f"wrote {out_rom} sha1={hashlib.sha1(data).hexdigest()}")
-    flips = ROOT / "tools" / "bin" / "flips"
-    bps = BUILD / "seaglass_cm.bps"
-    r = subprocess.run([str(flips), "--create", "--bps", str(ROM_IN), str(out_rom), str(bps)],
-                       capture_output=True, text=True)
-    print(r.stdout.strip() or r.stderr.strip())
-    if bps.exists():
-        print(f"patch: {bps} ({bps.stat().st_size} bytes)")
+    if out_rom.name == "seaglass_cm.gba":         # a control build never replaces the shipped BPS
+        flips = ROOT / "tools" / "bin" / "flips"
+        bps = BUILD / "seaglass_cm.bps"
+        r = subprocess.run([str(flips), "--create", "--bps", str(ROM_IN), str(out_rom), str(bps)],
+                           capture_output=True, text=True)
+        print(r.stdout.strip() or r.stderr.strip())
+        if bps.exists():
+            print(f"patch: {bps} ({bps.stat().st_size} bytes)")
 
     # Offered characters only -- a hidden character's code does not work, so
     # listing it would send a player to a code that gets refused. Lazarus's

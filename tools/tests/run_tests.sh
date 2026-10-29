@@ -540,6 +540,19 @@ ng_case nohook_as_granted /tmp/sg_nonewgame.gba granted && { echo "  FAIL negati
     || echo "  PASS negative control: the BL-restored ROM fails 'granted' (want FAIL)"
 python3 tools/tests/newgame_exp_share_negative_test.py || { echo "  FAIL new-game Exp. Share negative test"; exit 1; }
 
+echo "=== Layer 12: instant HP bar (QoL A3, 2026-10-28): a full-HP foe KO'd by Scratch, frames per bar update ==="
+CM_NO_INSTANTHP=1 python3 tools/inject_character_mode.py > /tmp/sg_hp_ctl_build.log 2>&1 \
+    && python3 tools/inject_character_mode.py > /tmp/sg_hp_build.log 2>&1 || { echo "  FAIL instant HP builds"; exit 1; }
+hp_case() {  # rom WANT_INSTANT
+    timeout 200 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=2 WANT_INSTANT=$2 "$MGBA" -t tools/savestates/battle_menu2.ss \
+        --script tools/mgba_scripts/cm_instant_hp_test.lua "$1" > /tmp/sg_hp_$(basename $1 .gba)_$2.log 2>&1 || true
+    grep -q "HARNESS RESULT: PASS" /tmp/sg_hp_$(basename $1 .gba)_$2.log
+}
+hp_case "$ROM" 1 && echo "  PASS shipped: the HP bar snaps" || { echo "  FAIL instant HP bar"; exit 1; }
+hp_case build/seaglass_cm_nohp.gba 0 && echo "  PASS CM_NO_INSTANTHP: the HP bar animates (control)" || { echo "  FAIL HP control"; exit 1; }
+hp_case build/seaglass_cm_nohp.gba 1 && { echo "  FAIL negative control: CM_NO_INSTANTHP passed 'instant'"; exit 1; } \
+    || echo "  PASS negative control: CM_NO_INSTANTHP fails 'instant' (want FAIL)"
+
 echo
 echo "ALL AUTOMATED LAYERS GREEN (incl. real-UI activation + in-situ trade e2e + wild override + live egg hatch + live PC exit)."
 echo "Remaining human-in-the-loop verify: full playthrough (docs/TESTING.md)."

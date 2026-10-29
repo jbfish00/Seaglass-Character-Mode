@@ -121,6 +121,7 @@ While Character Mode is on:
   Pokémon, not only the ones up to its level, then its egg moves (24 at most).
 - **Battle animations off for new games** (Character Mode on or off, 2026-10-28): set by the same new-game hook;
   Options turns them back on, and existing saves keep their own setting.
+- **Instant HP bar** (every save, 2026-10-28): the HP bar jumps straight to its new value in battle.
 - **HMs** are already badge-only in Seaglass, so any party Pokémon can use them.
 - **Overworld sprite**: you walk and run as your character (all 114 offered characters, including Seaglass's own Brendan and May).
 

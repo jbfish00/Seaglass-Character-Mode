@@ -259,7 +259,7 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 185  # +1: [29] battle animations off on new games (2026-10-28); +4: [29] new-game Exp. Share (2026-10-24); +3: [28] free tutors + egg relearner (2026-10-17); +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
+EXPECT_CHECKS = 186  # +1: [30] instant HP bar (2026-10-28); +1: [29] battle animations off on new games (2026-10-28); +4: [29] new-game Exp. Share (2026-10-24); +3: [28] free tutors + egg relearner (2026-10-17); +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
 # 147: +7: [22] the PC second guard (2026-09-29)
 # was 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
                      # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
@@ -450,6 +450,8 @@ def main():
     windows += [(CATCH_ODDS_SITE, 4), (CATCH_VENEER_ADDR - 0x08000000, 8)]
     # Exp. Share for every new game ([29], 2026-10-24): NewGameInitData's last BL and its 8-byte veneer
     windows += [(NEWGAME_BL_SITE, 4), (NEWGAME_VENEER_ADDR - 0x08000000, 8)]
+    # instant HP bar ([30], 2026-10-28): toAdd 255 + the branch, scale 0
+    windows += [(0x7CB10, 6), (0x7CB22, 2)]
     # reusable TMs (2026-10-09): one importance byte per TM record ([25])
     windows += [(o + 0x2C, 1) for o in _tm_importance_bytes(orig)[1] if o is not None]
     # QoL free tutors + egg relearner (2026-10-17, [28]): relearner gate / payment / three text pointers + texts,
@@ -1676,6 +1678,11 @@ def main():
        "built: CM_NewGameExpShare sets SaveBlock2+0x15 bit 2 (battle animations off; QoL A3 2026-10-28)")
     ok(not bl_callers(orig, NEWGAME_VENEER_ADDR) and not bl_callers(orig, NEWGAME_VENEER_ADDR + 4),
        "base: nothing BLs into the veneer's 8 bytes")
+    print("[30] instant HP bar (QoL A3, 2026-10-28)")
+    _hp = 0x7CB10
+    ok(bytes(orig[_hp:_hp + 20]) == bytes.fromhex("0120172e05dd18213000b0f1f7fd0004000c0622")
+       and bytes(patched[_hp:_hp + 20]) == bytes.fromhex("ff2006e0c04618213000b0f1f7fd0004000c0022"),
+       "MoveBattleBar's toAdd = 255 (`movs r0,#255 ; b` past the maxHP/24 division) and scale 0 (base bytes pinned)")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     if assert_tally(_p + _f, EXPECT_CHECKS, "verify_artifacts"):
