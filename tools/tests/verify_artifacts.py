@@ -259,7 +259,7 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 186  # +1: [30] instant HP bar (2026-10-28); +1: [29] battle animations off on new games (2026-10-28); +4: [29] new-game Exp. Share (2026-10-24); +3: [28] free tutors + egg relearner (2026-10-17); +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
+EXPECT_CHECKS = 193  # +7: [31] EXP rate (2026-10-29); +1: [30] instant HP bar (2026-10-28); +1: [29] battle animations off on new games (2026-10-28); +4: [29] new-game Exp. Share (2026-10-24); +3: [28] free tutors + egg relearner (2026-10-17); +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
 # 147: +7: [22] the PC second guard (2026-09-29)
 # was 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
                      # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
@@ -452,6 +452,10 @@ def main():
     windows += [(NEWGAME_BL_SITE, 4), (NEWGAME_VENEER_ADDR - 0x08000000, 8)]
     # instant HP bar ([30], 2026-10-28): toAdd 255 + the branch, scale 0
     windows += [(0x7CB10, 6), (0x7CB22, 2)]
+    # EXP rate ([31], 2026-10-29): veneer, getexp BL, data block (table + strings, script at +0x100), the two
+    # sStartMenuItems literals, the builder tail and the input handler's compare block (both rewritten in place)
+    windows += [(0x1FF724, 8), (0x9441E, 4), (0xFA9000, 0x180), (0x1FFD98, 4), (0x2000B8, 4), (0x1FF7A2, 24),
+                (0x20002A, 58)]
     # reusable TMs (2026-10-09): one importance byte per TM record ([25])
     windows += [(o + 0x2C, 1) for o in _tm_importance_bytes(orig)[1] if o is not None]
     # QoL free tutors + egg relearner (2026-10-17, [28]): relearner gate / payment / three text pointers + texts,
@@ -1683,6 +1687,50 @@ def main():
     ok(bytes(orig[_hp:_hp + 20]) == bytes.fromhex("0120172e05dd18213000b0f1f7fd0004000c0622")
        and bytes(patched[_hp:_hp + 20]) == bytes.fromhex("ff2006e0c04618213000b0f1f7fd0004000c0022"),
        "MoveBattleBar's toAdd = 255 (`movs r0,#255 ; b` past the maxHP/24 division) and scale 0 (base bytes pinned)")
+
+    print("[31] EXP rate: START > EXP RATE, Cmd_getexp scales the award (QoL, 2026-10-29)")
+    _sy = _elf_syms("cm.elf")
+    _shim = (ROOT / "build" / "cm.bin").read_bytes()
+    _vn, _bl, _tbl, _scr = 0x1FF724, 0x9441E, 0xFA9000, 0xFA9100
+    ok(decode_bl(orig, _bl) == 0x080A82B8 and decode_bl(patched, _bl) == 0x081FF724
+       and bytes(orig[_vn:_vn + 8]) == bytes.fromhex("034a13780349c854")
+       and struct.unpack_from("<HHI", patched, _vn) == (0x4B00, 0x4718, _sy["CM_ApplyExpMultipliers"] | 1),
+       "getexp: the BL at 0x0809441E called ApplyExperienceMultipliers and now calls the veneer over the dead "
+       "AddStartMenuAction, whose literal is CM_ApplyExpMultipliers")
+    ok(not bl_callers(orig, 0x081FF724) and struct.pack("<I", 0x081FF725) not in orig,
+       "base: AddStartMenuAction 0x081FF724 has no BL caller and no pointer (every caller inlines it)")
+    _f0 = _sy["CM_ApplyExpMultipliers"] - SHIM_ADDR
+    _body = _shim[_f0:_f0 + 0x60]
+    ok(struct.pack("<I", 0x080A82B9) in _body and struct.pack("<H", 0x407C) in _body and bytes([2, 3, 4, 6, 1]) in _shim,
+       "compiled CM_ApplyExpMultipliers: calls ApplyExperienceMultipliers (literal 0x080A82B9), reads VAR 0x407C, and "
+       "the shim holds the x/2 table 02 03 04 06 01 (a CM_NO_EXPRATE build has neither the var nor the table)")
+    _cmap = load_charmap()
+    _t16, _f16 = struct.unpack_from("<II", patched, _tbl + 16 * 8)
+    ok([struct.unpack_from("<I", orig, a)[0] for a in (0x1FFD98, 0x2000B8)] == [0x0895F500] * 2
+       and [struct.unpack_from("<I", patched, a)[0] for a in (0x1FFD98, 0x2000B8)] == [0x08FA9000] * 2
+       and patched[_tbl:_tbl + 16 * 8] == orig[0x95F500:0x95F500 + 16 * 8]
+       and patched[_t16 - 0x08000000:_t16 - 0x08000000 + 9] == enc("EXP RATE", _cmap)
+       and _f16 == _sy["CM_StartMenuExpRate"] | 1,
+       "START: both sStartMenuItems readers point at the copy, whose first 16 rows are the base table verbatim and "
+       "whose row 16 is 'EXP RATE' -> CM_StartMenuExpRate")
+    ok(bytes(orig[0x1FF7A2:0x1FF7A2 + 24]) == bytes.fromhex("2378002804d10522ea5401331b061b0e0622ea5401332370")
+       and bytes(patched[0x1FF7A2:0x1FF7A2 + 24]) == bytes.fromhex("23780522ea5401331b1ae91806220a7010224a7002332370"),
+       "START: BuildNormalStartMenu's tail writes SAVE (5), advances by 1 - FlagGet, appends 6 and 16 (bytes pinned)")
+    ok(bytes(orig[0x20002A:0x20002A + 58]) == bytes.fromhex(
+           "264bcb1a5a1e9341254a8a1a501e82411a40234bcb1a581e83411340224a8a1a501e82411a42c0d0204b9942bdd00120002138f708fd0020cae7")
+       and bytes(patched[0x20002A:0x20002A + 58]) == bytes.fromhex(
+           "3078285c1028d0d0244b9942cdd0234b9942cad0234b9942c7d0224b9942c4d0224b9942c1d001200021"
+           "38f70cfdbce7c046c046c046c046c046"),
+       "START: HandleStartMenuInput skips the fade for action 16 and keeps the five no-fade callbacks and the "
+       "FadeScreen BL (bytes pinned)")
+    _sc = patched[_scr:_scr + 0x40]
+    ok(_sc[0] == 0x69 and _sc[1] == 0x23 and struct.unpack_from("<I", _sc, 2)[0] == _sy["CM_ExpRatePrep"] | 1
+       and _sc[6] == 0x67 and _sc[11] == 0x66 and _sc[12] == 0xE3
+       and struct.unpack_from("<H", _sc, 20)[0] == 0x8000 and _sc[22:24] == bytes([0xFF, 5])
+       and _sc[44] == 0x23 and struct.unpack_from("<I", _sc, 45)[0] == _sy["CM_ExpRateSet"] | 1
+       and _sc[49:53] == bytes([0x68, 0x6B, 0x02, 0xFF]),
+       "the chooser script: lockall; callnative CM_ExpRatePrep; message; waitmessage; dynmultichoice (initial = "
+       "VAR_0x8000, 5 rows); callnative CM_ExpRateSet; closemessage; releaseall; end")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     if assert_tally(_p + _f, EXPECT_CHECKS, "verify_artifacts"):

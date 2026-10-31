@@ -1102,3 +1102,70 @@ void CM_NewGameExpShare(void)
         AddBagItem(ITEM_EXP_SHARE, 1);
     gSaveBlock2Ptr_[0x15] |= 1 << 2;
 }
+
+/* ------------------------------------------------------------ EXP rate (QoL, user 2026-10-29)
+ * Battle EXP x0.5 / x1 / x1.5 / x2 / x3 in every save, CM on or off. VAR_EXP_RATE: 0 = x1 (every existing save),
+ * 1 = x1.5, 2 = x2, 3 = x3, 4 = x0.5. 0x407C is vanilla's VAR_ROUTE129_STATE ("Unused Var" in pret's vars.h); this
+ * ROM has no script operand and no code literal for it.
+ *
+ * Multiply: Cmd_getexp stores the per-mon award in gBattleMoveDamage and calls
+ * ApplyExperienceMultipliers(&gBattleMoveDamage, expGetterMonId, gBattlerFainted) (0x080A82B8: Lucky Egg, traded,
+ * the 1.5x boosts) at 0x0809441E; the "gained N EXP" text and the controller's exp update read the value after it.
+ * That BL goes through a veneer (r3 is dead there) to CM_ApplyExpMultipliers, which runs the original and then
+ * scales: award * N / 2 (N = 2, 3, 4, 6, 1); a nonzero award never becomes 0.
+ * CM_NO_EXPRATE (control build): the hook still runs the original, the rate is ignored. */
+#define VAR_EXP_RATE        0x407C
+#define ApplyExperienceMultipliers ((void (*)(int *, u8, u8)) 0x080A82B9)
+
+void CM_ApplyExpMultipliers(int *exp, u8 monId, u8 fainted)
+{
+    static const u8 sHalves[5] = { 2, 3, 4, 6, 1 };
+    u16 rate;
+    int v;
+
+    ApplyExperienceMultipliers(exp, monId, fainted);
+#ifndef CM_NO_EXPRATE
+    rate = *GetVarPointer(VAR_EXP_RATE);
+    v = *exp;
+    if (rate == 0 || rate > 4 || v <= 0)
+        return;
+    v = (int) (((u32) v * sHalves[rate]) >> 1);
+    *exp = v ? v : 1;
+#else
+    (void) rate; (void) v; (void) sHalves;
+#endif
+}
+
+/* START > "EXP RATE" (action 16, appended after OPTION in the normal menu). The input handler skips its fade to
+ * black for action 16 (patched in place), and the start-menu task calls this once: close the menu exactly like EXIT
+ * (StartMenuExitCallback 0x0820027C), then run the chooser script (EXPRATE_SCRIPT_ADDR):
+ *   lockall; callnative CM_ExpRatePrep; message; waitmessage; dynmultichoice (initial = VAR_0x8000);
+ *   callnative CM_ExpRateSet; closemessage; releaseall; end */
+#define StartMenuExitCallback   ((u8 (*)(void))          0x0820027D)
+#define ScriptContext_SetupScript ((void (*)(const u8 *)) 0x081EF599)
+
+u8 CM_StartMenuExpRate(void)
+{
+    StartMenuExitCallback();
+    ScriptContext_SetupScript((const u8 *) EXPRATE_SCRIPT_ADDR);
+    return 1;
+}
+
+/* rows top to bottom: x0.5 x1 x1.5 x2 x3 */
+static const u8 sExpRateRowToValue[5] = { 4, 0, 1, 2, 3 };
+static const u8 sExpRateValueToRow[5] = { 1, 2, 3, 4, 0 };
+
+void CM_ExpRatePrep(void)
+{
+    u16 rate = *GetVarPointer(VAR_EXP_RATE);
+
+    *GetVarPointer(0x8000) = sExpRateValueToRow[rate <= 4 ? rate : 0];
+}
+
+void CM_ExpRateSet(void)
+{
+    u16 row = *GetVarPointer(VAR_RESULT);
+
+    if (row < 5)                        /* B (MULTI_B_PRESSED, 127) keeps the rate */
+        *GetVarPointer(VAR_EXP_RATE) = sExpRateRowToValue[row];
+}

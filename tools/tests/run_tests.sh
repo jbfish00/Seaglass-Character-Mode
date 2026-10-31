@@ -553,6 +553,44 @@ hp_case build/seaglass_cm_nohp.gba 0 && echo "  PASS CM_NO_INSTANTHP: the HP bar
 hp_case build/seaglass_cm_nohp.gba 1 && { echo "  FAIL negative control: CM_NO_INSTANTHP passed 'instant'"; exit 1; } \
     || echo "  PASS negative control: CM_NO_INSTANTHP fails 'instant' (want FAIL)"
 
+echo "=== Layer 13: EXP rate (QoL, user 2026-10-29): START > EXP RATE, Cmd_getexp scales the award, every save ==="
+# The Exp. Share battle (CM off) at every rate gives x1 * N / 2 to the battler and the bench mon (pinned below); the
+# CM_NO_EXPRATE control ignores the rate, so asked for x2 it must FAIL, and its shim fails verify_artifacts'
+# compiled-code check. START > EXP RATE: three chooser cases, and the same ROM with the input handler's original bytes
+# back (it fades to black first) must FAIL the "opened over the field" check.
+CM_NO_EXPRATE=1 python3 tools/inject_character_mode.py > /tmp/sg_er_ctl_build.log 2>&1 || { echo "  FAIL EXP rate control build"; exit 1; }
+python3 tools/tests/verify_artifacts.py 2>&1 | grep -aq "FAIL compiled CM_ApplyExpMultipliers" \
+    && echo "  PASS verify_artifacts' compiled-code check FAILS on the CM_NO_EXPRATE shim" \
+    || { echo "  FAIL the compiled-code check did not fail on the control shim"; exit 1; }
+python3 tools/inject_character_mode.py > /tmp/sg_er_build.log 2>&1 || { echo "  FAIL EXP rate build"; exit 1; }
+for c in "seaglass_cm 0 25 12 PASS" "seaglass_cm 1 37 18 PASS" "seaglass_cm 2 50 24 PASS" "seaglass_cm 3 75 36 PASS" \
+         "seaglass_cm 4 12 6 PASS" "seaglass_cm_noexprate 2 50 24 FAIL" "seaglass_cm_noexprate 2 25 12 PASS"; do
+    set -- $c
+    timeout 200 env RATE=$2 WANT0=$3 WANT1=$4 CM_EXPECT_CHECKS=4 "$MGBA" -t tools/savestates/battle_menu2.ss \
+        --script tools/mgba_scripts/cm_exp_rate_test.lua build/$1.gba > /tmp/sg_er_$1_$2_$3.log 2>&1 || true
+    grep -aq "HARNESS RESULT: $5" /tmp/sg_er_$1_$2_$3.log \
+        && echo "  PASS $1 rate $2 -> +$3 / +$4 is $5 ($(grep -ao 'battler +[0-9]*, bench +[0-9]*' /tmp/sg_er_$1_$2_$3.log | tail -1))" \
+        || { echo "  FAIL $1 rate $2 want +$3 / +$4 $5 (see /tmp/sg_er_$1_$2_$3.log)"; exit 1; }
+done
+python3 - <<'PY'
+d = bytearray(open("build/seaglass_cm.gba", "rb").read())
+o = 0x20002A
+d[o:o + 58] = bytes.fromhex("264bcb1a5a1e9341254a8a1a501e82411a40234bcb1a581e83411340224a8a1a501e8241"
+                            "1a42c0d0204b9942bdd00120002138f708fd0020cae7")
+open("/tmp/sg_erfade.gba", "wb").write(d)
+PY
+for c in "build/seaglass_cm.gba DDA 2 PASS" "build/seaglass_cm.gba UA 4 PASS" "build/seaglass_cm.gba B 0 PASS" \
+         "/tmp/sg_erfade.gba DDA 2 FAIL"; do
+    set -- $c
+    timeout 100 env KEYS=$2 WANT=$3 CM_EXPECT_CHECKS=4 "$MGBA" -t tools/savestates/route101.ss \
+        --script tools/mgba_scripts/cm_exp_rate_ui_test.lua "$1" > /tmp/sg_erui_$(basename $1 .gba)_$2.log 2>&1 || true
+    grep -aq "HARNESS RESULT: $4" /tmp/sg_erui_$(basename $1 .gba)_$2.log \
+        && { [ "$4" = PASS ] || grep -aq "FAIL the chooser opened over the field" /tmp/sg_erui_$(basename $1 .gba)_$2.log; } \
+        && echo "  PASS START row: $(basename $1) keys $2 -> $3 is $4" \
+        || { echo "  FAIL START row: $(basename $1) keys $2 want $4 (see /tmp/sg_erui_$(basename $1 .gba)_$2.log)"; exit 1; }
+done
+python3 tools/tests/exprate_negative_test.py || { echo "  FAIL EXP rate negative test"; exit 1; }
+
 echo
 echo "ALL AUTOMATED LAYERS GREEN (incl. real-UI activation + in-situ trade e2e + wild override + live egg hatch + live PC exit)."
 echo "Remaining human-in-the-loop verify: full playthrough (docs/TESTING.md)."

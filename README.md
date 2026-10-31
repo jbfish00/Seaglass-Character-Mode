@@ -122,6 +122,9 @@ While Character Mode is on:
 - **Battle animations off for new games** (Character Mode on or off, 2026-10-28): set by the same new-game hook;
   Options turns them back on, and existing saves keep their own setting.
 - **Instant HP bar** (every save, 2026-10-28): the HP bar jumps straight to its new value in battle.
+- **EXP rate** (every save, Character Mode on or off, 2026-10-30): START > **EXP RATE** (the last row) sets battle
+  EXP to x0.5, x1, x1.5, x2 or x3; the current rate is preselected and B keeps it. It multiplies what the game already
+  pays (after the Lucky Egg and Exp. Share), and an existing save starts at x1.
 - **HMs** are already badge-only in Seaglass, so any party Pokémon can use them.
 - **Overworld sprite**: you walk and run as your character (all 114 offered characters, including Seaglass's own Brendan and May).
 

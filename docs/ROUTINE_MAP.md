@@ -765,3 +765,26 @@ User ruling 2026-10-21: the early party-wide Exp. Share also applies with Charac
 Evidence: verify [29] (4), `newgame_exp_share_negative_test.py` 6/6 (in the checker guard), live layer 11
 (`cm_newgame_expshare_test.lua`: cold boot, A-mash the real intro, CM never on; the hooked call ran once, flag 0x20 = 1,
 item 461 in pocket 4; the same ROM with only the BL restored grants nothing and fails "granted").
+
+## EXP rate (QoL, user 2026-10-29; built 2026-10-30): ✅ SHIPPED, LIVE
+
+START > "EXP RATE" sets VAR 0x407C (vanilla VAR_ROUTE129_STATE, unused; 0 = x1, 1 = x1.5, 2 = x2, 3 = x3, 4 = x0.5);
+Cmd_getexp scales each mon's award by N / 2. Every save, CM on or off. Code: `src/character_mode.c` "EXP rate",
+injector `exp_rate()`. Same design as Lazarus (its ROUTINE_MAP "EXP rate").
+
+| what | addr | notes |
+|---|---|---|
+| `ApplyExperienceMultipliers(s32 *exp, u8 monId, u8 fainted)` | `0x080A82B8` | |
+| its only caller | BL `0x0809441E` in Cmd_getexp | `IsExpShareEnabled` `0x080D00D0` = FlagGet(0x20) |
+| veneer | `0x081FF724` | the standalone AddStartMenuAction (16 B + 8 B pool): no BL caller, no pointer, no word or short branch into it |
+| `sStartMenuItems` | `0x0895F500`, 16 x {text, callback} | 0 POKéDEX ... 7 EXIT, 13 DEBUG, 14 DEXNAV, 15 EDIT STATS. Readers: literals `0x081FFD98`, `0x082000B8`. Copied to `0x08FA9000` with row 16 |
+| `sCurrentStartMenuActions` / count / cursor | `0x0201D334` / `0x0201D330` / `0x0201D32F` | |
+| BuildNormalStartMenu | `0x081FF73C` (caller `0x081FF716`) | Pokédex if 0x861, Pokémon if 0x860, Bag, PokéNav if 0x862, DexNav if 0x88F, name, SAVE unless 0x279, OPTION. Tail `0x081FF7A2` (24 B) rewritten branchless: write 5, count += 1 - FlagGet, append 6 and 16. 9 rows at most (seen on screen) |
+| HandleStartMenuInput | A path `0x08200000` | r1 = callback after `str r1,[gMenuCallback]`; DexNav special case `cmp r3,#14`; FadeScreen `0x08138A70` unless EXIT `0x0820027D` / SAVE `0x0820021D` / DEBUG `0x082002A5` / RETIRE `0x082002C5` / `0x08200341`. Compare block `0x0820002A` (58 B) rewritten with "action 16" added |
+| StartMenuExitCallback | `0x0820027C` | |
+| ScriptContext_SetupScript | `0x081EF598` | |
+| chooser script | `0x08FA9100` | as Lazarus |
+
+Evidence: verify [31] (7), `exprate_negative_test.py` 7/7, live `cm_exp_rate_test.lua` (x1 25/12, x1.5 37/18, x2 50/24,
+x3 75/36, x0.5 12/6; CM_NO_EXPRATE asked x2 FAILS) and `cm_exp_rate_ui_test.lua` (3 chooser cases + the fade control),
+run_tests.sh layer 13.
