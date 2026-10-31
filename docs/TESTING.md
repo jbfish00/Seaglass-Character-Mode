@@ -167,7 +167,26 @@ string) rather than looping `emu:read8`. Scanning 256 KB of EWRAM one byte at a
 time crosses the C/Lua marshalling boundary ~200k times and stalls the emulator
 so hard the frame callback never returns.
 
-## ⭐ CURRENT COUNTS (2026-09-07) — the per-layer numbers in the matrix are historical
+## ⭐ CURRENT COUNTS (2026-10-30)
+
+```
+bash    tools/tests/run_tests.sh                    # ALL AUTOMATED LAYERS GREEN, 33 "=== Layer" sections (2026-10-30)
+python3 tools/tests/verify_artifacts.py             # 193 checks ([1]-[31])
+python3 tools/tests/exprate_negative_test.py        # 7/7 ([31], EXP rate; also run by layer 13)
+```
+The other `*_negative_test.py` files each pin their own case count (`EXPECT_CASES`). Counts below this block are older.
+
+Layers added since the 2026-09-07 block: 4j PC second guard, 4r relearner egg moves, 8 overworld sprite, 9 reusable
+TMs, 10 100% on-roster catch, 11 Exp. Share + battle animations off for every new game, 12 instant HP bar, and:
+
+| layer | script | proves |
+|---|---|---|
+| 13 EXP rate | `cm_exp_rate_test.lua` (battle_menu2.ss) | Exp. Share battle, CM off: x1 25/12, x1.5 37/18, x2 50/24, x3 75/36, x0.5 12/6; `CM_NO_EXPRATE` fails x2, and its shim fails verify's compiled-code check |
+| 13 EXP rate START row | `cm_exp_rate_ui_test.lua` (route101.ss) | START > EXP RATE: DDA -> x2, UA -> x0.5, B keeps; the ROM with the input handler's original bytes (fade to black) must FAIL "opened over the field" |
+
+`mon_decrypt.lua` (copied from Lazarus) reads a party mon's EXP from its encrypted substructures, checksum-validated.
+
+## CURRENT COUNTS (2026-09-07) — historical
 
 ⚠️ **Count these, never remember them.** `run_tests.sh` defines **22** `=== Layer`
 sections as of 2026-09-10 (21 before layer 4i), none skipped — not the 20 this

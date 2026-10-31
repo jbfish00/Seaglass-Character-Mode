@@ -19,3 +19,20 @@ A scan for 0x00 runs ≥1 KiB found 64 runs totaling ~608 KiB scattered througho
 ## Conclusion
 
 Free space is not expected to be a bottleneck for Character Mode's data payload (roster/name tables are small — see `tools/character_mode/characters_manifest.json`, currently ~1.2 KB of names alone). The 1.18 MiB trailing 0xFF block at `0x00ED2164` is the primary target for both data injection and any new code routines Phase 1 needs to add.
+
+## Hook trampolines and veneers as built (2026-10-30)
+
+The free tail (`0x08ED2164`+) is out of BL reach of the battle and field code, so every BL-hooked site jumps through a
+small veneer near it. ⚠️ The first trampolines sat in a "verified 64-byte 0xFF scavenge run" at `0x08470200` that is a
+referenced sprite frame (`SpriteFrameImage {0x08470200, 0x40}` at `0x0895ED54`); a run of 0xFF is not free unless
+nothing points at it (rowe_parity.md §13.53). It is now asserted byte-identical to the base.
+
+| address | what lives there | why it is free |
+|---|---|---|
+| `0x081C3430` +0 / +8 / +16 / +24 | PC second guard, catch + gift gate, encounter marker, wild entry stub (12 B; the wild veneer itself is at `0x08FA8000`) | the standalone IsRemovingLastPartyMon: inlined at all call sites, no BL caller, no pointer (verify [22]) |
+| `0x081C3458` | 100% catch veneer | the same function's tail + pool (verify [26]) |
+| `0x081C3460` | new-game Exp. Share veneer | the pool's last two words. **The block is now full.** |
+| `0x081FF724` | EXP rate veneer (getexp BL `0x0809441E`) | the standalone AddStartMenuAction (16 B + 8 B pool): every caller inlines it; no BL caller, no pointer, no word or short branch into it (verify [31]) |
+
+Patched in place, no veneer: MoveBattleBar `0x0807CB10`, the START menu builder tail `0x081FF7A2` and input handler
+`0x0820002A` (EXP rate). Data in the tail is listed by the injector's `*_ADDR` constants (EXP rate block `0x08FA9000`).
