@@ -1671,9 +1671,9 @@ def main():
        and bytes(orig[_nv:_nv + 8]) == bytes.fromhex("76a1010275a10102"),
        f"built: the BL goes through the veneer (ldr r3,[pc]; bx r3) to CM_NewGameExpShare {_ng | 1:#x}")
     _no = (_ng & ~1) - 0x08000000
-    _nc = bytes(patched[_no:_no + 0x54])   # code + its 5-word pool (2026-10-28: + the battle-scene store)
+    _nc = bytes(patched[_no:_no + 0xCC])   # code + its pool (2026-10-28: + the battle-scene store; 2026-11-07: + the starter kit)
     _nl = {struct.unpack_from("<I", _nc, k)[0] for k in range(0, len(_nc) - 3, 4)}
-    _nb = [decode_bl(patched, _no + k) for k in range(0, 0x3C, 2) if decode_bl(patched, _no + k)]
+    _nb = [decode_bl(patched, _no + k) for k in range(0, 0xB0, 2) if decode_bl(patched, _no + k)]
     ok({RESET_CONTEST_LINK | 1, 0x0810D255, 0x0814D089, 0x0814D2D1} <= _nl and len(_nb) >= 4
        and any(struct.unpack_from("<H", _nc, k)[0] == 0x2020 for k in range(0, len(_nc), 2))
        and len(re.findall(rb"\xce\x20\x01\x21..\xff\x30", _nc, re.S)) == 2,   # movs r0,#206 ; movs r1,#1 ; ldr ; adds r0,#255 = 461, twice

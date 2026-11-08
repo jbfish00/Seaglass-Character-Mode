@@ -528,7 +528,7 @@ d[0x176F50:0x176F54] = ((0xF000 | ((off >> 12) & 0x7FF)).to_bytes(2, "little")
 open(sys.argv[2], "wb").write(d)
 PY
 ng_case() {   # name rom expect
-    timeout 300 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=5 EXPECT=$3 SHOT=/tmp/sg_ng_$1.png \
+    timeout 300 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=$([ $3 = granted ] && echo 10 || echo 9) EXPECT=$3 SHOT=/tmp/sg_ng_$1.png \
         "$MGBA" --script tools/mgba_scripts/cm_newgame_expshare_test.lua "$2" > /tmp/sg_ng_$1.log 2>&1 || true
     grep -q "HARNESS RESULT: PASS" /tmp/sg_ng_$1.log
 }

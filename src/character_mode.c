@@ -1101,6 +1101,20 @@ void CM_NewGameExpShare(void)
     if (!CheckBagHasItem(ITEM_EXP_SHARE, 1))
         AddBagItem(ITEM_EXP_SHARE, 1);
     gSaveBlock2Ptr_[0x15] |= 1 << 2;
+#ifndef CM_NO_STARTKIT
+    /* QoL C11 + C16 (2026-11-07, every new game): Running Shoes (FLAG_SYS_B_DASH 0x8C0, the id Seaglass's own scripts
+     * set at 0x0827E242/0x082D7E3C), the Mach Bike (707) + Rydel's FLAG_RECEIVED_BIKE (0x5A: his script at 0x082A8222
+     * sets it before giveitem 707, so he offers the swap instead of a second bike), and the Shiny (691) + Oval (690)
+     * Charms: Seaglass's code asks the bag for both (CheckBagHasItem(691) x7 incl. 0x081A715A, (690) at 0x080F5200). */
+    FlagSet(0x8C0);
+    if (!FlagGet(0x5A) && !CheckBagHasItem(707, 1))
+        AddBagItem(707, 1);
+    FlagSet(0x5A);
+    if (!CheckBagHasItem(691, 1))
+        AddBagItem(691, 1);
+    if (!CheckBagHasItem(690, 1))
+        AddBagItem(690, 1);
+#endif
 }
 
 /* ------------------------------------------------------------ EXP rate (QoL, user 2026-10-29)

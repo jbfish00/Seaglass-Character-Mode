@@ -94,7 +94,7 @@ def main():
     fn = (_syms()["CM_NewGameExpShare"] & ~1) - 0x08000000
     flag = fn + bytes(good[fn:fn + 0x20]).find(bytes.fromhex("2020"))      # movs r0,#0x20
     assert flag > fn, "movs r0,#0x20 not found in CM_NewGameExpShare"
-    pool = fn + bytes(good[fn:fn + 0x54]).find((ORIG_BL_TARGET | 1).to_bytes(4, "little"))
+    pool = fn + bytes(good[fn:fn + 0xCC]).find((ORIG_BL_TARGET | 1).to_bytes(4, "little"))
     assert pool > fn, "ResetContestLinkResults literal not found in CM_NewGameExpShare"
     fails, passes = [], 0
 
@@ -149,7 +149,7 @@ def main():
         case("5 CM_NewGameExpShare drops ResetContestLinkResults", no_reset, "fn")
 
         def no_scene(d):
-            k = fn + bytes(d[fn:fn + 0x54]).find(bytes.fromhex("0b43"))       # orrs r3,r1 -> movs r3,r3
+            k = fn + bytes(d[fn:fn + 0xCC]).find(bytes.fromhex("0b43"))       # orrs r3,r1 -> movs r3,r3
             assert k > fn
             d[k:k + 2] = bytes.fromhex("1b00")
         case("6 the battle-scene bit is no longer set", no_scene, "scene")

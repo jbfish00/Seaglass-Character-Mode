@@ -3,6 +3,7 @@
 -- hooked at NewGameInitData's last BL 0x08176F50, built 2026-10-24).
 --
 -- 2026-10-28 (QoL A3): the same hook also turns battle animations off (SaveBlock2+0x15 bit 2).
+-- 2026-11-07 (QoL C11/C16): ... and gives Running Shoes, the Mach Bike (+ Rydel's flag), Shiny + Oval Charm.
 -- Cold boot with no save, A-mash the whole real intro (Birch speech, naming,
 -- truck) exactly as drive_intro.lua does. Character Mode is never turned on.
 -- Then:
@@ -30,15 +31,18 @@ H.mash(H.KEY.A, 30, END_FRAME, 24)
 H.onFrame(function(f)
     if f ~= END_FRAME + 60 then return end
     emu:screenshot(shot)
-    local has = false
-    for p = 0, 7 do
-        local slots, cap = H.rd32(H.BAG_POCKETS + 8 * p), H.rd8(H.BAG_POCKETS + 8 * p + 4)
-        if slots >= 0x02000000 and slots < 0x02040000 then
-            for i = 0, cap - 1 do
-                if H.rd16(slots + 4 * i) == 461 then has = true; H.log("Exp. Share in pocket " .. p) end
+    local function bagHas(item)
+        for p = 0, 7 do
+            local slots, cap = H.rd32(H.BAG_POCKETS + 8 * p), H.rd8(H.BAG_POCKETS + 8 * p + 4)
+            if slots >= 0x02000000 and slots < 0x02040000 then
+                for i = 0, cap - 1 do
+                    if H.rd16(slots + 4 * i) == item then H.log("item " .. item .. " in pocket " .. p); return true end
+                end
             end
         end
+        return false
     end
+    local has = bagHas(461)
     H.assertEq("NewGameInitData's hooked call ran once (the intro reached the new game)", ngRan, 1)
     H.assertEq("Character Mode never turned on (flag 0x2B0)", H.getFlag(0x2B0), 0)
     local sceneOff = (H.rd8(H.rd32(H.gSaveBlock2Ptr) + 0x15) >> 2) & 1   -- QoL A3 (2026-10-28)
@@ -46,10 +50,20 @@ H.onFrame(function(f)
         H.assertEq("party-wide Exp. Share switched on (flag 0x20)", H.getFlag(0x20), 1)
         H.assertTrue("an Exp. Share is in the bag (item 461)", has)
         H.assertEq("battle animations off on the new game (SaveBlock2+0x15 bit 2)", sceneOff, 1)
+        -- QoL C11/C16 (2026-11-07): Running Shoes, Mach Bike + Rydel's flag, Shiny + Oval Charm
+        H.assertEq("Running Shoes (FLAG_SYS_B_DASH 0x8C0)", H.getFlag(0x8C0), 1)
+        H.assertEq("Rydel's FLAG_RECEIVED_BIKE (0x5A)", H.getFlag(0x5A), 1)
+        H.assertTrue("Mach Bike (707) in the bag", bagHas(707))
+        H.assertTrue("Shiny Charm (691) in the bag", bagHas(691))
+        H.assertTrue("Oval Charm (690) in the bag", bagHas(690))
     else
         H.assertEq("no hook: flag 0x20 stays off", H.getFlag(0x20), 0)
         H.assertTrue("no hook: no Exp. Share in the bag", not has)
         H.assertEq("no hook: battle animations keep the game's default (on)", sceneOff, 0)
+        H.assertEq("no hook: Rydel's flag 0x5A stays off", H.getFlag(0x5A), 0)
+        H.assertTrue("no hook: no Mach Bike", not bagHas(707))
+        H.assertTrue("no hook: no Shiny Charm", not bagHas(691))
+        H.assertTrue("no hook: no Oval Charm", not bagHas(690))
     end
     H.finish()
 end)
