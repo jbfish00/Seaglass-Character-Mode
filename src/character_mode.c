@@ -421,6 +421,15 @@ void CM_BattleStringGated(const u8 *src, u8 *dst)
         if (species != 0 && onRoster(charId, species))
             src = (const u8 *) (MARKER_ADDR
                                 + (u32) (charId - 1) * MARKER_STRIDE);
+#ifndef CM_NO_OFFROSTER
+        /* QoL B9 (2026-11-08): an off-roster mon says so before the throw.
+           One shared record after the per-character ones. onRoster() calls an
+           out-of-model species "allowed", so this needs a real one -- the
+           same rule CM_CatchOdds uses to refuse the ball. */
+        else if (species != 0 && species < NUM_SPECIES)
+            src = (const u8 *) (MARKER_ADDR
+                                + (u32) NUM_CHARACTERS * MARKER_STRIDE);
+#endif
     }
     OrigExpandString(src, dst);
 }

@@ -206,7 +206,8 @@ PSS_CANSHIFT_BL    = 0x1C352C         # CanShiftMon (0x081C3508): bl Count
 PSS_CANSHIFT_TAIL  = 0x1C3530         # cmp r0,#0 ; bne -> b <epilogue 0x081C3524> ; nop
 PSS_GUARD_TRAMPOLINE_ADDR = TRAMPOLINE_BLOCK   # +0 of the block over the dead function
 TEXT_WILD_APPEARED = 0x084C646C     # "Wild {FD}{06} appeared!{FB}"
-# 193*64 = 12,352 B, in the run verified 0xFF from 0x08F0A000 to 0x08F1C000.
+# (193+1)*64 = 12,416 B (the last record is the QoL B9 off-roster line), in the
+# run verified 0xFF from 0x08F0A000 to 0x08F1C000.
 # ⚠️ NOT 0x08F10000: tools/tests/build_trade_testrom.py already writes its
 # test script there, and it asserts the space is clear -- so the first choice
 # broke the trade layer rather than corrupting anything. Kept as an assert
@@ -817,6 +818,7 @@ def main():
                     f"-DTRADE_COUNT={TRADE_COUNT}",
                     f"-DWILDPOOL_ADDR={WILDPOOL_ADDR:#x}",
                     f"-DMARKER_ADDR={MARKER_ADDR:#x}",
+                    *(["-DCM_NO_OFFROSTER"] if os.environ.get("CM_NO_OFFROSTER") == "1" else []),
                     f"-DWILDPOOL_STRIDE={WILDPOOL_STRIDE}",
                     f"-DNUM_CHARACTERS={NUM_CHARACTERS}",
                     f"-DTOBIAS_CHAR_ID={TOBIAS_CHAR_ID}",
@@ -1310,9 +1312,10 @@ def main():
 
     # --- encounter marker: per-character intro strings + its trampoline ---
     marker_blob = (CM / "marker_strings.bin").read_bytes()
-    assert len(marker_blob) == NUM_CHARACTERS * MARKER_STRIDE, (
+    # + 1: the shared off-roster line (QoL B9, 2026-11-08) is record NUM_CHARACTERS.
+    assert len(marker_blob) == (NUM_CHARACTERS + 1) * MARKER_STRIDE, (
         f"marker_strings.bin is {len(marker_blob)} B, expected "
-        f"{NUM_CHARACTERS * MARKER_STRIDE} for {NUM_CHARACTERS} characters "
+        f"{(NUM_CHARACTERS + 1) * MARKER_STRIDE} for {NUM_CHARACTERS} characters + 1 "
         f"-- re-run emit_marker_strings.py")
     assert not (MARKER_ADDR <= TRADE_TEST_SCRIPT_ADDR
                 < MARKER_ADDR + len(marker_blob)), (

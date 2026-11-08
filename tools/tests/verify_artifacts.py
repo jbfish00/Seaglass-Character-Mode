@@ -259,7 +259,7 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 193  # +7: [31] EXP rate (2026-10-29); +1: [30] instant HP bar (2026-10-28); +1: [29] battle animations off on new games (2026-10-28); +4: [29] new-game Exp. Share (2026-10-24); +3: [28] free tutors + egg relearner (2026-10-17); +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
+EXPECT_CHECKS = 195  # +2: [18] off-roster intro record (QoL B9, 2026-11-08); +7: [31] EXP rate (2026-10-29); +1: [30] instant HP bar (2026-10-28); +1: [29] battle animations off on new games (2026-10-28); +4: [29] new-game Exp. Share (2026-10-24); +3: [28] free tutors + egg relearner (2026-10-17); +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
 # 147: +7: [22] the PC second guard (2026-09-29)
 # was 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
                      # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
@@ -417,7 +417,7 @@ def main():
                # encounter marker: the per-character intro strings. Its
                # trampoline needs no window of its own -- it lives inside the
                # 64-byte scavenge run already covered above.
-               (0xF12000, NUM_CHARACTERS * 64),
+               (0xF12000, (NUM_CHARACTERS + 1) * 64),   # + the QoL B9 off-roster record
                (0x086EAA, 4),
                # PC second guard: six retargeted BLs, CanShiftMon's tail, and
                # the 8-byte trampoline over the dead IsRemovingLastPartyMon.
@@ -1379,7 +1379,7 @@ def main():
     _TEXT_WILD = 0x084C646C
     _BL, _EXPAND, _TRAMP = 0x086EAA, 0x080876DC, TRAMPOLINE_BLOCK + 16
     _mk = (CM / "marker_strings.bin").read_bytes()
-    ok(len(_mk) == NUM_CHARACTERS * _MARKER_STRIDE,
+    ok(len(_mk) == (NUM_CHARACTERS + 1) * _MARKER_STRIDE,
        f"marker_strings.bin is {NUM_CHARACTERS}x{_MARKER_STRIDE} "
        f"({len(_mk)} B)")
     _in_rom = bytes(patched[_MARKER_ADDR - 0x08000000:
@@ -1418,9 +1418,18 @@ def main():
        f"its literal is a Thumb pointer into the shim ({_hook:#010x})")
     # Every character's slot must be a terminated string, or a character whose
     # marker overran its stride would render whatever follows.
-    _bad = [i for i in range(NUM_CHARACTERS)
+    _bad = [i for i in range(NUM_CHARACTERS + 1)
             if 0xFF not in _mk[i * _MARKER_STRIDE:(i + 1) * _MARKER_STRIDE]]
     ok(not _bad, f"every marker slot is 0xFF-terminated ({len(_bad)} bad)")
+    # QoL B9 (2026-11-08): the shared off-roster record, and the shim's use of it.
+    _off_want = bytes.fromhex("d1dde0d800fd0600d5e4e4d9d5e6d9d8abfe"
+                              "c3e800dde700e2e3e800e3e200ede3e9e600e6e3e7e8d9e6adfbff")
+    ok(_mk[NUM_CHARACTERS * _MARKER_STRIDE:
+           NUM_CHARACTERS * _MARKER_STRIDE + len(_off_want)] == _off_want,
+       "the off-roster record reads 'Wild X appeared! / It is not on your roster.'")
+    ok(struct.pack("<I", _MARKER_ADDR + NUM_CHARACTERS * _MARKER_STRIDE)
+       in bytes(patched[SHIM_ADDR - 0x08000000:SHIM_ADDR - 0x08000000 + 0x2000]),
+       "the shim loads the off-roster record's address (MARKER_ADDR + N*64)")
 
     print("[22] PC second guard (ROWE's IsRemovingLastAllowedPartyMon)")
     # The anchor: special 0x88's wrapper must call the routine we hook. It is

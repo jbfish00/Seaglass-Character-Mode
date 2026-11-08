@@ -138,13 +138,27 @@ def main():
         longest = max(longest, len(s))
         blob += s + b"\xFF" * (STRIDE - len(s))
 
+    # QoL B9 (2026-11-08): ONE shared off-roster line, appended as record
+    # NUM_CHARACTERS (the shim reads MARKER_ADDR + NUM_CHARACTERS * STRIDE).
+    s = bytearray()
+    s += enc("Wild ", cm)
+    s += PLACEHOLDER
+    s += enc(" appeared!", cm)
+    s.append(NEWLINE)
+    s += enc("It is not on your roster.", cm)
+    s.append(PARAGRAPH)
+    s.append(TERM)
+    assert len(s) <= STRIDE
+    blob += s + b"\xFF" * (STRIDE - len(s))
+
     out = os.path.join(HERE, "marker_strings.bin")
     with open(out, "wb") as f:
         f.write(blob)
     with open(os.path.join(HERE, "marker_strings_manifest.json"), "w") as f:
-        json.dump({"count": len(chars), "stride": STRIDE,
+        json.dump({"count": len(chars), "offroster_record": len(chars),
+                   "stride": STRIDE,
                    "longest_used": longest, "bytes": len(blob)}, f, indent=1)
-    print("marker_strings.bin: %d characters x %d = %d B (longest %d)"
+    print("marker_strings.bin: %d characters + 1 off-roster line x %d = %d B (longest %d)"
           % (len(chars), STRIDE, len(blob), longest))
 
 

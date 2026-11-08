@@ -788,3 +788,11 @@ injector `exp_rate()`. Same design as Lazarus (its ROUTINE_MAP "EXP rate").
 Evidence: verify [31] (7), `exprate_negative_test.py` 7/7, live `cm_exp_rate_test.lua` (x1 25/12, x1.5 37/18, x2 50/24,
 x3 75/36, x0.5 12/6; CM_NO_EXPRATE asked x2 FAILS) and `cm_exp_rate_ui_test.lua` (3 chooser cases + the fade control),
 run_tests.sh layer 13.
+
+## Wild-intro roster hint (2026-11-08, QoL B9): ✅ LIVE
+
+`CM_BattleStringGated` (BL `0x08086EAA` -> trampoline): with CM on and a valid wild species (0 < sp <
+NUM_SPECIES, the rule `CM_CatchOdds` refuses the ball by) that is NOT on the roster, the plain intro becomes
+the shared record `MARKER_ADDR + NUM_CHARACTERS*64` = `0x08F15040`: "Wild X appeared! / It is not on your
+roster." `CM_NO_OFFROSTER=1` builds the control. Evidence: verify **195**, `run_tests.sh` layers 6d (Red +
+forced Sandshrew: the line), 6e (control: vanilla), 6f (negative control fails); full run ALL GREEN.

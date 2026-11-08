@@ -17,7 +17,8 @@
 -- broken stride because it only ever ran character 1.
 --
 -- Env: CM_CHAR, CM_FORCE_SPECIES (an on-roster species for that character),
---      CM_EXPECT_NAME (uppercase, or "" to expect the vanilla line),
+--      CM_EXPECT_NAME (uppercase, "" to expect the vanilla line, or OFFROSTER
+--      for the QoL B9 line "It is not on your roster."),
 --      CM_ON (default 1). Needs MGBA_HEADLESS_DEBUGGER=1.
 local H = dofile("tools/mgba_scripts/harness.lua")
 local CM_ON     = (os.getenv("CM_ON") or "1") ~= "0"
@@ -98,12 +99,17 @@ H.onFrame(function(f)
         H.assertTrue("wild trampoline fired (encounter happened)", forced)
         H.assertTrue("a wild intro was displayed at all", seen ~= nil)
         if seen then
-            if EXPECT ~= "" then
+            local offline = seen:find("It is not on your roster.", 1, true) ~= nil
+            if EXPECT == "OFFROSTER" then
+                -- QoL B9 (2026-11-08): an off-roster mon says so.
+                H.assertTrue("intro says 'It is not on your roster.'",
+                             offline and seen:find("destined for", 1, true) == nil)
+            elseif EXPECT ~= "" then
                 H.assertTrue("intro names the character (" .. EXPECT .. ")",
                              seen:find("destined for " .. EXPECT, 1, true) ~= nil)
             else
-                H.assertTrue("intro is the vanilla line (no marker)",
-                             seen:find("destined for", 1, true) == nil)
+                H.assertTrue("intro is the vanilla line (no marker, no off-roster line)",
+                             seen:find("destined for", 1, true) == nil and not offline)
             end
         end
         H.finish()

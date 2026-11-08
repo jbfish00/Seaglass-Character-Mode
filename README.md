@@ -350,3 +350,6 @@ patch only — never as a ROM.
 
 ## Starter kit (2026-11-07)
 Every new game (Character Mode on or off) starts with the Running Shoes, the Mach Bike (Rydel then offers the swap), the Shiny Charm and the Oval Charm. Build 2026-11-07: `build/seaglass_cm.gba` sha1 `021fc325462d590b1b6b78d615da4a3bccebac8c`, `build/seaglass_cm.bps` sha1 `f80a11dc3f51fabadb0e2ff7ad31d564fc2a701b` (round trip checked). The kit comes with a new game only; an existing save keeps what it has. On My Boy!, keep the old ROM and save, and load the new ROM under the same file name so the `.sav` carries over.
+
+## Wild-intro roster hint (2026-11-08)
+With Character Mode on, a wild Pokémon off your character's roster says so in its intro ("Wild X appeared! / It is not on your roster."), so you know before you throw a ball that it can't be caught. On-roster Pokémon still say "destined for <NAME>!". Build 2026-11-08: `build/seaglass_cm.gba` sha1 `44c8270e6afbfb7b7e90888a7a6c7ea2d5463c88`, `build/seaglass_cm.bps` sha1 `b804c0bf1a0f0c1a5d912de8a2dcd09873cec091` (round trip checked). Save-compatible: on My Boy!, keep the old ROM and save, and load the new ROM under the same file name so the `.sav` carries over.

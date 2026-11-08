@@ -402,6 +402,41 @@ grep -q "HARNESS RESULT: PASS" /tmp/sg_marker_off.log && echo "  PASS marker ine
     || { echo "  FAIL marker inert (see /tmp/sg_marker_off.log)"; exit 1; }
 
 echo
+# QoL B9 (2026-11-08): an off-roster mon's intro says "It is not on your roster."
+# 6d is the positive; 6e runs the CM_NO_OFFROSTER build (made here, then the
+# shipping build is restored) and must show the vanilla line; 6f asks that same
+# control ROM for the off-roster line and must FAIL.
+echo "=== Layer 6d: off-roster intro line (char 1 Red, Sandshrew 27) ==="
+timeout 250 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=3 CM_CHAR=1 \
+    CM_FORCE_SPECIES=27 CM_EXPECT_NAME=OFFROSTER "$MGBA" \
+    --script tools/mgba_scripts/cm_marker_test.lua \
+    -t tools/savestates/at_8_8.ss "$ROM" > /tmp/sg_marker_offroster.log 2>&1 || true
+grep -q "HARNESS RESULT: PASS" /tmp/sg_marker_offroster.log && echo "  PASS off-roster mon: 'It is not on your roster.'" \
+    || { echo "  FAIL off-roster line (see /tmp/sg_marker_offroster.log)"; exit 1; }
+SG_NOOFF=build/seaglass_cm_nooffroster.gba
+cp "$ROM" /tmp/sg_rom_keep.gba
+CM_NO_OFFROSTER=1 python3 tools/inject_character_mode.py >/dev/null 2>&1 \
+    || { echo "  FAIL CM_NO_OFFROSTER build"; exit 1; }
+cp build/seaglass_cm.gba "$SG_NOOFF"
+python3 tools/inject_character_mode.py >/dev/null 2>&1 || { echo "  FAIL shipping rebuild"; exit 1; }
+cmp -s /tmp/sg_rom_keep.gba "$ROM" || { echo "  FAIL the shipping rebuild differs from the ROM under test"; exit 1; }
+echo "=== Layer 6e: CM_NO_OFFROSTER control: vanilla line for the same mon ==="
+timeout 250 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=3 CM_CHAR=1 \
+    CM_FORCE_SPECIES=27 CM_EXPECT_NAME= "$MGBA" \
+    --script tools/mgba_scripts/cm_marker_test.lua \
+    -t tools/savestates/at_8_8.ss "$SG_NOOFF" > /tmp/sg_marker_nooff.log 2>&1 || true
+grep -q "HARNESS RESULT: PASS" /tmp/sg_marker_nooff.log && echo "  PASS control shows the vanilla line" \
+    || { echo "  FAIL control (see /tmp/sg_marker_nooff.log)"; exit 1; }
+echo "=== Layer 6f: NEGATIVE CONTROL: the control ROM asked for the off-roster line ==="
+timeout 250 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=3 CM_CHAR=1 \
+    CM_FORCE_SPECIES=27 CM_EXPECT_NAME=OFFROSTER "$MGBA" \
+    --script tools/mgba_scripts/cm_marker_test.lua \
+    -t tools/savestates/at_8_8.ss "$SG_NOOFF" > /tmp/sg_marker_nooffneg.log 2>&1 || true
+grep -q "HARNESS RESULT: PASS" /tmp/sg_marker_nooffneg.log \
+    && { echo "  FAIL NEGATIVE CONTROL: CM_NO_OFFROSTER passed 'OFFROSTER'"; exit 1; } \
+    || echo "  PASS negative control fails as it must"
+
+echo
 echo "=== Layer 5c: wild-encounter choke-point proof (BL 0x0822BF36 is the sole land-path caller) ==="
 # Proves, on a REACHABLE land encounter, that the exact BL we retarget is
 # executed and is the ONLY caller of CreateMonWithIVs for the wild mon --
