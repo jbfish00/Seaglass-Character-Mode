@@ -259,7 +259,7 @@ EGG_TAIL_ADDR = 0x08FA0000
 PC_TAIL_ADDR = 0x08FA1000
 PC_TAIL_SPACING = 0x20
 
-EXPECT_CHECKS = 195  # +2: [18] off-roster intro record (QoL B9, 2026-11-08); +7: [31] EXP rate (2026-10-29); +1: [30] instant HP bar (2026-10-28); +1: [29] battle animations off on new games (2026-10-28); +4: [29] new-game Exp. Share (2026-10-24); +3: [28] free tutors + egg relearner (2026-10-17); +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
+EXPECT_CHECKS = 197  # +2: [31] the Extras script, heal + PC branches (2026-11-11); +2: [18] off-roster intro record (QoL B9, 2026-11-08); +7: [31] EXP rate (2026-10-29); +1: [30] instant HP bar (2026-10-28); +1: [29] battle animations off on new games (2026-10-28); +4: [29] new-game Exp. Share (2026-10-24); +3: [28] free tutors + egg relearner (2026-10-17); +1: [26] off-roster refused (2026-10-09); +3: [27] early party-wide Exp. Share (2026-10-09); +6: [26] 100% roster catch (2026-10-09); +4: [25] reusable TMs (2026-10-09); +8: [24] the overworld sprite (2026-10-03); +3: [21] the roster header + hint (2026-10-02); +1: [11] the wild stub; +4: [23] the trampolines out of the sprite frame (2026-09-29)
 # 147: +7: [22] the PC second guard (2026-09-29)
 # was 140  # +7: [21] the roster display's entry scripts + code (2026-09-27)
                      # +8: [20] the relocated dynmultichoice callback table (2026-09-27)
@@ -454,7 +454,7 @@ def main():
     windows += [(0x7CB10, 6), (0x7CB22, 2)]
     # EXP rate ([31], 2026-10-29): veneer, getexp BL, data block (table + strings, script at +0x100), the two
     # sStartMenuItems literals, the builder tail and the input handler's compare block (both rewritten in place)
-    windows += [(0x1FF724, 8), (0x9441E, 4), (0xFA9000, 0x180), (0x1FFD98, 4), (0x2000B8, 4), (0x1FF7A2, 24),
+    windows += [(0x1FF724, 8), (0x9441E, 4), (0xFA9000, 0x200), (0x1FFD98, 4), (0x2000B8, 4), (0x1FF7A2, 24),
                 (0x20002A, 58)]
     # reusable TMs (2026-10-09): one importance byte per TM record ([25])
     windows += [(o + 0x2C, 1) for o in _tm_importance_bytes(orig)[1] if o is not None]
@@ -1718,10 +1718,10 @@ def main():
     ok([struct.unpack_from("<I", orig, a)[0] for a in (0x1FFD98, 0x2000B8)] == [0x0895F500] * 2
        and [struct.unpack_from("<I", patched, a)[0] for a in (0x1FFD98, 0x2000B8)] == [0x08FA9000] * 2
        and patched[_tbl:_tbl + 16 * 8] == orig[0x95F500:0x95F500 + 16 * 8]
-       and patched[_t16 - 0x08000000:_t16 - 0x08000000 + 9] == enc("EXP RATE", _cmap)
+       and patched[_t16 - 0x08000000:_t16 - 0x08000000 + 7] == enc("EXTRAS", _cmap)
        and _f16 == _sy["CM_StartMenuExpRate"] | 1,
        "START: both sStartMenuItems readers point at the copy, whose first 16 rows are the base table verbatim and "
-       "whose row 16 is 'EXP RATE' -> CM_StartMenuExpRate")
+       "whose row 16 is 'EXTRAS' -> CM_StartMenuExpRate")
     ok(bytes(orig[0x1FF7A2:0x1FF7A2 + 24]) == bytes.fromhex("2378002804d10522ea5401331b061b0e0622ea5401332370")
        and bytes(patched[0x1FF7A2:0x1FF7A2 + 24]) == bytes.fromhex("23780522ea5401331b1ae91806220a7010224a7002332370"),
        "START: BuildNormalStartMenu's tail writes SAVE (5), advances by 1 - FlagGet, appends 6 and 16 (bytes pinned)")
@@ -1732,14 +1732,33 @@ def main():
            "38f70cfdbce7c046c046c046c046c046"),
        "START: HandleStartMenuInput skips the fade for action 16 and keeps the five no-fade callbacks and the "
        "FadeScreen BL (bytes pinned)")
-    _sc = patched[_scr:_scr + 0x40]
-    ok(_sc[0] == 0x69 and _sc[1] == 0x23 and struct.unpack_from("<I", _sc, 2)[0] == _sy["CM_ExpRatePrep"] | 1
+    # 2026-11-11: the row's script is the Extras chooser; the rate chooser is its first branch (same bytes, minus lockall)
+    _xs = _scr + 0x08000000
+    _xh = patched[_scr:_scr + 0x60]
+    _a_rate = struct.unpack_from("<I", _xh, 6)[0]
+    _a_heal, _a_pc = struct.unpack_from("<I", _xh, 52)[0], struct.unpack_from("<I", _xh, 63)[0]
+    ok(_xh[:6] == bytes.fromhex("692b60080600") and _xh[10] == 0xE3 and _xh[20:22] == bytes([0xFF, 3])
+       and _xh[34:41] == bytes.fromhex("210d8000000601") and struct.unpack_from("<I", _xh, 41)[0] == _a_rate
+       and _xh[45:52] == bytes.fromhex("210d8001000601") and _xh[56:63] == bytes.fromhex("210d8002000601")
+       and _xh[67:69] == bytes([0x6B, 0x02]) and _a_rate == _xs + 69 and _a_rate < _a_heal < _a_pc < _xs + 0x100,
+       "the Extras script: lockall; checkflag 0x860; goto_if unset -> rate; dynmultichoice (3 rows); VAR_RESULT 0 -> "
+       "rate, 1 -> heal, 2 -> PC; releaseall; end")
+    _ro = _a_rate - 0x08000000
+    _sc = b"\x69" + bytes(patched[_ro:_ro + 0x40])
+    ok(_sc[1] == 0x23 and struct.unpack_from("<I", _sc, 2)[0] == _sy["CM_ExpRatePrep"] | 1
        and _sc[6] == 0x67 and _sc[11] == 0x66 and _sc[12] == 0xE3
        and struct.unpack_from("<H", _sc, 20)[0] == 0x8000 and _sc[22:24] == bytes([0xFF, 5])
        and _sc[44] == 0x23 and struct.unpack_from("<I", _sc, 45)[0] == _sy["CM_ExpRateSet"] | 1
-       and _sc[49:53] == bytes([0x68, 0x6B, 0x02, 0xFF]),
-       "the chooser script: lockall; callnative CM_ExpRatePrep; message; waitmessage; dynmultichoice (initial = "
+       and _sc[49:52] == bytes([0x68, 0x6B, 0x02]) and _a_heal == _a_rate + 51,
+       "the chooser branch: callnative CM_ExpRatePrep; message; waitmessage; dynmultichoice (initial = "
        "VAR_0x8000, 5 rows); callnative CM_ExpRateSet; closemessage; releaseall; end")
+    _ho, _po = _a_heal - 0x08000000, _a_pc - 0x08000000
+    _hl, _pcs = bytes(patched[_ho:_ho + 13]), bytes(patched[_po:_po + 12])
+    ok(_hl[:4] == bytes.fromhex("25000067") and _hl[8:13] == bytes.fromhex("666d686b02") and _a_pc == _a_heal + 13
+       and _pcs[:5] == bytes.fromhex("253f002723") and struct.unpack_from("<I", _pcs, 5)[0] == _sy["CM_SweepPartyToPCNative"] | 1
+       and _pcs[9:11] == bytes([0x6B, 0x02]) and _pcs[11] == 0xFF,
+       "heal branch: special 0 (HealPlayerParty); message; waitmessage; waitbuttonpress; closemessage; releaseall; end. "
+       "PC branch: special 0x3F; waitstate; callnative CM_SweepPartyToPCNative; releaseall; end")
 
     print(f"\n==== verify_artifacts: {_p} passed, {_f} failed ====")
     if assert_tally(_p + _f, EXPECT_CHECKS, "verify_artifacts"):

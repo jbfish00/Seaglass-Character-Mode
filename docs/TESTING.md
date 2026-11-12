@@ -182,7 +182,8 @@ TMs, 10 100% on-roster catch, 11 Exp. Share + battle animations off for every ne
 | layer | script | proves |
 |---|---|---|
 | 13 EXP rate | `cm_exp_rate_test.lua` (battle_menu2.ss) | Exp. Share battle, CM off: x1 25/12, x1.5 37/18, x2 50/24, x3 75/36, x0.5 12/6; `CM_NO_EXPRATE` fails x2, and its shim fails verify's compiled-code check |
-| 13 EXP rate START row | `cm_exp_rate_ui_test.lua` (route101.ss) | START > EXP RATE: DDA -> x2, UA -> x0.5, B keeps; the ROM with the input handler's original bytes (fade to black) must FAIL "opened over the field" |
+| 14 Extras: heal + PC anywhere | `cm_extras_test.lua` (route101_party.ss) | START > EXTRAS: HEAL PARTY (lead at 1 HP + poison -> full, no status), PC (`gSpecials[0x3F]` runs once), B; with FLAG_SYS_POKEMON_GET clear the row opens the rate chooser at once; the `CM_NO_EXTRAS` build asked for the heal must FAIL on the heal assert |
+| 13 EXP rate START row | `cm_exp_rate_ui_test.lua` (route101_party.ss) | START > EXTRAS > EXP RATE: DDA -> x2, UA -> x0.5, B keeps; the ROM with the input handler's original bytes (fade to black) must FAIL "opened over the field" |
 
 `mon_decrypt.lua` (copied from Lazarus) reads a party mon's EXP from its encrypted substructures, checksum-validated.
 

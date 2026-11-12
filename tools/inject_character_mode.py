@@ -572,6 +572,7 @@ START_ITEMS = 0x0895F500             # sStartMenuItems: 16 x {text, callback}; E
 START_ITEMS_COUNT = 16
 START_ITEMS_LITS = (0x081FFD98, 0x082000B8)   # PrintStartMenuActions, HandleStartMenuInput
 MENU_ACTION_EXPRATE = 16
+FLAG_SYS_POKEMON_GET_EXTRAS = 0x860   # BuildNormalStartMenu shows the Pokemon row on it (ROUTINE_MAP "EXP rate")
 # BuildNormalStartMenu (0x081FF73C) inlines AddStartMenuAction; after the FlagGet for SAVE (r0 = 0 / 1, r4 = &count,
 # r5 = sCurrentStartMenuActions) it appends SAVE (5) when r0 == 0, then OPTION (6). Rewritten in place, branchless:
 # write 5, count += 1 - r0, then append 6 and 16. At most 9 rows (POKeDEX ... OPTION, EXP RATE), what the array holds.
@@ -625,18 +626,41 @@ def exp_rate(data, syms, cm, splice):
 
     # 2. data block: the START table with row 16, strings, the chooser script at +0x100
     strs, blob = {}, bytearray(b"\0" * (8 * (START_ITEMS_COUNT + 1)))
-    for name, txt in [("row", "EXP RATE"), ("msg", "Battle EXP rate?")] + \
-            [(f"i{i}", x) for i, x in enumerate(("x0.5", "x1", "x1.5", "x2", "x3"))]:
+    # 2026-11-11 (QoL round 2 item 3, user: heal + PC anywhere as a START row, every save, no limit): the row is
+    # "EXTRAS". With FLAG_SYS_POKEMON_GET it first shows EXP RATE / HEAL PARTY / PC; without it (and in the
+    # CM_NO_EXTRAS control) it goes straight to the rate chooser, as before.
+    for name, txt in [("row", "EXTRAS"), ("msg", "Battle EXP rate?"), ("healed", "Your party was healed.")] + \
+            [(f"i{i}", x) for i, x in enumerate(("x0.5", "x1", "x1.5", "x2", "x3"))] + \
+            [(f"x{i}", x) for i, x in enumerate(("EXP RATE", "HEAL PARTY", "PC"))]:
         strs[name] = EXPRATE_ADDR + len(blob)
         blob += enc_text(txt, cm)
     assert len(blob) <= EXPRATE_SCRIPT_ADDR - EXPRATE_ADDR, len(blob)
     blob += b"\xff" * (EXPRATE_SCRIPT_ADDR - EXPRATE_ADDR - len(blob))
-    blob += (op_lockall() + op_callnative(syms["CM_ExpRatePrep"])
-             + bytes([0x67]) + struct.pack("<I", strs["msg"]) + bytes([0x66])    # message; waitmessage
-             + bytes([0xE3]) + struct.pack("<HH", 0, 0) + bytes([0, 0xFF, 0]) + struct.pack("<H", 0x8000)
-             + bytes([0xFF, 5]) + b"".join(struct.pack("<I", strs[f"i{i}"]) for i in range(5))
-             + op_callnative(syms["CM_ExpRateSet"])
-             + bytes([0x68]) + op_releaseall() + op_end())                    # closemessage
+    rate = (op_callnative(syms["CM_ExpRatePrep"])
+            + bytes([0x67]) + struct.pack("<I", strs["msg"]) + bytes([0x66])    # message; waitmessage
+            + bytes([0xE3]) + struct.pack("<HH", 0, 0) + bytes([0, 0xFF, 0]) + struct.pack("<H", 0x8000)
+            + bytes([0xFF, 5]) + b"".join(struct.pack("<I", strs[f"i{i}"]) for i in range(5))
+            + op_callnative(syms["CM_ExpRateSet"])
+            + bytes([0x68]) + op_releaseall() + op_end())                    # closemessage
+    # heal: the game's own special 0 (HealPlayerParty), then a message. pc: special 0x3F + waitstate, then the same
+    # party sweep the vanilla PC scripts got (an off-roster withdrawal goes back to the box).
+    heal = (bytes([0x25, 0x00, 0x00, 0x67]) + struct.pack("<I", strs["healed"]) + bytes([0x66, 0x6D, 0x68])
+            + op_releaseall() + op_end())
+    pc = (bytes([0x25]) + struct.pack("<H", 0x003F) + bytes([0x27])   # tools/character_mode/pc_hook.py SPECIAL_PC
+          + op_callnative(syms["CM_SweepPartyToPCNative"]) + op_releaseall() + op_end())
+
+    def head(a_rate, a_heal, a_pc):
+        if os.environ.get("CM_NO_EXTRAS") == "1":            # control: the rate chooser only
+            return op_lockall() + op_goto(a_rate)
+        return (op_lockall() + bytes([0x2B]) + struct.pack("<H", FLAG_SYS_POKEMON_GET_EXTRAS) + op_goto_if(0, a_rate)
+                + op_dynmultichoice(0xFF, [strs[f"x{i}"] for i in range(3)])
+                + op_compare(0x800D, 0) + op_goto_if(1, a_rate)
+                + op_compare(0x800D, 1) + op_goto_if(1, a_heal)
+                + op_compare(0x800D, 2) + op_goto_if(1, a_pc)
+                + op_releaseall() + op_end())
+    a_rate = EXPRATE_SCRIPT_ADDR + len(head(0, 0, 0))
+    a_heal, a_pc = a_rate + len(rate), a_rate + len(rate) + len(heal)
+    blob += head(a_rate, a_heal, a_pc) + rate + heal + pc
     items = at(START_ITEMS, 8 * START_ITEMS_COUNT)
     for i in range(START_ITEMS_COUNT):
         t, f = struct.unpack_from("<II", items, 8 * i)

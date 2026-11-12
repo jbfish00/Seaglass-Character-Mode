@@ -617,7 +617,7 @@ PY
 for c in "build/seaglass_cm.gba DDA 2 PASS" "build/seaglass_cm.gba UA 4 PASS" "build/seaglass_cm.gba B 0 PASS" \
          "/tmp/sg_erfade.gba DDA 2 FAIL"; do
     set -- $c
-    timeout 100 env KEYS=$2 WANT=$3 CM_EXPECT_CHECKS=4 "$MGBA" -t tools/savestates/route101.ss \
+    timeout 100 env KEYS=$2 WANT=$3 CM_EXPECT_CHECKS=4 "$MGBA" -t tools/savestates/route101_party.ss \
         --script tools/mgba_scripts/cm_exp_rate_ui_test.lua "$1" > /tmp/sg_erui_$(basename $1 .gba)_$2.log 2>&1 || true
     grep -aq "HARNESS RESULT: $4" /tmp/sg_erui_$(basename $1 .gba)_$2.log \
         && { [ "$4" = PASS ] || grep -aq "FAIL the chooser opened over the field" /tmp/sg_erui_$(basename $1 .gba)_$2.log; } \
@@ -625,6 +625,23 @@ for c in "build/seaglass_cm.gba DDA 2 PASS" "build/seaglass_cm.gba UA 4 PASS" "b
         || { echo "  FAIL START row: $(basename $1) keys $2 want $4 (see /tmp/sg_erui_$(basename $1 .gba)_$2.log)"; exit 1; }
 done
 python3 tools/tests/exprate_negative_test.py || { echo "  FAIL EXP rate negative test"; exit 1; }
+
+echo "=== Layer 14: Extras (QoL round 2 item 3, 2026-11-11): START > EXTRAS = EXP RATE / HEAL PARTY / PC, every save ==="
+# From route101_party.ss (a party, FLAG_SYS_POKEMON_GET set): heal (lead at 1 HP + poison -> full, no status), PC (the
+# storage special runs once), cancel; with the flag cleared the row opens the rate chooser at once. The CM_NO_EXTRAS
+# build (rate chooser only) asked for the heal must FAIL on the heal assert.
+CM_NO_EXTRAS=1 python3 tools/inject_character_mode.py > /tmp/sg_ex_ctl_build.log 2>&1 && cp build/seaglass_cm.gba build/seaglass_cm_noextras.gba \
+  && python3 tools/inject_character_mode.py > /tmp/sg_ex_build.log 2>&1 || { echo "  FAIL Extras builds"; exit 1; }
+for c in "seaglass_cm heal DA 1 0 0 0 PASS" "seaglass_cm pc DDA 0 1 0 0 PASS" "seaglass_cm cancel B 0 0 0 0 PASS" \
+         "seaglass_cm nomon DA 0 0 1 1 PASS" "seaglass_cm_noextras heal DA 1 0 1 0 FAIL"; do
+    set -- $c
+    timeout 110 env MGBA_HEADLESS_DEBUGGER=1 KEYS=$3 WANT_HEAL=$4 WANT_PC=$5 WANT_RATE=$6 NO_MON_FLAG=$7 CM_EXPECT_CHECKS=6 "$MGBA" -t tools/savestates/route101_party.ss \
+        --script tools/mgba_scripts/cm_extras_test.lua build/$1.gba > /tmp/sg_extras_$1_$2.log 2>&1 || true
+    grep -aq "HARNESS RESULT: $8" /tmp/sg_extras_$1_$2.log \
+        && { [ "$8" = PASS ] || grep -aq "FAIL lead healed" /tmp/sg_extras_$1_$2.log; } \
+        && echo "  PASS Extras: $1 $2 (keys $3) is $8" \
+        || { echo "  FAIL Extras: $1 $2 (keys $3) want $8 (see /tmp/sg_extras_$1_$2.log)"; exit 1; }
+done
 
 echo
 echo "ALL AUTOMATED LAYERS GREEN (incl. real-UI activation + in-situ trade e2e + wild override + live egg hatch + live PC exit)."

@@ -28,19 +28,20 @@ H.onFrame(function(f)
         H.press(K.UP, 6)
     end
     if f == 100 then H.press(K.A, 6) end
-    if f == 190 then
+    if f == 290 then
         plttSum = screenSum()
         if SHOT then emu:screenshot(SHOT) end
     end
+    if f == 200 then H.press(K.A, 6) end      -- 2026-11-11: the row opens Extras first; its first row is EXP RATE
     for i = 1, #KEYS do
-        if f == 200 + 30 * i then
+        if f == 300 + 30 * i then
             local c = KEYS:sub(i, i)
             H.press(c == "D" and K.DOWN or c == "U" and K.UP or c == "B" and K.B or K.A, 6)
         end
     end
-    if f == 395 then emu:write8(COUNT, 0) end          -- so only a rebuilt menu passes the last check
-    if f == 400 then H.press(K.START, 6) end
-    if f == 450 then
+    if f == 495 then emu:write8(COUNT, 0) end          -- so only a rebuilt menu passes the last check
+    if f == 500 then H.press(K.START, 6) end
+    if f == 550 then
         H.log(("last START action %d, palette sum %d of %d, rate %d, menu rows %d"):format(lastAction, plttSum, plttBase,
             H.getVar(VAR_EXP_RATE), emu:read8(COUNT)))
         H.assertEq("the normal START menu ends with the Exp. Rate row (action 16)", lastAction, 16)

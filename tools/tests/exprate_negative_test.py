@@ -17,6 +17,7 @@ build.)
 THE ROM IS NEVER MODIFIED IN PLACE.
 """
 import os
+import struct
 import subprocess
 import sys
 import tempfile
@@ -34,13 +35,13 @@ CHECKS = {
     "table": "START: both sStartMenuItems readers point at the copy",
     "build": "START: BuildNormalStartMenu's tail writes SAVE (5)",
     "input": "START: HandleStartMenuInput skips the fade for action 16",
-    "script": "the chooser script: lockall",
+    "script": "the chooser branch: callnative CM_ExpRatePrep",
 }
 BL_SITE, BL_ORIG = 0x09441E, bytes.fromhex("13f04bff")
 ROW16_FUNC = 0xFA9000 + 16 * 8 + 4
 BUILD_MOVS16 = 0x1FF7B2
 INPUT_CMP16 = 0x20002E
-SCRIPT_INITIAL = 0xFA9100 + 20
+SCRIPT_BASE = 0xFA9100           # the Extras script (2026-11-11); its first goto_if operand (+6) = the rate chooser branch
 
 
 def _child_env():
@@ -136,6 +137,7 @@ def main():
         case("5 the input handler skips the fade for action 15", input15, "input")
 
         def initial(d):
+            SCRIPT_INITIAL = struct.unpack_from("<I", d, SCRIPT_BASE + 6)[0] - 0x08000000 - 1 + 20
             assert d[SCRIPT_INITIAL:SCRIPT_INITIAL + 2] == bytes.fromhex("0080")
             d[SCRIPT_INITIAL] = 0x01
         case("6 the chooser's initial row read from VAR 0x8001", initial, "script")
