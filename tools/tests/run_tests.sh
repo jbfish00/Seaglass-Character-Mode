@@ -587,6 +587,17 @@ hp_case "$ROM" 1 && echo "  PASS shipped: the HP bar snaps" || { echo "  FAIL in
 hp_case build/seaglass_cm_nohp.gba 0 && echo "  PASS CM_NO_INSTANTHP: the HP bar animates (control)" || { echo "  FAIL HP control"; exit 1; }
 hp_case build/seaglass_cm_nohp.gba 1 && { echo "  FAIL negative control: CM_NO_INSTANTHP passed 'instant'"; exit 1; } \
     || echo "  PASS negative control: CM_NO_INSTANTHP fails 'instant' (want FAIL)"
+# 2026-11-14 (user: bars low and red at battle start): a low-max-HP foe that survives has its bar drawn at
+# floor(hp*48/max) on the shipped ROM and on CM_NO_INSTANTHP; the 10-28 patch (CM_OLD_HPBAR) draws it short
+CM_OLD_HPBAR=1 python3 tools/inject_character_mode.py > /tmp/sg_hp_old_build.log 2>&1 || { echo "  FAIL old HP-bar build"; exit 1; }
+drawn_case() {  # rom WANT_DRAWN
+    timeout 200 env MGBA_HEADLESS_DEBUGGER=1 CM_EXPECT_CHECKS=3 WANT_INSTANT=1 WANT_DRAWN=$2 "$MGBA" -t tools/savestates/battle_menu2.ss \
+        --script tools/mgba_scripts/cm_instant_hp_test.lua "$1" > /tmp/sg_hpdrawn_$(basename $1 .gba).log 2>&1 || true
+    grep -q "HARNESS RESULT: PASS" /tmp/sg_hpdrawn_$(basename $1 .gba).log
+}
+drawn_case "$ROM" 1 && echo "  PASS shipped: a low-max-HP bar is drawn at its HP" || { echo "  FAIL drawn bar (see /tmp/sg_hpdrawn_seaglass_cm.log)"; exit 1; }
+drawn_case build/seaglass_cm_oldhp.gba 0 && echo "  PASS CM_OLD_HPBAR: the 10-28 patch draws it short (control)" || { echo "  FAIL old-patch control"; exit 1; }
+drawn_case build/seaglass_cm_nohp.gba 1 && echo "  PASS CM_NO_INSTANTHP: vanilla draws it at its HP" || { echo "  FAIL vanilla drawn bar"; exit 1; }
 
 echo "=== Layer 13: EXP rate (QoL, user 2026-10-29): START > EXP RATE, Cmd_getexp scales the award, every save ==="
 # The Exp. Share battle (CM off) at every rate gives x1 * N / 2 to the battler and the bench mon (pinned below); the

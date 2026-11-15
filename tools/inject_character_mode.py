@@ -546,14 +546,20 @@ EGG_COUNT_FN, EGG_LIST_SITE, EGG_GMRM = 0x081AD818, 0x0816F4E4, 0x081AD6DC   # Q
 FREE_TUTOR_GATE, FREE_TUTOR_BP_CONFIRM, FREE_TUTOR_TEXT = 0x829a72b, 0x8301904, 0x8f1d000   # QoL 2026-10-17
 
 
-# ---- QoL A3 instant HP bar (2026-10-28) ------------------------------------------------------------------------------
+# ---- QoL A3 instant HP bar (2026-10-28, fixed 2026-11-14) -------------------------------------------------------------
 # pokeemerald-expansion's MoveBattleBar (entry 0x0807CAD0) computes B_FAST_HP_DRAIN's toAdd = max(maxHP / 24, 1)
 # (`movs r0,#1; cmp r6,#23; ble; movs r1,#24; movs r0,r6; bl __divsi3; lsls; lsrs`) and passes scale 6 (`movs r2,#6`).
-# toAdd becomes 255 (`movs r0,#255; b past the division; nop`) and scale 0, so every bar takes the integer path and
-# moves up to 255 HP a frame, clamped at the target. CM_NO_INSTANTHP=1 builds the control (build/seaglass_cm_nohp.gba).
+# toAdd becomes 255 (`movs r0,#255; b past the division; nop`): up to 255 HP a frame, clamped at the target. The scale
+# STAYS 6: MoveBattleBarGraphically (0x0807CBF0, CalcBarFilledPixels inlined) reads currValue as Q24.8 when max HP < 48,
+# so the 10-28 "scale 0" drew every max-HP<48 bar as (almost) empty and red at battle start (user report 2026-11-14).
+# Instead CalcNewBarValue's (0x0807CE70) fixed-point step Q(max)/48 is a whole bar: its `bl __divsi3` at 0x0807CEAE ->
+# two `movs r0,r0` (r0 = Q(max) stays). CM_NO_INSTANTHP=1 builds the control (build/seaglass_cm_nohp.gba);
+# CM_OLD_HPBAR=1 the 10-28 patch (build/seaglass_cm_oldhp.gba, the red-bar control).
 HPBAR_SITE = 0x0807CB10
 HPBAR_ORIG = bytes.fromhex("0120172e05dd18213000b0f1f7fd0004000c0622")
-HPBAR_NEW = bytes.fromhex("ff2006e0c04618213000b0f1f7fd0004000c0022")
+HPBAR_NEW = bytes.fromhex("ff2006e0c04618213000b0f1f7fd0004000c0622")
+HPBAR_OLD_NEW = bytes.fromhex("ff2006e0c04618213000b0f1f7fd0004000c0022")    # CM_OLD_HPBAR control only
+HPBAR_QSTEP = (0x0807CEAE, bytes.fromhex("b0f12dfc"), bytes.fromhex("00000000"))
 
 
 # --- EXP rate (QoL, user 2026-10-29; ../game_plans/EXP_RATE_PLAN.md) ---
@@ -708,9 +714,15 @@ def exp_rate(data, syms, cm, splice):
 def instant_hp(data):
     if os.environ.get("CM_NO_INSTANTHP") == "1":
         return False
+    old = os.environ.get("CM_OLD_HPBAR") == "1"
     o = HPBAR_SITE - 0x08000000
     assert bytes(data[o:o + len(HPBAR_ORIG)]) == HPBAR_ORIG, "MoveBattleBar's HP step not at %08X" % HPBAR_SITE
-    data[o:o + len(HPBAR_NEW)] = HPBAR_NEW
+    data[o:o + len(HPBAR_NEW)] = HPBAR_OLD_NEW if old else HPBAR_NEW
+    if not old:
+        a, b, n = HPBAR_QSTEP
+        q = a - 0x08000000
+        assert bytes(data[q:q + 4]) == b, "CalcNewBarValue's division not at %08X" % a
+        data[q:q + 4] = n
     return True
 
 
@@ -1533,6 +1545,8 @@ def main():
     print("instant HP bar:", instant_hp(data))
     if os.environ.get("CM_NO_INSTANTHP") == "1":
         out_rom = BUILD / "seaglass_cm_nohp.gba"
+    if os.environ.get("CM_OLD_HPBAR") == "1":
+        out_rom = BUILD / "seaglass_cm_oldhp.gba"
     print("EXP rate:", exp_rate(data, syms, cm, splice))
     if os.environ.get("CM_NO_EXPRATE") == "1":
         out_rom = BUILD / "seaglass_cm_noexprate.gba"

@@ -451,7 +451,7 @@ def main():
     # Exp. Share for every new game ([29], 2026-10-24): NewGameInitData's last BL and its 8-byte veneer
     windows += [(NEWGAME_BL_SITE, 4), (NEWGAME_VENEER_ADDR - 0x08000000, 8)]
     # instant HP bar ([30], 2026-10-28): toAdd 255 + the branch, scale 0
-    windows += [(0x7CB10, 6), (0x7CB22, 2)]
+    windows += [(0x7CB10, 6), (0x7CEAE, 4)]   # instant HP bar: toAdd 255 + branch; the fixed-point step (2026-11-14)
     # EXP rate ([31], 2026-10-29): veneer, getexp BL, data block (table + strings, script at +0x100), the two
     # sStartMenuItems literals, the builder tail and the input handler's compare block (both rewritten in place)
     windows += [(0x1FF724, 8), (0x9441E, 4), (0xFA9000, 0x200), (0x1FFD98, 4), (0x2000B8, 4), (0x1FF7A2, 24),
@@ -1694,8 +1694,10 @@ def main():
     print("[30] instant HP bar (QoL A3, 2026-10-28)")
     _hp = 0x7CB10
     ok(bytes(orig[_hp:_hp + 20]) == bytes.fromhex("0120172e05dd18213000b0f1f7fd0004000c0622")
-       and bytes(patched[_hp:_hp + 20]) == bytes.fromhex("ff2006e0c04618213000b0f1f7fd0004000c0022"),
-       "MoveBattleBar's toAdd = 255 (`movs r0,#255 ; b` past the maxHP/24 division) and scale 0 (base bytes pinned)")
+       and bytes(patched[_hp:_hp + 20]) == bytes.fromhex("ff2006e0c04618213000b0f1f7fd0004000c0622")
+       and bytes(orig[0x7CEAE:0x7CEB2]) == bytes.fromhex("b0f12dfc") and bytes(patched[0x7CEAE:0x7CEB2]) == bytes.fromhex("00000000"),
+       "MoveBattleBar's toAdd = 255 (`movs r0,#255 ; b` past the maxHP/24 division), scale stays 6, CalcNewBarValue's "
+       "fixed-point step (max HP < 48) is a whole bar (fixed 2026-11-14; base bytes pinned)")
 
     print("[31] EXP rate: START > EXP RATE, Cmd_getexp scales the award (QoL, 2026-10-29)")
     _sy = _elf_syms("cm.elf")

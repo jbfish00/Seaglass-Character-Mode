@@ -121,7 +121,7 @@ While Character Mode is on:
   Pokémon, not only the ones up to its level, then its egg moves (24 at most).
 - **Battle animations off for new games** (Character Mode on or off, 2026-10-28): set by the same new-game hook;
   Options turns them back on, and existing saves keep their own setting.
-- **Instant HP bar** (every save, 2026-10-28): the HP bar jumps straight to its new value in battle.
+- **Instant HP bar** (every save, 2026-10-28; fixed 2026-11-14): the HP bar jumps straight to its new value in battle; a Pokémon with under 48 max HP no longer starts a battle with a nearly empty red bar.
 - **Heal + PC anywhere** (every save, Character Mode on or off, 2026-11-11): START > **EXTRAS** (the last row) has
   *HEAL PARTY* (a free full heal, any time outside battle) and *PC* (the Pokémon storage system) once you have a
   Pokémon, next to *EXP RATE*.
@@ -356,3 +356,6 @@ Every new game (Character Mode on or off) starts with the Running Shoes, the Mac
 
 ## Wild-intro roster hint (2026-11-08)
 With Character Mode on, a wild Pokémon off your character's roster says so in its intro ("Wild X appeared! / It is not on your roster."), so you know before you throw a ball that it can't be caught. On-roster Pokémon still say "destined for <NAME>!". Build 2026-11-08: `build/seaglass_cm.gba` sha1 `44c8270e6afbfb7b7e90888a7a6c7ea2d5463c88`, `build/seaglass_cm.bps` sha1 `b804c0bf1a0f0c1a5d912de8a2dcd09873cec091` (round trip checked). Save-compatible: on My Boy!, keep the old ROM and save, and load the new ROM under the same file name so the `.sav` carries over.
+
+### Fix: instant HP bar drew low-max-HP bars red (2026-11-14)
+The 2026-10-28 instant HP bar drew any Pokémon with under 48 max HP (most early-game Pokémon) as a nearly empty red bar at the start of a battle, and after every hit. The bar is now drawn at its real value and is still instant. Build 2026-11-14: `build/seaglass_cm.gba` sha1 `b492c53fc192820299b98d5f7441947c5a6c5200`, `build/seaglass_cm.bps` sha1 `d568cb7fea133cab08c0850ec70e178d747344b1` (round trip checked; differs from the old patch in 5 bytes). Save-compatible: on My Boy!, keep the old ROM and save, and load the new ROM under the same file name so the `.sav` carries over.
